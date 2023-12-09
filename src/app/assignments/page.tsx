@@ -1,0 +1,93 @@
+import SideBar from "@/components/layout/sideBar"
+import Header from "@/components/layout/header"
+import Link from "next/link"
+export default function Assigments() {
+    return (
+        <>
+            <Header />
+            <div className="flex">
+                <SideBar />
+                <div className="ml-14 w-2/3">
+                    <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
+                        Assignments
+                    </div>
+                    <div className="mt-4 bg-white rounded-lg">
+                        <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASSName] aoe - Q.5 ClassNameRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
+                    </div>
+
+                    <div className="bg-white mt-2 pb-8 rounded">
+                        <div className="ml-6 mr-6">
+                            <div className="flex items-center p-4">
+                                <button className="flex items-center font-poppins justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
+                                    <img src="/img/calendar.svg" alt="" />
+                                    <Link href={'/course_Time'} className="ml-2">Timetable</Link>
+                                </button>
+                                <button className="flex items-center font-poppins justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg ml-8">
+                                    <img src="/img/assignment.svg" alt="" />
+                                    <p className="ml-2">Assignments</p>
+                                </button>
+                            </div>
+
+                            <div className="border-b border-black"></div>
+
+                            <Link href={'/speaking'} className="bg-gray-200 mt-12 grid grid-cols-2 border border-black rounded-lg">
+                                <div className=" p-2 flex items-center ">
+                                    <img src="/img/assignment.svg" alt="" />
+                                    <div className="ml-4 font-poppins">
+                                        Essay-Listening-Lesson 1
+                                    </div>
+                                </div>
+
+                                <div className=" p-2 flex items-center justify-end">
+                                    <div className="font-poppins font-medium">
+                                        Deadline:
+                                    </div>
+                                    <div className="ml-1 font-poppins">
+                                        30/02/2023
+                                    </div>
+                                </div>
+                            </Link>
+
+                            <Link href={'./reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg">
+                                <div className=" p-2 flex items-center ">
+                                    <img src="/img/assignment.svg" alt="" />
+                                    <div className="ml-4 font-poppins">
+                                        Essay-Listening-Lesson 1
+                                    </div>
+                                </div>
+
+                                <div className=" p-2 flex items-center justify-end">
+                                    <div className="font-poppins font-medium">
+                                        Deadline:
+                                    </div>
+                                    <div className="ml-1 font-poppins">
+                                        30/02/2023
+                                    </div>
+                                </div>
+                            </Link>
+
+                            <div className="mt-4 grid grid-cols-2 border border-black rounded-lg">
+                                <div className=" p-2 flex items-center ">
+                                    <img src="/img/assignment.svg" alt="" />
+                                    <div className="ml-4 font-poppins">
+                                        Essay-Listening-Lesson 1
+                                    </div>
+                                </div>
+
+                                <div className=" p-2 flex items-center justify-end">
+                                    <div className="font-poppins font-medium">
+                                        Deadline:
+                                    </div>
+                                    <div className="ml-1 font-poppins">
+                                        30/02/2023
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
