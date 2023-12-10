@@ -39,7 +39,7 @@ export default function SideBar() {
                         <button className="text2 font-poppins font-semibold text-sm text-white">Excerises
                             Bank</button>
                     </Link>
-                    <Link href={'/report'}
+                    <Link href={'/report_bug'}
                         className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
                         <Iflag className="w-8 h-8 fill-white" />
                         <button className="text3 font-poppins font-semibold text-sm text-white">Feedback and Bug
