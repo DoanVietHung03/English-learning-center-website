@@ -15,9 +15,9 @@ export default function create_RP() {
 
                         <div className="bg-white rounded">
                             <div className="flex items-center">
-                                <div>
-                                    <p>Title of report (*)</p>
-                                    <textarea name="" id=""></textarea>
+                                <div className="mt-12 ml-14 w-1/3">
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Title of report (*)</p>
+                                    <textarea className="w-full rounded-md border border-zinc-400 focus:outline-none mt-3 " name="" id="myTitle" placeholder="Title of the content you wish to report"></textarea>
                                 </div>
 
                                 <div>
