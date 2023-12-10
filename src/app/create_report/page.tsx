@@ -1,5 +1,6 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
+import RPtype from "./reportType_dropdown"
 
 export default function create_RP() {
     return (

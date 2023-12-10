@@ -6,7 +6,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function typeRP() {
+export default function RPtype() {
   return (
     <Menu as="div" className="relative inline-block text-left w-full mt-2">
       <div className='mr-4'>
