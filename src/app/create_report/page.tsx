@@ -16,7 +16,7 @@ export default function create_RP() {
                         <div className="bg-white rounded">
                             <div className="flex items-center">
                                 <div>
-                                    <p></p>
+                                    <p>Title of report (*)</p>
                                     <textarea name="" id=""></textarea>
                                 </div>
 
