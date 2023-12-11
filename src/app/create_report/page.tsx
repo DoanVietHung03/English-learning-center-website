@@ -40,8 +40,10 @@ export default function create_RP() {
                                 <p className=" text-zinc-500 text-base leading-tight tracking-tight">Attached image</p>
                             </button>
 
-                            <div>
-                                
+                            <div className="rounded-md border border-zinc-400 ml-14 mr-12 mt-2 pl-2 py-1">
+                                <button className="bg-zinc-300 border border-black text-sm px-5">
+                                    Choose file
+                                </button>
                             </div>
 
                         </div>
