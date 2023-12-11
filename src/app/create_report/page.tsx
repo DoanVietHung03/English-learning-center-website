@@ -29,9 +29,11 @@ export default function create_RP() {
                                 </div>
                             </div>
 
-                            <div className="ml-14 items-center mt-12 text-center text-black text-base font-medium leading-tight tracking-tight">
+                            <div className="ml-14 items-center mt-12 mr-12 text-black text-base font-medium leading-tight tracking-tight">
                                 <p>Content of report</p>
+                                <textarea className="w-full border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none" id="myContent" placeholder="Type content of the report"></textarea>
                             </div>
+
                         </div>
 
                     </div>
