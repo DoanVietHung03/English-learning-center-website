@@ -24,14 +24,28 @@ export default function Profile() {
                             <SkillDropdown />
                         </div>
 
-                        <div className="mt-24 flex items-center ml-9 gap-2">
-                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium font-['Poppins'] px-6 py-1">
+                        <div className="mt-16 flex items-center ml-9 gap-2">
+                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium font-['Poppins'] px-6 py-1 hover:bg-purple-400">
                                 Sort Data
                             </button>
 
-                            <button className="text-red-700 rounded-lg text-base font-medium font-['Poppins'] border-2 border-red-600 px-4 py-[2px]">
+                            <button className="text-red-700 rounded-lg text-base font-medium font-['Poppins'] border-2 border-red-600 px-4 py-[2px] hover:bg-red-200">
                                 Remove filter
                             </button>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-between">
+                        <div className="w-1/3">
+
+                        </div>
+
+                        <div className="w-1/3">
+
+                        </div>
+
+                        <div className="w-1/3">
+
                         </div>
                     </div>
                 </div>
