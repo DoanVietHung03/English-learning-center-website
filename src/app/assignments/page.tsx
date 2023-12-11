@@ -18,11 +18,11 @@ export default function Assigments() {
                     <div className="bg-white mt-2 pb-8 rounded">
                         <div className="ml-6 mr-6">
                             <div className="flex items-center p-4">
-                                <button className="flex items-center font-poppins justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
+                                <button className="flex items-center font-poppins justify-center border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
                                     <img src="/img/calendar.svg" alt="" />
                                     <Link href={'/course_Time'} className="ml-2">Timetable</Link>
                                 </button>
-                                <button className="flex items-center font-poppins justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg ml-8">
+                                <button className="flex items-center font-poppins justify-center  border border-stone-300 bg-blue-300 p-2 rounded-lg ml-8">
                                     <img src="/img/assignment.svg" alt="" />
                                     <p className="ml-2">Assignments</p>
                                 </button>
@@ -30,7 +30,43 @@ export default function Assigments() {
 
                             <div className="border-b border-black"></div>
 
-                            <Link href={'/speaking'} className="bg-gray-200 mt-12 grid grid-cols-2 border border-black rounded-lg">
+                            <Link href={'/ass_speaking'} className="mt-12 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                                <div className=" p-2 flex items-center ">
+                                    <img src="/img/assignment.svg" alt="" />
+                                    <div className="ml-4 font-poppins">
+                                        Essay-Speaking-Lesson 1
+                                    </div>
+                                </div>
+
+                                <div className=" p-2 flex items-center justify-end">
+                                    <div className="font-poppins font-medium">
+                                        Deadline:
+                                    </div>
+                                    <div className="ml-1 font-poppins">
+                                        30/02/2023
+                                    </div>
+                                </div>
+                            </Link>
+
+                            <Link href={'./ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                                <div className=" p-2 flex items-center ">
+                                    <img src="/img/assignment.svg" alt="" />
+                                    <div className="ml-4 font-poppins">
+                                        Essay-Reading-Lesson 1
+                                    </div>
+                                </div>
+
+                                <div className=" p-2 flex items-center justify-end">
+                                    <div className="font-poppins font-medium">
+                                        Deadline:
+                                    </div>
+                                    <div className="ml-1 font-poppins">
+                                        30/02/2023
+                                    </div>
+                                </div>
+                            </Link>
+
+                            <Link href={'./ass_listening'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <img src="/img/assignment.svg" alt="" />
                                     <div className="ml-4 font-poppins">
@@ -48,11 +84,11 @@ export default function Assigments() {
                                 </div>
                             </Link>
 
-                            <Link href={'./reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg">
+                            <Link href={'./ass_writing'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <img src="/img/assignment.svg" alt="" />
                                     <div className="ml-4 font-poppins">
-                                        Essay-Listening-Lesson 1
+                                        Essay-Writing-Lesson 1
                                     </div>
                                 </div>
 
@@ -65,24 +101,6 @@ export default function Assigments() {
                                     </div>
                                 </div>
                             </Link>
-
-                            <div className="mt-4 grid grid-cols-2 border border-black rounded-lg">
-                                <div className=" p-2 flex items-center ">
-                                    <img src="/img/assignment.svg" alt="" />
-                                    <div className="ml-4 font-poppins">
-                                        Essay-Listening-Lesson 1
-                                    </div>
-                                </div>
-
-                                <div className=" p-2 flex items-center justify-end">
-                                    <div className="font-poppins font-medium">
-                                        Deadline:
-                                    </div>
-                                    <div className="ml-1 font-poppins">
-                                        30/02/2023
-                                    </div>
-                                </div>
-                            </div>
 
                         </div>
                     </div>

@@ -17,7 +17,7 @@ export default function CourseTime() {
                     <div className="bg-sky-100 mt-2">
                         <div className="ml-6">
                             <div className="flex items-center p-4">
-                                <button className="flex items-center justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
+                                <button className="flex items-center justify-center border border-stone-300 bg-blue-300 p-2 rounded-lg">
                                     <img src="/img/calendar.svg" alt="" />
                                     <p className="ml-2">Timetable</p>
                                 </button>
