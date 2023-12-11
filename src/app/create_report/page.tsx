@@ -47,9 +47,9 @@ export default function create_RP() {
                                 </button>
                             </div>
 
-                            <div className="ml-14 mt-6">
-                                <button className="flex items-center gap-2 bg-lime-300 rounded-lg px-4 py-1">
-                                    <p>Send</p>
+                            <div className="ml-14 mt-16">
+                                <button className="flex items-center gap-2 bg-lime-300 rounded-lg px-4 py-1 hover:bg-lime-400">
+                                    <p className="text-base leading-tight tracking-tight font-medium">Send</p>
                                     <IfileExport />
                                 </button>
                             </div>
