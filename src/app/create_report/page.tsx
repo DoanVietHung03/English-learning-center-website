@@ -3,6 +3,7 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import RPtypeDropdown from "./reportType_dropdown"
+import Iimage from "@/components/icons/icon_image"
 
 export default function create_RP() {
     return (
@@ -29,9 +30,18 @@ export default function create_RP() {
                                 </div>
                             </div>
 
-                            <div className="ml-14 items-center mt-12 mr-12 text-black text-base font-medium leading-tight tracking-tight">
+                            <div className="ml-14 h-96 items-center mt-12 mr-12 text-black text-base font-medium leading-tight tracking-tight">
                                 <p>Content of report</p>
-                                <textarea className="w-full border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none" id="myContent" placeholder="Type content of the report"></textarea>
+                                <textarea className="w-full h-[340px] border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none" id="myContent" placeholder="Type content of the report"></textarea>
+                            </div>
+
+                            <button className="flex items-center ml-14 mt-2 gap-2 bg-gray-200 rounded-xl px-3 py-2">
+                                <Iimage />
+                                <p className=" text-zinc-500 text-base leading-tight tracking-tight">Attached image</p>
+                            </button>
+
+                            <div>
+                                
                             </div>
 
                         </div>
