@@ -1,5 +1,10 @@
+'use client'
+
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
+import SubjectDropdown from "./subjectDropdown"
+import ModuleDropdown from "./moduleDropdown"
+import SkillDropdown from "./skillDropdown"
 
 export default function Profile() {
     return (
@@ -13,7 +18,11 @@ export default function Profile() {
                         Exercises Bank
                     </div>
                     <div className="bg-white rounded pb-3">
-
+                        <div className="flex justify-between px-11 py-7">
+                            <SubjectDropdown />
+                            <ModuleDropdown />
+                            <SkillDropdown />
+                        </div>
                     </div>
                 </div>
             </div>
