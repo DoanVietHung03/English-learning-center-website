@@ -23,6 +23,16 @@ export default function Profile() {
                             <ModuleDropdown />
                             <SkillDropdown />
                         </div>
+
+                        <div className="mt-24 flex items-center ml-9 gap-2">
+                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium font-['Poppins'] px-6 py-1">
+                                Sort Data
+                            </button>
+
+                            <button className="text-red-700 rounded-lg text-base font-medium font-['Poppins'] border-2 border-red-600 px-4 py-[2px]">
+                                Remove filter
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
