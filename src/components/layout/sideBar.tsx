@@ -33,7 +33,7 @@ export default function SideBar() {
                         <Ibook1 className="w-8 h-8 fill-white" />
                         <button className="text1 text-sm font-poppins font-semibold text-white">Courses List</button>
                     </Link>
-                    <Link href={'/courseList'}
+                    <Link href={'/exercise_bank'}
                         className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
                         <Ibank className="w-8 h-8 fill-white" />
                         <button className="text2 font-poppins font-semibold text-sm text-white">Excerises
