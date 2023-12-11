@@ -23,7 +23,7 @@ export default function create_RP() {
 
                                 <div>
                                     <p>Type of report</p>
-                                    
+                                    <RPtype />
                                 </div>
                             </div>
                         </div>
