@@ -1,6 +1,8 @@
+'use client'
+
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
-import RPtype from "./reportType_dropdown"
+import RPtypeDropdown from "./reportType_dropdown"
 
 export default function create_RP() {
     return (
@@ -15,16 +17,20 @@ export default function create_RP() {
                         </div>
 
                         <div className="bg-white rounded">
-                            <div className="flex items-center">
-                                <div className="mt-12 ml-14 w-1/3">
+                            <div className="flex items-center gap-24 pt-12">
+                                <div className=" ml-14 w-1/3">
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Title of report (*)</p>
-                                    <textarea className="w-full h-12 rounded-md border border-zinc-400 focus:outline-none mt-3 pt-2 pl-2" name="" id="myTitle" placeholder="Title of the content you wish to report"></textarea>
+                                    <input className="w-full h-[34px] px-3 py-2 mt-3 rounded-md border border-zinc-400 focus:outline-none " type="text" id="myTitle" placeholder="Title of the content you wish to report" />
                                 </div>
 
-                                <div>
-                                    <p>Type of report</p>
-                                    <RPtype />
+                                <div className="w-1/3">
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Type of report</p>
+                                    <RPtypeDropdown />
                                 </div>
+                            </div>
+
+                            <div className="ml-14 items-center mt-12 text-center text-black text-base font-medium leading-tight tracking-tight">
+                                <p>Content of report</p>
                             </div>
                         </div>
 
