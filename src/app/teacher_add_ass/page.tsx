@@ -4,8 +4,10 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import ChooseSkillDropdown from "./chooseSkill"
+import { SyntheticEvent, useState } from "react"
 
 export default function Ass_Reading() {
+    const [DueDate, setDueDate] = useState('')
     return (
         <>
             <Header />
@@ -20,7 +22,7 @@ export default function Ass_Reading() {
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded">
-                        <div className="mx-11 border-b border-stone-300 pb-2">
+                        <div className="mx-10 border-b border-stone-300 pb-2">
                             <div className="grid grid-cols-2">
                                 <div className="flex items-center justify-start mt-4">
                                     <button className="rounded-tl rounded-bl border border-stone-300 bg-white hover:bg-blue-300 text-center text-black text-base font-bold font-poppins leading-tight tracking-tight hover:text-white px-[60px] pb-3 pt-[10px]">
@@ -39,12 +41,19 @@ export default function Ass_Reading() {
                             </div>
                         </div>
 
-                        <div className="flex items-center justify-center bg-zinc-100 rounded-lg border border-neutral-400">
+                        <div className="flex items-center justify-center bg-zinc-100 rounded-lg border border-neutral-400" style={{ width: '940px', margin: '20px auto 0'}}>
                             <div>
                                 <div>
                                     <div>
-                                        <p>Choose skill</p>
+                                        <p><strong>Choose skill</strong></p>
                                         <ChooseSkillDropdown />
+                                    </div>
+
+                                    <div>
+                                        <p><strong>Due date</strong></p>
+                                        <input className="w-full h-8 ml-5 text-base font-semibold focus:outline-none"
+                                            type="Due Date" placeholder="Type Due Date"
+                                            onChange={ev => setDueDate(ev.target.value)} />
                                     </div>
                                 </div>
                             </div>

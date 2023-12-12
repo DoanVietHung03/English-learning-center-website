@@ -19,8 +19,8 @@ export default function Assigments() {
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded">
-                        <div className="ml-6 mr-6">
-                            <div className="flex items-center p-4">
+                        <div className="flex-col ml-6 mr-6">
+                            <div className="flex items-center p-4 border-b border-black mb-5">
                                 <button className="flex items-center font-poppins justify-center border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
                                     <Icalendar />
                                     <Link href={'/course_Time'} className="ml-2">Timetable</Link>
@@ -30,19 +30,20 @@ export default function Assigments() {
                                     <p className="ml-2">Assignments</p>
                                 </button>
                             </div>
+                            
+                            <div className="flow-root">
+                                <Link href={'/teacher_add_ass'} className="float-right bg-zinc-100 border border-stone-300 hover:bg-green-300 p-2 rounded-lg ml-8">
+                                    Add assignment
+                                </Link>
+                            </div>
+                              
 
-                            <div className="border-b border-black"></div>
-
-                            <button className="p-2 flex items-center justify-end bg-zinc-100 border border-stone-300 hover:bg-green-300 p-2 rounded-lg ml-8">
-                                <Link href={'/teacher_add_ass'} className="ml-2">Add assignment</Link>
-                            </button>
-
-                            <Link href={'/ass_speaking'} className="mt-12 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            <Link href={'/ass_speaking'} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
                                         Essay-Speaking-Lesson 1
-                                    I</div>
+                                    </div>
                                 </div>
 
                                 <div className=" p-2 flex items-center justify-end">
