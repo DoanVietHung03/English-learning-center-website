@@ -3,6 +3,7 @@ import Icalendar from "../icons/icon_cal"
 import Imenu from "../icons/icon_menu"
 import Itarget from "../icons/icon_target"
 import Link from "next/link"
+
 export default function CourseInfo() {
     return (
         <div className="w-full h-36 p-8 rounded-xl bg-white">

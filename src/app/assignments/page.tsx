@@ -33,6 +33,10 @@ export default function Assigments() {
 
                             <div className="border-b border-black"></div>
 
+                            <button className="p-2 flex items-center justify-end bg-zinc-100 border border-stone-300 hover:bg-green-300 p-2 rounded-lg ml-8">
+                                <Link href={'/teacher_add_ass'} className="ml-2">Add assignment</Link>
+                            </button>
+
                             <Link href={'/ass_speaking'} className="mt-12 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
