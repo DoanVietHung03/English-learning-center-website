@@ -38,6 +38,7 @@ const assignmentSchema = new Schema({
         },
         grade: Number
     }],
+    attachedFile: String,
 }, { timestamps: true });
 
 export const Assignment = models?.Assignment || model('Assignment', assignmentSchema)
