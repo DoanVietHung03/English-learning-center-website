@@ -8,7 +8,7 @@ export async function POST(req: { json: () => any }) {
 
     const id = await Course.findOne({ course_id })
     if (id) {
-        new Error('Course is existed');
+        throw new Error('Course is existed');
     }
     const createdCourse = await Course.create(body)
     return Response.json(createdCourse)

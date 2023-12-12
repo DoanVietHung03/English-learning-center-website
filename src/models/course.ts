@@ -1,5 +1,4 @@
 import { Schema, model, models } from "mongoose";
-//import userSchema from "./user"
 import { User } from "@/models/user"
 
 const courseSchema = new Schema({
