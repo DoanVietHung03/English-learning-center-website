@@ -9,13 +9,13 @@ const handler = nextAuth({
             id: 'credentials',
             credentials: {
                 phone: { label: "Phone", type: "phone", placeholder: "0123456789" },
-                password: { label: "Password", type: "password" }
+                password: { label: "Password", type: "password" },
+                type: { label: "Type", type: "type" }
             },
             async authorize(credentials, req) {
                 const phone = credentials?.phone;
                 const password = credentials?.password
-
-                mongoose.connect( 
+                mongoose.connect(
                     "mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
                 const user = await User.findOne({ phone })
                 const passwordOk = user && (password == user.password)
