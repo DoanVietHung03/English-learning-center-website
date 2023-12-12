@@ -19,10 +19,10 @@ const courseSchema = new Schema({
         type: String,
         required: true
     },
-    member:{
-        type: [User],
+    member_id:[{
+        type: String,
         required: true
-    },
+    }],
 }, { timestamps: true });
 
 export const Course = models?.Course || model('Course', courseSchema)
