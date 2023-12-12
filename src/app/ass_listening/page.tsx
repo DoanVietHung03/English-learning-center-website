@@ -3,7 +3,6 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
-import Audio from "./scrubber_bar"
 
 export default function Ass_Reading() {
     return (
@@ -22,7 +21,7 @@ export default function Ass_Reading() {
                     <div className="bg-white mt-2 pb-8 rounded">
                         <div className="flex items-center justify-end py-2 border-b border-stone-300 mx-4">
                             <Link href={''}>
-                                <button className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm">
+                                <button className="flex items-center bg-lime-300 hover:bg-lime-400 rounded-lg px-3 py-1 font-poppins text-sm">
                                     Submit
                                 </button>
                             </Link>
@@ -30,7 +29,7 @@ export default function Ass_Reading() {
 
                         <div className="grid grid-cols-2 mt-4 py-4 mx-4 gap-6">
                             <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4">
-                                <Audio />
+                   
                                 <div><span className="text-black text-base font-bold font-['Poppins']">
                                     Questions 21-25<br/>Choose the correct letter, A, B or C.<br/></span><span className="text-black text-base font-normal font-['Poppins']">
                                         Food Waste<br/></span><span className="text-black text-base font-bold font-['Poppins']">21 What point does Robert make about the 2013 study in Britain?<br/></span>
