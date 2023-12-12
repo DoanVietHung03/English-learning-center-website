@@ -11,6 +11,6 @@ export async function POST(req: { json: () => any }) {
         new Error('password must be at least 5 characters or phone is existed');
     }
     const createdUser = await User.create(body)
-    return Response.json(body)
+    return Response.json(createdUser)
 }
 
