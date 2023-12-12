@@ -36,7 +36,7 @@ export default function RPtypeDropdown() {
                     'block px-4 py-2 text-sm text-center'
                   )}
                 >
-                  Dinh Bao Tran
+                  System error
                 </a>
               )}
             </Menu.Item>
@@ -49,7 +49,7 @@ export default function RPtypeDropdown() {
                     'block px-4 py-2 text-sm text-center'
                   )}
                 >
-                  Dinh Thi Thuy Duong
+                  Operation error
                 </a>
               )}
             </Menu.Item>
@@ -62,7 +62,7 @@ export default function RPtypeDropdown() {
                     'block px-4 py-2 text-sm text-center'
                   )}
                 >
-                  Doan Viet Hung
+                  Exercises error
                 </a>
               )}
             </Menu.Item>
@@ -75,7 +75,7 @@ export default function RPtypeDropdown() {
                     'block px-4 py-2 text-sm text-center'
                   )}
                 >
-                  Duong Tran Duy Hung
+                  Another
                 </a>
               )}
             </Menu.Item>
