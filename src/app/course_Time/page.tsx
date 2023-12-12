@@ -1,6 +1,9 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
+import Icalendar from "@/components/icons/icon_cal"
+import Ibook from "@/components/icons/icon_book"
+
 export default function CourseTime() {
     return (
         <>
@@ -18,11 +21,11 @@ export default function CourseTime() {
                         <div className="ml-6">
                             <div className="flex items-center p-4">
                                 <button className="flex items-center justify-center border border-stone-300 bg-blue-300 p-2 rounded-lg">
-                                    <img src="/img/calendar.svg" alt="" />
+                                    <Icalendar />
                                     <p className="ml-2">Timetable</p>
                                 </button>
                                 <button className="flex items-center justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg ml-8">
-                                    <img src="/img/assignment.svg" alt="" />
+                                    <Ibook />
                                     <Link href={'/assignments'} className="ml-2">Assignments</Link>
                                 </button>
                             </div>

@@ -1,6 +1,9 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
+import Icalendar from "@/components/icons/icon_cal"
+import Ibook from "@/components/icons/icon_book"
+
 export default function Assigments() {
     return (
         <>
@@ -19,11 +22,11 @@ export default function Assigments() {
                         <div className="ml-6 mr-6">
                             <div className="flex items-center p-4">
                                 <button className="flex items-center font-poppins justify-center border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
-                                    <img src="/img/calendar.svg" alt="" />
+                                    <Icalendar />
                                     <Link href={'/course_Time'} className="ml-2">Timetable</Link>
                                 </button>
                                 <button className="flex items-center font-poppins justify-center  border border-stone-300 bg-blue-300 p-2 rounded-lg ml-8">
-                                    <img src="/img/assignment.svg" alt="" />
+                                    <Ibook />
                                     <p className="ml-2">Assignments</p>
                                 </button>
                             </div>
@@ -32,10 +35,10 @@ export default function Assigments() {
 
                             <Link href={'/ass_speaking'} className="mt-12 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
-                                    <img src="/img/assignment.svg" alt="" />
+                                    <Ibook />
                                     <div className="ml-4 font-poppins">
                                         Essay-Speaking-Lesson 1
-                                    </div>
+                                    I</div>
                                 </div>
 
                                 <div className=" p-2 flex items-center justify-end">
@@ -50,7 +53,7 @@ export default function Assigments() {
 
                             <Link href={'./ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
-                                    <img src="/img/assignment.svg" alt="" />
+                                    <Ibook />
                                     <div className="ml-4 font-poppins">
                                         Essay-Reading-Lesson 1
                                     </div>
@@ -68,7 +71,7 @@ export default function Assigments() {
 
                             <Link href={'./ass_listening'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
-                                    <img src="/img/assignment.svg" alt="" />
+                                    <Ibook />
                                     <div className="ml-4 font-poppins">
                                         Essay-Listening-Lesson 1
                                     </div>
@@ -86,7 +89,7 @@ export default function Assigments() {
 
                             <Link href={'./ass_writing'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
-                                    <img src="/img/assignment.svg" alt="" />
+                                    <Ibook />
                                     <div className="ml-4 font-poppins">
                                         Essay-Writing-Lesson 1
                                     </div>
