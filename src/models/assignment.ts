@@ -13,9 +13,17 @@ const assignmentSchema = new Schema({
         type: String,
         required: true
     },
+    startDate: {
+        type: Date,
+        default: Date.now,
+        required: true
+    },
     dueDate: {
         type: Date,
         required: true
+    },
+    fileRecord: {
+        type: File,
     },
     submission: [{
         answer: String,

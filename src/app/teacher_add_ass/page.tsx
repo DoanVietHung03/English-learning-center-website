@@ -35,6 +35,14 @@ export default function Ass_Reading() {
             headers: { 'Content-Type': 'application/json' },
         })
     }
+    async function handleFormSubmit1(ev: SyntheticEvent) {
+        ev.preventDefault()
+        await fetch('/api/assignment', {
+            method: 'POST',
+            body: JSON.stringify({ Skill, deadline, Title, file, DueDate }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }
     return (
         <>
             <Header />
@@ -111,10 +119,12 @@ export default function Ass_Reading() {
 
                             </div>
                             <div className="flex items-center justify-end mt-16 mr-4">
-                                <button type="submit" onClick={ }
+                                {/*
+                                <button type="submit" onClick={handleFormSubmit}
                                     className="bg-lime-600 text-white rounded-lg text-center border-2 border-white text-xs font-poppins leading-tight tracking-tight px-[30px] pb-3 pt-[10px] font-bold hover:bg-white hover:border-lime-200 hover:text-black transition-colors duration-300">
-                                    Add
-                                </button>
+                                    onClick={handleFormSubmit}
+                                </button> */}
+                                <button className="w-full" type="submit" onClick={handleFormSubmit1}>submit</button>
                             </div>
                         </form>
                     </div>
