@@ -10,7 +10,7 @@ export default function SideBar() {
     return (
         <div className="w-1/5">
             <div
-                className="sideBar flex-col bg-[#68C6E3] mt-16 w-full h-full rounded-tr-3xl rounded-br-3xl transition-all duration-300 ease-in-out">
+                className="sideBar flex-col bg-[#68C6E3] mt-16 w-full h-fit rounded-tr-3xl rounded-br-3xl transition-all duration-300 ease-in-out pb-12">
                 <div className="flex icon-closed pt-7 mr-6 justify-end">
                     <Icross className="w-8 h-8 fill-white" />
                 </div>
