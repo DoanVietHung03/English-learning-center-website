@@ -19,12 +19,22 @@ export default function Ass_Reading() {
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [Title, setTitle] = useState('')
     const [file, setFile] = useState('');
+    const [content, setContent] = useState('');
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
     };
+
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        await fetch('/api/register', {
+            method: 'POST',
+            body: JSON.stringify({ phone, password, type }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }
     return (
         <>
             <Header />
@@ -38,7 +48,7 @@ export default function Ass_Reading() {
                         <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASS] aoe - Q.5 ClassRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
                     </div>
 
-                    <div className="bg-white mt-2 pb-8 rounded">
+                    <div className="bg-white mt-2 pb-8 rounded px-7">
                         <div className="mx-10 border-b border-stone-300 pb-2">
                             <div className="grid grid-cols-2">
                                 <div className="flex items-center justify-start mt-4">
@@ -52,7 +62,7 @@ export default function Ass_Reading() {
 
                             </div>
                         </div>
-                        <form className="h-[500px] bg-zinc-100 rounded-lg border border-neutral-400">
+                        <form className="h-[500px] p-4 bg-zinc-100 rounded-lg border border-neutral-400">
                             <div className="flex h-3/4">
                                 <div className="flex flex-col w-1/2 p-4 gap-5 pr-10">
                                     <div>
@@ -93,13 +103,15 @@ export default function Ass_Reading() {
                                 <div className="flex flex-col w-1/2 mt-3 gap-3">
                                     <div className="h-96 items-center text-black text-base font-normal leading-tight tracking-tight">
                                         <p>Content</p>
-                                        <textarea className="w-full h-[350px] border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none" id="myContent" placeholder="Type content of the assignment"></textarea>
+                                        <textarea onChange={ev => setContent(ev.target.value)}
+                                            className="w-full h-[350px] border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none"
+                                            id="myContent" placeholder="Type content of the assignment"></textarea>
                                     </div>
                                 </div>
 
                             </div>
                             <div className="flex items-center justify-end mt-16 mr-4">
-                                <button type="submit"
+                                <button type="submit" onClick={ }
                                     className="bg-lime-600 text-white rounded-lg text-center border-2 border-white text-xs font-poppins leading-tight tracking-tight px-[30px] pb-3 pt-[10px] font-bold hover:bg-white hover:border-lime-200 hover:text-black transition-colors duration-300">
                                     Add
                                 </button>

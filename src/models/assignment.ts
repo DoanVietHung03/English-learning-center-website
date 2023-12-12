@@ -1,24 +1,16 @@
 import { Schema, model, models } from "mongoose";
 
 const assignmentSchema = new Schema({
-    assignment_id: {
-        type: String,
-        required: true
-    },
     course_id: {
         type: String,
         required: true
     },
-    topic: {
+    content: {
         type: String,
         required: true
     },
     skill: {
         type: String,
-        required: true
-    },
-    startDate: {
-        type: Date,
         required: true
     },
     dueDate: {
