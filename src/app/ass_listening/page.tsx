@@ -29,7 +29,7 @@ export default function Ass_Reading() {
 
                         <div className="grid grid-cols-2 mt-4 py-4 mx-4 gap-6">
                             <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4">
-
+                                <audio src="/84_we.mp3" controls></audio>
                                 <div><span className="text-black text-base font-bold font-['Poppins']">
                                     Questions 21-25<br/>Choose the correct letter, A, B or C.<br/></span><span className="text-black text-base font-normal font-['Poppins']">
                                         Food Waste<br/></span><span className="text-black text-base font-bold font-['Poppins']">21 What point does Robert make about the 2013 study in Britain?<br/></span>
