@@ -7,3 +7,4 @@ export async function POST(req: { json: () => any }) {
     const createdUser = await User.create(body)
     return Response.json(body)
 }
+
