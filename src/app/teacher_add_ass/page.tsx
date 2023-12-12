@@ -4,7 +4,7 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import ChooseSkillDropdown from "./chooseSkill"
-import { SyntheticEvent, useState } from "react"
+import {useState } from "react"
 
 export default function Ass_Reading() {
     const [DueDate, setDueDate] = useState('')
