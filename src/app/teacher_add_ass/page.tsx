@@ -38,7 +38,7 @@ export default function Ass_Reading() {
                         <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASS] aoe - Q.5 ClassRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
                     </div>
 
-                    <div className="bg-white mt-2 pb-8 rounded">
+                    <div className="bg-white mt-2 pb-8 rounded px-7">
                         <div className="mx-10 border-b border-stone-300 pb-2">
                             <div className="grid grid-cols-2">
                                 <div className="flex items-center justify-start mt-4">
@@ -90,7 +90,7 @@ export default function Ass_Reading() {
                                     }
                                 </div>
 
-                                <div className="flex flex-col w-1/2 mt-3 gap-3">
+                                <div className="flex flex-col w-1/2 mt-3 mr-3 gap-3">
                                     <div className="h-96 items-center text-black text-base font-normal leading-tight tracking-tight">
                                         <p>Content</p>
                                         <textarea className="w-full h-[350px] border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none" id="myContent" placeholder="Type content of the assignment"></textarea>

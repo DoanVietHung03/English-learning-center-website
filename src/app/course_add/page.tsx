@@ -2,6 +2,7 @@
 
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
+import Select from "react-select";
 import Link from "next/link"
 import { useState } from "react"
 
@@ -12,7 +13,12 @@ export default function Course_Add() {
     const [sDate, setSDate] = useState('')
     const [cDate, setCDate] = useState('')
     const [student, setStudent] = useState('')
-
+    const handleChangeModule = (ev) => {
+        setModule(ev.value);
+    };
+    const handleChangeTeacher = (ev) => {
+        setTeacher(ev.value);
+    };
     return (
         <>
             <Header />
@@ -34,15 +40,20 @@ export default function Course_Add() {
                         <div className="ml-6">
                             <div className="flex items-center gap-20 pt-8">
                                 <div className=" ml-5 w-2/3">
-                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Course Name</p>
+                                    <div className="mb-2">Course Name</div>
                                     <input className="w-full h-[34px] px-2 py-2 mt-3 rounded-md border border-zinc-300 focus:outline-none " type="text" id="myTitle" placeholder="Type name of the course" />
                                 </div>                           
                             </div>
 
 
-                            <div className="flex items-center gap-20 pt-8 ml-5">
-                                <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a module</p>
-                                
+                            <div className="items-center gap-20 pt-6 ml-5">
+                                <div className="mb-2">Choose a module</div>
+                                <Select options={optionModule} onChange={handleChangeModule} className="w-1/3" />
+                            </div>
+
+                            <div className="items-center gap-20 pt-6 ml-5">
+                                <div className="mb-2">Choose a teacher</div>
+                                <Select options={optionModule} onChange={handleChangeModule} className="w-1/3" />
                             </div>
                         </div>
                     </div>
@@ -57,3 +68,15 @@ export default function Course_Add() {
         </>
     )
 }
+
+const optionModule = [
+    { value: "IELTS", label: "IELTS" },
+    { value: "TOEIC", label: "TOEIC" },
+    { value: "TOEFL", label: "TOEFL" },
+];
+
+const optionTeacher = [
+    { value: "IELTS", label: "IELTS" },
+    { value: "TOEIC", label: "TOEIC" },
+    { value: "TOEFL", label: "TOEFL" },
+];
