@@ -22,7 +22,7 @@ export default function create_RP() {
                             <div className="flex items-center gap-24 pt-12">
                                 <div className=" ml-14 w-1/3">
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Title of report (*)</p>
-                                    <input className="w-full h-[34px] px-3 py-2 mt-3 rounded-md border border-zinc-400 focus:outline-none " type="text" id="myTitle" placeholder="Title of the content you wish to report" />
+                                    <input className="w-full h-[34px] px-3 py-2 mt-3 rounded-md border border-zinc-300 focus:outline-none " type="text" id="myTitle" placeholder="Title of the content you wish to report" />
                                 </div>
 
                                 <div className="w-1/3">
