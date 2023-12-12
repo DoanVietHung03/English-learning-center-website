@@ -1,63 +1,68 @@
-import './globals.css'
+'use client';
+import Image from "next/image"
+import Link from "next/link"
+import Ilock from "@/components/icons/icon_lock"
+import Iman from "@/components/icons/icon_man"
+import { SyntheticEvent, useState } from "react"
+import { signIn } from "next-auth/react"
+export default function Login() {
+    const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
+    const [loginProgress, setloginProgress] = useState(false);
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault();
+        setloginProgress(true);
+        await signIn('credentials', { phone, password, callbackUrl: '/courseList' })
+        setloginProgress(false);
+        // console.log(phone, password)
+    }
+    return (
+        <>
+            <div className="mt-20 rounded-lg mx-auto my-auto w-2/3 h-[550px] bg-white border-gray-200 border-2">
+                <div className="flex h-full">
+                    <div className="w-1/2">
+                        <div className="flex items-center p-4">
+                            <img className="w-14" src="/icon.png" alt="logo" />
+                            <p className=" font-bold ml-4 text-[#68C6E3] text-xl">Academy of English</p>
+                        </div>
 
-import Link from 'next/link'
-import Istudent from '@/components/icons/icon_student'
-import Iteacher from '@/components/icons/icon_teacher'
-import Iadmin from '@/components/icons/icon_admin'
-import Icheck from '@/components/icons/icon_check'
-export default function Home() {
-  return (
-    <body className="bg-white">
-      <div className="relative justify-center items-center m-20">
-        <div className="text-center text-black text-4xl font-normal leading-tight tracking-tight">Please
-          select your</div>
-        <div className="text-center text-black text-7xl font-bold leading-tight tracking-tight">USER TYPE
-        </div>
-      </div>
-      <div className="grid grid-cols-3">
-        <div className="flex items-center justify-center ml-56">
-          <button
-            className="flex-col justify-center items-center w-48 transition transform hover:bg-primary focus:bg-primary rounded-2xl border-2 shadow-2xl border-primary">
-            <Istudent className='fill-[#7F7F7F] w-44 h-44 transition-colors hover:fill-white' />
-            <div
-              className="text-center rounded-2xl text-zinc-500 text-2xl font-normal leading-tight tracking-tight">
-              Student
+                        <div    >
+                            <img className="flex items-center justify-center " src="/login.svg" alt="picture" />
+                        </div>
+                    </div>
+
+                    <div className="w-1/2">
+
+                        <h1 className="flex justify-center items-center mt-14 font-bold text-5xl text-[#50BFE2]">
+                            Welcome to aoe
+                        </h1>
+                        <form onSubmit={handleFormSubmit}>
+                            <div className="font-mono mt-12 ml-6 mr-4 text-xl">
+                                <div className="w-full p-2 inline-flex justify-center items-center border-2 border-solid rounded-md border-gray-100">
+                                    <Iman className="w-[21px] h-[24px] fill-[#D3CECE]" />
+                                    <input className="w-full h-8 ml-5 text-base font-semibold focus:outline-none"
+                                        type="phone" placeholder="Your telephone number"
+                                        name="Username" required value={phone}
+                                        onChange={ev => setPhone(ev.target.value)} />
+                                </div>
+                            </div>
+
+                            <div className="font-mono mt-8 ml-6 mr-4 text-xl">
+                                <div className="w-full p-2 inline-flex justify-center items-center border-2 border-solid rounded-md border-gray-100">
+                                    <Ilock className="w-[21px] h-[24px] fill-[#D3CECE]" />
+                                    <input className="w-full h-8 ml-5 text-base font-semibold focus:outline-none"
+                                        type="password" placeholder="Your password"
+                                        name="Password" required value={password}
+                                        onChange={ev => setPassword(ev.target.value)} />
+                                </div>
+                            </div>
+                            <button className="rounded-md my-4 ml-40 w-36 h-11 p-1 pt-2 pb-2 font-bold text-xl font-poppins text-white
+                                        transition transform hover:scale-110 active:scale-100 bg-primary"
+                                type="submit">Sign in</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </button>
-        </div>
-
-        <div className="flex items-center justify-center">
-          <button
-            className="flex-col justify-center items-center w-48 transition transform hover:bg-primary focus:bg-primary rounded-2xl border-2 shadow-2xl border-primary">
-            <Iteacher className='fill-[#7F7F7F] w-44 h-44 transition-colors hover:fill-white' />
-            <div
-              className="text-center rounded-2xl text-zinc-500 text-2xl font-normal leading-tight tracking-tight">
-              Teacher
-            </div>
-          </button>
-        </div>
-
-        <div className="flex items-center justify-center mr-56">
-          <button
-            className="flex-col justify-center items-center w-48 transition transform hover:bg-primary focus:bg-primary rounded-2xl border-2 shadow-2xl border-primary">
-            <Iadmin className='fill-[#7F7F7F] w-44 h-44 transition-colors hover:fill-white' />
-            <div
-              className="text-center text-zinc-500 text-2xl font-normal leading-tight tracking-tight">
-              Admin
-            </div>
-          </button>
-        </div>
-      </div>
-
-      <div className="flex justify-center items-center mt-12">
-        <Link href="/login">
-          <button
-            className="flex justify-center items-center text-center text-zinc-500 text-3xl leading-tight tracking-tight mr-4 font-semibold transition transform hover:scale-110 active:scale-100">
-            <Icheck className='w-24 h-24 rounded-full hover:bg-slate-400' />
-          </button>
-        </Link>
-      </div>
-    </body>
-  )
+        </>
+    )
 }
-
