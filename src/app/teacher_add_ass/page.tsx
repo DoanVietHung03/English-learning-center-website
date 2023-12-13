@@ -12,6 +12,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
+import Link from "next/link";
 
 export default function Ass_Reading() {
     const [skill, setSkill] = useState('')
@@ -52,12 +53,14 @@ export default function Ass_Reading() {
                         <div className="mx-10 border-b border-stone-300 pb-2">
                             <div className="grid grid-cols-2">
                                 <div className="flex items-center justify-start mt-4">
-                                    <button className="rounded-tl rounded-bl border border-stone-300 bg-blue-300 text-center text-xs font-bold font-poppins leading-tight tracking-tight text-white px-[60px] pb-3 pt-[10px] transition-colors duration-300">
+                                    <button className="rounded-tl rounded-bl border border-stone-300 bg-blue-300 text-center text-black text-xs font-bold font-poppins leading-tight tracking-tight px-[60px] pb-3 pt-[10px]">
                                         Add
                                     </button>
-                                    <button className="rounded-tr rounded-br border border-stone-300 bg-white hover:bg-blue-300 text-center text-black text-xs font-bold font-poppins leading-tight tracking-tight hover:text-white px-[60px] pb-3 pt-[10px] transition-colors duration-300">
-                                        Clone
-                                    </button>
+                                    <Link href={"/teacher_clone_ass"}>
+                                        <button className="rounded-tr rounded-br border border-stone-300 bg-white hover:bg-blue-300 text-center text-black text-xs font-bold font-poppins leading-tight tracking-tight hover:text-white px-[60px] pb-3 pt-[10px] transition-colors duration-300">
+                                            Clone
+                                        </button>
+                                    </Link>
                                 </div>
 
                             </div>
