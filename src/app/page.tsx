@@ -5,17 +5,24 @@ import Ilock from "@/components/icons/icon_lock"
 import Iman from "@/components/icons/icon_man"
 import { SyntheticEvent, useState } from "react"
 import { signIn } from "next-auth/react"
+
 export default function Login() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
-    const [loginProgress, setloginProgress] = useState(false);
-    async function handleFormSubmit(ev: SyntheticEvent) {
+    const [loginProgress, setLoginProgress] = useState(false);
+    const [error, setError] = useState('');
+
+    async function handleFormSubmit(ev) {
         ev.preventDefault();
-        setloginProgress(true);
-        await signIn('credentials', { phone, password, callbackUrl: '/courseList' })
-        setloginProgress(false);
-        // console.log(phone, password)
-    }
+        setLoginProgress(true);
+
+       // await signIn('credentials', { phone, password, callbackUrl: '/courseList' })
+        
+        /* The code block is attempting to sign in the user using the `signIn` function from the
+        `next-auth/react` library. It is using the 'credentials' provider and passing the `phone`,
+        `password`, and `callbackUrl` as parameters. */
+            
+        }
     return (
         <>
             <div className="mt-20 rounded-lg mx-auto my-auto w-2/3 h-[550px] bg-white border-gray-200 border-2">
@@ -36,6 +43,7 @@ export default function Login() {
                         <h1 className="flex justify-center items-center mt-14 font-bold text-5xl text-[#50BFE2]">
                             Welcome to aoe
                         </h1>
+                        
                         <form onSubmit={handleFormSubmit}>
                             <div className="font-mono mt-12 ml-6 mr-4 text-xl">
                                 <div className="w-full p-2 inline-flex justify-center items-center border-2 border-solid rounded-md border-gray-100">
@@ -59,6 +67,11 @@ export default function Login() {
                             <button className="rounded-md my-4 ml-40 w-36 h-11 p-1 pt-2 pb-2 font-bold text-xl font-poppins text-white
                                         transition transform hover:scale-110 active:scale-100 bg-primary"
                                 type="submit">Sign in</button>
+                            {error && (
+                                <div className="text-red-500 text-sm mt-2">
+                                    {error}
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>

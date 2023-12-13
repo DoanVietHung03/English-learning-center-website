@@ -15,14 +15,20 @@ import ReactAudioPlayer from 'react-audio-player';
 import Link from "next/link";
 import ImagnifyingGlass from "@/components/icons/icon_magnifyingGlass";
 
-export default function Ass_Reading() {
+export default function Clone_Assignment() {
     const [skill, setSkill] = useState('')
     const [course, setCourse] = useState('')
+    const [module, setModule] = useState('')
+
     function handleChangeCourse(ev) {
         setCourse(ev.value);
     }
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
+    };
+
+    const handleChangeModule = (ev) => {
+        setModule(ev.value);
     };
 
     async function handleFormSubmit(ev: SyntheticEvent) {
@@ -72,13 +78,19 @@ export default function Ass_Reading() {
                         <div className="bg-zinc-100 rounded-lg border border-neutral-400 pb-6 mt-4">
                             <div className="ml-14 py-10">
                                 <div className="grid grid-cols-2">
+
+                                <   div>
+                                        <p className="text-black text-base font-medium leading-tight tracking-tigh mb-2">Choose module</p>
+                                        <Select options={optionModule} onChange={handleChangeModule} className="w-3/4" />
+                                    </div>
+
                                     <div>
                                         <p className="text-black text-base font-medium leading-tight tracking-tigh mb-2">Choose course</p>
                                         <Select options={optionCourse} onChange={handleChangeCourse} className="w-3/4" />
                                     </div>
 
                                     <div>
-                                        <p className="text-black text-base font-medium leading-tight tracking-tigh mb-2">Choose skill</p>
+                                        <p className="text-black text-base font-medium leading-tight tracking-tigh py-3">Choose skill</p>
                                         <Select options={optionSkill} onChange={handleChangeSkill} className="w-3/4" />
                                     </div>
                                 </div>
@@ -113,6 +125,13 @@ const optionSkill = [
     { value: "Reading", label: "Reading" }
 ];
 
+const optionModule = [
+    { value: "IELTS", label: "IELTS" },
+    { value: "TOEIC", label: "TOEIC" },
+    { value: "TOEFL", label: "TOEFL" }
+];
+
 const optionCourse = [
-    {}
+    {},
+   
 ];
