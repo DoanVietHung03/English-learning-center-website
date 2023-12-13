@@ -20,6 +20,9 @@ export default function Course_Add() {
     const handleChangeTeacher = (ev) => {
         setTeacher(ev.value);
     };
+    const handleChangeStudentPhone = (ev) => {
+        setStudent(ev.value);
+    };
 
     async function findTeacher(ev: SyntheticEvent) {
         ev.preventDefault()
@@ -47,38 +50,46 @@ export default function Course_Add() {
                     </div> 
 
                     <div className="bg-white mt-2 rounded">
-                        <div className="ml-6">
-                            <div className="flex items-center gap-20 pt-8">
-                                <div className=" ml-5 w-2/3">
-                                    <div className="mb-2">Course Name</div>
-                                    <input className="w-full h-[34px] px-2 py-2 mt-3 rounded-md border border-zinc-300 focus:outline-none " type="text" id="myTitle" placeholder="Type name of the course" />
-                                </div>                           
+                        <div className="px-12 py-8">
+                            <div className="items-center">
+                                <div className="text-base font-medium">Course Name</div>
+                                <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-full" type="text" id="myTitle" placeholder="Type name of the course" />                        
                             </div>
 
+                            <div className="mt-8 grid grid-cols-2">
+                                <div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a module</p>
+                                    <Select options={optionModule} onChange={handleChangeModule} className="w-3/4 mt-2" placeholder="Select module" />
+                                </div>
 
-                            <div className="flex flex-col w-1/2 mt-3 mr-3 gap-3">
-                                <div className="h-96 items-center text-black text-base font-normal leading-tight tracking-tight">
-                                    <p>Choose a module</p>
-                                        <Select options={optionModule} onChange={handleChangeModule} className="w-1/3" />
+                                <div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a teacher</p>
+                                    <Select options={optionModule} onChange={handleChangeTeacher} className="w-3/4 mt-2" placeholder="Select teacher" />
                                 </div>
                             </div>
                             
-                            <div className="flex flex-col w-1/2 mt-3 mr-3 gap-3">
-                                <div className="h-96 items-center text-black text-base font-normal leading-tight tracking-tight">
-                                    <p>Choose a teacher</p>
-                                    <Select options={optionModule} onChange={handleChangeTeacher} className="w-1/3" />
+                            <div className="mt-12 grid grid-cols-2">
+                                <div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Start Date</p>
+                                    <input className="rounded border border-zinc-300 focus:outline-none w-3/4 mt-2 px-3 py-[6.5px]" type="text" id="myStartDate" placeholder="Type start date" />
+                                </div>
+
+                                <div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Complete Date</p>
+                                    <input className="rounded border border-zinc-300 focus:outline-none w-3/4 mt-2 px-3 py-[6.5px]" type="text" id="myCompleteDate" placeholder="Type complete date" />
                                 </div>
                             </div>
-                           
 
+                            <div className="mt-12">
+                                <p className="text-black text-base font-medium leading-tight tracking-tight">Student</p>
+                                <Select options={optionModule} onChange={handleChangeStudentPhone} className="w-[333px] mt-2" placeholder="Telephone numer of student" />
+                            </div>
+
+                            <div className=" mt-8 rounded-lg border border-stone-300 h-40 w-full">
+
+                            </div>
                         </div>
                     </div>
-
-
-
-
-
-
                 </div>
             </div>
         </>
@@ -86,12 +97,6 @@ export default function Course_Add() {
 }
 
 const optionModule = [
-    { value: "IELTS", label: "IELTS" },
-    { value: "TOEIC", label: "TOEIC" },
-    { value: "TOEFL", label: "TOEFL" },
-];
-
-const optionTeacher = [
     { value: "IELTS", label: "IELTS" },
     { value: "TOEIC", label: "TOEIC" },
     { value: "TOEFL", label: "TOEFL" },
