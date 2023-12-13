@@ -15,6 +15,7 @@ const assignmentSchema = new Schema({
     },
     title: {
         type: String,
+        required: false
     },
     attachedFile: String,
 }, { timestamps: true });

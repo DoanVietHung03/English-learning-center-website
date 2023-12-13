@@ -20,6 +20,16 @@ export default function Course_Add() {
     const handleChangeTeacher = (ev) => {
         setTeacher(ev.value);
     };
+
+    async function findTeacher(ev: SyntheticEvent) {
+        ev.preventDefault()
+        await fetch('/api/user', {
+            method: 'GET',
+            body: JSON.stringify({  }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }
+
     return (
         <>
             <Header />
