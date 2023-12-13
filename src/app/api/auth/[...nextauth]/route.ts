@@ -10,7 +10,6 @@ const handler = nextAuth({
             credentials: {
                 phone: { label: "Phone", type: "phone", placeholder: "0123456789" },
                 password: { label: "Password", type: "password" },
-                type: { label: "Type", type: "type" }
             },
             async authorize(credentials, req) {
                 const phone = credentials?.phone;
@@ -21,7 +20,6 @@ const handler = nextAuth({
                 const passwordOk = user && (password == user.password)
 
                 if (passwordOk) {
-                    console.log('nhap dung tai khoan: ', user.phone, "va mat khau: ", user.password)
                     return user
                 }
                 return null;
