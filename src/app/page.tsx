@@ -5,16 +5,30 @@ import Ilock from "@/components/icons/icon_lock"
 import Iman from "@/components/icons/icon_man"
 import { SyntheticEvent, useState } from "react"
 import { signIn } from "next-auth/react"
+import { useRouter } from 'next/navigation'
 export default function Login() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [loginProgress, setloginProgress] = useState(false);
+    const [error, setError] = useState(true);
+    const router = useRouter();
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
-        setloginProgress(true);
-        await signIn('credentials', { phone, password, callbackUrl: '/courseList' })
-        setloginProgress(false);
-        // console.log(phone, password)
+        // try {
+        const response = await fetch('/api/authentication', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phone, password }), // Gửi dữ liệu
+        });
+        console.log(response)
+        if (response.ok) {
+            router.push('/courseList')
+        }
+        else {
+            setError(false);
+        }
     }
     return (
         <>
@@ -56,7 +70,17 @@ export default function Login() {
                                         onChange={ev => setPassword(ev.target.value)} />
                                 </div>
                             </div>
-                            <button className="rounded-md my-4 ml-40 w-36 h-11 p-1 pt-2 pb-2 font-bold text-xl font-poppins text-white
+                            {(!error) &&
+                                (
+                                    <div className="ml-6 mt-5 text-red-800 font-semibold 
+                                        bg-red-300 rounded-lg p-3 mr-5">
+                                        Wrong phone number or password
+                                    </div>
+                                )
+                            }
+                            <button
+                                onClick={handleFormSubmit}
+                                className="rounded-md my-4 ml-40 w-36 h-11 p-1 pt-2 pb-2 font-bold text-xl font-poppins text-white
                                         transition transform hover:scale-110 active:scale-100 bg-primary"
                                 type="submit">Sign in</button>
                         </form>
