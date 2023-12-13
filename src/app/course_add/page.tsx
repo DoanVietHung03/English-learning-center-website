@@ -20,17 +20,22 @@ export default function Course_Add() {
     const [teacher, setTeacher] = useState('')
     const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [cDate, setCDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
-    const [student, setStudent] = useState('')
+    const [student, setStudent] = useState()
+    const [student_added, setStudentAdded] = useState([])
     const handleChangeModule = (ev) => {
         setModule(ev.value);
     };
     const handleChangeTeacher = (ev) => {
         setTeacher(ev.value);
     };
+
     const handleChangeStudentID = (ev) => {
         setStudent(ev.value);
+        if(!student_added.includes(student)){
+            student_added.push(student)
+        }
     };
-
+    console.log(student_added)
     const [teachers, setTeachers] = useState([]);
     const [students, setStudents] = useState([]);
     useEffect(() => {
@@ -123,8 +128,14 @@ export default function Course_Add() {
                                     className="w-[333px] mt-2" placeholder="Telephone numer of student" />
                             </div>
 
-                            <div className=" mt-8 rounded-lg border border-stone-300 h-40 w-full">
-
+                            <div className="flex mt-8 rounded-lg border border-stone-300 h-40 w-full gap-3">
+                                {
+                                    student_added.map(c => (
+                                        <div className="p-3 bg-gray-300 font-semibold py-2 h-9">
+                                            {c}
+                                        </div>
+                                    )
+                                )}
                             </div>
                         </div>
                     </div>
