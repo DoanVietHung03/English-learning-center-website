@@ -4,6 +4,7 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Select from "react-select";
 import Iplus from "@/components/icons/icon_plus";
+import Idelete from "@/components/icons/delete";
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { GET } from '@/app/api/user/route';
@@ -12,6 +13,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import dayjs, { Dayjs } from 'dayjs';
 
 export default function Course_Add() {
@@ -21,7 +23,14 @@ export default function Course_Add() {
     const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [cDate, setCDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [student, setStudent] = useState()
-    const [student_added, setStudentAdded] = useState([])
+    var [student_added, setStudentAdded] = useState([])
+    const handleDelete = (index) => {
+        // Tạo một bản sao mới của mảng và loại bỏ phần tử tại chỉ mục index
+        const updatedArray = [...student_added.slice(0, index), ...student_added.slice(index + 1)];
+
+        // Cập nhật state với mảng mới
+        setStudentAdded(updatedArray);
+    };
     const handleChangeModule = (ev) => {
         setModule(ev.value);
     };
@@ -30,12 +39,13 @@ export default function Course_Add() {
     };
 
     const handleChangeStudentID = (ev) => {
+        setStudent(ev.value)
         var temp = ev.value
         if (!student_added.includes(temp)) {
             student_added.push(temp)
         }
         console.log(student_added)
-    };
+    }
     console.log(student_added)
     const [teachers, setTeachers] = useState([]);
     const [students, setStudents] = useState([]);
@@ -50,16 +60,16 @@ export default function Course_Add() {
     const optionTeachers = teachers.map(
         function (teacher) {
             return {
-                value: teacher.phone,
-                label: teacher.phone
+                value: teacher.phone + " - " + teacher.name,
+                label: teacher.phone + " - " + teacher.name
             }
         }
     );
     const optionStudents = students.map(
         function (student) {
             return {
-                value: student.phone,
-                label: student.phone
+                value: student.phone + " - " + student.name,
+                label: student.phone + " - " + student.name
             }
         }
     );
@@ -129,12 +139,17 @@ export default function Course_Add() {
                                     className="w-[333px] mt-2" placeholder="Telephone numer of student" />
                             </div>
 
-                            <div className="flex mt-8 rounded-lg border border-stone-300 h-40 w-full gap-3">
+                            <div className="inline-block px-4 mt-8 rounded-lg border border-stone-300 h-40 w-full gap-3">
                                 {
-                                    student_added.map((c, i) => (
-                                        <div className="p-3 bg-gray-300 font-semibold py-2 h-9">
-                                            {i}: {c}
-                                        </div>
+                                    student_added.map((c: string, i) => (
+                                        <>
+                                            <div className="inline-block items-center gap-2 mt-3 ml-3 p-3 bg-gray-300 font-semibold py-2">
+                                                {i + 1}: {c}
+                                                <button className="ml-2" onClick={() => handleDelete(i)}>
+                                                    < Idelete />
+                                                </button>
+                                            </div>
+                                        </>
                                     )
                                     )}
                             </div>

@@ -12,6 +12,7 @@ const options = [
 export default function Register() {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
     const [type, setType] = useState('');
 
     const handleChange = (ev) => {
@@ -22,7 +23,7 @@ export default function Register() {
         ev.preventDefault()
         await fetch('/api/user', {
             method: 'POST',
-            body: JSON.stringify({ phone, password, type }),
+            body: JSON.stringify({ phone, password, name, type }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
@@ -38,13 +39,16 @@ export default function Register() {
                     </div>
                     <div className="bg-white h-full">
                         <form className="m-9 pt-4 block max-w-xl mx-auto">
-                            <input className="block w-full bg-gray-200 px-4 py-2 rounded-lg mb-2" type="phone" placeholder="phone" value={phone}
+                            <input className="block w-full bg-gray-200 px-4 py-2 rounded-lg mb-4" type="phone" placeholder="phone" value={phone}
                                 onChange={ev => setPhone(ev.target.value)} />
                             <input className="block w-full bg-gray-200 px-4 py-2 rounded-lg mb-4" type="password" placeholder="password" value={password}
                                 onChange={ev => setPassword(ev.target.value)} />
+                            <input className="block w-full bg-gray-200 px-4 py-2 rounded-lg mb-4" type="text" placeholder="name" value={name}
+                                onChange={ev => setName(ev.target.value)} />
                             <div>User Type</div>
                             <Select options={options} onChange={handleChange} autoFocus={true} className="mb-3" />
-                            <button className="w-full" type="submit" onClick={handleFormSubmit}>Register</button>
+                            <button className="bg-lime-300 py-2 px-2 w-full rounded-lg hover:bg-lime-700 hover:text-white transition-colors duration-300"
+                                type="submit" onClick={handleFormSubmit}>Register</button>
                         </form>
                     </div>
                 </div>

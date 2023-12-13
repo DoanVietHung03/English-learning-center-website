@@ -11,6 +11,7 @@ export async function POST(req: { json: () => any }) {
     const createdUser = await User.create({
         phone: body.phone,
         password: body.password,
+        name: body.name,
         type: body.type, // Đảm bảo giữ nguyên giá trị từ request body
     })
     return Response.json(createdUser)
