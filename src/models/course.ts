@@ -2,10 +2,6 @@ import { Schema, model, models } from "mongoose";
 import { User } from "@/models/user"
 
 const courseSchema = new Schema({
-    course_id: { 
-        type: String, 
-        required: true, 
-        unique: true},
     name: { 
         type: String, 
         required: true},
@@ -19,9 +15,13 @@ const courseSchema = new Schema({
         type: String,
         required: true
     },
-    member_id:[{
+    teacher_id:{
         type: String,
         required: true
+    },
+    student_id:[{
+        type: String,
+        required: false
     }],
 }, { timestamps: true });
 
