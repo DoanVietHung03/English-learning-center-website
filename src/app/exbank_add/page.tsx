@@ -7,9 +7,6 @@ import Select from "react-select";
 import * as React from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 
@@ -44,20 +41,7 @@ export default function Ass_Reading() {
                         Exercise Bank
                     </div>
 
-                    <div className="bg-white mt-2 pb-8 rounded px-7">
-                        <div className="mx-10 border-b border-stone-300 pb-2">
-                            <div className="grid grid-cols-2">
-                                <div className="flex items-center justify-start mt-4">
-                                    <button className="rounded-tl rounded-bl border border-stone-300 bg-blue-300 text-center text-xs font-bold font-poppins leading-tight tracking-tight text-white px-[60px] pb-3 pt-[10px] transition-colors duration-300">
-                                        Add
-                                    </button>
-                                    <button className="rounded-tr rounded-br border border-stone-300 bg-white hover:bg-blue-300 text-center text-black text-xs font-bold font-poppins leading-tight tracking-tight hover:text-white px-[60px] pb-3 pt-[10px] transition-colors duration-300">
-                                        Clone
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
+                    <div className="bg-white mt-2 pb-8 rounded px-7 py-8">
                         <form className="h-[500px] p-4 bg-zinc-100 rounded-lg border border-neutral-400">
                             <div className="flex h-3/4">
                                 <div className="flex flex-col w-1/2 p-4 gap-5 pr-10">
@@ -65,16 +49,7 @@ export default function Ass_Reading() {
                                         <div className="mb-2">Choose Skill</div>
                                         <Select options={optionSkill} onChange={handleChangeSkill} className="w-full" />
                                     </div>
-                                    <div>
-                                        <div>Due Date</div>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DemoContainer components={['DatePicker', 'DatePicker']}>
-                                                <DatePicker value={deadline} onChange={(newValue) => setDeadline(newValue)}
-                                                    className="w-full bg-white text-xs"
-                                                />
-                                            </DemoContainer>
-                                        </LocalizationProvider>
-                                    </div>
+
                                     <div>
                                         <div className="text-lg">Title</div>
                                         <input type="text" placeholder="Type title" onChange={ev => setTitle(ev.target.value)}
@@ -100,7 +75,7 @@ export default function Ass_Reading() {
                             <div className="flex items-center justify-end mt-16 mr-4">
                                 <button type="submit" onClick={handleFormSubmit}
                                     className="bg-lime-300 rounded-lg text-center text-sm font-poppins leading-tight tracking-tight px-[30px] pb-3 pt-[10px] font-bold hover:bg-lime-400">
-                                        Submit
+                                        Add
                                 </button>
                             </div>
                         </form>

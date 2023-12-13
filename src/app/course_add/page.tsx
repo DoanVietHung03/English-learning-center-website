@@ -3,6 +3,7 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Select from "react-select";
+import Iplus from "@/components/icons/icon_plus";
 import Link from "next/link"
 import { useState } from "react"
 
@@ -25,15 +26,14 @@ export default function Course_Add() {
             <div className="flex">
                 <SideBar />
                 <div className="ml-14 w-2/3">
-                    <div className="flex justify-between mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
+                    <div className="flex justify-between mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black pb-2">
                         <div>
                             Create Course
                         </div>
-                        <div className="flex items-center justify-end">
-                            <button className="bg-lime-300 rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight px-[30px] pb-2 pt-[8px] hover:bg-lime-400">
-                                Create 
-                            </button>
-                        </div>
+                        <button className="gap-2 flex items-center justify-end bg-lime-300 rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight hover:bg-lime-400 px-4">
+                            <Iplus />
+                            <p className="flex items-center">Create</p> 
+                        </button>
                     </div> 
 
                     <div className="bg-white mt-2 rounded">
