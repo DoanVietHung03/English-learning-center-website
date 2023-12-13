@@ -5,6 +5,10 @@ const assignmentSchema = new Schema({
         type: String,
         required: true
     },
+    title: {
+        type: String,
+        required: true
+    },
     content: {
         type: String,
         required: true
@@ -38,7 +42,6 @@ const assignmentSchema = new Schema({
         },
         grade: Number
     }],
-    attachedFile: String,
 }, { timestamps: true });
 
 export const Assignment = models?.Assignment || model('Assignment', assignmentSchema)
