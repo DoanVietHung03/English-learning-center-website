@@ -16,7 +16,7 @@ import ReactAudioPlayer from 'react-audio-player';
 export default function Ass_Reading() {
     const [skill, setSkill] = useState('')
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
-    const [Title, setTitle] = useState('')
+    const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
     const [content, setContent] = useState('');
     function handleChangeImage(ev) {
@@ -30,7 +30,7 @@ export default function Ass_Reading() {
         ev.preventDefault()
         await fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ skill, deadline, Title, file, content }),
+            body: JSON.stringify({ title, deadline, content, skill, file }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
@@ -110,10 +110,8 @@ export default function Ass_Reading() {
 
                             </div>
                             <div className="flex items-center justify-end mt-16 mr-4">
-
                                 <button type="submit" onClick={handleFormSubmit}
                                     className="bg-lime-600 text-white rounded-lg text-center border-2 border-white text-xs font-poppins leading-tight tracking-tight px-[30px] pb-3 pt-[10px] font-bold hover:bg-white hover:border-lime-200 hover:text-black transition-colors duration-300">
-                                    submit
                                 </button>
                             </div>
                         </form>
@@ -123,7 +121,6 @@ export default function Ass_Reading() {
         </>
     )
 }
-
 
 const optionSkill = [
     { value: "Speaking", label: "Speaking" },
