@@ -23,6 +23,10 @@ const courseSchema = new Schema({
         type: String,
         required: false
     }],
+    session: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Session'
+    }]
 }, { timestamps: true });
 
 export const Course = models?.Course || model('Course', courseSchema)

@@ -2,7 +2,7 @@
 
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
-import { SyntheticEvent, useState } from "react"
+import { SyntheticEvent, useState, useEffect } from "react"
 import Select from "react-select";
 import * as React from 'react';
 import dayjs, { Dayjs } from 'dayjs';
@@ -14,10 +14,28 @@ import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 import Link from "next/link";
 import ImagnifyingGlass from "@/components/icons/icon_magnifyingGlass";
+import mongoose from "mongoose";
+import { Course } from "@/models/course";
+import { MenuItem } from "@mui/material";
+
+
+async function GET() {
+    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
+    const list_course = await Course.find({type: 'course'})
+    return Response.json(list_course)
+}
 
 export default function Clone_Assignment() {
     const [skill, setSkill] = useState('')
-    const [course, setCourse] = useState('')
+    const [course, setCourse] = useState([]) 
+    useEffect(() => {
+        fetch('api/course').then(res => {
+            res.json().then(menuItems => {
+                setCourse(menuItems);
+            });
+        });
+    })
+
     const [module, setModule] = useState('')
 
     function handleChangeCourse(ev) {
@@ -40,6 +58,13 @@ export default function Clone_Assignment() {
         })
     }
     
+    async function fetchData() {
+        try {
+            const response = await GET({ json: () => {} });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
     return (
         <>
             <Header />
