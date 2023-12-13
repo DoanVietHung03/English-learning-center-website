@@ -20,7 +20,7 @@ export default function Course_Add() {
     const [teacher, setTeacher] = useState('')
     const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [cDate, setCDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
-    // const [student, setStudent] = useState()
+    const [student, setStudent] = useState()
     const [student_added, setStudentAdded] = useState([])
     const handleChangeModule = (ev) => {
         setModule(ev.value);
@@ -30,9 +30,9 @@ export default function Course_Add() {
     };
 
     const handleChangeStudentID = (ev) => {
-        // setStudent(ev.value);
-        var temp = ev.value
-        if(!student_added.includes(temp) && temp!==''){
+        setStudent(ev.value);
+        var temp = ev.value //student
+        if(!student_added.includes(temp)){
             student_added.push(temp)
         }
         console.log(temp)
