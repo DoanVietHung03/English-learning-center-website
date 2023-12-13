@@ -6,7 +6,12 @@ export async function POST(req: { json: () => any }) {
     mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
     const pass = body.password;
     if ((!pass?.length || pass.length < 5)) {
-        new Error('password must be at least 5 characters');
+        return new Response(
+            JSON.stringify(
+                { ok: false, message: 'User not existed' }), {
+            headers: { 'Content-Type': 'application/json' },
+            status: 500,
+        });
     }
     const createdUser = await User.create({
         phone: body.phone,
