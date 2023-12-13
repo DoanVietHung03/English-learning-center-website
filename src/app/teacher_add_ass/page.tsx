@@ -14,7 +14,6 @@ import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 
 export default function Ass_Reading() {
-    const [DueDate, setDueDate] = useState('')
     const [Skill, setSkill] = useState('')
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [Title, setTitle] = useState('')
@@ -110,11 +109,12 @@ export default function Ass_Reading() {
 
                             </div>
                             <div className="flex items-center justify-end mt-16 mr-4">
-                                {/* <button type="submit"
+                                {/*
+                                <button type="submit" onClick={handleFormSubmit}
                                     className="bg-lime-600 text-white rounded-lg text-center border-2 border-white text-xs font-poppins leading-tight tracking-tight px-[30px] pb-3 pt-[10px] font-bold hover:bg-white hover:border-lime-200 hover:text-black transition-colors duration-300">
                                     onClick={handleFormSubmit}
                                 </button> */}
-                                <button className="w-full" type="submit" onClick={handleFormSubmit}>submit</button>
+                                <button className="w-full" type="submit" onClick={handleFormSubmit1}>submit</button>
                             </div>
                         </form>
                     </div>
@@ -123,7 +123,6 @@ export default function Ass_Reading() {
         </>
     )
 }
-
 
 const optionSkill = [
     { value: "Speaking", label: "Speaking" },
