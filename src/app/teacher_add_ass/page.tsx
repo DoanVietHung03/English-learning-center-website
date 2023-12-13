@@ -18,10 +18,10 @@ export default function Ass_Reading() {
     const [Skill, setSkill] = useState('')
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [Title, setTitle] = useState('')
-    const [file, setFile] = useState('');
-    function handleChangeImage(ev) {
-        setFile(URL.createObjectURL(ev.target.files[0]));
-    }
+    //const [file, setFile] = useState('');
+    // function handleChangeImage(ev) {
+    //     setFile(URL.createObjectURL(ev.target.files[0]));
+    // }
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
     };
@@ -29,7 +29,7 @@ export default function Ass_Reading() {
         ev.preventDefault()
         await fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ Skill, deadline, Title, file, DueDate }),
+            body: JSON.stringify({ }),
             headers: { 'Content-Type': 'application/json' },
         })
     }

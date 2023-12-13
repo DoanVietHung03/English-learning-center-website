@@ -1,43 +1,35 @@
 import { Schema, model, models } from "mongoose";
 
 const assignmentSchema = new Schema({
-    assignment_id: {
-        type: String,
-        required: true
-    },
     course_id: {
         type: String,
-        required: true
+        //required: true
     },
     topic: {
         type: String,
-        required: true
+        //required: true
     },
     skill: {
         type: String,
-        required: true
-    },
-    startDate: {
-        type: Date,
-        required: true
+        //required: true
     },
     dueDate: {
         type: Date,
-        required: true
+        //required: true
     },
-    submission: [{
-        answer: String,
-        student_id: {
-            type: String,
-            required: true,
-            unique: true
-        },
-        date_submit: {
-            type: Date,
-            default: Date.now,
-        },
-        grade: Number
-    }],
+    // submission: [{
+    //     answer: String,
+    //     student_id: {
+    //         type: String,
+    //         //required: true,
+    //         //unique: true
+    //     },
+    //     date_submit: {
+    //         type: Date,
+    //         default: Date.now,
+    //     },
+    //     grade: Number
+    // }],
     attachedFile: String,
 }, { timestamps: true });
 
