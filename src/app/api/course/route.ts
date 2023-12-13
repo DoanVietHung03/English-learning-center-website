@@ -13,5 +13,6 @@ export async function POST(req: { json: () => any }) {
         teacher_id: body.teacher,
         student_id: body.student_added
     })
+    console.log(createdCourse)
     return Response.json(createdCourse)
 } 

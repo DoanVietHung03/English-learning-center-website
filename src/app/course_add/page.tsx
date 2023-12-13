@@ -37,6 +37,14 @@ export default function Course_Add() {
         }
     };
     console.log(student_added)
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        await fetch('/api/course', {
+            method: 'POST',
+            body: JSON.stringify({ title, module, teacher, sDate, cDate, student_added }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }
     const [teachers, setTeachers] = useState([]);
     const [students, setStudents] = useState([]);
     useEffect(() => {
