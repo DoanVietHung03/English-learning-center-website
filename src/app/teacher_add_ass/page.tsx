@@ -26,7 +26,7 @@ export default function Ass_Reading() {
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
     };
-    async function handleFormSubmit1(ev: SyntheticEvent) {
+    async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         await fetch('/api/assignment', {
             method: 'POST',
@@ -114,7 +114,7 @@ export default function Ass_Reading() {
                                     className="bg-lime-600 text-white rounded-lg text-center border-2 border-white text-xs font-poppins leading-tight tracking-tight px-[30px] pb-3 pt-[10px] font-bold hover:bg-white hover:border-lime-200 hover:text-black transition-colors duration-300">
                                     onClick={handleFormSubmit}
                                 </button> */}
-                                <button className="w-full" type="submit" onClick={handleFormSubmit1}>submit</button>
+                                <button className="w-full" type="submit" onClick={handleFormSubmit}>submit</button>
                             </div>
                         </form>
                     </div>
