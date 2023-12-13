@@ -15,9 +15,13 @@ export default function Ass_Reading() {
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
+    const [filemp3, setFilemp3] = useState('');
     const [content, setContent] = useState('');
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
+    }
+    function handleChangeImage1(ev) {
+        setFilemp3(URL.createObjectURL(ev.target.files[0]));
     }
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
@@ -59,7 +63,7 @@ export default function Ass_Reading() {
                                         (
                                             <div className="bg-white p-3 rounded-lg border-2">
                                                 <h2>Choose file Listening:</h2>
-                                                <input type="file" accept="audio" onChange={handleChangeImage} />
+                                                <input type="file" accept="audio" onChange={handleChangeImage1} />
                                                 <ReactAudioPlayer
                                                     src={file}
                                                     autoPlay
