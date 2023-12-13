@@ -31,7 +31,7 @@ export default function Course_Add() {
 
     const handleChangeStudentID = (ev) => {
         setStudent(ev.value);
-        if(!student_added.includes(student)){
+        if (!student_added.includes(student)) {
             student_added.push(student)
         }
     };
@@ -135,7 +135,7 @@ export default function Course_Add() {
                                             {c}
                                         </div>
                                     )
-                                )}
+                                    )}
                             </div>
                         </div>
                     </div>
