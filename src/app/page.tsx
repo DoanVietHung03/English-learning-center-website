@@ -5,16 +5,30 @@ import Ilock from "@/components/icons/icon_lock"
 import Iman from "@/components/icons/icon_man"
 import { SyntheticEvent, useState } from "react"
 import { signIn } from "next-auth/react"
+import { useRouter } from 'next/navigation'
 export default function Login() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [loginProgress, setloginProgress] = useState(false);
+    const [error, setError] = useState(true);
+    const router = useRouter();
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
-        setloginProgress(true);
-        await signIn('credentials', { phone, password, callbackUrl: '/courseList' })
-        setloginProgress(false);
-        // console.log(phone, password)
+        // try {
+        const response = await fetch('/api/authentication', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phone, password }), // Gửi dữ liệu
+        });
+        console.log(response)
+        if (response.ok) {
+            router.push('/courseList')
+        }
+        else {
+            setError(false);
+        }
     }
     return (
         <>
@@ -36,7 +50,6 @@ export default function Login() {
                         <h1 className="flex justify-center items-center mt-14 font-bold text-5xl text-[#50BFE2]">
                             Welcome to aoe
                         </h1>
-                        
                         <form onSubmit={handleFormSubmit}>
                             <div className="font-mono mt-12 ml-6 mr-4 text-xl">
                                 <div className="w-full p-2 inline-flex justify-center items-center border-2 border-solid rounded-md border-gray-100">
@@ -70,11 +83,6 @@ export default function Login() {
                                 className="rounded-md my-4 ml-40 w-36 h-11 p-1 pt-2 pb-2 font-bold text-xl font-poppins text-white
                                         transition transform hover:scale-110 active:scale-100 bg-primary"
                                 type="submit">Sign in</button>
-                            {error && (
-                                <div className="text-red-500 text-sm mt-2">
-                                    {error}
-                                </div>
-                            )}
                         </form>
                     </div>
                 </div>
