@@ -1,29 +1,32 @@
 import { Schema, model, models } from "mongoose";
 
 const reportSchema = new Schema({
-    report_id: { 
-        type: String, 
-        required: true},
-    username: { 
-        type: String, 
-        required: true},
-    content: { 
-        type: String, 
-        required: true},
-    image: {
-        type: [String],
-        require: true,
+    title: {
+        type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true
+    },
+    content: {
+        type: String,
+        required: true
+    },
+    file: {
+        type: String,
     },
     date_created: {
         type: Date,
         default: Date.now,
     },
     date_completed: {
-        type: Date
+        type: Date,
+        default: null,
     },
     status: {
         type: String,
-        require: true,
+        default: "Not completed"
     }
 }, { timestamps: true });
 
