@@ -16,13 +16,15 @@ export async function POST(req: { json: () => any }) {
     return Response.json(createdUser)
 }
 
-
-
-
 export async function GET() {
     mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
 
-    const userCheck = await User.find({ type: 'Student' });
-
-    return Response.json(userCheck)
+    const teachers = await User.find({ type: 'Teacher' });
+    const students = await User.find({ type: 'Student' });
+    return Response.json({ teachers, students })
 }
+
+
+
+
+
