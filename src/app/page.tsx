@@ -5,24 +5,17 @@ import Ilock from "@/components/icons/icon_lock"
 import Iman from "@/components/icons/icon_man"
 import { SyntheticEvent, useState } from "react"
 import { signIn } from "next-auth/react"
-
 export default function Login() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
-    const [loginProgress, setLoginProgress] = useState(false);
-    const [error, setError] = useState('');
-
-    async function handleFormSubmit(ev) {
+    const [loginProgress, setloginProgress] = useState(false);
+    async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
-        setLoginProgress(true);
-
-       // await signIn('credentials', { phone, password, callbackUrl: '/courseList' })
-        
-        /* The code block is attempting to sign in the user using the `signIn` function from the
-        `next-auth/react` library. It is using the 'credentials' provider and passing the `phone`,
-        `password`, and `callbackUrl` as parameters. */
-            
-        }
+        setloginProgress(true);
+        await signIn('credentials', { phone, password, callbackUrl: '/courseList' })
+        setloginProgress(false);
+        // console.log(phone, password)
+    }
     return (
         <>
             <div className="mt-20 rounded-lg mx-auto my-auto w-2/3 h-[550px] bg-white border-gray-200 border-2">
@@ -64,7 +57,17 @@ export default function Login() {
                                         onChange={ev => setPassword(ev.target.value)} />
                                 </div>
                             </div>
-                            <button className="rounded-md my-4 ml-40 w-36 h-11 p-1 pt-2 pb-2 font-bold text-xl font-poppins text-white
+                            {(!error) &&
+                                (
+                                    <div className="ml-6 mt-5 text-red-800 font-semibold 
+                                        bg-red-300 rounded-lg p-3 mr-5">
+                                        Wrong phone number or password
+                                    </div>
+                                )
+                            }
+                            <button
+                                onClick={handleFormSubmit}
+                                className="rounded-md my-4 ml-40 w-36 h-11 p-1 pt-2 pb-2 font-bold text-xl font-poppins text-white
                                         transition transform hover:scale-110 active:scale-100 bg-primary"
                                 type="submit">Sign in</button>
                             {error && (
