@@ -41,10 +41,7 @@ export default function Ass_Reading() {
                 <SideBar />
                 <div className="ml-14 w-2/3">
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
-                        Assignments
-                    </div>
-                    <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASS] aoe - Q.5 ClassRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
+                        Exercise Bank
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded px-7">
@@ -83,20 +80,11 @@ export default function Ass_Reading() {
                                         <input type="text" placeholder="Type title" onChange={ev => setTitle(ev.target.value)}
                                             className="py-2 px-2 w-full border-gray-300 border-2 rounded-md" />
                                     </div>
-                                    {(skill == "Listening") &&
-                                        (
-                                            <div className="bg-white p-3 rounded-lg border-2">
-                                                <h2>Choose file Listening:</h2>
-                                                <input type="file" accept="audio" onChange={handleChangeImage} />
-                                                <ReactAudioPlayer
-                                                    src={file}
-                                                    autoPlay
-                                                    controls
-                                                    className="w-full"
-                                                />
-                                            </div>
-                                        )
-                                    }
+                                    
+                                    <p className="text-lg">Upload sample answer</p>
+                                    <div className="bg-white p-2 rounded-lg border-2">
+                                        <input type="file" accept="audio" onChange={handleChangeImage} />
+                                    </div>
                                 </div>
 
                                 <div className="flex flex-col w-1/2 mt-3 gap-3">
