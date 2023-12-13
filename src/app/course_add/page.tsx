@@ -30,8 +30,10 @@ export default function Course_Add() {
     };
 
     const handleChangeStudentID = (ev) => {
-        if (!student_added.includes(student)) {
-            student_added.push(student)
+        setStudent(ev.value)
+        var temp = ev.value
+        if (!student_added.includes(temp)) {
+            student_added.push(temp)
         }
     };
     console.log(student_added)
@@ -129,9 +131,9 @@ export default function Course_Add() {
 
                             <div className="flex mt-8 rounded-lg border border-stone-300 h-40 w-full gap-3">
                                 {
-                                    student_added.map(c => (
+                                    student_added.map((c,i) => (
                                         <div className="p-3 bg-gray-300 font-semibold py-2 h-9">
-                                            {c}
+                                            {i}:{c}
                                         </div>
                                     )
                                     )}
