@@ -5,31 +5,35 @@ const assignmentSchema = new Schema({
         type: String,
         //required: true
     },
-    topic: {
+    content: {
         type: String,
         //required: true
     },
     skill: {
         type: String,
-        //required: true
+        required: true
+    },
+    startDate: {
+        type: Date,
+        required: true
     },
     dueDate: {
         type: Date,
         //required: true
     },
-    // submission: [{
-    //     answer: String,
-    //     student_id: {
-    //         type: String,
-    //         //required: true,
-    //         //unique: true
-    //     },
-    //     date_submit: {
-    //         type: Date,
-    //         default: Date.now,
-    //     },
-    //     grade: Number
-    // }],
+    submission: [{
+        answer: String,
+        student_id: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        date_submit: {
+            type: Date,
+            default: Date.now,
+        },
+        grade: Number
+    }],
     attachedFile: String,
 }, { timestamps: true });
 
