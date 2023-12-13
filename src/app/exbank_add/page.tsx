@@ -10,9 +10,8 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 
-export default function Ass_Reading() {
+export default function Ex_Reading() {
     const [skill, setSkill] = useState('')
-    const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
     const [filemp3, setFilemp3] = useState('');
@@ -29,9 +28,9 @@ export default function Ass_Reading() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        await fetch('/api/assignment', {
+        await fetch('/api/exercisesBank', {
             method: 'POST',
-            body: JSON.stringify({title, deadline, content, skill, file }),
+            body: JSON.stringify({ title, filemp3, content, skill, file }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
@@ -73,7 +72,7 @@ export default function Ass_Reading() {
                                             </div>
                                         )
                                     }
-                                    
+
                                     <p className="text-lg">Upload sample answer</p>
                                     <div className="bg-white p-2 rounded-lg border-2">
                                         <input type="file" accept="audio" onChange={handleChangeImage} />
@@ -93,7 +92,7 @@ export default function Ass_Reading() {
                             <div className="flex items-center justify-end mt-16 mr-4">
                                 <button type="submit" onClick={handleFormSubmit}
                                     className="bg-lime-300 rounded-lg text-center text-sm font-poppins leading-tight tracking-tight px-[30px] pb-3 pt-[10px] font-bold hover:bg-lime-400">
-                                        Add
+                                    Add
                                 </button>
                             </div>
                         </form>
