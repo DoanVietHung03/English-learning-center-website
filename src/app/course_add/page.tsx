@@ -5,7 +5,20 @@ import Header from "@/components/layout/header"
 import Select from "react-select";
 import Iplus from "@/components/icons/icon_plus";
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { GET } from '@/app/api/user/route';
+
+
+//const type = 'teacher'
+
+// async function GET() {
+//     mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
+//     const list_teacher = await User.find({type: 'teacher'})//,{phone: 1, type:0, name: 0, _id : 0})
+//     console.log(list_teacher)
+//     return Response.json(list_teacher)
+// }
+// mongoose.js (or wherever you set up your MongoDB connection)
+
 
 export default function Course_Add() {
     const [title, setTitle] = useState('')
@@ -20,9 +33,33 @@ export default function Course_Add() {
     const handleChangeTeacher = (ev) => {
         setTeacher(ev.value);
     };
-    const handleChangeStudentPhone = (ev) => {
+    const handleChangeStudentID = (ev) => {
         setStudent(ev.value);
     };
+
+    const [teachers, setTeachers] = useState([])
+    useEffect(() => {
+        fetch('/api/user').then(res => {
+          res.json().then(menuItems => {
+            setTeachers(menuItems);
+          });
+        })
+      }, []);
+
+      console.log(teachers)
+    // async function fetchData() {
+    //     try {
+    //       // Call the GET function
+    //       const response = await GET({ json: () => {} });
+    //       console.log(response);
+    //     } catch (error) {
+    //       console.error('Error fetching data:', error);
+    //     }
+    //   }
+      
+    //   // Call the fetchData function
+    // fetchData();
+
     return (
         <>
             <Header />
@@ -72,7 +109,7 @@ export default function Course_Add() {
 
                             <div className="mt-12">
                                 <p className="text-black text-base font-medium leading-tight tracking-tight">Student</p>
-                                <Select options={optionModule} onChange={handleChangeStudentPhone} className="w-[333px] mt-2" placeholder="Telephone numer of student" />
+                                <Select options={optionModule} onChange={handleChangeStudentID} className="w-[333px] mt-2" placeholder="Telephone numer of student" />
                             </div>
 
                             <div className=" mt-8 rounded-lg border border-stone-300 h-40 w-full">
@@ -91,3 +128,5 @@ const optionModule = [
     { value: "TOEIC", label: "TOEIC" },
     { value: "TOEFL", label: "TOEFL" },
 ];
+
+

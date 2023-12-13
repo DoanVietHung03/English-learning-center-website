@@ -20,7 +20,7 @@ export default function Register() {
     };
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        await fetch('/api/register', {
+        await fetch('/api/user', {
             method: 'POST',
             body: JSON.stringify({ phone, password, type }),
             headers: { 'Content-Type': 'application/json' },
