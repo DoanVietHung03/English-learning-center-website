@@ -15,20 +15,21 @@ const reportSchema = new Schema({
     },
     file: {
         type: String,
+        required: true
     },
     date_created: {
         type: Date,
-        default: Date.now,
+        required: true
     },
     date_completed: {
         type: Date,
-        default: null,
+        required: false
     },
     status: {
         type: String,
-        default: "Not completed"
+        required: true
     }
 }, { timestamps: true });
 
-export const Report = models?.User || model('Report', reportSchema)
+export const Report = models?.Report || model('Report', reportSchema)
 

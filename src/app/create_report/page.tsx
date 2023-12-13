@@ -13,6 +13,9 @@ export default function Create_RP() {
     const [type, setType] = useState('')
     const [content, setContent] = useState('')
     const [file, setFile] = useState('');
+    const [date_created, setDate_created] = useState(Date.now());
+    const [date_completed, setDate_completed] = useState(null);
+    const [status, setStatus] = useState('Not completed');
     const handleChangeType = (ev) => {
         setType(ev.value);
     };
@@ -23,7 +26,7 @@ export default function Create_RP() {
         ev.preventDefault()
         await fetch('/api/report', {
             method: 'POST',
-            body: JSON.stringify({ title, type, content, file }),
+            body: JSON.stringify({ title, type, content, file, date_created, date_completed, status }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
