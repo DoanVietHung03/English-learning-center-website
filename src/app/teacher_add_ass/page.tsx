@@ -30,7 +30,7 @@ export default function Ass_Reading() {
         ev.preventDefault()
         await fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({title, deadline, content, skill, file }),
+            body: JSON.stringify({ title, deadline, content, skill, file }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
