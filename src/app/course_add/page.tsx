@@ -83,7 +83,7 @@ export default function Course_Add() {
                         </div>
                         <button className="gap-2 flex items-center justify-end bg-lime-300 rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight hover:bg-lime-400 px-4">
                             <Iplus />
-                            <p className="flex items-center">Create course</p>
+                            <p className="flex items-center" onClick={handleFormSubmit}>Create course</p>
                         </button>
                     </div>
 
@@ -91,7 +91,8 @@ export default function Course_Add() {
                         <div className="px-12 py-8">
                             <div className="items-center">
                                 <div className="text-base font-medium">Course Name</div>
-                                <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-full" type="text" id="myTitle" placeholder="Type name of the course" />
+                                <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-full" type="text" id="myTitle" placeholder="Type name of the course" 
+                                onChange={ev => setTitle(ev.target.value)} />
                             </div>
 
                             <div className="mt-8 grid grid-cols-2">
