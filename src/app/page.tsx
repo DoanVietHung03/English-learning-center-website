@@ -9,8 +9,8 @@ import { useRouter } from 'next/navigation'
 export default function Login() {
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
-    const [loginProgress, setloginProgress] = useState(false);
-    const [error, setError] = useState(true);
+    const [loginProgress, setloginProgress] = useState(true);
+    const [error, setError] = useState(false);
     const router = useRouter();
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
@@ -27,7 +27,7 @@ export default function Login() {
             router.push('/courseList')
         }
         else {
-            setError(false);
+            setError(true);
         }
     }
     return (
@@ -70,7 +70,7 @@ export default function Login() {
                                         onChange={ev => setPassword(ev.target.value)} />
                                 </div>
                             </div>
-                            {(!error) &&
+                            {(error) &&
                                 (
                                     <div className="ml-6 mt-5 text-red-800 font-semibold 
                                         bg-red-300 rounded-lg p-3 mr-5">
