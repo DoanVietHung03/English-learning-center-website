@@ -4,7 +4,7 @@ import { User } from "@/models/user"
 const courseSchema = new Schema({
     name: { 
         type: String, 
-        required: true},
+        required: false},
     startDate: {
         type: Date,
         required: true},
@@ -23,6 +23,11 @@ const courseSchema = new Schema({
         type: String,
         required: false
     }],
+    session: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Session',
+        required: false
+    }]
 }, { timestamps: true });
 
 export const Course = models?.Course || model('Course', courseSchema)

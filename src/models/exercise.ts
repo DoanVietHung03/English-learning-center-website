@@ -3,7 +3,7 @@ import { Schema, model, models } from "mongoose";
 const exerciseSchema = new Schema({
     title: {
         type: String,
-        required: false
+        required: true
     },
     skill: {
         type: String,
@@ -15,11 +15,11 @@ const exerciseSchema = new Schema({
     },
     solution: {
         type: String,
-        required: true
+      //  required: true
     },
     attachedFile: {
         type: String,
-        required: false
+        required: true
     }
 }, { timestamps: true });
 

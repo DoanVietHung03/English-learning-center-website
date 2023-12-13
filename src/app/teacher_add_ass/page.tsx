@@ -14,7 +14,7 @@ import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 import Link from "next/link";
 
-export default function Ass_Reading() {
+export default function Add_Ass() {
     const [skill, setSkill] = useState('')
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [title, setTitle] = useState('')
