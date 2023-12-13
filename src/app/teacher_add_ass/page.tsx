@@ -14,11 +14,11 @@ import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 
 export default function Ass_Reading() {
-    const [DueDate, setDueDate] = useState('')
-    const [Skill, setSkill] = useState('')
+    const [skill, setSkill] = useState('')
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
-    const [Title, setTitle] = useState('')
+    const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
+    const [content, setContent] = useState('');
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
@@ -26,19 +26,11 @@ export default function Ass_Reading() {
         setSkill(ev.value);
     };
 
-    async function handleFormSubmit(ev: SyntheticEvent) {
-        ev.preventDefault()
-        await fetch('/api/register', {
-            method: 'POST',
-            body: JSON.stringify({ phone, password, type }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-    }
     async function handleFormSubmit1(ev: SyntheticEvent) {
         ev.preventDefault()
         await fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ }),
+            body: JSON.stringify({title, deadline, content, skill, file }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
@@ -91,7 +83,7 @@ export default function Ass_Reading() {
                                         <input type="text" placeholder="Type title" onChange={ev => setTitle(ev.target.value)}
                                             className="py-2 px-2 w-full border-gray-300 border-2 rounded-md" />
                                     </div>
-                                    {(Skill == "Listening") &&
+                                    {(skill == "Listening") &&
                                         (
                                             <div className="bg-white p-3 rounded-lg border-2">
                                                 <h2>Choose file Listening:</h2>
