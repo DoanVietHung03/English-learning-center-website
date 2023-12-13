@@ -49,7 +49,7 @@ export default function CourseTime() {
                                     </div>
                                 </div>
 
-                                <div className="bg-white col-span-2 w-3/4">
+                                <div className="bg-white">
                                     <Link href={"/attendance_list"}>
                                         <div className="m-3 font-poppins font-semibold hover:underline">
                                             IELTS Speaking
@@ -62,6 +62,13 @@ export default function CourseTime() {
                                         Room: C-23
                                     </div>
                                 </div>
+
+                                <div className="bg-white w-2/3 items-center flex">
+                                    <button className="bg-sky-400 hover:bg-sky-300 rounded-xl border border-stone-300 px-4 py-1">
+                                        <p className="text-white text-xs font-bold font-['Poppins']">+ Create Attendance List</p>
+                                    </button>
+                                </div>
+                               
                             </div>
 
                             <div className="grid grid-cols-3 p-4">
@@ -77,7 +84,7 @@ export default function CourseTime() {
                                     </div>
                                 </div>
 
-                                <div className="bg-white col-span-2 w-3/4">
+                                <div className="bg-white">
                                     <Link href={"/attendance_list"}>
                                         <div className="m-3 font-poppins font-semibold hover:underline">
                                             IELTS Speaking
@@ -89,6 +96,12 @@ export default function CourseTime() {
                                     <div className="font-poppins font-normal ml-3 text-sm">
                                         Room: C-23
                                     </div>
+                                </div>
+
+                                <div className="bg-white w-2/3 items-center flex">
+                                    <button className="bg-sky-400 hover:bg-sky-300 rounded-xl border border-stone-300 px-4 py-1">
+                                        <p className="text-white text-xs font-bold font-['Poppins']">+ Create Attendance List</p>
+                                    </button>
                                 </div>
                             </div>
                         </div>
