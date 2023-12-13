@@ -14,7 +14,8 @@ import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 
 export default function Ass_Reading() {
-    const [skill, setSkill] = useState('')
+    const [DueDate, setDueDate] = useState('')
+    const [Skill, setSkill] = useState('')
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
@@ -26,6 +27,14 @@ export default function Ass_Reading() {
         setSkill(ev.value);
     };
 
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        await fetch('/api/register', {
+            method: 'POST',
+            body: JSON.stringify({ phone, password, type }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }
     async function handleFormSubmit1(ev: SyntheticEvent) {
         ev.preventDefault()
         await fetch('/api/assignment', {
@@ -124,7 +133,6 @@ export default function Ass_Reading() {
         </>
     )
 }
-
 
 const optionSkill = [
     { value: "Speaking", label: "Speaking" },

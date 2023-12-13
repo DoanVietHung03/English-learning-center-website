@@ -46,15 +46,21 @@ export default function Course_Add() {
                             </div>
 
 
-                            <div className="items-center gap-20 pt-6 ml-5">
-                                <div className="mb-2">Choose a module</div>
-                                <Select options={optionModule} onChange={handleChangeModule} className="w-1/3" />
+                            <div className="flex flex-col w-1/2 mt-3 mr-3 gap-3">
+                                <div className="h-96 items-center text-black text-base font-normal leading-tight tracking-tight">
+                                    <p>Choose a module</p>
+                                        <Select options={optionModule} onChange={handleChangeModule} className="w-1/3" />
+                                </div>
                             </div>
+                            
+                            <div className="flex flex-col w-1/2 mt-3 mr-3 gap-3">
+                                <div className="h-96 items-center text-black text-base font-normal leading-tight tracking-tight">
+                                    <p>Choose a teacher</p>
+                                    <Select options={optionModule} onChange={handleChangeTeacher} className="w-1/3" />
+                                </div>
+                            </div>
+                           
 
-                            <div className="items-center gap-20 pt-6 ml-5">
-                                <div className="mb-2">Choose a teacher</div>
-                                <Select options={optionModule} onChange={handleChangeModule} className="w-1/3" />
-                            </div>
                         </div>
                     </div>
 

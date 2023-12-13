@@ -8,7 +8,7 @@ export async function POST(req: { json: () => any }) {
 
     const id = await Exercise.findOne({ exercise_id })
     if (id) {
-        throw new Error('Course is existed');
+        throw new Error('Exercise is existed');
     }
     const createdExercise = await Exercise.create(body)
     return Response.json(createdExercise)
