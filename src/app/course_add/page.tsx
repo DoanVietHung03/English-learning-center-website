@@ -124,7 +124,7 @@ export default function Course_Add() {
                             <div className="mt-12">
                                 <p className="text-black text-base font-medium leading-tight tracking-tight">Student</p>
                                 <Select options={optionStudents} onChange={handleChangeStudentID}
-                                    className="w-[333px] mt-2" placeholder="Telephone numer of student" />
+                                    className="w-[333px] mt-2" placeholder="Telephone number of student" />
                             </div>
 
                             <div className="flex mt-8 rounded-lg border border-stone-300 h-40 w-full gap-3">

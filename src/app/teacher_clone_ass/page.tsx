@@ -19,12 +19,6 @@ import { Course } from "@/models/course";
 import { MenuItem } from "@mui/material";
 
 
-async function GET() {
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
-    const list_course = await Course.find({type: 'course'})
-    return Response.json(list_course)
-}
-
 export default function Clone_Assignment() {
     const [skill, setSkill] = useState('')
     const [course, setCourse] = useState([]) 
@@ -58,13 +52,6 @@ export default function Clone_Assignment() {
         })
     }
     
-    async function fetchData() {
-        try {
-            const response = await GET({ json: () => {} });
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }
     return (
         <>
             <Header />
