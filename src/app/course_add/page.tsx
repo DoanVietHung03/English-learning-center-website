@@ -32,7 +32,7 @@ export default function Course_Add() {
                         </div>
                         <button className="gap-2 flex items-center justify-end bg-lime-300 rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight hover:bg-lime-400 px-4">
                             <Iplus />
-                            <p className="flex items-center">Create</p> 
+                            <p className="flex items-center">Create course</p> 
                         </button>
                     </div> 
 

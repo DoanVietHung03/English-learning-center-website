@@ -55,6 +55,20 @@ export default function Ass_Reading() {
                                         <input type="text" placeholder="Type title" onChange={ev => setTitle(ev.target.value)}
                                             className="py-2 px-2 w-full border-gray-300 border-2 rounded-md" />
                                     </div>
+                                    {(skill == "Listening") &&
+                                        (
+                                            <div className="bg-white p-3 rounded-lg border-2">
+                                                <h2>Choose file Listening:</h2>
+                                                <input type="file" accept="audio" onChange={handleChangeImage} />
+                                                <ReactAudioPlayer
+                                                    src={file}
+                                                    autoPlay
+                                                    controls
+                                                    className="w-full"
+                                                />
+                                            </div>
+                                        )
+                                    }
                                     
                                     <p className="text-lg">Upload sample answer</p>
                                     <div className="bg-white p-2 rounded-lg border-2">
