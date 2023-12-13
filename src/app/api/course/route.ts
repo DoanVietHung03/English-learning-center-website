@@ -10,7 +10,7 @@ export async function POST(req: { json: () => any }) {
         endDate: body.cDate,
         module: body.module,
         teacher_id: body.teacher,
-        //student_id: body.
+        student_id: body.student_added
     })
     return Response.json(createdCourse)
 }
