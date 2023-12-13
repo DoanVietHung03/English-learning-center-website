@@ -23,7 +23,7 @@ export default function Assigments() {
                             <div className="flex items-center p-4 border-b border-black mb-5">
                                 <button className="flex items-center font-poppins justify-center border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
                                     <Icalendar />
-                                    <Link href={'/course_Time'} className="ml-2">Timetable</Link>
+                                    <Link href={'/student_course_Time'} className="ml-2">Timetable</Link>
                                 </button>
                                 <button className="flex items-center font-poppins justify-center  border border-stone-300 bg-blue-300 p-2 rounded-lg ml-8">
                                     <Ibook />
