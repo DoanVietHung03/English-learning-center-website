@@ -5,9 +5,49 @@ import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
 import Iimage from "@/components/icons/icon_image"
 import Example from "./chat_dropdown"
-
+import { SyntheticEvent, useEffect, useState } from "react"
+import Image from "next/image"
+import Select from "react-select";
 export default function Chat() {
+    const [receiver, setReceiver] = useState('')
+    const [content, setContent] = useState('')
+    const [teachers, setTeachers] = useState([]);
+    const [students, setStudents] = useState([]);
+    const [file, setFile] = useState('');
+    useEffect(() => {
+        fetch('/api/user')
+            .then(res => res.json())
+            .then(data => {
+                setTeachers(data.teachers)
+                setStudents(data.students)
+            })
+    }, []);
+    const handleChangeReceiver = (ev) => {
+        setReceiver(ev.value);
+    };
+    function handleChangeFile(ev) {
+        setFile(URL.createObjectURL(ev.target.files[0]));
+    }
+    const optionReceiver = teachers.map(teacher => {
+        return {
+            value: teacher.phone,
+            label: teacher.phone + " - " + teacher.name + " - " + "Teacher"
+        }
+    }).concat(students.map(student => {
+        return {
+            value: student.phone,
+            label: student.phone + " - " + student.name + ' - ' + "Student"
+        }
+    }))
 
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        await fetch('/api/report', {
+            method: 'POST',
+            body: JSON.stringify({ title, type, content, file, date_created, date_completed, status }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }
     return (
         <>
             <Header />
@@ -36,7 +76,7 @@ export default function Chat() {
                                     </div>
 
                                     <button className="flex items-center pl-7 mt-3 pb-6">
-                                        <Iimage className="w-6 mr-2 fill-zinc-500"/>
+                                        <Iimage className="w-6 mr-2 fill-zinc-500" />
                                         <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
                                     </button>
                                 </div>
@@ -56,7 +96,7 @@ export default function Chat() {
                                     </div>
 
                                     <button className="flex items-center pl-7 mt-3 pb-6">
-                                        <Iimage className="w-6 mr-2 fill-zinc-500"/>
+                                        <Iimage className="w-6 mr-2 fill-zinc-500" />
                                         <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
                                     </button>
                                 </div>
@@ -67,22 +107,27 @@ export default function Chat() {
                                 <div className="mt-12 ml-7">
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Choose receiver</p>
                                     {/* Dropdown list */}
-                                    <Example />
+                                    <Select options={optionReceiver} onChange={handleChangeReceiver}
+                                        className="w-3/4 mt-2" placeholder="Select receiver" />
                                 </div>
 
                                 <div className="mt-12 ml-6 mr-4">
                                     <p className="text-black text-base font-medium">Content</p>
-                                    <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none mt-2" id="myText" placeholder="Type content..."></textarea>
+                                    <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none mt-2"
+                                        placeholder="Type content..." onChange={ev => setContent(ev.target.value)}></textarea>
                                 </div>
-
-                                <button className="flex items-center pl-7 mt-4 pb-6">
-                                    <Iimage className="w-6 mr-2 fill-zinc-500"/>
-                                    <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Attached image</p>
-                                </button>
-
-                                <button className="bg-zinc-300 border border-black px-4 py-1 text-center text-black text-base font-normal leading-tight tracking-tight ml-7 hover:bg-zinc-400">
-                                    Choose file
-                                </button>
+                                <div className="font-semibold mt-3 ml-7">Image</div>
+                                <div className="bg-white w-[380px] rounded-md border border-zinc-400 ml-7 mt-2 pl-2 py-1">
+                                    <input
+                                        className="mb-3"
+                                        type="file"
+                                        onChange={handleChangeFile} />
+                                    <Image
+                                        src={file}
+                                        width={200}
+                                        height={200}
+                                    />
+                                </div>
 
                                 <div className="flex mt-[86px] mr-4 justify-end pb-8">
                                     <button className="text-center text-black text-base font-['Poppins'] bg-lime-300 rounded-lg px-3 py-1 hover:bg-lime-400">
