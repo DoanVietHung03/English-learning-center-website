@@ -6,7 +6,7 @@ import Select from "react-select";
 import Iplus from "@/components/icons/icon_plus";
 import Idelete from "@/components/icons/delete";
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, SyntheticEvent } from "react"
 import { GET } from '@/app/api/user/route';
 import * as React from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
