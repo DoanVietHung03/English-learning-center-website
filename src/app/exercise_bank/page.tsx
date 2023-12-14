@@ -2,13 +2,29 @@
 
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
-import SubjectDropdown from "./subjectDropdown"
-import ModuleDropdown from "./moduleDropdown"
-import SkillDropdown from "./skillDropdown"
 import Link from "next/link"
 import Ieye from "@/components/icons/eye"
+import { SyntheticEvent, useState } from "react"
+import Select from "react-select";
+import * as React from 'react';
 
-export default function Profile() {
+export default function Exercise_bank() {
+    const [subject, setSubject] = useState('')
+    const [module, setModule] = useState('')
+    const [skill, setSkill] = useState('')
+
+    const handleChangeSubject = (ev) => {
+        setSubject(ev.value);
+    };
+
+    const handleChangeModule = (ev) => {
+        setModule(ev.value);
+    };
+
+    const handleChangeSkill = (ev) => {
+        setSkill(ev.value);
+    };
+
     return (
         <>
             <Header />
@@ -21,9 +37,9 @@ export default function Profile() {
                     </div>
                     <div className="bg-white rounded pb-3">
                         <div className="flex justify-between px-11 py-7">
-                            <SubjectDropdown />
-                            <ModuleDropdown />
-                            <SkillDropdown />
+                            <Select options={optionSubject} onChange={handleChangeSubject} className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Subject"/>
+                            <Select options={optionModule} onChange={handleChangeModule} className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Module"/>
+                            <Select options={optionSkill} onChange={handleChangeSkill} className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Skill"/>
                         </div>
 
                         <div className="mt-16 flex items-center ml-9 gap-2">
@@ -100,3 +116,24 @@ export default function Profile() {
         </>
     )
 }    
+
+const optionSubject = [
+    { value: "Speaking", label: "Speaking" },
+    { value: "Listening", label: "Listening" },
+    { value: "Writing", label: "Writing" },
+    { value: "Reading", label: "Reading" }
+];
+
+const optionModule = [
+    { value: "Speaking", label: "Speaking" },
+    { value: "Listening", label: "Listening" },
+    { value: "Writing", label: "Writing" },
+    { value: "Reading", label: "Reading" }
+];
+
+const optionSkill = [
+    { value: "Speaking", label: "Speaking" },
+    { value: "Listening", label: "Listening" },
+    { value: "Writing", label: "Writing" },
+    { value: "Reading", label: "Reading" }
+];
