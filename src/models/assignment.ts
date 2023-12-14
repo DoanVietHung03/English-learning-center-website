@@ -18,6 +18,10 @@ const assignmentSchema = new Schema({
         required: false
     },
     attachedFile: String,
+    submissions: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Submission'
+    }]
 }, { timestamps: true });
 
 export const Assignment = models?.Assignment || model('Assignment', assignmentSchema)

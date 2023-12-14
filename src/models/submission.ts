@@ -9,7 +9,6 @@ const submissionSchema = new Schema({
     },
     answer: {
         type: String,
-        //required: true
     },
     grade:{
         type: Number
