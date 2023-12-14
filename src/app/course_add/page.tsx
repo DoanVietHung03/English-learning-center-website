@@ -13,8 +13,9 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
+import { useRouter } from 'next/navigation'
 import dayjs, { Dayjs } from 'dayjs';
+import { error } from "console";
 
 export default function Course_Add() {
     const [title, setTitle] = useState('')
@@ -23,7 +24,9 @@ export default function Course_Add() {
     const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [cDate, setCDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [student, setStudent] = useState()
+    const [error, setError] = useState(false)
     var [student_added, setStudentAdded] = useState([])
+    const router = useRouter();
     const handleDelete = (index) => {
         // Tạo một bản sao mới của mảng và loại bỏ phần tử tại chỉ mục index
         const updatedArray = [...student_added.slice(0, index), ...student_added.slice(index + 1)];
@@ -49,11 +52,17 @@ export default function Course_Add() {
     console.log(student_added)
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        await fetch('/api/course', {
+        const response = await fetch('/api/course', {
             method: 'POST',
             body: JSON.stringify({ title, module, teacher, sDate, cDate, student_added }),
             headers: { 'Content-Type': 'application/json' },
         })
+        if (!response.ok)
+            setError(true)
+        else {
+
+            router.push('/assignments')
+        }
     }
     const [teachers, setTeachers] = useState([]);
     const [students, setStudents] = useState([]);
@@ -162,6 +171,12 @@ export default function Course_Add() {
                                     )
                                     )}
                             </div>
+                            {(error) &&
+                                <div className="mt-5 max-w-xs text-red-800 font-semibold 
+                                bg-red-300 rounded-lg p-3 mr-5">
+                                    Some information is missed or wrong
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
