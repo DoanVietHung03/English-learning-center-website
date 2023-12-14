@@ -40,14 +40,14 @@ export default function Chat() {
         }
     }))
 
-    async function handleFormSubmit(ev: SyntheticEvent) {
-        ev.preventDefault()
-        await fetch('/api/report', {
-            method: 'POST',
-            body: JSON.stringify({ title, type, content, file, date_created, date_completed, status }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-    }
+    // async function handleFormSubmit(ev: SyntheticEvent) {
+    //     ev.preventDefault()
+    //     await fetch('/api/report', {
+    //         method: 'POST',
+    //         body: JSON.stringify({ receiver, content, sentDate, file, date_created, date_completed, status }),
+    //         headers: { 'Content-Type': 'application/json' },
+    //     })
+    // }
     return (
         <>
             <Header />
@@ -108,7 +108,7 @@ export default function Chat() {
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Choose receiver</p>
                                     {/* Dropdown list */}
                                     <Select options={optionReceiver} onChange={handleChangeReceiver}
-                                        className="w-3/4 mt-2" placeholder="Select receiver" />
+                                        className="w-[380px] mt-2 mr-3" placeholder="Select receiver" />
                                 </div>
 
                                 <div className="mt-12 ml-6 mr-4">
