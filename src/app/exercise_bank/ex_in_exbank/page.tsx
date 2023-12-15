@@ -2,7 +2,76 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 
-export default function Ass_Reading() {
+export default function ExBank() {
+    const [title, setTitle] = useState('')
+    
+    const [content, setContent] = useState()
+    const [skill, setError] = useState(false)
+    var [student_added, setStudentAdded] = useState([])
+    const router = useRouter();
+    const handleDelete = (index) => {
+        // Tạo một bản sao mới của mảng và loại bỏ phần tử tại chỉ mục index
+        const updatedArray = [...student_added.slice(0, index), ...student_added.slice(index + 1)];
+
+        // Cập nhật state với mảng mới
+        setStudentAdded(updatedArray);
+    };
+    const handleChangeModule = (ev) => {
+        setModule(ev.value);
+    };
+    const handleChangeTeacher = (ev) => {
+        setTeacher(ev.value);
+    };
+
+    const handleChangeStudentID = (ev) => {
+        setStudent(ev.value)
+        var temp = ev.value
+        if (!student_added.includes(temp)) {
+            student_added.push(temp)
+        }
+        console.log(student_added)
+    }
+    console.log(student_added)
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        const response = await fetch('/api/course', {
+            method: 'POST',
+            body: JSON.stringify({ title, module, teacher, sDate, cDate, student_added }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        if (!response.ok)
+            setError(true)
+        else {
+
+            router.push('/assignments')
+        }
+    }
+    const [teachers, setTeachers] = useState([]);
+    const [students, setStudents] = useState([]);
+    useEffect(() => {
+        fetch('/api/user')
+            .then(res => res.json())
+            .then(data => {
+                setTeachers(data.teachers)
+                setStudents(data.students)
+            })
+    }, []);
+    const optionTeachers = teachers.map(
+        function (teacher) {
+            return {
+                value: teacher.phone + " - " + teacher.name,
+                label: teacher.phone + " - " + teacher.name
+            }
+        }
+    );
+    const optionStudents = students.map(
+        function (student) {
+            return {
+                value: student.phone + " - " + student.name,
+                label: student.phone + " - " + student.name
+            }
+        }
+    );
     return (
         <>
             <Header />

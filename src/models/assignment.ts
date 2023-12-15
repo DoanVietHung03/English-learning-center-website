@@ -19,8 +19,18 @@ const assignmentSchema = new Schema({
     },
     attachedFile: String,
     submissions: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Submission'
+        student_id:{
+            type: String,
+            required: false
+        },
+        answer: {
+            type: String,
+            required: false
+        },
+        grade:{
+            type: Number,
+            required: false
+        }
     }]
 }, { timestamps: true });
 

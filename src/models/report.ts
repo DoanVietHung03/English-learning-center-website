@@ -15,7 +15,7 @@ const reportSchema = new Schema({
     },
     file: {
         type: String,
-        required: true
+        required: false
     },
     date_created: {
         type: Date,

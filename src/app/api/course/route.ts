@@ -1,6 +1,6 @@
 import { Course } from "@/models/course"
 import mongoose from "mongoose"
-
+import { cookies } from  'next/headers'
 
 export async function POST(req: { json: () => any }) {
     try {
@@ -25,3 +25,12 @@ export async function POST(req: { json: () => any }) {
         });
     }
 } 
+
+export async function GET() {
+    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
+    //console.log("api", cookies().get('userName'))
+    const studentID = localStorage.getItem('userName')
+    console.log(studentID)
+    const courses = await Course.find({student_id:{ $in: studentID}});
+    return Response.json({courses})
+}

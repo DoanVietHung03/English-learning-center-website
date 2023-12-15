@@ -20,7 +20,17 @@ const exerciseSchema = new Schema({
     attachedFile: {
         type: String,
         required: true
-    }
+    },
+    progress: [{
+        student_id:{
+            type: String,
+            required: false
+        },
+        answer: {
+            type: String,
+            required: false
+        },
+    }]
 }, { timestamps: true });
 
 export const Exercise = models?.Exercise || model('Exercise', exerciseSchema)

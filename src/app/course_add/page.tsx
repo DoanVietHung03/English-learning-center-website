@@ -6,7 +6,7 @@ import Select from "react-select";
 import Iplus from "@/components/icons/icon_plus";
 import Idelete from "@/components/icons/delete";
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, SyntheticEvent } from "react"
 import { GET } from '@/app/api/user/route';
 import * as React from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -47,9 +47,9 @@ export default function Course_Add() {
         if (!student_added.includes(temp)) {
             student_added.push(temp)
         }
-        console.log(student_added)
+      //  console.log(student_added)
     }
-    console.log(student_added)
+    //console.log(student_added)
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         const response = await fetch('/api/course', {
@@ -190,7 +190,3 @@ const optionModule = [
     { value: "TOEIC", label: "TOEIC" },
     { value: "TOEFL", label: "TOEFL" },
 ];
-
-
-
-

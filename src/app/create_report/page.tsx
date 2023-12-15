@@ -19,9 +19,11 @@ export default function Create_RP() {
     const handleChangeType = (ev) => {
         setType(ev.value);
     };
+
     function handleChangeFile(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
+    
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         await fetch('/api/report', {
@@ -76,8 +78,7 @@ export default function Create_RP() {
                             <Image
                                 src={file}
                                 width={300}
-                                height={300}
-                            />
+                                height={300} alt={""}                            />
                         </div>
 
                         <div className="ml-14 mt-16">
