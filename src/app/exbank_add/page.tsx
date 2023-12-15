@@ -10,12 +10,14 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 
-export default function Ex_Reading() {
+export default function Exercise_Add() {
     const [skill, setSkill] = useState('')
+    const [module, setModule] = useState('')
     const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
     const [filemp3, setFilemp3] = useState('');
     const [content, setContent] = useState('');
+
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
@@ -25,6 +27,9 @@ export default function Ex_Reading() {
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
     };
+    const handelChangeModule = (ev) => {
+        setModule(ev.value);
+    }
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
@@ -48,6 +53,11 @@ export default function Ex_Reading() {
                         <form className="h-[500px] p-4 bg-zinc-100 rounded-lg border border-neutral-400">
                             <div className="flex h-3/4">
                                 <div className="flex flex-col w-1/2 p-4 gap-5 pr-10">
+                                    <div>
+                                        <div className="mb-2">Choose Module</div>
+                                        <Select options={optionModule} onChange={handelChangeModule} className="w-full" />
+                                    </div>
+
                                     <div>
                                         <div className="mb-2">Choose Skill</div>
                                         <Select options={optionSkill} onChange={handleChangeSkill} className="w-full" />
@@ -109,3 +119,9 @@ const optionSkill = [
     { value: "Writing", label: "Writing" },
     { value: "Reading", label: "Reading" }
 ];
+
+const optionModule = [
+    { value: "IELTS", label: "IELTS" },
+    { value: "TOEIC", label: "TOEIC" },
+    { value: "TOEFL", label: "TOEFL" }
+]
