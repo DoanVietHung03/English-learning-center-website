@@ -47,7 +47,7 @@ export default function Course_Add() {
         if (!student_added.includes(temp)) {
             student_added.push(temp)
         }
-      //  console.log(student_added)
+        //  console.log(student_added)
     }
     //console.log(student_added)
     async function handleFormSubmit(ev: SyntheticEvent) {

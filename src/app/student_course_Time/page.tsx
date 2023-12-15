@@ -3,8 +3,29 @@ import Header from "@/components/layout/header"
 import Link from "next/link"
 import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
+import { useState, useEffect } from "react"
 
 export default function CourseTime() {
+    const [course, setCourse] = useState('')
+    useEffect(() => {
+        fetch('/api/courseList', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: localStorage.getItem("course_id") }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Hiển thị danh sách khóa học trong giao diện
+                setCourses(data)
+                if (courses == null)
+                    setEmptyCourse(true)
+                else
+                    setEmptyCourse(false)
+            })
+            .catch(error => console.error('Error:', error));
+    }, []);
     return (
         <>
             <Header />
