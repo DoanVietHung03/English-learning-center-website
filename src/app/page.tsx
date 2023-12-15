@@ -3,18 +3,20 @@ import Image from "next/image"
 import Link from "next/link"
 import Ilock from "@/components/icons/icon_lock"
 import Iman from "@/components/icons/icon_man"
-import { SyntheticEvent, useState } from "react"
+import { SyntheticEvent, useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import { cookies } from  'next/headers'
 import { getCookies, setCookie } from 'cookies-next'
-localStorage.removeItem("userName")
+
+
 export default function Login() {
-    //localStorage.clear()
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [loginProgress, setloginProgress] = useState(true);
     const [error, setError] = useState(false);
+    const [courses, setCourses] = useState([])
+
     const router = useRouter();
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
@@ -30,6 +32,7 @@ export default function Login() {
         if (response.ok) {
             localStorage.setItem('userName', phone)
             router.push('/courseList')
+            console.log(courses)
         }
         else {
             setError(true);

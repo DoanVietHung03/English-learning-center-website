@@ -6,15 +6,15 @@ import { useEffect, useState } from "react";
 import { POST } from "../api/assignment/route";
 
 export default function CourseList() {
-    console.log("cl", localStorage.getItem("userPhone"))
-    const [courses, setCourses] = useState([])
+    console.log(localStorage.getItem("userName"))
+    const [courses, setCourses] = useState()
     useEffect(() => {
         fetch('/api/courseList', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({userName: localStorage.getItem("userPhone") }),
+        body: JSON.stringify({userName: localStorage.getItem("userName") }),
       })
       .then(response => response.json())
       .then(data => {
@@ -23,6 +23,13 @@ export default function CourseList() {
       })
       .catch(error => console.error('Error:', error));
     }, []);
+    // useEffect(() => {
+    //     fetch('/api/course')
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setCourses(data)
+    //         })
+    // }, []);
     console.log(courses)
     return (
         <>
