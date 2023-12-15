@@ -2,8 +2,33 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import React from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 
-export default function Ass_Reading() {
+export default function Ass_Wri() {
+    const [topic, SetTopic] = useState('')
+    const [assignment, SetAssignment] = useState('')
+
+    //get CourseID
+    //lay info assignment where ass.idCourse = Course.idCourse
+    //luu info submission voi id ass
+    useEffect(() => {
+        fetch('/api/assignment')
+            .then(res => res.json())
+            .then(data => {
+                SetAssignment(data.assignment)
+            })
+    }, []);
+
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        const response =  await fetch('/api/submission', {
+            method: 'POST',
+            body: JSON.stringify({}),
+            headers: { 'Content-Type': 'application/json'},
+        })
+    }
+
+
     return (
         <>
             <Header />
