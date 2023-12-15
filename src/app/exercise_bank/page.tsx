@@ -12,6 +12,11 @@ export default function Exercise_bank() {
     const [subject, setSubject] = useState('')
     const [module, setModule] = useState('')
     const [skill, setSkill] = useState('')
+    const [content, setContent] = useState('')
+
+    const handleButtonClick = (ev) => {
+        setContent(ev.value)
+    }
 
     const handleChangeSubject = (ev) => {
         setSubject(ev.value);
@@ -53,6 +58,16 @@ export default function Exercise_bank() {
                         </div>
                     </div>
 
+                    <div className="flex items-center gap-4 pl-4 pt-3">
+                        <button onClick={handleButtonClick} className="bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300">
+                            In progress
+                        </button>
+
+                        <button className="bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300">
+                            Done
+                        </button>
+                    </div>
+
                     <div className="flex justify-between mt-10 gap-2">
                         <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
                             <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">IELTS Academic Grammar 0 - 2.5 | Tân ngữ</p>
@@ -64,7 +79,7 @@ export default function Exercise_bank() {
                             </div>
 
                             <div className="mt-10 ml-4">
-                                <Link href={"/ex_in_exbank"}>
+                                <Link href={"/exercise_bank/ex_in_exbank"}>
                                     <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
                                         <Ieye className="w-[1em] fill-blue-400"/>
                                         <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
@@ -83,7 +98,7 @@ export default function Exercise_bank() {
                             </div>
 
                             <div className="mt-10 ml-4">
-                                <Link href={"/ex_in_exbank"}>
+                                <Link href={"/exercise_bank/ex_in_exbank"}>
                                     <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
                                         <Ieye className="w-[1em] fill-blue-400"/>
                                         <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
@@ -102,7 +117,7 @@ export default function Exercise_bank() {
                             </div>
 
                             <div className="mt-10 ml-4">
-                                <Link href={"/ex_in_exbank"}>
+                                <Link href={"/exercise_bank/ex_in_exbank"}>
                                     <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
                                         <Ieye className="w-[1em] fill-blue-400"/>
                                         <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
