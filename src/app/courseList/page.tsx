@@ -31,8 +31,8 @@ export default function CourseList() {
             })
             .catch(error => console.error('Error:', error));
     }, []);
-    console.log(courses[0])
-    console.log(emptyCourse)
+    //console.log(courses[0])
+    //console.log(emptyCourse)
     return (
         <>
             <Header />

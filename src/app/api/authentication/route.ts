@@ -25,20 +25,31 @@ export async function POST(req) {
         if (!passwordOk) {
             return new Response(
                 JSON.stringify(
-                    { ok: false, message: 'Wrong password' }), {
+                    { ok: false, message: 'Wrong password'}), {
                 headers: { 'Content-Type': 'application/json' },
-                status: 500,
+                status: 200,
             });
         }
 
-        return new Response(
-            JSON.stringify(
-                { ok: true }), {
-            headers: { 'Content-Type': 'application/json' },
-            status: 200,
-        });
+        const data = {
+            check: true,
+            userType: userCheck.type
+        }
+        //console.log(data)
+        return Response.json({
+            check: true,
+            userType: userCheck.type
+        })
+
+        // return new Response(
+        //     JSON.stringify(data), {
+        //     headers: { 'Content-Type': 'application/json' },
+        //     status: 200,
+        // });
+
     } catch (error) {
         console.error('Error during authentication:', error);
         return Response.json({ ok: false, message: 'Internal server error' });
     }
 }
+
