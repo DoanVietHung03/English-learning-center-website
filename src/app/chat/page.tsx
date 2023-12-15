@@ -73,9 +73,9 @@ export default function Chat() {
                         <div className="mt-6 grid grid-cols-2">
                             {/* left side */}
                             <div className="border-r-2 border-black mt-6 ml-9">
-                                <div className="text-black text-sm font-semibold">
-                                    
-                                </div>
+                                <button className="text-black text-sm font-semibold">
+                                    Chat received
+                                </button>
 
                                 <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
                                     <div className="flex items-center pl-7 pt-4">
