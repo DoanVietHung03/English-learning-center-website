@@ -10,10 +10,9 @@ const messageSchema = new Schema({
         required: true
     },
     sentDate: {
-        type: Date,
-        required: true,
+        type: Date
     },
     attachedFile: String,
 }, { timestamps: true });
 
-export const Message = models?.Course || model('Message', messageSchema)
+export const Message = models?.Message || model('Message', messageSchema)

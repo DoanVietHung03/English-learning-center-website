@@ -89,7 +89,7 @@ export default function ExBank() {
                         <div className="flex items-center justify-end py-2 border-b border-stone-300 mx-4">
                             <Link href={''}>
                                 <button className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm">
-                                    Submit
+                                    Save your progress
                                 </button>
                             </Link>
                         </div>

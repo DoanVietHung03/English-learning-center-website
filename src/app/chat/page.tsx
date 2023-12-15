@@ -1,5 +1,6 @@
 'use client'
 
+//Thiếu người gửi
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
@@ -8,12 +9,34 @@ import Example from "./chat_dropdown"
 import { SyntheticEvent, useEffect, useState } from "react"
 import Image from "next/image"
 import Select from "react-select";
+import { useRouter } from 'next/navigation'
+
 export default function Chat() {
     const [receiver, setReceiver] = useState('')
     const [content, setContent] = useState('')
     const [teachers, setTeachers] = useState([]);
     const [students, setStudents] = useState([]);
+    const [date, setDate] = useState(Date.now());
     const [file, setFile] = useState('');
+    const router = useRouter();
+    var [message_sent, SetMessageSent] = useState([])
+
+    const handleChangeReceiver = (ev) => {
+        setReceiver(ev.value);
+    };
+
+    const optionReceiver = teachers.map(teacher => {
+        return {
+            value: teacher.phone,
+            label: teacher.type + " - " + teacher.name 
+        }
+    }).concat(students.map(student => {
+        return {
+            value: student.phone,
+            label: student.type + " - " + student.name 
+        }
+    }))
+
     useEffect(() => {
         fetch('/api/user')
             .then(res => res.json())
@@ -22,32 +45,21 @@ export default function Chat() {
                 setStudents(data.students)
             })
     }, []);
-    const handleChangeReceiver = (ev) => {
-        setReceiver(ev.value);
-    };
+
+
     function handleChangeFile(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
-    const optionReceiver = teachers.map(teacher => {
-        return {
-            value: teacher.phone,
-            label: teacher.phone + " - " + teacher.name + " - " + "Teacher"
-        }
-    }).concat(students.map(student => {
-        return {
-            value: student.phone,
-            label: student.phone + " - " + student.name + ' - ' + "Student"
-        }
-    }))
+    
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        const response =  await fetch('/api/message', {
+            method: 'POST',
+            body: JSON.stringify({receiver, content, date, file}),
+            headers: { 'Content-Type': 'application/json'},
+        })
+    }
 
-    // async function handleFormSubmit(ev: SyntheticEvent) {
-    //     ev.preventDefault()
-    //     await fetch('/api/report', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ receiver, content, sentDate, file, date_created, date_completed, status }),
-    //         headers: { 'Content-Type': 'application/json' },
-    //     })
-    // }
     return (
         <>
             <Header />
@@ -125,13 +137,14 @@ export default function Chat() {
                                     <Image
                                         src={file}
                                         width={200}
-                                        height={200}
-                                    />
+                                        height={200} alt={""}                                    />
                                 </div>
 
                                 <div className="flex mt-[86px] mr-4 justify-end pb-8">
-                                    <button className="text-center text-black text-base font-['Poppins'] bg-lime-300 rounded-lg px-3 py-1 hover:bg-lime-400">
-                                        Submit
+                                    <button 
+                                        onClick={handleFormSubmit}
+                                        className="text-center text-black text-base font-['Poppins'] bg-lime-300 rounded-lg px-4 py-1 hover:bg-lime-400">
+                                        Send
                                     </button>
                                 </div>
                             </div>
