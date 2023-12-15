@@ -74,7 +74,7 @@ export default function Chat() {
                             {/* left side */}
                             <div className="border-r-2 border-black mt-6 ml-9">
                                 <div className="text-black text-sm font-semibold">
-                                    Chat received
+                                    
                                 </div>
 
                                 <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
