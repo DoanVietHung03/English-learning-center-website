@@ -1,4 +1,4 @@
-'use client';
+'use client';    
 import Image from "next/image"
 import Link from "next/link"
 import Ilock from "@/components/icons/icon_lock"
@@ -6,7 +6,11 @@ import Iman from "@/components/icons/icon_man"
 import { SyntheticEvent, useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from 'next/navigation'
+import { cookies } from  'next/headers'
+import { getCookies, setCookie } from 'cookies-next'
+localStorage.removeItem("userName")
 export default function Login() {
+    //localStorage.clear()
     const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
     const [loginProgress, setloginProgress] = useState(true);
@@ -24,12 +28,15 @@ export default function Login() {
         });
         console.log(response)
         if (response.ok) {
+            localStorage.setItem('userName', phone)
             router.push('/courseList')
         }
         else {
             setError(true);
         }
     }
+
+    
     return (
         <>
             <div className="mt-20 rounded-lg mx-auto my-auto w-2/3 h-[550px] bg-white border-gray-200 border-2">
