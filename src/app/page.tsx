@@ -38,11 +38,15 @@ export default function Login() {
             checkUser = data.check
             userType = data.userType
         })
+        .catch(error =>{
+            console.error('Error fetching data:', error);
+        })
         console.log(userType)
-        localStorage.setItem("userType", userType)
-        console.log(localStorage.getItem("userType"))
+        
         if (checkUser) {
             localStorage.setItem('userName', phone)
+            localStorage.setItem("userType", userType)
+            console.log(localStorage.getItem("userType"))
             router.push('/courseList')
             console.log(courses)
         }
