@@ -26,9 +26,9 @@
 // });
 
 import { Course } from "@/models/course"
-import { User} from "@/models/user"
+import { User } from "@/models/user"
 import mongoose from "mongoose"
-import { cookies } from  'next/headers'
+import { cookies } from 'next/headers'
 
 export async function POST(req: { json: () => any }) {
     try {

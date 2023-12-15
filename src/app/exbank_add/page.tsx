@@ -10,13 +10,14 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 
-export default function Ex_Reading() {
+export default function Exercise_Add() {
     const [skill, setSkill] = useState('')
     const [module, setModule] = useState('')
     const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
     const [filemp3, setFilemp3] = useState('');
     const [content, setContent] = useState('');
+
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }

@@ -6,7 +6,7 @@ import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
 import Iimage from "@/components/icons/icon_image"
 import Example from "./chat_dropdown"
-import { SyntheticEvent, useEffect, useState } from "react"
+import { SyntheticEvent, useEffect, useState, ReactElement } from "react"
 import Image from "next/image"
 import Select from "react-select";
 import { useRouter } from 'next/navigation'
@@ -28,12 +28,12 @@ export default function Chat() {
     const optionReceiver = teachers.map(teacher => {
         return {
             value: teacher.phone,
-            label: teacher.type + " - " + teacher.name 
+            label: teacher.type + " - " + teacher.name
         }
     }).concat(students.map(student => {
         return {
             value: student.phone,
-            label: student.type + " - " + student.name 
+            label: student.type + " - " + student.name
         }
     }))
 
@@ -50,15 +50,59 @@ export default function Chat() {
     function handleChangeFile(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
-    
+
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        const response =  await fetch('/api/message', {
+        const response = await fetch('/api/message', {
             method: 'POST',
-            body: JSON.stringify({receiver, content, date, file}),
-            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ receiver, content, date, file }),
+            headers: { 'Content-Type': 'application/json' },
         })
     }
+
+    const [contentChat, setContentChat] = useState<ReactElement | null>(null);
+    const [selectedButton, setSelectedButton] = useState<number | null>(null);
+
+    const handleButtonClick = (buttonNumber: number) => {
+        setSelectedButton(buttonNumber);
+        if (buttonNumber === 1) {
+            setContentChat(
+                <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
+                    <div className="flex items-center pl-7 pt-4">
+                        <Iuser className="w-10 fill-zinc-400 mr-4" />
+                        <p className="text-black text-sm font-semibold font-['Poppins']">Do Hoang Khanh Duy</p>
+                    </div>
+
+                    <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
+                        Teacher please answer me this question, it’s so hard that I cannot do it myself, please answer me senpai !!
+                    </div>
+
+                    <button className="flex items-center pl-7 mt-3 pb-6">
+                        <Iimage className="w-6 mr-2 fill-zinc-500" />
+                        <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
+                    </button>
+                </div>
+            )
+        } else if (buttonNumber === 2) {
+            setContentChat(
+                <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
+                    <div className="flex items-center pl-7 pt-4">
+                        <Iuser className="w-10 fill-zinc-400 mr-4" />
+                        <p className="text-black text-sm font-semibold font-['Poppins']">Do Hoang Khanh Duy</p>
+                    </div>
+
+                    <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
+                        You need to do it yourself, remember there’s nothing that you cannot do my son. There’s no room for self-doubt.
+                    </div>
+
+                    <button className="flex items-center pl-7 mt-3 pb-6">
+                        <Iimage className="w-6 mr-2 fill-zinc-500" />
+                        <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
+                    </button>
+                </div>
+            )
+        }
+    };
 
     return (
         <>
@@ -73,50 +117,29 @@ export default function Chat() {
                         <div className="mt-6 grid grid-cols-2">
                             {/* left side */}
                             <div className="border-r-2 border-black mt-6 ml-9">
-                                <button className="text-black text-sm font-semibold">
+                                <button
+                                    onClick={() => handleButtonClick(1)}
+                                    className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 1 ? 'bg-blue-400' : ''}`}>
                                     Chat received
                                 </button>
 
-                                <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
-                                    <div className="flex items-center pl-7 pt-4">
-                                        <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                        <p className="text-black text-sm font-semibold font-['Poppins']">Do Hoang Khanh Duy</p>
-                                    </div>
-
-                                    <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
-                                        Teacher please answer me this question, it’s so hard that I cannot do it myself, please answer me senpai !!
-                                    </div>
-
-                                    <button className="flex items-center pl-7 mt-3 pb-6">
-                                        <Iimage className="w-6 mr-2 fill-zinc-500" />
-                                        <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
-                                    </button>
-                                </div>
-
-                                <div className="mt-3 border-t-2 border-stone-300 pt-3 text-black text-sm font-semibold mr-8">
+                                <button
+                                    onClick={() => handleButtonClick(2)}
+                                    className={`ml-6 bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-blue-400' : ''}`}>
                                     Chat sent
-                                </div>
+                                </button>
 
-                                <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
-                                    <div className="flex items-center pl-7 pt-4">
-                                        <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                        <p className="text-black text-sm font-semibold font-['Poppins']">Do Hoang Khanh Duy</p>
-                                    </div>
-
-                                    <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
-                                        You need to do it yourself, remember there’s nothing that you cannot do my son. There’s no room for self-doubt.
-                                    </div>
-
-                                    <button className="flex items-center pl-7 mt-3 pb-6">
-                                        <Iimage className="w-6 mr-2 fill-zinc-500" />
-                                        <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
-                                    </button>
+                                <div className="mt-6">
+                                    {contentChat}
                                 </div>
                             </div>
 
                             {/* Right side */}
                             <div className="bg-zinc-100 rounded-lg border border-neutral-400 mt-6 mr-7 ml-8">
-                                <div className="mt-12 ml-7">
+                                <div className="flex items-center justify-center">
+                                    <p className="mt-8 text-black text-2xl font-bold font-['Poppins'] leading-tight tracking-tight">Send message</p>
+                                </div>
+                                <div className="mt-6 ml-7">
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Choose receiver</p>
                                     {/* Dropdown list */}
                                     <Select options={optionReceiver} onChange={handleChangeReceiver}
@@ -137,11 +160,11 @@ export default function Chat() {
                                     <Image
                                         src={file}
                                         width={200}
-                                        height={200} alt={""}                                    />
+                                        height={150} alt={""} />
                                 </div>
 
                                 <div className="flex mt-[86px] mr-4 justify-end pb-8">
-                                    <button 
+                                    <button
                                         onClick={handleFormSubmit}
                                         className="text-center text-black text-base font-['Poppins'] bg-lime-300 rounded-lg px-4 py-1 hover:bg-lime-400">
                                         Send

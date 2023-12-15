@@ -153,7 +153,7 @@ export default function Exercise_bank() {
 
                         <button
                             onClick={() => handleButtonClick(2)}
-                            className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-rose-500' : ''}`}>
+                            className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-blue-400' : ''}`}>
                             Your Exercises
                         </button>
                     </div>
