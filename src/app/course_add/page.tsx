@@ -77,7 +77,7 @@ export default function Course_Add() {
     const optionTeachers = teachers.map(
         function (teacher) {
             return {
-                value: teacher.phone + " - " + teacher.name,
+                value: teacher.phone,
                 label: teacher.phone + " - " + teacher.name
             }
         }
@@ -85,7 +85,7 @@ export default function Course_Add() {
     const optionStudents = students.map(
         function (student) {
             return {
-                value: student.phone + " - " + student.name,
+                value: student.phone,
                 label: student.phone + " - " + student.name
             }
         }

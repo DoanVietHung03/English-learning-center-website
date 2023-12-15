@@ -50,7 +50,6 @@ export async function POST(req: { json: () => any }) {
               courses.splice(i)
           }
         }
-        
         return Response.json(courses);
     } catch (error) {
         return new Response(

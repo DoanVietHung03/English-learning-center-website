@@ -5,6 +5,10 @@ const exerciseSchema = new Schema({
         type: String,
         required: true
     },
+    module:{
+        type: String,
+        required: true
+    },
     skill: {
         type: String,
         required: true
@@ -19,7 +23,7 @@ const exerciseSchema = new Schema({
     },
     attachedFile: {
         type: String,
-        required: true
+        required: false
     },
     progress: [{
         student_id:{
@@ -31,6 +35,7 @@ const exerciseSchema = new Schema({
             required: false
         },
     }]
+
 }, { timestamps: true });
 
 export const Exercise = models?.Exercise || model('Exercise', exerciseSchema)
