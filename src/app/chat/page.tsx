@@ -5,8 +5,44 @@ import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
 import Iimage from "@/components/icons/icon_image"
 import Example from "./chat_dropdown"
+import { useState, useEffect, SyntheticEvent } from "react"
+import * as React from 'react';
 
 export default function Chat() {
+    const [receiver, setReceiver] = useState('')
+    const [content, setContent] = useState('')
+    const [file, setFile] = useState('')
+    const [sentDate, setDate] = useState(Date.now());
+    const [receivers, setReceivers] = useState([]);
+
+    const handleChangeReceiver = (ev) => {
+        setReceiver(ev.value);
+    };
+
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        await fetch('/api/message', {
+            method: 'POST',
+            body: JSON.stringify({receiver, content, sentDate, file}),
+            headers: { 'Content-Type': 'application/json' },
+        })
+    }
+
+    useEffect(() => {
+        fetch('api/user')
+        .then(res => res.json())
+        .then(data => {
+            setReceivers(data.receivers)
+        })
+    }, []);
+
+    const optionReceivers = receivers.map(
+        function (receiver) {
+            return {
+                value: receiver.name
+            }
+        }
+    );
 
     return (
         <>
@@ -74,11 +110,6 @@ export default function Chat() {
                                     <p className="text-black text-base font-medium">Content</p>
                                     <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none mt-2" id="myText" placeholder="Type content..."></textarea>
                                 </div>
-
-                                <button className="flex items-center pl-7 mt-4 pb-6">
-                                    <Iimage className="w-6 mr-2 fill-zinc-500"/>
-                                    <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Attached image</p>
-                                </button>
 
                                 <button className="bg-zinc-300 border border-black px-4 py-1 text-center text-black text-base font-normal leading-tight tracking-tight ml-7 hover:bg-zinc-400">
                                     Choose file
