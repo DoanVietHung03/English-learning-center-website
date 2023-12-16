@@ -9,9 +9,11 @@ import Ibuilding from "@/components/icons/icon_building";
 import Itarget from "@/components/icons/icon_target";
 import Imenu from "@/components/icons/icon_menu";
 import Icalendar from "@/components/icons/icon_cal";
+import moment from 'moment';
 export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
+    const type = localStorage.getItem('userType')
     useEffect(() => {
         fetch('/api/courseList', {
             method: 'POST',
@@ -39,17 +41,26 @@ export default function CourseList() {
             <div className='flex gap-6'>
                 <SideBar />
                 <div className="w-2/3">
-                    <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
-                        Courses List
+                    <div className="flex justify-between pt-3 pb-2 mb-2 border-b border-black">
+                        <div className="font-poppins font-bold text-5xl">
+                            Courses List
+                        </div>
+                        {(type == 'Admin') &&
+                            <Link href='/register' className="bg-lime-400 flex gap-3 rounded-xl items-center justify-center py-3 px-3">
+                                <div className="text-2xl font-bold">+</div>
+                                <div className="font-bold flex items-center">Add Course</div>
+                            </Link>
+                        }
+
                     </div>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 overflow-y-auto h-3/4">
                         {!emptyCourse && (
                             courses.map(course => (
                                 // eslint-disable-next-line react/jsx-key
                                 <>
                                     <div className="w-full h-36 p-8 rounded-xl bg-white">
                                         <div className="flex w-full mb-4">
-                                            <Link href={'/student_course_Time'} onClick={() => { localStorage.setItem("course_id", course._id) }}
+                                            <Link href={'/course_Time'} onClick={() => { localStorage.setItem("course_id", course._id) }}
                                                 className="flex justify-start font-poppins w-[840px] cursor-pointer text-blue-500 font-semibold text-xs hover:underline">
                                                 {course.name}
                                             </Link>
@@ -72,7 +83,7 @@ export default function CourseList() {
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Icalendar className="w-4" />
-                                                <p className="font-poppins text-xs">{course.startDate} -> {course.endDate}</p>
+                                                <p className="font-poppins text-xs">{moment.utc(course.startDate).format('MM/DD/YYYY')} -> {moment.utc(course.endDate).format('MM/DD/YYYY')}</p>
                                             </div>
                                         </div>
                                     </div>
