@@ -19,7 +19,7 @@ export async function POST(req: { json: () => any }) {
         for (var i = 0; i < 24; i++) {
             await Session.create({
                 course_id: body.title,
-                name: 'session' + String(i + 1)
+                name: 'Session ' + String(i + 1)
             })
         }
         // console.log(createdCourse);

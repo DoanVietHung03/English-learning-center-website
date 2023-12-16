@@ -5,12 +5,11 @@ import Link from "next/link"
 import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
 import { useState, useEffect } from "react"
-
+import moment from "moment"
 export default function CourseTime() {
-    const [courses, setCourses] = useState('')
+    const [course, setCourse] = useState('')
     const [sessions, setSessions] = useState([])
     useEffect(() => {
-        console.log(localStorage.getItem("course_id"))
         fetch('/api/session', {
             method: 'POST',
             headers: {
@@ -20,13 +19,16 @@ export default function CourseTime() {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 // Hiển thị danh sách khóa học trong giao diện
-                setSessions(data)
+                setCourse(data.course)
+                setSessions(data.sessions)
+                // sessions = data.sessions
+                console.log(data.sessions)
+                console.log(sessions)
             })
             .catch(error => console.error('Error:', error));
     }, []);
-    console.log(sessions)
+    // console.log(sessions)
     return (
         <>
             <Header />
@@ -37,7 +39,7 @@ export default function CourseTime() {
                         Courses List
                     </div>
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASSName] aoe - Q.5 ClassNameRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{course.name}</div>
                     </div>
                     <div className="bg-sky-100 mt-2">
                         <div className="ml-6">
@@ -52,112 +54,56 @@ export default function CourseTime() {
                                 </button>
                             </div>
 
-                            <div className="flex p-4 gap-16">
+                            <div className="flex p-4 justify-between">
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
                                     Overall: 24 sessions
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
-                                    Teacher: ...
+                                    Teacher: {course.teacher_id}
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
-                                    Room: ...
+                                    Room: {course.room}
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
-                                    Start date:
+                                    Start date: {moment.utc(course.startDate).format('MM/DD/YYYY')}
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
-                                    Mon, Wed, Fri
+                                    {course.schedule}
                                 </div>
                             </div>
                             <div className="inline-block ml-4 gap-4">
-                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
-                                    <div className="font-bold text-blue-400 mb-3">
-                                        OFFLINE
-                                    </div>
-                                    <div className="flex gap-14 items-center mb-3">
-                                        <div className="font-semibold font-poppins">
-                                            Session 1
-                                        </div>
-                                        <div className="font-bold font-poppins text-sm">
-                                            23:00 - 2:00
-                                        </div>
-                                    </div>
-                                    <div className="font-bold">Skill: Reading & Listening</div>
-                                </div>
-                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
-                                    <div className="font-bold text-blue-400 mb-3">
-                                        OFFLINE
-                                    </div>
-                                    <div className="flex gap-14 items-center mb-3">
-                                        <div className="font-semibold font-poppins">
-                                            Session 1
-                                        </div>
-                                        <div className="font-bold font-poppins text-sm">
-                                            23:00 - 2:00
-                                        </div>
-                                    </div>
-                                    <div className="font-bold">Skill: Reading & Listening</div>
-                                </div>
-                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
-                                    <div className="font-bold text-blue-400 mb-3">
-                                        OFFLINE
-                                    </div>
-                                    <div className="flex gap-14 items-center mb-3">
-                                        <div className="font-semibold font-poppins">
-                                            Session 1
-                                        </div>
-                                        <div className="font-bold font-poppins text-sm">
-                                            23:00 - 2:00
-                                        </div>
-                                    </div>
-                                    <div className="font-bold">Skill: Reading & Listening</div>
-                                </div>
-                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
-                                    <div className="font-bold text-blue-400 mb-3">
-                                        OFFLINE
-                                    </div>
-                                    <div className="flex gap-14 items-center mb-3">
-                                        <div className="font-semibold font-poppins">
-                                            Session 1
-                                        </div>
-                                        <div className="font-bold font-poppins text-sm">
-                                            23:00 - 2:00
-                                        </div>
-                                    </div>
-                                    <div className="font-bold">Skill: Reading & Listening</div>
-                                </div>
-                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
-                                    <div className="font-bold text-blue-400 mb-3">
-                                        OFFLINE
-                                    </div>
-                                    <div className="flex gap-14 items-center mb-3">
-                                        <div className="font-semibold font-poppins">
-                                            Session 1
-                                        </div>
-                                        <div className="font-bold font-poppins text-sm">
-                                            23:00 - 2:00
-                                        </div>
-                                    </div>
-                                    <div className="font-bold">Skill: Reading & Listening</div>
-                                </div>
-                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
-                                    <div className="font-bold text-blue-400 mb-3">
-                                        OFFLINE
-                                    </div>
-                                    <div className="flex gap-14 items-center mb-3">
-                                        <div className="font-semibold font-poppins">
-                                            Session 1
-                                        </div>
-                                        <div className="font-bold font-poppins text-sm">
-                                            23:00 - 2:00
-                                        </div>
-                                    </div>
-                                    <div className="font-bold">Skill: Reading & Listening</div>
-                                </div>
+                                {
+                                    sessions.map((session, i) => (
+                                        <>
+                                            <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
+                                                <div className="font-bold text-blue-400 mb-3">
+                                                    OFFLINE
+                                                </div>
+                                                <div className="flex gap-14 items-center mb-3">
+                                                    <div className="font-semibold font-poppins">
+                                                        {session.name}
+                                                    </div>
+                                                    <div className="font-bold font-poppins text-sm">
+                                                        23:00 - 2:00
+                                                    </div>
+                                                </div>
+                                                {(i % 3 == 0) &&
+                                                    <div className="font-bold">Skill: Reading & Listening</div>
+                                                }
+                                                {(i % 3 == 2) &&
+                                                    <div className="font-bold">Skill: Writing</div>
+                                                }
+                                                {(i % 3 == 1) &&
+                                                    <div className="font-bold">Skill: Speaking</div>
+                                                }
+                                            </div>
+                                        </>
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>

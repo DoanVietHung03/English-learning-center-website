@@ -12,7 +12,7 @@ export default function Exercise_bank() {
     const [module, setModule] = useState('')
     const [skill, setSkill] = useState('')
     const [content, setContent] = useState<ReactElement | any | null>(null)
-    const [exercise, setExercise] = useState([[]])
+    const [exercises, setExercises] = useState([])
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
 
     const handleButtonClick = (buttonNumber: number) => {
@@ -23,18 +23,16 @@ export default function Exercise_bank() {
     useEffect(() => {
         fetch('/api/exercisesBank')
             .then(res => res.json())
-            .then(data =>{
-                //setExercise(data)
-                a = data
-                //console.log(a)
+            .then(data => {
+                setExercises(data)
+                console.log(data)
+                console.log(exercises)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-            
-        console.log(a[0])
-        
-        
+
+
         // Mặc định hiển thị nội dung khi trang được tải
         // if (selectedButton === null) {
         //     setContent(
@@ -162,7 +160,16 @@ export default function Exercise_bank() {
 
                     <div>
                         {/* {exercise[0].content} */}
-                        
+                        {
+                            exercises.map(exercise => (
+                                <>
+                                    <div>
+                                        {exercise.title}
+                                    </div>
+                                </>
+                            ))
+                        }
+
                     </div>
                 </div>
             </div>

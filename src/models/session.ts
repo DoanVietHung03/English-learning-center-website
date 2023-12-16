@@ -11,7 +11,7 @@ const sessionSchema = new Schema({
     },
     attendList: [{
         type: String,
-        require: false
+        required: false
     }]
 })
 
