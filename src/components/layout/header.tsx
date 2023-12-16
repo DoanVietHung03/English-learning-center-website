@@ -29,7 +29,9 @@ export default function Header() {
                             <Link href={"/setting_profile"}>
                                 <p className='text-center text-black text-lg font-semibold mt-6 pt-4 mb-4 border-t border-zinc-400 mx-8 hover:text-gray-400'>Setting</p>
                             </Link>
-                            <p className='text-center text-black text-lg font-semibold hover:text-gray-400'>Sign out</p>
+                            <Link href={"/"}>
+                                <p className='text-center text-black text-lg font-semibold hover:text-gray-400'>Sign out</p>
+                            </Link>
                         </div>
                     </Popup>
                 </div>

@@ -9,6 +9,7 @@ import Ibuilding from "@/components/icons/icon_building";
 import Itarget from "@/components/icons/icon_target";
 import Imenu from "@/components/icons/icon_menu";
 import Icalendar from "@/components/icons/icon_cal";
+
 export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
@@ -42,7 +43,7 @@ export default function CourseList() {
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
                         Courses List
                     </div>
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 overflow-y-auto h-3/4">
                         {!emptyCourse && (
                             courses.map(course => (
                                 // eslint-disable-next-line react/jsx-key
