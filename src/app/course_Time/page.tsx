@@ -52,61 +52,111 @@ export default function CourseTime() {
                                 </button>
                             </div>
 
-                            <div className="p-4">
-                                <div className=" font-poppins text-blue-500 bg-blue-200 border inline-block p-1 text-sm">
+                            <div className="flex p-4 gap-16">
+                                <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
                                     Overall: 24 sessions
                                 </div>
-                            </div>
 
-                            <div className="grid grid-cols-3 p-4">
-                                <div className="bg-stone-200">
-                                    <div className="font-bold font-poppins m-3 text-blue-400">
-                                        OFFLINE
-                                    </div>
-                                    <div className="font-poppins font-normal ml-3 text-sm">
-                                        29/9/2023
-                                    </div>
-                                    <div className="font-bold font-poppins ml-3 m-1 text-sm">
-                                        23:00 - 2:00
-                                    </div>
+                                <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
+                                    Teacher: ...
                                 </div>
 
-                                <div className="bg-white col-span-2 w-3/4">
-                                    <div className="m-3 font-poppins font-semibold">
-                                        IELTS Speaking
-                                    </div>
-                                    <div className="font-poppins font-normal ml-3 text-sm">
-                                        GV: Danh Khuy
-                                    </div>
-                                    <div className="font-poppins font-normal ml-3 text-sm">
-                                        Room: C-23
-                                    </div>
+                                <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
+                                    Room: ...
+                                </div>
+
+                                <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
+                                    Start date:
+                                </div>
+
+                                <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
+                                    Mon, Wed, Fri
                                 </div>
                             </div>
-
-                            <div className="grid grid-cols-3 p-4">
-                                <div className="bg-stone-200">
-                                    <div className="font-bold font-poppins m-3 text-blue-400">
+                            <div className="inline-block ml-4 gap-4">
+                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
+                                    <div className="font-bold text-blue-400 mb-3">
                                         OFFLINE
                                     </div>
-                                    <div className="font-poppins font-normal ml-3 text-sm">
-                                        1/10/2023
+                                    <div className="flex gap-14 items-center mb-3">
+                                        <div className="font-semibold font-poppins">
+                                            Session 1
+                                        </div>
+                                        <div className="font-bold font-poppins text-sm">
+                                            23:00 - 2:00
+                                        </div>
                                     </div>
-                                    <div className="font-bold font-poppins ml-3 m-1 text-sm">
-                                        23:00 - 2:00
-                                    </div>
+                                    <div className="font-bold">Skill: Reading & Listening</div>
                                 </div>
-
-                                <div className="bg-white col-span-2 w-3/4">
-                                    <div className="m-3 font-poppins font-semibold">
-                                        IELTS Speaking
+                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
+                                    <div className="font-bold text-blue-400 mb-3">
+                                        OFFLINE
                                     </div>
-                                    <div className="font-poppins font-normal ml-3 text-sm">
-                                        GV: Danh Khuy
+                                    <div className="flex gap-14 items-center mb-3">
+                                        <div className="font-semibold font-poppins">
+                                            Session 1
+                                        </div>
+                                        <div className="font-bold font-poppins text-sm">
+                                            23:00 - 2:00
+                                        </div>
                                     </div>
-                                    <div className="font-poppins font-normal ml-3 text-sm">
-                                        Room: C-23
+                                    <div className="font-bold">Skill: Reading & Listening</div>
+                                </div>
+                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
+                                    <div className="font-bold text-blue-400 mb-3">
+                                        OFFLINE
                                     </div>
+                                    <div className="flex gap-14 items-center mb-3">
+                                        <div className="font-semibold font-poppins">
+                                            Session 1
+                                        </div>
+                                        <div className="font-bold font-poppins text-sm">
+                                            23:00 - 2:00
+                                        </div>
+                                    </div>
+                                    <div className="font-bold">Skill: Reading & Listening</div>
+                                </div>
+                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
+                                    <div className="font-bold text-blue-400 mb-3">
+                                        OFFLINE
+                                    </div>
+                                    <div className="flex gap-14 items-center mb-3">
+                                        <div className="font-semibold font-poppins">
+                                            Session 1
+                                        </div>
+                                        <div className="font-bold font-poppins text-sm">
+                                            23:00 - 2:00
+                                        </div>
+                                    </div>
+                                    <div className="font-bold">Skill: Reading & Listening</div>
+                                </div>
+                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
+                                    <div className="font-bold text-blue-400 mb-3">
+                                        OFFLINE
+                                    </div>
+                                    <div className="flex gap-14 items-center mb-3">
+                                        <div className="font-semibold font-poppins">
+                                            Session 1
+                                        </div>
+                                        <div className="font-bold font-poppins text-sm">
+                                            23:00 - 2:00
+                                        </div>
+                                    </div>
+                                    <div className="font-bold">Skill: Reading & Listening</div>
+                                </div>
+                                <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-5 pr-28">
+                                    <div className="font-bold text-blue-400 mb-3">
+                                        OFFLINE
+                                    </div>
+                                    <div className="flex gap-14 items-center mb-3">
+                                        <div className="font-semibold font-poppins">
+                                            Session 1
+                                        </div>
+                                        <div className="font-bold font-poppins text-sm">
+                                            23:00 - 2:00
+                                        </div>
+                                    </div>
+                                    <div className="font-bold">Skill: Reading & Listening</div>
                                 </div>
                             </div>
                         </div>
