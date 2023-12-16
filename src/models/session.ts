@@ -1,19 +1,18 @@
-import {Schema, model, models} from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-const sessionSchema =new Schema({
+const sessionSchema = new Schema({
     course_id: {
-        type: String
+        type: String,
+        required: true,
     },
-    Room: {
-        type: String
-    },
-    Name: {
-        type: String
+    name: {
+        type: String,
+        required: true,
     },
     attendList: [{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        required: false
     }]
 })
 
-export const Session = models?.Session|| model('Session', sessionSchema)
+export const Session = models?.Session || model('Session', sessionSchema)
