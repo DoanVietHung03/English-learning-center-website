@@ -7,7 +7,6 @@ import Iplus from "@/components/icons/icon_plus";
 import Idelete from "@/components/icons/delete";
 import Link from "next/link"
 import { useState, useEffect, SyntheticEvent } from "react"
-import { GET } from '@/app/api/user/route';
 import * as React from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -15,7 +14,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useRouter } from 'next/navigation'
 import dayjs, { Dayjs } from 'dayjs';
-import { error } from "console";
 
 export default function Course_Add() {
     const [title, setTitle] = useState('')

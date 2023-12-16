@@ -158,13 +158,29 @@ export default function Exercise_bank() {
                         </button>
                     </div>
 
-                    <div>
+                    <div className="inline-block mt-4">
                         {/* {exercise[0].content} */}
                         {
                             exercises.map(exercise => (
                                 <>
-                                    <div>
-                                        {exercise.title}
+                                    <div className="inline-block bg-white mr-4 pl-10 pr-[95px] py-4 mb-4 rounded-xl">
+                                        <div className="font-semibold mb-4">
+                                            {exercise.title}
+                                        </div>
+                                        <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
+                                            <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
+                                                {exercise.module}
+                                            </div>
+                                            <div className="p-2 border-2 border-gray-300 rounded-lg">
+                                                {exercise.skill}
+                                            </div>
+                                        </div>
+                                        <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
+                                            href='/exercise_bank/ex_in_exbank'
+                                            className="flex p-2 mt-3 w-full items-center gap-4 bg-gray-200 rounded-lg">
+                                            <Ieye className="fill-blue-400 w-6" />
+                                            <div className="text-blue-400">View Exercise</div>
+                                        </Link>
                                     </div>
                                 </>
                             ))
