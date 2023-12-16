@@ -13,7 +13,7 @@ export default function Ass_Listening() {
         fetch('/api/assignment')
             .then(res => res.json())
             .then(data=> {
-                console.log(data)
+                console.log(Object.keys(data))
                 setFile(data.attachedFile)
             })
             // .catch(error => {
@@ -21,7 +21,11 @@ export default function Ass_Listening() {
             // });
         }, []);
 
-        console.log(file[0])
+        //const file1 = Object.keys(file);
+        // file.map(file => (
+        //     console.log(file)
+        // ))
+        //console.log(file1)
     return (
         <>
             <Header />

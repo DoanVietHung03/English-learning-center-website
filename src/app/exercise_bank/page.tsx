@@ -15,13 +15,18 @@ export default function Exercise_bank() {
     const [exercises, setExercises] = useState([])
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
 
-    var exercise = [Object]
+
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
     };
 
-    useEffect(() => {
-        fetch('/api/exercisesBank')
+        
+
+
+        // Mặc định hiển thị nội dung khi trang được tải
+
+        useEffect(() => {
+            fetch('/api/exercisesBank')
             .then(res => res.json())
             .then(data => {
                 setExercises(data)
@@ -32,10 +37,6 @@ export default function Exercise_bank() {
                 console.error('Error fetching data:', error);
             });
 
-
-        // Mặc định hiển thị nội dung khi trang được tải
-
-        useEffect(() => {
         if (selectedButton == null) {
             setContent(
                 <div className="flex justify-between mt-10 gap-2">
@@ -165,7 +166,7 @@ export default function Exercise_bank() {
                             exercises.map(exercise => (
                                 <>
                                     <div>
-                                        {exercise.title}
+                                        {exercise.title[0]}
                                     </div>
                                 </>
                             ))
