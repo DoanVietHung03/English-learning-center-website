@@ -16,21 +16,37 @@ export default function Login() {
     const [loginProgress, setloginProgress] = useState(true);
     const [error, setError] = useState(false);
     const [courses, setCourses] = useState([])
+    // const [checkUser, setCheck] = useState(Boolean)
+    // const [userType, setType] = useState('')
+
 
     const router = useRouter();
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
+        var checkUser
+        var userType
         // try {
-        const response = await fetch('/api/authentication', {
+        await fetch('/api/authentication', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ phone, password }), // Gửi dữ liệu
-        });
-        console.log(response)
-        if (response.ok) {
+        })
+        .then(response => response.json())
+        .then(data => {
+            checkUser = data.check
+            userType = data.userType
+        })
+        .catch(error =>{
+            console.error('Error fetching data:', error);
+        })
+        console.log(userType)
+        
+        if (checkUser) {
             localStorage.setItem('userName', phone)
+            localStorage.setItem("userType", userType)
+            console.log(localStorage.getItem("userType"))
             router.push('/courseList')
             console.log(courses)
         }

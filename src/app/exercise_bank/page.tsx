@@ -12,89 +12,104 @@ export default function Exercise_bank() {
     const [module, setModule] = useState('')
     const [skill, setSkill] = useState('')
     const [content, setContent] = useState<ReactElement | any | null>(null)
+    const [exercise, setExercise] = useState([[]])
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
 
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
     };
 
+    var a = []
     useEffect(() => {
+        fetch('/api/exercisesBank')
+            .then(res => res.json())
+            .then(data =>{
+                //setExercise(data)
+                a = data
+                //console.log(a)
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+            
+        console.log(a[0])
+        
+        
         // Mặc định hiển thị nội dung khi trang được tải
-        if (selectedButton === null) {
-            setContent(
-                <div className="flex justify-between mt-10 gap-2">
-                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">IELTS Academic Grammar 0 - 2.5 | Tân ngữ</p>
-                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">IELTS</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Academic</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Grammar</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">0 - 2.5</p>
-                        </div>
+        // if (selectedButton === null) {
+        //     setContent(
+        //         <div className="flex justify-between mt-10 gap-2">
+        //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+        //                 <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4"></p>
+        //                 <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1"></p>
+        //                 </div>
 
-                        <div className="mt-10 ml-4">
-                            <Link href={"/exercise_bank/ex_in_exbank"}>
-                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-                                    <Ieye className="w-[1em] fill-blue-400" />
-                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
+        //                 <div className="mt-10 ml-4">
+        //                     <Link href={"/exercise_bank/ex_in_exbank"}>
+        //                         <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
+        //                             <Ieye className="w-[1em] fill-blue-400" />
+        //                             <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
+        //                         </button>
+        //                     </Link>
+        //                 </div>
+        //             </div>
 
-                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">IELTS Academic Grammar 0 - 2.5 | Tân ngữ</p>
-                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">IELTS</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Academic</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Grammar</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">0 - 2.5</p>
-                        </div>
+        //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+        //                 <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">IELTS Academic Grammar 0 - 2.5 | Tân ngữ</p>
+        //                 <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">IELTS</p>
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Academic</p>
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Grammar</p>
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">0 - 2.5</p>
+        //                 </div>
 
-                        <div className="mt-10 ml-4">
-                            <Link href={"/exercise_bank/ex_in_exbank"}>
-                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-                                    <Ieye className="w-[1em] fill-blue-400" />
-                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
+        //                 <div className="mt-10 ml-4">
+        //                     <Link href={"/exercise_bank/ex_in_exbank"}>
+        //                         <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
+        //                             <Ieye className="w-[1em] fill-blue-400" />
+        //                             <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
+        //                         </button>
+        //                     </Link>
+        //                 </div>
+        //             </div>
 
-                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">IELTS Academic Grammar 0 - 2.5 | Tân ngữ</p>
-                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">IELTS</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Academic</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Grammar</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">0 - 2.5</p>
-                        </div>
+        //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+        //                 <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">IELTS Academic Grammar 0 - 2.5 | Tân ngữ</p>
+        //                 <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">IELTS</p>
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Academic</p>
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Grammar</p>
+        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">0 - 2.5</p>
+        //                 </div>
 
-                        <div className="mt-10 ml-4">
-                            <Link href={"/exercise_bank/ex_in_exbank"}>
-                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-                                    <Ieye className="w-[1em] fill-blue-400" />
-                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            );
-        }
+        //                 <div className="mt-10 ml-4">
+        //                     <Link href={"/exercise_bank/ex_in_exbank"}>
+        //                         <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
+        //                             <Ieye className="w-[1em] fill-blue-400" />
+        //                             <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
+        //                         </button>
+        //                     </Link>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     );
+        // }
 
-        if (selectedButton !== null) {
-            if (selectedButton === 1) {
-                setContent('');
-            } else if (selectedButton === 2) {
-                setContent(
-                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-                        {/* Nội dung cho Button 2 */}
-                    </div>
-                );
-            }
-        }
-    }, [selectedButton, content]);
+        // if (selectedButton !== null) {
+        //     if (selectedButton === 1) {
+        //         setContent('');
+        //     } else if (selectedButton === 2) {
+        //         setContent(
+        //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+        //                 {/* Nội dung cho Button 2 */}
+        //             </div>
+        //         );
+        //     }
+        // }
+    }, []);
+
+    //console.log(exercise)
 
     const handleChangeModule = (ev) => {
         setModule(ev.value);
@@ -146,7 +161,8 @@ export default function Exercise_bank() {
                     </div>
 
                     <div>
-                        {content}
+                        {/* {exercise[0].content} */}
+                        
                     </div>
                 </div>
             </div>

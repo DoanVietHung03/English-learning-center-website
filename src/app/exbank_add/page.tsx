@@ -35,7 +35,7 @@ export default function Exercise_Add() {
         ev.preventDefault()
         await fetch('/api/exercisesBank', {
             method: 'POST',
-            body: JSON.stringify({ title, filemp3, content, skill, file }),
+            body: JSON.stringify({ title, filemp3, content, skill, file, module}),
             headers: { 'Content-Type': 'application/json' },
         })
     }

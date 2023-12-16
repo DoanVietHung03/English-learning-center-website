@@ -2,10 +2,12 @@ import { Schema, model, models } from "mongoose";
 
 const submissionSchema = new Schema({
     student_id:{
-        type: String
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     assignment_id:{
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Assignment'
     },
     answer: {
         type: String,
