@@ -5,7 +5,7 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
 import Iimage from "@/components/icons/icon_image"
-import Example from "./chat_dropdown"
+//import Example from "./chat_dropdown"
 import { SyntheticEvent, useEffect, useState, ReactElement } from "react"
 import Image from "next/image"
 import Select from "react-select";
@@ -38,7 +38,13 @@ export default function Chat() {
     }))
 
     useEffect(() => {
-        fetch('/api/user')
+        fetch('/api/user')//, {
+            // method: 'POST',
+            // headers: {
+            //     'Content-Type': 'application/json',
+            // },
+           // body: JSON.stringify({userName: localStorage.getItem("userName")}),
+      //  })
             .then(res => res.json())
             .then(data => {
                 setTeachers(data.teachers)
