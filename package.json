@@ -32,7 +32,8 @@
     "react-date-picker": "^10.6.0",
     "react-dom": "^18",
     "react-player": "^2.13.0",
-    "react-select": "^5.8.0"
+    "react-select": "^5.8.0",
+    "reactjs-popup": "^2.0.6"
   },
   "devDependencies": {
     "@types/node": "^20",
