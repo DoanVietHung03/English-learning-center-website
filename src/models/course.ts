@@ -4,17 +4,22 @@ import { User } from "@/models/user"
 const courseSchema = new Schema({
     name: {
         type: String,
+        unique: true,
         required: false
     },
     startDate: {
         type: Date,
         required: true
     },
-    endDate: {
-        type: Date,
+    module: {
+        type: String,
         required: true
     },
-    module: {
+    room: {
+        type: String,
+        required: true
+    },
+    schedule: {
         type: String,
         required: true
     },

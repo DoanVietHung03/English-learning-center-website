@@ -7,9 +7,11 @@ import Ibook from "@/components/icons/icon_book"
 import { useState, useEffect } from "react"
 
 export default function CourseTime() {
-    const [course, setCourse] = useState('')
+    const [courses, setCourses] = useState('')
+    const [sessions, setSessions] = useState([])
     useEffect(() => {
-        fetch('/api/courseList', {
+        console.log(localStorage.getItem("course_id"))
+        fetch('/api/session', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -18,15 +20,13 @@ export default function CourseTime() {
         })
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 // Hiển thị danh sách khóa học trong giao diện
-                setCourses(data)
-                if (courses == null)
-                    setEmptyCourse(true)
-                else
-                    setEmptyCourse(false)
+                setSessions(data)
             })
             .catch(error => console.error('Error:', error));
     }, []);
+    console.log(sessions)
     return (
         <>
             <Header />

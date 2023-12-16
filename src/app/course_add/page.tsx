@@ -22,7 +22,8 @@ export default function Course_Add() {
     const [module, setModule] = useState('')
     const [teacher, setTeacher] = useState('')
     const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
-    const [cDate, setCDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
+    const [schedule, setSchedule] = useState('')
+    const [room, setRoom] = useState('')
     const [student, setStudent] = useState()
     const [error, setError] = useState(false)
     var [student_added, setStudentAdded] = useState([])
@@ -41,6 +42,9 @@ export default function Course_Add() {
         setTeacher(ev.value);
     };
 
+    const handleChangeSchedule = (ev) => {
+        setSchedule(ev.value);
+    };
     const handleChangeStudentID = (ev) => {
         setStudent(ev.value)
         var temp = ev.value
@@ -54,7 +58,7 @@ export default function Course_Add() {
         ev.preventDefault()
         const response = await fetch('/api/course', {
             method: 'POST',
-            body: JSON.stringify({ title, module, teacher, sDate, cDate, student_added }),
+            body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added }),
             headers: { 'Content-Type': 'application/json' },
         })
         if (!response.ok)
@@ -116,18 +120,32 @@ export default function Course_Add() {
 
                             <div className="mt-8 grid grid-cols-2">
                                 <div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a schedule</p>
+                                    <Select options={optionSchedule} onChange={handleChangeSchedule}
+                                        className="w-3/4 mt-2" placeholder="Select schedule" />
+                                </div>
+                                <div>
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a module</p>
                                     <Select options={optionModule} onChange={handleChangeModule}
                                         className="w-3/4 mt-2" placeholder="Select module" />
                                 </div>
-
                                 <div>
-                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a teacher</p>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight mt-4">Choose a teacher</p>
                                     <Select options={optionTeachers} onChange={handleChangeTeacher} className="w-3/4 mt-2" placeholder="Select teacher" />
                                 </div>
+                                <div className="items-center mt-3 w-3/4">
+                                    <div className="text-base font-medium">Room</div>
+                                    <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-full" type="text" id="myTitle" placeholder="Type name of the course"
+                                        onChange={ev => setRoom(ev.target.value)} />
+                                </div>
                             </div>
-
-                            <div className="mt-10 grid grid-cols-2">
+                            <div></div>
+                            <div className="mt-7 grid grid-cols-2">
+                                <div className="">
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Student</p>
+                                    <Select options={optionStudents} onChange={handleChangeStudentID}
+                                        className="w-[333px] mt-2" placeholder="Telephone number of student" />
+                                </div>
                                 <div>
                                     <div className="font-semibold">Start Date</div>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -139,23 +157,9 @@ export default function Course_Add() {
                                     </LocalizationProvider>
                                 </div>
 
-                                <div>
-                                    <div className="font-semibold">Complete Date</div>
-                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DemoContainer components={['DatePicker', 'DatePicker']}>
-                                            <DatePicker value={cDate} onChange={(newValue) => setCDate(newValue)}
-                                                className="w-3/4"
-                                            />
-                                        </DemoContainer>
-                                    </LocalizationProvider>
-                                </div>
                             </div>
 
-                            <div className="mt-12">
-                                <p className="text-black text-base font-medium leading-tight tracking-tight">Student</p>
-                                <Select options={optionStudents} onChange={handleChangeStudentID}
-                                    className="w-[333px] mt-2" placeholder="Telephone number of student" />
-                            </div>
+
 
                             <div className="inline-block px-4 mt-8 rounded-lg border border-stone-300 h-40 w-full gap-3">
                                 {
@@ -189,4 +193,9 @@ const optionModule = [
     { value: "IELTS", label: "IELTS" },
     { value: "TOEIC", label: "TOEIC" },
     { value: "TOEFL", label: "TOEFL" },
+];
+
+const optionSchedule = [
+    { value: "Mon-Wed-Fri", label: "Mon-Wed-Fri" },
+    { value: "Tue-Thu-Sat", label: "Tue-Thu-Sat" },
 ];

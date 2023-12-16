@@ -13,7 +13,9 @@ import moment from 'moment';
 export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
+
     const type = localStorage.getItem('userType')
+
     useEffect(() => {
         fetch('/api/courseList', {
             method: 'POST',
@@ -46,7 +48,7 @@ export default function CourseList() {
                             Courses List
                         </div>
                         {(type == 'Admin') &&
-                            <Link href='/register' className="bg-lime-400 flex gap-3 rounded-xl items-center justify-center py-3 px-3">
+                            <Link href='/course_add' className="bg-lime-400 flex gap-3 rounded-xl items-center justify-center py-3 px-3">
                                 <div className="text-2xl font-bold">+</div>
                                 <div className="font-bold flex items-center">Add Course</div>
                             </Link>
@@ -60,7 +62,7 @@ export default function CourseList() {
                                 <>
                                     <div className="w-full h-36 p-8 rounded-xl bg-white">
                                         <div className="flex w-full mb-4">
-                                            <Link href={'/course_Time'} onClick={() => { localStorage.setItem("course_id", course._id) }}
+                                            <Link href={'/course_Time'} onClick={() => { localStorage.setItem("course_id", course.name) }}
                                                 className="flex justify-start font-poppins w-[840px] cursor-pointer text-blue-500 font-semibold text-xs hover:underline">
                                                 {course.name}
                                             </Link>
@@ -71,7 +73,7 @@ export default function CourseList() {
                                         <div className="flex text-11 gap-4 mt-6">
                                             <div className="flex items-center gap-2">
                                                 <Ibuilding className="w-3" />
-                                                <p className="font-poppins text-xs">AOE - D5</p>
+                                                <p className="font-poppins text-xs">{course.room}</p>
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Itarget className="w-3" />
@@ -83,7 +85,7 @@ export default function CourseList() {
                                             </div>
                                             <div className="flex items-center gap-2">
                                                 <Icalendar className="w-4" />
-                                                <p className="font-poppins text-xs">{moment.utc(course.startDate).format('MM/DD/YYYY')} -> {moment.utc(course.endDate).format('MM/DD/YYYY')}</p>
+                                                <p className="font-poppins text-xs">{moment.utc(course.startDate).format('MM/DD/YYYY')}-{course.schedule}</p>
                                             </div>
                                         </div>
                                     </div>
