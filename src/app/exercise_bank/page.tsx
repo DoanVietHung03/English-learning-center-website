@@ -12,89 +12,105 @@ export default function Exercise_bank() {
     const [module, setModule] = useState('')
     const [skill, setSkill] = useState('')
     const [content, setContent] = useState<ReactElement | any | null>(null)
-    const [exercise, setExercise] = useState([[]])
+    // const [exercise, setExercise] = useState([])
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
 
+    var exercise = [Object]
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
     };
 
-    var a = []
     useEffect(() => {
         fetch('/api/exercisesBank')
             .then(res => res.json())
-            .then(data =>{
-                //setExercise(data)
-                a = data
-                //console.log(a)
+            .then(data=> {
+                exercise.push(data)
+                console.log(data)
             })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+            // .catch(error => {
+            //     console.error('Error fetching data:', error);
+            // });
+        }, []);
+        console.log(exercie)
+
+        //console.log(exercise)
+
+    
+        // arr.forEach(item =>{
             
-        console.log(a[0])
-        
+        //     })
+            
+        // })
+        // console.log("abc", exercise)
+        //console.log(a)
+        // console.log(exercise)
+        // exercise.forEach(item => {
+        //     console.log(item)
+        // })
+        //console.log(arr)
+        //console.log(a)
+        //console.log(exercise)
         
         // Mặc định hiển thị nội dung khi trang được tải
-        // if (selectedButton === null) {
-        //     setContent(
-        //         <div className="flex justify-between mt-10 gap-2">
-        //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-        //                 <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4"></p>
-        //                 <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1"></p>
-        //                 </div>
 
-        //                 <div className="mt-10 ml-4">
-        //                     <Link href={"/exercise_bank/ex_in_exbank"}>
-        //                         <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-        //                             <Ieye className="w-[1em] fill-blue-400" />
-        //                             <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-        //                         </button>
-        //                     </Link>
-        //                 </div>
-        //             </div>
+        useEffect(() => {
+        if (selectedButton == null) {
+            setContent(
+                <div className="flex justify-between mt-10 gap-2">
+                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].module</p>
+                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
+                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].title</p>
+                        </div>
 
-        //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-        //                 <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">IELTS Academic Grammar 0 - 2.5 | Tân ngữ</p>
-        //                 <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">IELTS</p>
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Academic</p>
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Grammar</p>
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">0 - 2.5</p>
-        //                 </div>
+                        <div className="mt-10 ml-4">
+                            <Link href={"/exercise_bank/ex_in_exbank"}>
+                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
+                                    <Ieye className="w-[1em] fill-blue-400" />
+                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+{/* 
+                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].title</p>
+                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
+                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].module</p>
+                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].skill</p>
+                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1"></p>
+                        </div>
 
-        //                 <div className="mt-10 ml-4">
-        //                     <Link href={"/exercise_bank/ex_in_exbank"}>
-        //                         <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-        //                             <Ieye className="w-[1em] fill-blue-400" />
-        //                             <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-        //                         </button>
-        //                     </Link>
-        //                 </div>
-        //             </div>
+                        <div className="mt-10 ml-4">
+                            <Link href={"/exercise_bank/ex_in_exbank"}>
+                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
+                                    <Ieye className="w-[1em] fill-blue-400" />
+                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
 
-        //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-        //                 <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">IELTS Academic Grammar 0 - 2.5 | Tân ngữ</p>
-        //                 <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">IELTS</p>
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Academic</p>
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">Grammar</p>
-        //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">0 - 2.5</p>
-        //                 </div>
+                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].title</p>
+                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
+                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].module</p>
+                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].skill</p>
+                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1"></p>
+                        </div>
 
-        //                 <div className="mt-10 ml-4">
-        //                     <Link href={"/exercise_bank/ex_in_exbank"}>
-        //                         <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-        //                             <Ieye className="w-[1em] fill-blue-400" />
-        //                             <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-        //                         </button>
-        //                     </Link>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     );
-        // }
+                        <div className="mt-10 ml-4">
+                            <Link href={"/exercise_bank/ex_in_exbank"}>
+                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
+                                    <Ieye className="w-[1em] fill-blue-400" />
+                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
+                                </button>
+                            </Link>
+                        </div>
+            </div> */}
+                </div>
+            );
+        }
 
         // if (selectedButton !== null) {
         //     if (selectedButton === 1) {
@@ -108,6 +124,7 @@ export default function Exercise_bank() {
         //     }
         // }
     }, []);
+    
 
     //console.log(exercise)
 
@@ -161,7 +178,7 @@ export default function Exercise_bank() {
                     </div>
 
                     <div>
-                        {/* {exercise[0].content} */}
+                        {content}
                         
                     </div>
                 </div>

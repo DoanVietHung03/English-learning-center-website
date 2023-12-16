@@ -4,9 +4,6 @@ const sessionSchema =new Schema({
     course_id: {
         type: String
     },
-    Date: {
-        type: Date
-    },
     Room: {
         type: String
     },

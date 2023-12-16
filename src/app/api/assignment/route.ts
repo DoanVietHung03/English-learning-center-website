@@ -16,3 +16,9 @@ export async function POST(req: { json: () => any }) {
  //   console.log(createdAssignment)
     return Response.json(createdAssignment)
 }
+
+export async function GET() {
+    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
+    const exbank = await Assignment.find({content: "egrheshr"});
+    return Response.json(exbank)
+}

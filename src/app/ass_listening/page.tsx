@@ -3,8 +3,25 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import ReactAudioPlayer from "react-audio-player"
 
-export default function Ass_Reading() {
+export default function Ass_Listening() {
+    const[file, setFile] = useState('')
+    
+    useEffect(() => {
+        fetch('/api/assignment')
+            .then(res => res.json())
+            .then(data=> {
+                console.log(data)
+                setFile(data.attachedFile)
+            })
+            // .catch(error => {
+            //     console.error('Error fetching data:', error);
+            // });
+        }, []);
+
+        console.log(file[0])
     return (
         <>
             <Header />
@@ -46,7 +63,17 @@ export default function Ass_Reading() {
                             <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center inline-flex p-4">
                                 <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
                             </div>
-                        </div>                       
+                        </div> 
+                        <div className="bg-white p-3 rounded-lg border-2">
+                                                <h2>Choose file Listening:</h2>
+                                                <input type="file" accept="audio"  />
+                                                <ReactAudioPlayer
+                                                    src={file}
+                                                    autoPlay
+                                                    controls
+                                                    className="w-full"
+                                                />
+                                            </div>                      
                     </div>
                 </div>
             </div>
