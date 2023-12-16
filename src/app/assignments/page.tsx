@@ -1,3 +1,4 @@
+'use client'
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
@@ -5,6 +6,7 @@ import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
 
 export default function Assigments() {
+    const type = localStorage.getItem('userType')
     return (
         <>
             <Header />
@@ -30,13 +32,13 @@ export default function Assigments() {
                                     <p className="ml-2">Assignments</p>
                                 </button>
                             </div>
-                            
-                            <div className="flow-root">
-                                <Link href={'/teacher_add_ass'} className="float-right bg-zinc-100 border border-stone-300 hover:bg-green-300 p-2 rounded-lg ml-8">
-                                    Add assignment
-                                </Link>
-                            </div>
-                              
+                            {(type == 'Teacher') &&
+                                < div className="flow-root">
+                                    <Link href={'/teacher_add_ass'} className="float-right bg-zinc-100 border border-stone-300 hover:bg-green-300 p-2 rounded-lg ml-8">
+                                        Add assignment
+                                    </Link>
+                                </div>
+                            }
 
                             <Link href={'/api/ass_speaking'} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
@@ -113,7 +115,7 @@ export default function Assigments() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

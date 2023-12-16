@@ -50,11 +50,13 @@ export default function SideBar() {
                             Report</button>
                     </Link>
                     {/* <!-- chatting --> */}
-                    <Link href={'/chat'}
-                        className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
-                        <Ichat className="w-8 h-8 fill-white" />
-                        <button className="text4 font-poppins font-semibold text-sm text-white ml-3">Chat</button>
-                    </Link>
+                    {(type !== 'Admin') &&
+                        <Link href={'/chat'}
+                            className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
+                            <Ichat className="w-8 h-8 fill-white" />
+                            <button className="text4 font-poppins font-semibold text-sm text-white ml-3">Chat</button>
+                        </Link>
+                    }
                     {(type == 'Admin') &&
                         (<Link href={'/user_management'}
                             className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">

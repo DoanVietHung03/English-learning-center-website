@@ -1,3 +1,4 @@
+'use client'
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
