@@ -18,6 +18,6 @@ export async function POST(req: { json: () => any }) {
 
 export async function GET() {
     mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
-    const exbank = await Exercise.find();
+    const exbank = await Exercise.find({},{title: 1, module: 1, skill: 1});
     return Response.json(exbank)
 }

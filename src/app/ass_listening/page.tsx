@@ -3,10 +3,40 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
+import { useEffect, useState } from "react"
+import ReactAudioPlayer from "react-audio-player"
+import { DateRangeIcon } from "@mui/x-date-pickers"
 
-export default function Ass_Reading() {
+export default function Ass_Listening() {
+    const[file, setFile] = useState([])
+    const[answer, setSubmission] = useState()
+    
+
+    useEffect(() => {
+        fetch('/api/assignment')
+            .then(res => res.json())
+            .then(data=> {
+                //console.log(Object.keys(data))
+                console.log(data)
+                setFile(Object.values(data))
+                //console.log(file)
+            })
+            // .catch(error => {
+            //     console.error('Error fetching data:', error);
+            // });
+        }, []);
+
+       
+})
+
+        //const file1 = Object.keys(file);
+        // file.map(file => (
+        //     console.log(file)
+        // ))
+        //console.log(file1)
     return (
-        <>
+        <>  
+
             <Header />
             <div className="flex">
                 <SideBar />
@@ -46,7 +76,17 @@ export default function Ass_Reading() {
                             <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center inline-flex p-4">
                                 <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
                             </div>
-                        </div>                       
+                        </div> 
+                        <div className="bg-white p-3 rounded-lg border-2">
+                                                <h2>Choose file Listening:</h2>
+                                                <input type="file" accept="audio"  />
+                                                <ReactAudioPlayer
+                                                    src={file}
+                                                    autoPlay
+                                                    controls
+                                                    className="w-full"
+                                                />
+                                            </div>                      
                     </div>
                 </div>
             </div>

@@ -1,23 +1,28 @@
-'use client'
-
+"use client"
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import React from "react"
 import { SyntheticEvent, useEffect, useState } from "react"
 
-export default function Ass_Wri() {
-    const [topic, SetTopic] = useState('')
-    const [assignment, SetAssignment] = useState('')
+export default function Do_Assignment() {
+    const [assignment, SetAssignment] = useState([])
+    const [answer, SetAnswer] = useState('')
 
     //get CourseID
     //lay info assignment where ass.idCourse = Course.idCourse
     //luu info submission voi id ass
+
+
     useEffect(() => {
-        fetch('/api/assignment')
+        fetch('/api/assignment_info', {
+            method: 'POST',
+            body: JSON.stringify({id: localStorage.getItem("assignment_id")}),
+            headers: { 'Content-Type': 'application/json'},
+        })
             .then(res => res.json())
             .then(data => {
-                SetAssignment(data.assignment)
+                SetAssignment(data)
             })
     }, []);
 
@@ -25,7 +30,7 @@ export default function Ass_Wri() {
         ev.preventDefault()
         const response =  await fetch('/api/submission', {
             method: 'POST',
-            body: JSON.stringify({}),
+            body: JSON.stringify({answer, id_student: localStorage.getItem("userName"), id_assignment: localStorage.getItem("assignment_id")}),
             headers: { 'Content-Type': 'application/json'},
         })
     }
@@ -47,22 +52,23 @@ export default function Ass_Wri() {
                     <div className="bg-white mt-2 pb-8 rounded">
                         <div className="flex items-center justify-end py-2 border-b border-stone-300 mx-4">
                             <Link href={''}>
-                                <button className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm">
+                                <button onClick={handleFormSubmit} className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm">
                                     Submit
                                 </button>
                             </Link>
                         </div>
 
+                        {assignment.map(info => (
                         <div className="grid grid-cols-2 mt-4 py-4 mx-4 gap-6">
                             <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4">
-                                Write a full essay with this question:<br/>
-                                Although there is a lot of translation software available, learning a language could still be advantageous. To what extent do you agree or disagree? (Đề thi ngày 09/04/2022)
+                                {info.content}
                             </div>
 
                             <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center inline-flex p-4">
-                                <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
+                                <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..." ></textarea>
                             </div>
                         </div>
+                        ))}
                     </div>
                 </div>
             </div>
