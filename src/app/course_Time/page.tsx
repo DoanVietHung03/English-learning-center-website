@@ -75,7 +75,7 @@ export default function CourseTime() {
                                     {course.schedule}
                                 </div>
                             </div>
-                            <div className="inline-block ml-4 gap-4">
+                            <div className="inline-block ml-4 gap-4 h-96 overflow-y-auto">
                                 {
                                     sessions.map((session, i) => (
                                         <>
