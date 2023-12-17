@@ -73,7 +73,7 @@ export default function Assigments() {
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
-                                        {assignment.content}
+                                        {/*assignment.content*/}
                                     </div>
                                 </div>
 
