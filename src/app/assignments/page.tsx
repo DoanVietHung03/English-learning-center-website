@@ -5,6 +5,7 @@ import Link from "next/link"
 import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
 import { useEffect, useState } from "react"
+import moment from "moment"
 
 export default function Assigments() {
     const type = localStorage.getItem('userType')
@@ -34,7 +35,6 @@ export default function Assigments() {
     
     return (
         <>
-            
             <Header />
             <div className="flex">
                 <SideBar />
@@ -68,8 +68,8 @@ export default function Assigments() {
                                 </div>
                             }
 
-                            {assignments.map(assignment => (assignment.skill !== 'Speaking' &&(
-                            <Link href={'/ass_speaking'} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            {assignments.map(assignment => (assignment.skill !== 'Listening' &&(
+                            <Link href={'/ass_writing'} onClick={() => { localStorage.setItem("assignment_id", assignment._id) }} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
@@ -82,13 +82,13 @@ export default function Assigments() {
                                         Deadline:
                                     </div>
                                     <div className="ml-1 font-poppins">
-                                        {assignment.deadline}
+                                        {moment.utc(assignment.startDate).format('MM/DD/YYYY')}
                                     </div>
                                 </div>
                             </Link>
                             )))}
 
-                            <Link href={'/ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            {/* <Link href={'/ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
@@ -104,7 +104,7 @@ export default function Assigments() {
                                         30/02/2023
                                     </div>
                                 </div>
-                            </Link>
+                            </Link> */}
                             
                             {assignments.map(assignment => (assignment.skill === 'Listening' &&(
                             <Link href={'/ass_listening'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
@@ -126,7 +126,7 @@ export default function Assigments() {
                             </Link>
                             )))}
 
-                            <Link href={'/ass_writing'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            {/* <Link href={'/ass_writing'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
@@ -142,7 +142,7 @@ export default function Assigments() {
                                         30/02/2023
                                     </div>
                                 </div>   
-                            </Link>
+                            </Link> */}
                         </div>
                     </div>
 
