@@ -5,7 +5,7 @@ const exerciseSchema = new Schema({
         type: String,
         required: true
     },
-    module:{
+    module: {
         type: String,
         required: true
     },
@@ -19,14 +19,14 @@ const exerciseSchema = new Schema({
     },
     solution: {
         type: String,
-      //  required: true
+        //  required: true
     },
     attachedFile: {
         type: String,
         required: false
     },
     progress: [{
-        student_id:{
+        student_id: {
             type: String,
             required: false
         },

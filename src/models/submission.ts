@@ -2,18 +2,20 @@ import { Schema, model, models } from "mongoose";
 
 const submissionSchema = new Schema({
     student_id:{
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        type: String,
+        required: true
     },
     assignment_id:{
-        type: Schema.Types.ObjectId,
-        ref: 'Assignment'
+        type: String,
+        required: true
     },
     answer: {
         type: String,
+        required: false
     },
     grade:{
-        type: Number
+        type: Number,
+        required: false
     }
 }, { timestamps: true });
 

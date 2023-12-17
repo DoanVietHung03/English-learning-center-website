@@ -31,7 +31,7 @@ export default function Add_Ass() {
         ev.preventDefault()
         await fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ title, deadline, content, skill, file }),
+            body: JSON.stringify({ title, deadline, content, skill, file, id: localStorage.getItem('course_id') }),
             headers: { 'Content-Type': 'application/json' },
         })
     }

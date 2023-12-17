@@ -5,21 +5,29 @@ import Header from "@/components/layout/header"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import ReactAudioPlayer from "react-audio-player"
+import { DateRangeIcon } from "@mui/x-date-pickers"
 
 export default function Ass_Listening() {
-    const[file, setFile] = useState('')
+    const[file, setFile] = useState([])
+    const[answer, setSubmission] = useState()
     
+
     useEffect(() => {
         fetch('/api/assignment')
             .then(res => res.json())
             .then(data=> {
-                console.log(Object.keys(data))
-                setFile(data.attachedFile)
+                //console.log(Object.keys(data))
+                console.log(data)
+                setFile(Object.values(data))
+                //console.log(file)
             })
             // .catch(error => {
             //     console.error('Error fetching data:', error);
             // });
         }, []);
+
+       
+})
 
         //const file1 = Object.keys(file);
         // file.map(file => (
@@ -27,7 +35,8 @@ export default function Ass_Listening() {
         // ))
         //console.log(file1)
     return (
-        <>
+        <>  
+
             <Header />
             <div className="flex">
                 <SideBar />

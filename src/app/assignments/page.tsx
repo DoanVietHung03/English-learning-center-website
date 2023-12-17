@@ -4,11 +4,38 @@ import Header from "@/components/layout/header"
 import Link from "next/link"
 import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
+import { useEffect, useState } from "react"
 
 export default function Assigments() {
     const type = localStorage.getItem('userType')
+    const [assignments, setAssignment] = useState([])
+    
+    console.log(localStorage.getItem('userType'))
+    console.log(localStorage.getItem('course_id'))
+    
+
+    useEffect(() => {
+        const response = fetch('/api/assignment',{
+            method: 'GET',
+            body: JSON.stringify({ id: localStorage.getItem('course_id') }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        
+         .then(res => res.json())
+         .then(data => {
+             setAssignment(data)
+             console.log(data)
+         })
+         .catch(error => {
+             console.error('Error fetching data:', error);
+        });
+    }, []);
+
+    console.log(assignments)
+    
     return (
         <>
+            
             <Header />
             <div className="flex">
                 <SideBar />
@@ -16,9 +43,11 @@ export default function Assigments() {
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
                         Assignments
                     </div>
+                    
                     <div className="mt-4 bg-white rounded-lg">
                         <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASSName] aoe - Q.5 ClassNameRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
                     </div>
+                
 
                     <div className="bg-white mt-2 pb-8 rounded">
                         <div className="flex-col ml-6 mr-6">
@@ -40,11 +69,12 @@ export default function Assigments() {
                                 </div>
                             }
 
-                            <Link href={'/api/ass_speaking'} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            {assignments.map(assignment => (
+                            <Link href={'/api/ass_speaking'}  onClick={() => { localStorage.setItem("assignment_id", assignment.content) }} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
-                                        Essay-Speaking-Lesson 1
+                                        {assignment.content}
                                     </div>
                                 </div>
 
@@ -57,6 +87,7 @@ export default function Assigments() {
                                     </div>
                                 </div>
                             </Link>
+                            ))}
 
                             <Link href={'/api/ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
@@ -109,11 +140,11 @@ export default function Assigments() {
                                     <div className="ml-1 font-poppins">
                                         30/02/2023
                                     </div>
-                                </div>
+                                </div>   
                             </Link>
-
                         </div>
                     </div>
+
                 </div>
             </div >
         </>
