@@ -68,12 +68,12 @@ export default function Assigments() {
                                 </div>
                             }
 
-                            {assignments.map(assignment => (
+                            {assignments.map(assignment => (assignment.skill !== 'Speaking' &&(
                             <Link href={'/ass_speaking'} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
-                                        {assignment.content}
+                                        {assignment.title} - {assignment.skill} 
                                     </div>
                                 </div>
 
@@ -86,7 +86,7 @@ export default function Assigments() {
                                     </div>
                                 </div>
                             </Link>
-                            ))}
+                            )))}
 
                             <Link href={'/ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
@@ -105,7 +105,8 @@ export default function Assigments() {
                                     </div>
                                 </div>
                             </Link>
-
+                            
+                            {assignments.map(assignment => (assignment.skill === 'Listening' &&(
                             <Link href={'/ass_listening'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
@@ -123,6 +124,7 @@ export default function Assigments() {
                                     </div>
                                 </div>
                             </Link>
+                            )))}
 
                             <Link href={'/ass_writing'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
