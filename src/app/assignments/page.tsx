@@ -15,12 +15,11 @@ export default function Assigments() {
     
 
     useEffect(() => {
-        const response = fetch('/api/assignment',{
-            method: 'GET',
+        fetch('/api/assignment_list',{
+            method: 'POST',
             body: JSON.stringify({ id: localStorage.getItem('course_id') }),
             headers: { 'Content-Type': 'application/json' },
         })
-        
          .then(res => res.json())
          .then(data => {
              setAssignment(data)
@@ -31,7 +30,7 @@ export default function Assigments() {
         });
     }, []);
 
-    console.log(assignments)
+    //console.log(assignments)
     
     return (
         <>
@@ -69,11 +68,12 @@ export default function Assigments() {
                                 </div>
                             }
 
+                            {assignments.map(assignment => (
                             <Link href={'/ass_speaking'} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
-                                        {/*assignment.content*/}
+                                        {assignment.content}
                                     </div>
                                 </div>
 
@@ -82,7 +82,7 @@ export default function Assigments() {
                                         Deadline:
                                     </div>
                                     <div className="ml-1 font-poppins">
-                                        30/02/2023
+                                        {assignment.deadline}
                                     </div>
                                 </div>
                             </Link>
