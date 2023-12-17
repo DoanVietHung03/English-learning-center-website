@@ -69,8 +69,7 @@ export default function Assigments() {
                                 </div>
                             }
 
-                            {assignments.map(assignment => (
-                            <Link href={'/api/ass_speaking'}  onClick={() => { localStorage.setItem("assignment_id", assignment.content) }} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            <Link href={'/ass_speaking'} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
@@ -89,7 +88,7 @@ export default function Assigments() {
                             </Link>
                             ))}
 
-                            <Link href={'/api/ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            <Link href={'/ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
@@ -107,7 +106,7 @@ export default function Assigments() {
                                 </div>
                             </Link>
 
-                            <Link href={'/api/ass_listening'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            <Link href={'/ass_listening'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
@@ -125,7 +124,7 @@ export default function Assigments() {
                                 </div>
                             </Link>
 
-                            <Link href={'/api/ass_writing'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            <Link href={'/ass_writing'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
