@@ -10,8 +10,11 @@ import { SyntheticEvent, useEffect, useState, ReactElement } from "react"
 import Image from "next/image"
 import Select from "react-select";
 import { useRouter } from 'next/navigation'
+import moment from "moment"
 
 export default function Chat() {
+    const [sender, setSender] = useState('')
+    const [message, setMessage] = useState('')
     const [receiver, setReceiver] = useState('')
     const [content, setContent] = useState('')
     const [teachers, setTeachers] = useState([]);
@@ -19,8 +22,11 @@ export default function Chat() {
     const [date, setDate] = useState(Date.now());
     const [file, setFile] = useState('');
     const router = useRouter();
-    var [message_sent, SetMessageSent] = useState([])
+    const [message_sent, SetMessageSent] = useState([]);
+    const [message_received, SetMessageReceived] = useState([]);
 
+    const type = localStorage.getItem('phone')
+    
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
     };
@@ -38,18 +44,20 @@ export default function Chat() {
     }))
 
     useEffect(() => {
-        fetch('/api/user')//, {
-            // method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/json',
-            // },
-           // body: JSON.stringify({userName: localStorage.getItem("userName")}),
-      //  })
+        fetch('/api/message', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({sender: localStorage.getItem("phone")}),
+       })
             .then(res => res.json())
             .then(data => {
                 setTeachers(data.teachers)
                 setStudents(data.students)
+                setReceiver(data.receiver)
             })
+            .catch(error => console.error('Error:', error));
     }, []);
 
 
@@ -61,7 +69,7 @@ export default function Chat() {
         ev.preventDefault()
         const response = await fetch('/api/message', {
             method: 'POST',
-            body: JSON.stringify({ receiver, content, date, file }),
+            body: JSON.stringify({ sender, receiver, content, date, file }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
@@ -80,7 +88,7 @@ export default function Chat() {
                     </div>
 
                     <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
-                        Teacher please answer me this question, it’s so hard that I cannot do it myself, please answer me senpai !!
+                        {message.sender}
                     </div>
 
                     <button className="flex items-center pl-7 mt-3 pb-6">
@@ -143,7 +151,7 @@ export default function Chat() {
                             {/* Right side */}
                             <div className="bg-zinc-100 rounded-lg border border-neutral-400 mt-6 mr-7 ml-8">
                                 <div className="flex items-center justify-center">
-                                    <p className="mt-8 text-black text-2xl font-bold font-['Poppins'] leading-tight tracking-tight">Send message</p>
+                                    <p className="mt-8 text-black text-2xl font-bold leading-tight tracking-tight">Send message</p>
                                 </div>
                                 <div className="mt-6 ml-7">
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Choose receiver</p>
@@ -172,7 +180,7 @@ export default function Chat() {
                                 <div className="flex mt-[86px] mr-4 justify-end pb-8">
                                     <button
                                         onClick={handleFormSubmit}
-                                        className="text-center text-black text-base font-['Poppins'] bg-lime-300 rounded-lg px-4 py-1 hover:bg-lime-400">
+                                        className="text-center text-black text-base bg-lime-300 rounded-lg px-4 py-1 hover:bg-lime-400">
                                         Send
                                     </button>
                                 </div>
