@@ -79,11 +79,11 @@ export default function CourseTime() {
                                 {
                                     sessions.map((session, i) => (
                                         <>
-                                            <div className="inline-block bg-white mb-4 mr-24 rounded-lg py-3 pl-4 pr-28">
+                                            <div className="inline-block bg-white mb-4 mr-8 rounded-lg py-3 pl-4 pr-2">
                                                 <div className="font-bold text-blue-400 mb-3">
                                                     OFFLINE
                                                 </div>
-                                                <div className="flex gap-12 items-center mb-3">
+                                                <div className="flex gap-10 items-center mb-3">
                                                     <div className="font-semibold font-poppins">
                                                         {session.name}
                                                     </div>

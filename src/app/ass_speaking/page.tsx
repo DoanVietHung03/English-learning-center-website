@@ -1,9 +1,17 @@
+'use client'
+
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import Imicro from "@/components/icons/microphone"
+import React, { useState } from 'react'
+import { Span } from "next/dist/trace"
 
 export default function Ass_Speaking() {
+    const [file, setFile] = useState('');
+    function handleChangeFile(ev) {
+        setFile(URL.createObjectURL(ev.target.files[0]));
+    }
     return (
         <>
             <Header />
@@ -35,12 +43,18 @@ export default function Ass_Speaking() {
 
                             <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center inline-flex p-4 pb-12">
                                 <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
-                                <div className="flex items-center justify-end mt-[65px] w-full">
-                                    <div className="w-fit py-1 px-2 border border-zinc-400 bg-white rounded-lg">
-                                        <button className="flex items-center justify-end border p-1 bg-zinc-300 hover:bg-zinc-400">
-                                            <Imicro />
-                                            <p className="ml-2 font-poppins text-center text-sm">Choose recorded file</p>
-                                        </button>
+                                <div className="mt-[65px] w-full items-center justify-end flex">
+                                    <div className="w-1/3">
+                                        <div className="w-fit py-1 px-2 border border-zinc-400 bg-white rounded-lg">
+                                            <div className="flex items-center justify-end border p-1 bg-zinc-300">
+                                                <Imicro />
+                                                <p className="ml-2 font-poppins text-center text-sm">Choose recorded file</p>
+                                            </div>
+                                        </div>
+                                        <input
+                                            className="mb-3 mt-2"
+                                            type="file"
+                                            onChange={handleChangeFile} />
                                     </div>
                                 </div>
                             </div>

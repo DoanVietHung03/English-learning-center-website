@@ -125,13 +125,13 @@ export default function Chat() {
                             <div className="border-r-2 border-black mt-6 ml-9">
                                 <button
                                     onClick={() => handleButtonClick(1)}
-                                    className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 1 ? 'bg-sky-500' : ''}`}>
+                                    className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 1 ? 'bg-sky-600' : ''}`}>
                                     Chat received
                                 </button>
 
                                 <button
                                     onClick={() => handleButtonClick(2)}
-                                    className={`ml-6 bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-sky-500' : ''}`}>
+                                    className={`ml-6 bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-sky-600' : ''}`}>
                                     Chat sent
                                 </button>
 
