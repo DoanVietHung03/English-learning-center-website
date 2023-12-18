@@ -6,9 +6,13 @@ import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
 import { useState, useEffect } from "react"
 import moment from "moment"
+import IcirclePlus from "@/components/icons/circlePlus"
+import Ieye from "@/components/icons/eye"
 export default function CourseTime() {
     const [course, setCourse] = useState('')
     const [sessions, setSessions] = useState([])
+    const [attendances, setAttendances] = useState([])
+    const type = localStorage.getItem("userType")
     useEffect(() => {
         fetch('/api/session', {
             method: 'POST',
@@ -22,13 +26,13 @@ export default function CourseTime() {
                 // Hiển thị danh sách khóa học trong giao diện
                 setCourse(data.course)
                 setSessions(data.sessions)
+                setAttendances(data.attendance)
+                console.log("123", data.attendance)
                 // sessions = data.sessions
-                console.log(data.sessions)
-                console.log(sessions)
             })
             .catch(error => console.error('Error:', error));
     }, []);
-    // console.log(sessions)
+    console.log(attendances)
     return (
         <>
             <Header />
@@ -50,7 +54,7 @@ export default function CourseTime() {
                                 </button>
                                 <button className="flex items-center justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg ml-8">
                                     <Ibook />
-                                    <Link href={'/assignments'}  className="ml-2">Assignments</Link>
+                                    <Link href={'/assignments'} className="ml-2">Assignments</Link>
                                 </button>
                             </div>
 
@@ -99,6 +103,20 @@ export default function CourseTime() {
                                                 }
                                                 {(i % 3 == 1) &&
                                                     <div className="font-bold">Skill: Speaking</div>
+                                                }
+                                                {(type == 'Teacher') && (!attendances[i]) &&
+                                                    <Link href='/course_Time/add_attend'
+                                                        className="bg-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg">
+                                                        <IcirclePlus className="w-5 fill-blue-400" />
+                                                        Create Attendance List
+                                                    </Link>
+                                                }
+                                                {(type == 'Teacher' || type == 'Admin') && (attendances[i]) &&
+                                                    <Link href='/course_Time/add_attend'
+                                                        className="bg-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg">
+                                                        <Ieye className="w-5 fill-blue-400" />
+                                                        View Attendance List
+                                                    </Link>
                                                 }
                                             </div>
                                         </>
