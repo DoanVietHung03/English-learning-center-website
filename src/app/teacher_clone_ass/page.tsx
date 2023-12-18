@@ -4,28 +4,18 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import { SyntheticEvent, useState, useEffect } from "react"
+import { useRouter } from 'next/navigation'
 import Select from "react-select";
 import * as React from 'react';
-import dayjs, { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Image from "next/image";
-import ReactAudioPlayer from 'react-audio-player';
 import Link from "next/link";
-import ImagnifyingGlass from "@/components/icons/icon_magnifyingGlass";
-import mongoose from "mongoose";
-import { Course } from "@/models/course";
-import { MenuItem } from "@mui/material";
 import Icheck from "@/components/icons/icon_check";
-
 
 export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
     const [assi, setAssi] = useState([])
     const [assignments, setAssignments] = useState([])
     const [assignmentChoosed, setAssignmentChoosed] = useState(Number)
+    const router = useRouter();
     useEffect(() => {
         fetch('/api/courseList', {
             method: 'POST',
@@ -61,6 +51,7 @@ export default function Clone_Assignment() {
             }),
             headers: { 'Content-Type': 'application/json' },
         })
+        router.push('/assignments')
     }
     const handleChangeCourse = (ev: SyntheticEvent) => {
         fetch('/api/assignment_list', {
