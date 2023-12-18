@@ -18,6 +18,7 @@ import ImagnifyingGlass from "@/components/icons/icon_magnifyingGlass";
 import mongoose from "mongoose";
 import { Course } from "@/models/course";
 import { MenuItem } from "@mui/material";
+import Icheck from "@/components/icons/icon_check";
 
 
 export default function Clone_Assignment() {
@@ -109,8 +110,8 @@ export default function Clone_Assignment() {
                                 </div>
 
                                 <div className="flex items-end justify-end">
-                                    <button onClick={handleFormSubmit} 
-                                    className="bg-lime-300 hover:bg-lime-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight">
+                                    <button onClick={handleFormSubmit}
+                                        className="bg-lime-400 text-white hover:bg-lime-200 hover:text-gray-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight transition-colors duration-300">
                                         Clone
                                     </button>
                                 </div>
@@ -137,10 +138,17 @@ export default function Clone_Assignment() {
                                         <div>
                                             {i}-{"  " + assignment.title}-{"  " + assignment.skill}
                                         </div>
-                                        <button onClick={()=> setAssignmentChoosed(i)}
-                                            className="p-2 bg-lime-400 rounded-lg font-semibold text-white">
-                                            Choose
-                                        </button>
+                                        {(assignmentChoosed !== i) &&
+                                            <button onClick={() => setAssignmentChoosed(i)}
+                                                className="p-2 bg-lime-400 rounded-lg font-semibold text-white hover:bg-lime-200 hover:text-gray-400 transition-colors duration-300">
+                                                Choose
+                                            </button>
+                                        }
+                                        {(assignmentChoosed == i) &&
+                                            <div className="flex p-2 bg-lime-400 rounded-lg font-semibold text-white w-[71px] py-[10px] items-center justify-center">
+                                                <Icheck className="fill-white w-5" />
+                                            </div>
+                                        }
                                     </div>
                                 ))
                             }
