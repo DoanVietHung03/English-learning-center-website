@@ -87,7 +87,7 @@ export default function Clone_Assignment() {
             <Header />
             <div className="flex">
                 <SideBar />
-                <div className="ml-14 w-2/3">
+                <div className="ml-14">
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
                         Assignments
                     </div>
@@ -128,30 +128,32 @@ export default function Clone_Assignment() {
                         </div>
 
 
-                        <div className="mt-6 rounded-lg border border-zinc-400 h-52">
+                        <div className="mt-6 rounded-lg border border-zinc-400">
                             <div className="mx-4 text-center border-b border-zinc-400">
                                 Result
                             </div>
-                            {
-                                assignments.map((assignment, i) => (
-                                    <div className="flex justify-between px-5 py-3">
-                                        <div>
-                                            {i}-{"  " + assignment.title}-{"  " + assignment.skill}
-                                        </div>
-                                        {(assignmentChoosed !== i) &&
-                                            <button onClick={() => setAssignmentChoosed(i)}
-                                                className="p-2 bg-lime-400 rounded-lg font-semibold text-white hover:bg-lime-200 hover:text-gray-400 transition-colors duration-300">
-                                                Choose
-                                            </button>
-                                        }
-                                        {(assignmentChoosed == i) &&
-                                            <div className="flex p-2 bg-lime-400 rounded-lg font-semibold text-white w-[71px] py-[10px] items-center justify-center">
-                                                <Icheck className="fill-white w-5" />
+                            <div className="h-52 overflow-y-scroll">
+                                {
+                                    assignments.map((assignment, i) => (
+                                        <div className="flex justify-between px-5 py-3">
+                                            <div>
+                                                {i}-{"  " + assignment.title}-{"  " + assignment.skill}
                                             </div>
-                                        }
-                                    </div>
-                                ))
-                            }
+                                            {(assignmentChoosed !== i) &&
+                                                <button onClick={() => setAssignmentChoosed(i)}
+                                                    className="p-2 bg-lime-400 rounded-lg font-semibold text-white hover:bg-lime-200 hover:text-gray-400 transition-colors duration-300">
+                                                    Choose
+                                                </button>
+                                            }
+                                            {(assignmentChoosed == i) &&
+                                                <div className="flex p-2 bg-lime-400 rounded-lg font-semibold text-white w-[71px] py-[10px] items-center justify-center">
+                                                    <Icheck className="fill-white w-5" />
+                                                </div>
+                                            }
+                                        </div>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
