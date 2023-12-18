@@ -13,6 +13,22 @@ export default function Ass_Grading() {
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
+
+    function findName(idUser: String){
+        fetch('/api/userName',{
+            method: 'POST',
+            body: JSON.stringify({ id: idUser }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+         .then(res => res.json())
+         .then(data => {
+            console.log(data)
+            return data
+         })
+         .catch(error => {
+             console.error('Error fetching data:', error);
+        });
+    }
     
     useEffect(() => {
         fetch('/api/submission_list',{
@@ -29,6 +45,8 @@ export default function Ass_Grading() {
              console.error('Error fetching data:', error);
         });
     }, []);
+
+
 
     return (
         <>

@@ -24,7 +24,7 @@ export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
     const [assi, setAssi] = useState([])
     const [assignments, setAssignments] = useState([])
-    const [assignmentChoosed, setAssignmentChoosed] = useState({})
+    const [assignmentChoosed, setAssignmentChoosed] = useState(Number)
     useEffect(() => {
         fetch('/api/courseList', {
             method: 'POST',
@@ -49,14 +49,13 @@ export default function Clone_Assignment() {
         })
 
     async function handleFormSubmit(ev: SyntheticEvent) {
-        setAssignmentChoosed(ev.value)
-        const response = await fetch('/api/assigment', {
+        const response = await fetch('/api/assignment', {
             method: 'POST',
             body: JSON.stringify({
-                title: assignmentChoosed.title,
-                content: assignmentChoosed.content,
-                skill: assignmentChoosed.skill,
-                deadline: assignmentChoosed.deadline,
+                title: assignments[assignmentChoosed].title,
+                content: assignments[assignmentChoosed].content,
+                skill: assignments[assignmentChoosed].skill,
+                deadline: assignments[assignmentChoosed].deadline,
                 id: localStorage.getItem('course_id')
             }),
             headers: { 'Content-Type': 'application/json' },
@@ -75,8 +74,13 @@ export default function Clone_Assignment() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-
     };
+
+    // const handleChangeAssignment = (ev: SyntheticEvent) => {
+    //     setAssignmentChoosed(ev.value)
+    //     console.log(ev.value)
+    // };
+
     return (
         <>
             <Header />
@@ -105,7 +109,8 @@ export default function Clone_Assignment() {
                                 </div>
 
                                 <div className="flex items-end justify-end">
-                                    <button className="bg-lime-300 hover:bg-lime-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight">
+                                    <button onClick={handleFormSubmit} 
+                                    className="bg-lime-300 hover:bg-lime-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight">
                                         Clone
                                     </button>
                                 </div>
@@ -127,14 +132,14 @@ export default function Clone_Assignment() {
                                 Result
                             </div>
                             {
-                                assignments.map((assignment: { title: String, skill: String }, i) => (
+                                assignments.map((assignment, i) => (
                                     <div className="flex justify-between px-5 py-3">
                                         <div>
                                             {i}-{"  " + assignment.title}-{"  " + assignment.skill}
                                         </div>
-                                        <button onClick={handleFormSubmit}
+                                        <button onClick={()=> setAssignmentChoosed(i)}
                                             className="p-2 bg-lime-400 rounded-lg font-semibold text-white">
-                                            clone
+                                            Choose
                                         </button>
                                     </div>
                                 ))

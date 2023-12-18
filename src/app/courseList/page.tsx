@@ -13,8 +13,57 @@ import moment from 'moment';
 export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
+    const [name, setName] = useState('')
+    
 
     const type = localStorage.getItem('userType')
+    
+
+    // function findName(idUser: String){
+    //     var Uname: String
+    //     fetch('/api/userName',{
+    //         method: 'POST',
+    //         body: JSON.stringify({ id: idUser }),
+    //         headers: { 'Content-Type': 'application/json' },
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         //console.log(data)
+    //         var map = new Map(Object.entries(data));
+    //         const name = map.get("name")
+    //         if
+    //         Uname = name
+    //         console.log(typeof(name))
+    //      })
+    //      .catch(error => {
+    //          console.error('Error fetching data:', error);
+    //     });
+    //     console.log(Uname)
+    //     return Uname
+    // }
+
+
+    // function findName(idUser: string): Promise<string> {
+    //     return new Promise((resolve, reject) => {
+    //         fetch('/api/userName', {
+    //             method: 'POST',
+    //             body: JSON.stringify({ id: idUser }),
+    //             headers: { 'Content-Type': 'application/json' },
+    //         })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             const map = new Map(Object.entries(data));
+    //             const name = map.get("name");
+    //             console.log(name);
+    //             resolve(name);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching data:', error);
+    //             reject(error);
+    //         });
+    //     });
+    // }
 
     useEffect(() => {
         fetch('/api/courseList', {
@@ -35,8 +84,7 @@ export default function CourseList() {
             })
             .catch(error => console.error('Error:', error));
     }, []);
-    //console.log(courses[0])
-    //console.log(emptyCourse)
+
     return (
         <>
             <Header />
@@ -75,10 +123,12 @@ export default function CourseList() {
                                                 <Ibuilding className="w-3" />
                                                 <p className="font-poppins text-xs">{course.room}</p>
                                             </div>
+                                            
                                             <div className="flex items-center gap-2">
                                                 <Itarget className="w-3" />
-                                                <p className="font-poppins text-xs">Teacher: {course.TeacherName}</p>
+                                                <p className="font-poppins text-xs">Teacher: {course.teacher_id}</p>
                                             </div>
+
                                             <div className="flex items-center gap-2">
                                                 <Imenu className="w-3" />
                                                 <p className="font-poppins text-xs">{course.module}</p>

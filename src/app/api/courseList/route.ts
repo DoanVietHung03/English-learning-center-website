@@ -28,7 +28,6 @@
 import { Course } from "@/models/course"
 import { User } from "@/models/user"
 import mongoose from "mongoose"
-import { cookies } from 'next/headers'
 
 export async function POST(req: { json: () => any }) {
   try {
@@ -53,6 +52,7 @@ export async function POST(req: { json: () => any }) {
           courses.splice(i)
       }
     }
+
     return Response.json(courses);
   } catch (error) {
     return new Response(
