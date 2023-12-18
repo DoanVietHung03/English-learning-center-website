@@ -14,3 +14,4 @@ export async function POST(req: { json: () => any }) {
     })
     return Response.json(createdSubmission);
 }
+

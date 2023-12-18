@@ -5,14 +5,30 @@ import Header from "@/components/layout/header"
 import Imicro from "@/components/icons/microphone";
 import Iuser from "@/components/icons/icon_user";
 import * as React from 'react';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Ass_Grading() {
-    
+    const [submissions, setSubmissions] = useState([])
     const [file, setFile] = useState('');
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
+    
+    useEffect(() => {
+        fetch('/api/submission_list',{
+            method: 'POST',
+            body: JSON.stringify({ id: localStorage.getItem('assignment_id') }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+         .then(res => res.json())
+         .then(data => {
+            setSubmissions(data)
+            console.log(data)
+         })
+         .catch(error => {
+             console.error('Error fetching data:', error);
+        });
+    }, []);
 
     return (
         <>
@@ -24,7 +40,7 @@ export default function Ass_Grading() {
                         Assignments
                     </div>
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASS] aoe - Q.5 ClassRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_id")}</div>
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded px-7">
