@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 'use client'
 
 import SideBar from "@/components/layout/sideBar"
@@ -20,38 +21,62 @@ import { MenuItem } from "@mui/material";
 
 
 export default function Clone_Assignment() {
-    const [skill, setSkill] = useState('')
-    const [course, setCourse] = useState([]) 
+    const [courses, setCourses] = useState([])
+    const [assi, setAssi] = useState([])
+    const [assignments, setAssignments] = useState([])
+    const [assignmentChoosed, setAssignmentChoosed] = useState({})
     useEffect(() => {
-        fetch('api/course').then(res => {
-            res.json().then(menuItems => {
-                setCourse(menuItems);
-            });
-        });
-    })
-
-    const [module, setModule] = useState('')
-
-    function handleChangeCourse(ev) {
-        setCourse(ev.value);
-    }
-    const handleChangeSkill = (ev) => {
-        setSkill(ev.value);
-    };
-
-    const handleChangeModule = (ev) => {
-        setModule(ev.value);
-    };
+        fetch('/api/courseList', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userName: localStorage.getItem("userName") }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                setCourses(data)
+            })
+            .catch(error => console.error('Error:', error));
+    }, []);
+    var optionCourses = [{ value: String, label: String }]
+    if (courses)
+        optionCourses = courses.map(function (course) {
+            return {
+                value: course.name,
+                label: course.name
+            }
+        })
 
     async function handleFormSubmit(ev: SyntheticEvent) {
-        ev.preventDefault()
-        await fetch('/api/assignment', {
+        setAssignmentChoosed(ev.value)
+        const response = await fetch('/api/assigment', {
             method: 'POST',
-            body: JSON.stringify({ course, skill }),
+            body: JSON.stringify({
+                title: assignmentChoosed.title,
+                content: assignmentChoosed.content,
+                skill: assignmentChoosed.skill,
+                deadline: assignmentChoosed.deadline,
+                id: localStorage.getItem('course_id')
+            }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
-    
+    const handleChangeCourse = (ev: SyntheticEvent) => {
+        fetch('/api/assignment_list', {
+            method: 'POST',
+            body: JSON.stringify({ id: ev.value }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then(res => res.json())
+            .then(data => {
+                setAssignments(data)
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+
+    };
     return (
         <>
             <Header />
@@ -78,7 +103,7 @@ export default function Clone_Assignment() {
                                         Clone
                                     </button>
                                 </div>
-                                
+
                                 <div className="flex items-end justify-end">
                                     <button className="bg-lime-300 hover:bg-lime-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight">
                                         Clone
@@ -89,39 +114,31 @@ export default function Clone_Assignment() {
 
                         <div className="bg-zinc-100 rounded-lg border border-neutral-400 pb-6 mt-4">
                             <div className="ml-14 py-10">
-                                <div className="grid grid-cols-2">
-
-                                <   div>
-                                        <p className="text-black text-base font-medium leading-tight tracking-tigh mb-2">Choose module</p>
-                                        <Select options={optionModule} onChange={handleChangeModule} className="w-3/4" />
-                                    </div>
-
-                                    <div>
-                                        <p className="text-black text-base font-medium leading-tight tracking-tigh mb-2">Choose course</p>
-                                        <Select options={optionCourse} onChange={handleChangeCourse} className="w-3/4" />
-                                    </div>
-
-                                    <div>
-                                        <p className="text-black text-base font-medium leading-tight tracking-tigh py-3">Choose skill</p>
-                                        <Select options={optionSkill} onChange={handleChangeSkill} className="w-3/4" />
-                                    </div>
+                                <div className="flex flex-col justify-center items-center">
+                                    <p className="text-black text-base font-medium leading-tight tracking-tigh mb-2">Choose course</p>
+                                    <Select options={optionCourses} onChange={handleChangeCourse} className="w-3/4" />
                                 </div>
                             </div>
-
-                            <div className="flex items-center justify-center">
-                                <button className="flex items-center justify-center gap-2 bg-zinc-400 hover:bg-zinc-300 rounded-lg px-3 py-1">
-                                    <p className="text-neutral-700 text-base font-normal font-['Poppins'] leading-3 tracking-tight">Search</p>
-                                    <ImagnifyingGlass />   
-                                </button>
-                            </div>
                         </div>
+
 
                         <div className="mt-6 rounded-lg border border-zinc-400 h-52">
                             <div className="mx-4 text-center border-b border-zinc-400">
                                 Result
                             </div>
-
-
+                            {
+                                assignments.map((assignment: { title: String, skill: String }, i) => (
+                                    <div className="flex justify-between px-5 py-3">
+                                        <div>
+                                            {i}-{"  " + assignment.title}-{"  " + assignment.skill}
+                                        </div>
+                                        <button onClick={handleFormSubmit}
+                                            className="p-2 bg-lime-400 rounded-lg font-semibold text-white">
+                                            clone
+                                        </button>
+                                    </div>
+                                ))
+                            }
                         </div>
                     </div>
                 </div>
@@ -145,5 +162,5 @@ const optionModule = [
 
 const optionCourse = [
     {},
-   
+
 ];
