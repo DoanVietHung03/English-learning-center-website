@@ -108,7 +108,7 @@ export default function CourseTime() {
                                                     <Link href='/course_Time/add_attend'
                                                         className="bg-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg">
                                                         <IcirclePlus className="w-5 fill-blue-400" />
-                                                        Creaete Attendance List
+                                                        Create Attendance List
                                                     </Link>
                                                 }
                                                 {(type == 'Teacher') && (attendances[i]) &&
