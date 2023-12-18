@@ -68,7 +68,7 @@ export default function Assigments() {
                                 </div>
                             }
 
-                            {assignments.map(assignment => (
+                            {assignments.map(assignment => (type === "Student" &&(
                             <Link href={'/assignment_submit'} onClick={() => { localStorage.setItem("assignment_id", assignment._id) }} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
@@ -86,7 +86,27 @@ export default function Assigments() {
                                     </div>
                                 </div>
                             </Link>
-                            ))}
+                            )))}
+
+                            {assignments.map(assignment => (type === "Teacher" &&(
+                            <Link href={'/teacher_grading'} onClick={() => { localStorage.setItem("assignment_id", assignment._id) }} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                                <div className=" p-2 flex items-center ">
+                                    <Ibook />
+                                    <div className="ml-4 font-poppins">
+                                        {assignment.title} - {assignment.skill} 
+                                    </div>
+                                </div>
+
+                                <div className=" p-2 flex items-center justify-end">
+                                    <div className="font-poppins font-medium">
+                                        Deadline:
+                                    </div>
+                                    <div className="ml-1 font-poppins">
+                                        {moment.utc(assignment.startDate).format('MM/DD/YYYY')}
+                                    </div>
+                                </div>
+                            </Link>
+                            )))}
                         </div>
                     </div>
 
