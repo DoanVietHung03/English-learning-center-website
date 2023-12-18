@@ -111,7 +111,7 @@ export default function CourseTime() {
                                                         Create Attendance List
                                                     </Link>
                                                 }
-                                                {(type == 'Teacher') && (attendances[i]) &&
+                                                {(type == 'Teacher' || type == 'Admin') && (attendances[i]) &&
                                                     <Link href='/course_Time/add_attend'
                                                         className="bg-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg">
                                                         <Ieye className="w-5 fill-blue-400" />
