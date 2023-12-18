@@ -17,8 +17,35 @@ export default function Do_Assignment() {
     //lay info assignment where ass.idCourse = Course.idCourse
     //luu info submission voi id ass
 
+    const blobUrl = 'blob:http://localhost:3000/audio/5089f84a-e6bb-4787-8baa-00f695f275ae';
+    function handlePlayMp3(){
+        console.log("aaaaa")
+        fetch(blobUrl)
+        .then(response => {
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
+            }
+            return response.blob();
+        })
+        .then(blob => {
+            // Tạo URL từ blob
+            const objectUrl = URL.createObjectURL(blob);
+
+            // Sử dụng URL trong một đối tượng Audio
+            const audioElement = new Audio(objectUrl);
+            audioElement.play();
+
+            // Nếu bạn muốn hiển thị nó trong một thẻ audio
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.src = objectUrl;
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    }
 
     useEffect(() => {
+        handlePlayMp3()
         fetch('/api/assignment_info', {
             method: 'POST',
             body: JSON.stringify({id: localStorage.getItem("assignment_id")}),
