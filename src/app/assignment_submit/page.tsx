@@ -4,11 +4,15 @@ import Header from "@/components/layout/header"
 import Link from "next/link"
 import React from "react"
 import { SyntheticEvent, useEffect, useState } from "react"
+import ReactAudioPlayer from "react-audio-player"
 
 export default function Do_Assignment() {
     const [assignment, SetAssignment] = useState([])
     const [answer, SetAnswer] = useState('')
-
+    const [file, setFile] = useState('');
+    function handleChangeFile(ev) {
+        setFile(URL.createObjectURL(ev.target.files[0]));
+    }
     //get CourseID
     //lay info assignment where ass.idCourse = Course.idCourse
     //luu info submission voi id ass
@@ -30,10 +34,12 @@ export default function Do_Assignment() {
         ev.preventDefault()
         const response =  await fetch('/api/submission', {
             method: 'POST',
-            body: JSON.stringify({answer, id_student: localStorage.getItem("userName"), id_assignment: localStorage.getItem("assignment_id")}),
+            body: JSON.stringify({answer, id_student: localStorage.getItem("userName"), id_assignment: localStorage.getItem("assignment_id"), file}),
             headers: { 'Content-Type': 'application/json'},
         })
     }
+
+    
 
 
     return (
@@ -46,7 +52,7 @@ export default function Do_Assignment() {
                         Assignments
                     </div>
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASSName] aoe - Q.5 ClassNameRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_id")}</div>
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded">
@@ -69,6 +75,19 @@ export default function Do_Assignment() {
                             </div>
                         </div>
                         ))}
+
+                        {assignment.map(info => (info.skill === "Speaking" &&(
+                        <div className="bg-white p-3 rounded-lg border-2">
+                            <h2>Add your file:</h2>
+                            <input type="file" accept="audio" onChange={handleChangeFile} />
+                            <ReactAudioPlayer
+                                src={file}
+                                autoPlay
+                                controls
+                                className="w-full"
+                            />
+                        </div>
+                        )))}
                     </div>
                 </div>
             </div>

@@ -44,7 +44,7 @@ export default function Assigments() {
                     </div>
                     
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASSName] aoe - Q.5 ClassNameRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_id")}</div>
                     </div>
                 
 
@@ -68,8 +68,8 @@ export default function Assigments() {
                                 </div>
                             }
 
-                            {assignments.map(assignment => (assignment.skill !== 'Listening' &&(
-                            <Link href={'/ass_writing'} onClick={() => { localStorage.setItem("assignment_id", assignment._id) }} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
+                            {assignments.map(assignment => (
+                            <Link href={'/assignment_submit'} onClick={() => { localStorage.setItem("assignment_id", assignment._id) }} className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
                                 <div className=" p-2 flex items-center ">
                                     <Ibook />
                                     <div className="ml-4 font-poppins">
@@ -86,63 +86,7 @@ export default function Assigments() {
                                     </div>
                                 </div>
                             </Link>
-                            )))}
-
-                            {/* <Link href={'/ass_reading'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
-                                <div className=" p-2 flex items-center ">
-                                    <Ibook />
-                                    <div className="ml-4 font-poppins">
-                                        Essay-Reading-Lesson 1
-                                    </div>
-                                </div>
-
-                                <div className=" p-2 flex items-center justify-end">
-                                    <div className="font-poppins font-medium">
-                                        Deadline:
-                                    </div>
-                                    <div className="ml-1 font-poppins">
-                                        30/02/2023
-                                    </div>
-                                </div>
-                            </Link> */}
-                            
-                            {assignments.map(assignment => (assignment.skill === 'Listening' &&(
-                            <Link href={'/ass_listening'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
-                                <div className=" p-2 flex items-center ">
-                                    <Ibook />
-                                    <div className="ml-4 font-poppins">
-                                        Essay-Listening-Lesson 1
-                                    </div>
-                                </div>
-
-                                <div className=" p-2 flex items-center justify-end">
-                                    <div className="font-poppins font-medium">
-                                        Deadline:
-                                    </div>
-                                    <div className="ml-1 font-poppins">
-                                        30/02/2023
-                                    </div>
-                                </div>
-                            </Link>
-                            )))}
-
-                            {/* <Link href={'/ass_writing'} className="mt-4 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-200">
-                                <div className=" p-2 flex items-center ">
-                                    <Ibook />
-                                    <div className="ml-4 font-poppins">
-                                        Essay-Writing-Lesson 1
-                                    </div>
-                                </div>
-
-                                <div className=" p-2 flex items-center justify-end">
-                                    <div className="font-poppins font-medium">
-                                        Deadline:
-                                    </div>
-                                    <div className="ml-1 font-poppins">
-                                        30/02/2023
-                                    </div>
-                                </div>   
-                            </Link> */}
+                            ))}
                         </div>
                     </div>
 
