@@ -52,7 +52,8 @@ export default function CourseTime() {
                                     <Icalendar />
                                     <p className="ml-2">Timetable</p>
                                 </button>
-                                <button className="flex items-center justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg ml-8">
+                                <button className="flex items-center justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg ml-8
+                                    transition-colors duration-300">
                                     <Ibook />
                                     <Link href={'/assignments'} className="ml-2">Assignments</Link>
                                 </button>
@@ -106,14 +107,16 @@ export default function CourseTime() {
                                                 }
                                                 {(type == 'Teacher') && (!attendances[i]) &&
                                                     <Link href='/course_Time/add_attend'
-                                                        className="bg-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg">
+                                                        className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
+                                                         hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <IcirclePlus className="w-5 fill-blue-400" />
                                                         Create Attendance List
                                                     </Link>
                                                 }
                                                 {(type == 'Teacher' || type == 'Admin') && (attendances[i]) &&
                                                     <Link href='/course_Time/add_attend'
-                                                        className="bg-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg">
+                                                        className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
+                                                        hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <Ieye className="w-5 fill-blue-400" />
                                                         View Attendance List
                                                     </Link>
