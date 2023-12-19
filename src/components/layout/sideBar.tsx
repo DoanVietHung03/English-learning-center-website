@@ -1,71 +1,54 @@
 "use client"
-import Icross from "../icons/icon_cross"
-import Imenu from "../icons/icon_menu"
-import Ibook1 from "../icons/icon_book1"
-import Ibank from "../icons/icon_bank"
-import Iflag from "../icons/icon_flag"
-import Ichat from "../icons/icon_chat"
-import Image from "next/image"
+
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import Iuser from "../icons/icon_user"
+import React, { useState } from "react"
+import IarrowLeft from "../icons/icon_arrow_left"
+import dynamic from "next/dynamic"
+import { title } from "process"
+
 export default function SideBar() {
     const type = localStorage.getItem('userType')
+    const [open, setOpen] = useState(true);
+    const Menus = [
+        { title: "Course List", src: dynamic(() => import("../icons/icon_book1")) },
+        { title: "Exercise Bank", src: dynamic(() => import("../icons/icon_bank")) },
+        { title: "Feedback and Bug Report", src: dynamic(() => import("../icons/icon_flag")) },
+        { title: "Chat", src: dynamic(() => import("../icons/icon_chat")) },
+        { title: "User Management", src: dynamic(() => import("../icons/icon_user")) }
+    ];
+    const paths = ["/courseList", "/exercise_bank", "/report_bug", "chat", "/user_management"]
+
     return (
-        <div className="w-1/5">
-            <div
-                className="sideBar flex-col bg-[#68C6E3] mt-16 w-full h-fit rounded-tr-3xl rounded-br-3xl transition-all duration-300 ease-in-out pb-12">
-                <div className="flex icon-closed pt-7 mr-6 justify-end">
-                    <Icross className="w-8 h-8 fill-white" />
+        <div className="flex bg-[#68C6E3] rounded-tr-3xl rounded-br-3xl mt-16">
+            <div className={` ${open ? "w-72" : "w-24 "} h-[500px] p-6 pt-8 relative duration-300`}>
+                <button className={`absolute cursor-pointer -right-3 top-9 w-7 ${!open && "rotate-180"}`}
+                        onClick={() => setOpen(!open)}>
+                    <IarrowLeft className="w-[2em] fill-black bg-sky-200 rounded-full p-2 hover:bg-sky-300"/>
+                </button>
+                
+                <div className="flex gap-x-4 items-center text-center">
+                    <img
+                        src="./icon.png"
+                        className={`w-[5.5em] pt-4 duration-500 ${open && "rotate-[360deg]"}`}
+                    />
+                    <h1 className={`font-['Montserrat Alternates'] text-white origin-left text-center font-bold text-6xl duration-200 ${!open && "scale-0"}`}>
+                        aoe
+                    </h1>
                 </div>
-
-                <div className="flex icon-opened justify-center pt-7 mb-6 hidden">
-                    <Imenu className="w-8 h-8 fill-white" />
-                </div>
-
-                <div className="logoTxt mb-10 font-montseratt-alt font-bold text-6xl text-center text-white">
-                    aoe
-                </div>
-
-                <div className="logo flex justify-center mb-7 hidden">
-                    <Image width={48} height={48} src="/icon.png" alt="" />
-                </div>
-
-                <div className="selection flex flex-col gap-5 ml-3 mr-3">
-                    <Link href={'/courseList'}
-                        className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
-                        <Ibook1 className="w-8 h-8 fill-white" />
-                        <button className="text1 text-sm font-poppins font-semibold text-white">Courses List</button>
-                    </Link>
-                    <Link href={'/exercise_bank'}
-                        className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
-                        <Ibank className="w-8 h-8 fill-white" />
-                        <button className="text2 font-poppins font-semibold text-sm text-white">Excerises
-                            Bank</button>
-                    </Link>
-                    <Link href={'/report_bug'}
-                        className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
-                        <Iflag className="w-8 h-8 fill-white" />
-                        <button className="text3 font-poppins font-semibold text-sm text-white">Feedback and Bug
-                            Report</button>
-                    </Link>
-                    {/* <!-- chatting --> */}
-                    {(type !== 'Admin') &&
-                        <Link href={'/chat'}
-                            className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
-                            <Ichat className="w-8 h-8 fill-white" />
-                            <button className="text4 font-poppins font-semibold text-sm text-white ml-3">Chat</button>
+                <ul className="pt-6">
+                    {Menus.slice(0, 4).map((Menu, index) => (
+                        <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>
+                            <li
+                                className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-300
+                                            ${index === 0 && "bg-transparent"}`}>
+                            <Menu.src className="w-8 fill-white"/>
+                                <span className={`${!open && "hidden"} origin-left duration-200 ml-4`}>
+                                    {index < 3 ? Menu.title : (type !== 'Admin' ? Menus[3].title : Menus[4].title)}
+                                </span>
+                            </li>
                         </Link>
-                    }
-                    {(type == 'Admin') &&
-                        (<Link href={'/user_management'}
-                            className="flex gap-2 cursor-pointer h-16 pl-9 w-full rounded-xl items-center transition duration-300 ease-in-out hover:bg-gray-400 hover:bg-opacity-40 focus:bg-gray-400 focus:bg-opacity-40 active:bg-gray-400 active:bg-opacity-40">
-                            <Iuser className="w-8 h-8 fill-white" />
-                            <button className="text4 font-poppins font-semibold text-sm text-white ml-3">User Management</button>
-                        </Link>)
-                    }
-
-                </div>
+                    ))}
+                </ul>
             </div>
         </div>
     )
