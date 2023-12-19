@@ -137,11 +137,11 @@ export default function Exercise_bank() {
                         </div>
 
                         <div className="mt-16 flex items-center ml-9 gap-2">
-                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium font-['Poppins'] px-6 py-1 hover:bg-purple-400">
+                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium px-6 py-1 hover:bg-purple-400">
                                 Sort Data
                             </button>
 
-                            <button className="text-red-700 rounded-lg text-base font-medium font-['Poppins'] border-2 border-red-600 px-4 py-[2px] hover:bg-red-200">
+                            <button className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px] hover:bg-red-200">
                                 Remove filter
                             </button>
                         </div>
@@ -180,7 +180,8 @@ export default function Exercise_bank() {
                                         </div>
                                         <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
                                             href='/exercise_bank/ex_in_exbank'
-                                            className="flex p-2 mt-3 w-full items-center gap-4 bg-gray-200 rounded-lg">
+                                            className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
+                                                    transition-colors duration-300">
                                             <Ieye className="fill-blue-400 w-6" />
                                             <div className="text-blue-400">View Exercise</div>
                                         </Link>
