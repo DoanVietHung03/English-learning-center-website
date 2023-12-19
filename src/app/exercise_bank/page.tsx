@@ -137,11 +137,13 @@ export default function Exercise_bank() {
                         </div>
 
                         <div className="mt-16 flex items-center ml-9 gap-2">
-                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium px-6 py-1 hover:bg-purple-400">
+                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium px-6 py-1 
+                            hover:bg-purple-400 transition-colors duration-300">
                                 Sort Data
                             </button>
 
-                            <button className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px] hover:bg-red-200">
+                            <button className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px]
+                             hover:bg-red-200 transition-colors duration-300">
                                 Remove filter
                             </button>
                         </div>
