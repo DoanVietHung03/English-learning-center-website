@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 'use client'
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
@@ -11,9 +12,9 @@ export default function ViewAttend() {
     useEffect(() => {
         fetch('/api/attendance', {
             method: 'POST',
-            body: JSON.stringify({session_id: localStorage.getItem('session_id'), course_id: localStorage.getItem('course_id')}),
+            body: JSON.stringify({ session_id: localStorage.getItem('session_id'), course_id: localStorage.getItem('course_id') }),
             headers: { 'Content-Type': 'application/json' },
-        }) 
+        })
             .then(res => res.json())
             .then(data => {
                 setAttend(data.studentList)
@@ -37,15 +38,16 @@ export default function ViewAttend() {
                         {localStorage.getItem('session_id')}
                     </div>
                     <div className="bg-white h-1/2 mt-4">
+                        <div className="ml-4 mt-4 font-semibold">
+                            There are {attends.length} students attend this session
+                        </div>
                         {
                             attends.map((attend, i) => (
                                 <div className="inline-block mt-4 ml-4">
                                     {attend &&
                                         <div className="inline-block mr-4 bg-gray-200 p-3 rounded-lg">
                                             <div className="flex gap-3">
-                                                <div>
-                                                    {i}: {attend}
-                                                </div>
+                                                {i}: {attend}
                                             </div>
                                         </div>}
                                 </div>
