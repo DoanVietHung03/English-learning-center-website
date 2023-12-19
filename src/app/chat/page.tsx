@@ -22,6 +22,8 @@ export default function Chat() {
     const [date, setDate] = useState(Date.now());
     const [file, setFile] = useState('');
     const router = useRouter();
+    const [receivers, setReceivers] = useState([])
+
     const [message_sent, SetMessageSent] = useState([]);
     const [message_received, SetMessageReceived] = useState([]);
 
@@ -31,17 +33,25 @@ export default function Chat() {
         setReceiver(ev.value);
     };
 
-    const optionReceiver = teachers.map(teacher => {
+    const optionReceiver = receivers.map(receiver => {
         return {
-            value: teacher.phone,
-            label: teacher.type + " - " + teacher.name
+            
+            value: receiver.phone,
+            label: receiver.type + " - " + receiver.name
         }
-    }).concat(students.map(student => {
-        return {
-            value: student.phone,
-            label: student.type + " - " + student.name
-        }
-    }))
+    })
+
+    // const optionReceiver = teachers.map(teacher => {
+    //     return {
+    //         value: teacher.phone,
+    //         label: teacher.type + " - " + teacher.name
+    //     }
+    // }).concat(students.map(student => {
+    //     return {
+    //         value: student.phone,
+    //         label: student.type + " - " + student.name
+    //     }
+    // }))
 
     useEffect(() => {
         fetch('/api/message', {
@@ -53,9 +63,10 @@ export default function Chat() {
        })
             .then(res => res.json())
             .then(data => {
-                setTeachers(data.teachers)
-                setStudents(data.students)
+                // setTeachers(data.teachers)
+                // setStudents(data.students)
                 setReceiver(data.receiver)
+            
             })
             .catch(error => console.error('Error:', error));
     }, []);

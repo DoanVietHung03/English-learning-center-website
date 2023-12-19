@@ -18,13 +18,12 @@ export default function CreateAttend() {
             .then(res => res.json())
             .then(data => {
                 setListStudent(data)
-
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []);
-    console.log("1123142", listStudent)
+  //  console.log("1123142", listStudent)
     const handleDelete = (index) => {
         // Tạo một bản sao mới của mảng và loại bỏ phần tử tại chỉ mục index
         const updatedArray = [...listStudent.slice(0, index), ...listStudent.slice(index + 1)];
@@ -38,16 +37,16 @@ export default function CreateAttend() {
         const listStuCreate = listStudent.map(function (student) {
             return student.phone
         })
-        console.log(listStuCreate)
+    //    console.log(listStuCreate)
         // console.lo
         ev.preventDefault()
         const response = await fetch('/api/createAttend', {
             method: 'POST',
-            body: JSON.stringify({ course_id: localStorage.getItem('course_id'), session_id: localStorage.getItem('sessionName'), studentList: listStuCreate }),
+            body: JSON.stringify({ course_id: localStorage.getItem('course_id'), session_id: localStorage.getItem('session_id'), studentList: listStuCreate }),
             headers: { 'Content-Type': 'application/json' },
         })
-        // router.push('/course_Time')
-    }
+        router.push('/course_Time')
+    }console.log(localStorage.getItem('session_id'))
     return (
         <>
             <Header />
@@ -57,8 +56,8 @@ export default function CreateAttend() {
                     <div className="font-poppins font-bold text-5xl">
                         Create Attendance List
                     </div>
-                    <div className="flex bg-white py-2 px-3 justify-center items-center rounded-lg font-bold">
-                        {localStorage.getItem('sessionName')}
+                    <div className="flex bg-white mt-4 py-2 px-3 text-sky-300 justify-center items-center rounded-lg font-bold">
+                        {localStorage.getItem('session_id')}
                     </div>
                     <div className="bg-white h-1/2 mt-4">
                         {
@@ -81,11 +80,11 @@ export default function CreateAttend() {
                         <div className="flex justify-end">
                             <button onClick={handleSubmit}
                                 className="bg-lime-300 p-3 rounded-md mr-4 my-4">
-                                submit
+                                Submit
                             </button>
-                        </div>
-                    </div>
 
+                        </div>
+                    </div>                   
                 </div>
             </div>
         </>
