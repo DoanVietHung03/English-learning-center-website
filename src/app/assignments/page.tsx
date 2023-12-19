@@ -91,7 +91,7 @@ export default function Assigments() {
                                                 Deadline:
                                             </div>
                                             <div className="ml-1 font-poppins">
-                                                {moment.utc(assignment.startDate).format('MM/DD/YYYY')}
+                                                {moment.utc(assignment.deadline).format('MM/DD/YYYY')}
                                             </div>
                                         </div>
                                     </Link>
@@ -112,7 +112,7 @@ export default function Assigments() {
                                                 Deadline:
                                             </div>
                                             <div className="ml-1 font-poppins">
-                                                {moment.utc(assignment.startDate).format('MM/DD/YYYY')}
+                                                {moment.utc(assignment.deadline).format('MM/DD/YYYY')}
                                             </div>
                                         </div>
                                     </Link>

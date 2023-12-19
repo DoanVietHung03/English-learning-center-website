@@ -9,6 +9,12 @@ import Select from "react-select";
 import * as React from 'react';
 import Link from "next/link";
 import Icheck from "@/components/icons/icon_check";
+import dayjs, { Dayjs } from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
@@ -48,6 +54,7 @@ export default function Clone_Assignment() {
                 content: assignments[assignmentChoosed].content,
                 skill: assignments[assignmentChoosed].skill,
                 deadline: deadline,
+                attachedFile: assignments[assignmentChoosed].attachedFile,
                 id: localStorage.getItem('course_id')
             }),
             headers: { 'Content-Type': 'application/json' },
