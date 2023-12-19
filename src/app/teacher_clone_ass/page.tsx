@@ -4,21 +4,11 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import { SyntheticEvent, useState, useEffect } from "react"
+import { useRouter } from 'next/navigation'
 import Select from "react-select";
 import * as React from 'react';
-import dayjs, { Dayjs } from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Image from "next/image";
-import ReactAudioPlayer from 'react-audio-player';
 import Link from "next/link";
-import ImagnifyingGlass from "@/components/icons/icon_magnifyingGlass";
-import mongoose from "mongoose";
-import { Course } from "@/models/course";
-import { MenuItem } from "@mui/material";
-
+import Icheck from "@/components/icons/icon_check";
 
 export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
@@ -26,6 +16,7 @@ export default function Clone_Assignment() {
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [assignments, setAssignments] = useState([])
     const [assignmentChoosed, setAssignmentChoosed] = useState(Number)
+    const router = useRouter();
     useEffect(() => {
         fetch('/api/courseList', {
             method: 'POST',
@@ -61,6 +52,7 @@ export default function Clone_Assignment() {
             }),
             headers: { 'Content-Type': 'application/json' },
         })
+        router.push('/assignments')
     }
     const handleChangeCourse = (ev: SyntheticEvent) => {
         fetch('/api/assignment_list', {
@@ -87,7 +79,7 @@ export default function Clone_Assignment() {
             <Header />
             <div className="flex">
                 <SideBar />
-                <div className="ml-14 w-2/3">
+                <div className="ml-14">
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
                         Assignments
                     </div>
@@ -110,8 +102,8 @@ export default function Clone_Assignment() {
                                 </div>
 
                                 <div className="flex items-end justify-end">
-                                    <button onClick={handleFormSubmit} 
-                                    className="bg-lime-300 hover:bg-lime-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight">
+                                    <button onClick={handleFormSubmit}
+                                        className="bg-lime-400 text-white hover:bg-lime-200 hover:text-gray-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight transition-colors duration-300">
                                         Clone
                                     </button>
                                 </div>
@@ -138,23 +130,32 @@ export default function Clone_Assignment() {
                         </div>
 
 
-                        <div className="mt-6 rounded-lg border border-zinc-400 h-52">
+                        <div className="mt-6 rounded-lg border border-zinc-400">
                             <div className="mx-4 text-center border-b border-zinc-400">
                                 Result
                             </div>
-                            {
-                                assignments.map((assignment, i) => (
-                                    <div className="flex justify-between px-5 py-3">
-                                        <div>
-                                            {i}-{"  " + assignment.title}-{"  " + assignment.skill}
+                            <div className="h-52 overflow-y-scroll">
+                                {
+                                    assignments.map((assignment, i) => (
+                                        <div className="flex justify-between px-5 py-3">
+                                            <div>
+                                                {i}-{"  " + assignment.title}-{"  " + assignment.skill}
+                                            </div>
+                                            {(assignmentChoosed !== i) &&
+                                                <button onClick={() => setAssignmentChoosed(i)}
+                                                    className="p-2 bg-lime-400 rounded-lg font-semibold text-white hover:bg-lime-200 hover:text-gray-400 transition-colors duration-300">
+                                                    Choose
+                                                </button>
+                                            }
+                                            {(assignmentChoosed == i) &&
+                                                <div className="flex p-2 bg-lime-400 rounded-lg font-semibold text-white w-[71px] py-[10px] items-center justify-center">
+                                                    <Icheck className="fill-white w-5" />
+                                                </div>
+                                            }
                                         </div>
-                                        <button onClick={()=> setAssignmentChoosed(i)}
-                                            className="p-2 bg-lime-400 rounded-lg font-semibold text-white">
-                                            Choose
-                                        </button>
-                                    </div>
-                                ))
-                            }
+                                    ))
+                                }
+                            </div>
                         </div>
                         
                     </div>

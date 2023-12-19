@@ -14,56 +14,7 @@ export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
     const [name, setName] = useState('')
-    
-
     const type = localStorage.getItem('userType')
-    
-
-    // function findName(idUser: String){
-    //     var Uname: String
-    //     fetch('/api/userName',{
-    //         method: 'POST',
-    //         body: JSON.stringify({ id: idUser }),
-    //         headers: { 'Content-Type': 'application/json' },
-    //     })
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         //console.log(data)
-    //         var map = new Map(Object.entries(data));
-    //         const name = map.get("name")
-    //         if
-    //         Uname = name
-    //         console.log(typeof(name))
-    //      })
-    //      .catch(error => {
-    //          console.error('Error fetching data:', error);
-    //     });
-    //     console.log(Uname)
-    //     return Uname
-    // }
-
-
-    // function findName(idUser: string): Promise<string> {
-    //     return new Promise((resolve, reject) => {
-    //         fetch('/api/userName', {
-    //             method: 'POST',
-    //             body: JSON.stringify({ id: idUser }),
-    //             headers: { 'Content-Type': 'application/json' },
-    //         })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             console.log(data);
-    //             const map = new Map(Object.entries(data));
-    //             const name = map.get("name");
-    //             console.log(name);
-    //             resolve(name);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching data:', error);
-    //             reject(error);
-    //         });
-    //     });
-    // }
 
     useEffect(() => {
         fetch('/api/courseList', {
@@ -114,16 +65,13 @@ export default function CourseList() {
                                                 className="flex justify-start font-poppins w-[840px] cursor-pointer text-blue-500 font-semibold text-xs hover:underline">
                                                 {course.name}
                                             </Link>
-                                            <div className="flex bg-red-200 px-4 py-1 items-center text-sm text-red-600 font-bold rounded-lg">
-                                                Finished
-                                            </div>
                                         </div>
                                         <div className="flex text-11 gap-4 mt-6">
                                             <div className="flex items-center gap-2">
                                                 <Ibuilding className="w-3" />
                                                 <p className="font-poppins text-xs">{course.room}</p>
                                             </div>
-                                            
+
                                             <div className="flex items-center gap-2">
                                                 <Itarget className="w-3" />
                                                 <p className="font-poppins text-xs">Teacher: {course.teacher_id}</p>
