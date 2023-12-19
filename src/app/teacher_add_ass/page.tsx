@@ -13,6 +13,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
+
 
 export default function Add_Ass() {
     const [skill, setSkill] = useState('')
@@ -20,6 +22,7 @@ export default function Add_Ass() {
     const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
     const [content, setContent] = useState('');
+    const router = useRouter();
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
@@ -34,6 +37,7 @@ export default function Add_Ass() {
             body: JSON.stringify({ title, deadline, content, skill, file, id: localStorage.getItem('course_id') }),
             headers: { 'Content-Type': 'application/json' },
         })
+        router.push('/assignments')
     }
     
     return (

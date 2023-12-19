@@ -17,6 +17,9 @@ export default function CourseList() {
     const type = localStorage.getItem('userType')
 
     useEffect(() => {
+        /* The code is making a POST request to the '/api/courseList' endpoint with the specified
+        headers and request body. The request body contains the username retrieved from the
+        localStorage. */
         fetch('/api/courseList', {
             method: 'POST',
             headers: {

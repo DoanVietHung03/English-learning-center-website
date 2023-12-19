@@ -9,10 +9,17 @@ import Select from "react-select";
 import * as React from 'react';
 import Link from "next/link";
 import Icheck from "@/components/icons/icon_check";
+import dayjs, { Dayjs } from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 
 export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
     const [assi, setAssi] = useState([])
+    const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [assignments, setAssignments] = useState([])
     const [assignmentChoosed, setAssignmentChoosed] = useState(Number)
     const router = useRouter();
@@ -46,7 +53,8 @@ export default function Clone_Assignment() {
                 title: assignments[assignmentChoosed].title,
                 content: assignments[assignmentChoosed].content,
                 skill: assignments[assignmentChoosed].skill,
-                deadline: assignments[assignmentChoosed].deadline,
+                deadline: deadline,
+                attachedFile: assignments[assignmentChoosed].attachedFile,
                 id: localStorage.getItem('course_id')
             }),
             headers: { 'Content-Type': 'application/json' },
@@ -117,6 +125,16 @@ export default function Clone_Assignment() {
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div>Due Date</div>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DemoContainer components={['DatePicker', 'DatePicker']}>
+                                    <DatePicker value={deadline} onChange={(newValue) => setDeadline(newValue)}
+                                        className="w-full bg-white text-xs"
+                                    />
+                                </DemoContainer>
+                            </LocalizationProvider>
+                        </div>
 
 
                         <div className="mt-6 rounded-lg border border-zinc-400">
@@ -146,6 +164,7 @@ export default function Clone_Assignment() {
                                 }
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>

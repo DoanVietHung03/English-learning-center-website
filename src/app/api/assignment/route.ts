@@ -14,7 +14,7 @@ export async function POST(req: { json: () => any }) {
         attachedFile: body.file,
         course_id: body.id,
     })
-    //   console.log(createdAssignment)
+    console.log(createdAssignment)
     return Response.json(createdAssignment)
 }
 

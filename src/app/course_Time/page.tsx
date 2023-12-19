@@ -27,7 +27,7 @@ export default function CourseTime() {
                 setCourse(data.course)
                 setSessions(data.sessions)
                 setAttendances(data.attendance)
-                console.log("123", data.attendance)
+                //console.log("123", data.attendance)
                 // sessions = data.sessions
             })
             .catch(error => console.error('Error:', error));
@@ -89,9 +89,10 @@ export default function CourseTime() {
                                                     OFFLINE
                                                 </div>
                                                 <div className="flex gap-10 items-center mb-3">
-                                                    <div className="font-semibold font-poppins">
-                                                        {session.name}
-                                                    </div>
+                                                        <div className="font-semibold font-poppins">
+                                                            {session.name}
+                                                        </div>
+                                                    
                                                     <div className="font-bold font-poppins text-sm">
                                                         23:00 - 2:00
                                                     </div>
@@ -106,7 +107,8 @@ export default function CourseTime() {
                                                     <div className="font-bold">Skill: Speaking</div>
                                                 }
                                                 {(type == 'Teacher') && (!attendances[i]) &&
-                                                    <Link href='/course_Time/add_attend'
+                                                    <Link onClick={() => localStorage.setItem("session_id", session.name)} 
+                                                    href='/course_Time/add_attend'
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
                                                          hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <IcirclePlus className="w-5 fill-blue-400" />
@@ -114,7 +116,8 @@ export default function CourseTime() {
                                                     </Link>
                                                 }
                                                 {(type == 'Teacher' || type == 'Admin') && (attendances[i]) &&
-                                                    <Link href='/course_Time/add_attend'
+                                                    <Link onClick={() => localStorage.setItem("session_id", session.name)}
+                                                     href='/course_Time/view_attend' 
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
                                                         hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <Ieye className="w-5 fill-blue-400" />
