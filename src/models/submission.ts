@@ -16,7 +16,11 @@ const submissionSchema = new Schema({
     grade:{
         type: Number,
         required: false
-    }
+    },
+    attachedFile:{
+        type: String,
+        required: false
+    },
 }, { timestamps: true });
 
 export const Submission = models?.Submission || model('Submission', submissionSchema)

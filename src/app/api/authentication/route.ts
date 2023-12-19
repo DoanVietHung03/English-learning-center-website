@@ -25,20 +25,22 @@ export async function POST(req) {
         if (!passwordOk) {
             return new Response(
                 JSON.stringify(
-                    { ok: false, message: 'Wrong password'}), {
+                    { ok: false, message: 'Wrong password' }), {
                 headers: { 'Content-Type': 'application/json' },
                 status: 200,
             });
         }
 
-        const data = {
-            check: true,
-            userType: userCheck.type
-        }
-        //console.log(data)
+        // const data = {
+        //     check: true,
+        //     userType: userCheck.type,
+        //     userFname: userCheck.name
+        // }
+        // //console.log(data)
         return Response.json({
             check: true,
-            userType: userCheck.type
+            userType: userCheck.type,
+            userFname: userCheck.name
         })
 
         // return new Response(

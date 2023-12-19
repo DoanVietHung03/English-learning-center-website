@@ -13,7 +13,7 @@ import moment from 'moment';
 export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
-
+    const [name, setName] = useState('')
     const type = localStorage.getItem('userType')
 
     useEffect(() => {
@@ -38,8 +38,7 @@ export default function CourseList() {
             })
             .catch(error => console.error('Error:', error));
     }, []);
-    //console.log(courses[0])
-    //console.log(emptyCourse)
+
     return (
         <>
             <Header />
@@ -69,19 +68,18 @@ export default function CourseList() {
                                                 className="flex justify-start font-poppins w-[840px] cursor-pointer text-blue-500 font-semibold text-xs hover:underline">
                                                 {course.name}
                                             </Link>
-                                            <div className="flex bg-red-200 px-4 py-1 items-center text-sm text-red-600 font-bold rounded-lg">
-                                                Finished
-                                            </div>
                                         </div>
                                         <div className="flex text-11 gap-4 mt-6">
                                             <div className="flex items-center gap-2">
                                                 <Ibuilding className="w-3" />
                                                 <p className="font-poppins text-xs">{course.room}</p>
                                             </div>
+
                                             <div className="flex items-center gap-2">
                                                 <Itarget className="w-3" />
-                                                <p className="font-poppins text-xs">Teacher: {course.TeacherName}</p>
+                                                <p className="font-poppins text-xs">Teacher: {course.teacher_id}</p>
                                             </div>
+
                                             <div className="flex items-center gap-2">
                                                 <Imenu className="w-3" />
                                                 <p className="font-poppins text-xs">{course.module}</p>

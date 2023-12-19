@@ -10,6 +10,8 @@ export async function POST(req: { json: () => any }) {
         assignment_id: body.id_assignment,
         answer: body.answer,
         grade: null,
+        attachedFile: body.file
     })
     return Response.json(createdSubmission);
 }
+

@@ -1,3 +1,4 @@
+import { Attendance } from "@/models/attendance";
 import { Course } from "@/models/course"
 import { Session } from "@/models/session";
 import mongoose from "mongoose"
@@ -9,7 +10,8 @@ export async function POST(req: { json: () => any }) {
         mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
         const course = await Course.findOne({ name: body.id })
         const sessions = await Session.find({ course_id: body.id })
-        return Response.json({ course, sessions });
+        const attendance = await Attendance.find({ course_id: body.id })
+        return Response.json({ course, sessions, attendance });
     } catch (error) {
         return new Response(
             JSON.stringify(
