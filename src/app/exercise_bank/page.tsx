@@ -20,43 +20,43 @@ export default function Exercise_bank() {
         setSelectedButton(buttonNumber);
     };
 
-        
 
-    
-        // Mặc định hiển thị nội dung khi trang được tải
+
+
+    // Mặc định hiển thị nội dung khi trang được tải
 
     useEffect(() => {
         fetch('/api/exercisesBank')
-        .then(res => res.json())
-        .then(data => {
-            setExercises(data)
-            console.log(data)
-            console.log(exercises)
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
+            .then(res => res.json())
+            .then(data => {
+                setExercises(data)
+                console.log(data)
+                console.log(exercises)
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
     }, []);
 
-        if (selectedButton == null) {
-            setContent(
-                <div className="flex justify-between mt-10 gap-2">
-                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].module</p>
-                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].title</p>
-                        </div>
+    // if (selectedButton == null) {
+    //     setContent(
+    //         <div className="flex justify-between mt-10 gap-2">
+    //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+    //                 <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].module</p>
+    //                 <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
+    //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].title</p>
+    //                 </div>
 
-                        <div className="mt-10 ml-4">
-                            <Link href={"/exercise_bank/ex_in_exbank"}>
-                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-                                    <Ieye className="w-[1em] fill-blue-400" />
-                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-{/* 
+    //                 <div className="mt-10 ml-4">
+    //                     <Link href={"/exercise_bank/ex_in_exbank"}>
+    //                         <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
+    //                             <Ieye className="w-[1em] fill-blue-400" />
+    //                             <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
+    //                         </button>
+    //                     </Link>
+    //                 </div>
+    //             </div>
+    {/* 
                     <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
                         <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].title</p>
                         <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
@@ -92,23 +92,23 @@ export default function Exercise_bank() {
                             </Link>
                         </div>
             </div> */}
-                </div>
-            );
-        }
+    //         </div>
+    //     );
+    // }
 
-        // if (selectedButton !== null) {
-        //     if (selectedButton === 1) {
-        //         setContent('');
-        //     } else if (selectedButton === 2) {
-        //         setContent(
-        //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-        //                 {/* Nội dung cho Button 2 */}
-        //             </div>
-        //         );
-        //     }
-        // }
+    // if (selectedButton !== null) {
+    //     if (selectedButton === 1) {
+    //         setContent('');
+    //     } else if (selectedButton === 2) {
+    //         setContent(
+    //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
+    //                 {/* Nội dung cho Button 2 */}
+    //             </div>
+    //         );
+    //     }
+    // }
 
-    
+
 
     //console.log(exercise)
 
@@ -137,11 +137,13 @@ export default function Exercise_bank() {
                         </div>
 
                         <div className="mt-16 flex items-center ml-9 gap-2">
-                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium font-['Poppins'] px-6 py-1 hover:bg-purple-400">
+                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium px-6 py-1 
+                            hover:bg-purple-400 transition-colors duration-300">
                                 Sort Data
                             </button>
 
-                            <button className="text-red-700 rounded-lg text-base font-medium font-['Poppins'] border-2 border-red-600 px-4 py-[2px] hover:bg-red-200">
+                            <button className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px]
+                             hover:bg-red-200 transition-colors duration-300">
                                 Remove filter
                             </button>
                         </div>
@@ -150,13 +152,15 @@ export default function Exercise_bank() {
                     <div className="flex items-center gap-4 pl-4 pt-3">
                         <button
                             onClick={() => handleButtonClick(1)}
-                            className={`bg-white hover:bg-red-500 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 1 ? 'bg-blue-400' : ''}`}>
+                            className={`bg-white hover:bg-red-500 text-black hover:text-white text-base font-medium px-4 py-2 
+                            rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 1 ? 'bg-blue-400' : ''}`}>
                             All
                         </button>
 
                         <button
                             onClick={() => handleButtonClick(2)}
-                            className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-blue-400' : ''}`}>
+                            className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2
+                             rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 2 ? 'bg-blue-400' : ''}`}>
                             Your Exercises
                         </button>
                     </div>
@@ -180,7 +184,8 @@ export default function Exercise_bank() {
                                         </div>
                                         <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
                                             href='/exercise_bank/ex_in_exbank'
-                                            className="flex p-2 mt-3 w-full items-center gap-4 bg-gray-200 rounded-lg">
+                                            className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
+                                                    transition-colors duration-300">
                                             <Ieye className="fill-blue-400 w-6" />
                                             <div className="text-blue-400">View Exercise</div>
                                         </Link>
