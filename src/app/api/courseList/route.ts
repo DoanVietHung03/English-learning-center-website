@@ -43,16 +43,19 @@ export async function POST(req: { json: () => any }) {
     }
     else {
       courses = await Course.find()
-      courses = courses.map(course => {
-        if (course.student_id.includes(body.userName))
-          return course
-      })
+      // courses = courses.map(course => {
+      //   if (course.student_id.includes(body.userName))
+      //     return course
+      // })
+      courses = courses
+      .filter(course => course.student_id.includes(body.userName))
+      .filter(course => course !== null);
       console.log(courses)
 
-      for (var i = 0; i < courses.length; i++) {
-        if (courses[i] == null)
-          courses.splice(i)
-      }
+      // for (var i = 0; i < courses.length; i++) {
+      //   if (courses[i] == null)
+      //     courses.splice(i)
+      // }
     }
     console.log(courses)
 
