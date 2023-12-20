@@ -65,11 +65,11 @@ export default function CourseList() {
                                     <div className="w-full h-36 p-8 rounded-xl bg-white">
                                         <div className="flex w-full mb-4">
                                             <Link href={'/course_Time'} onClick={() => { localStorage.setItem("course_id", course.name) }}
-                                                className="flex justify-start font-poppins w-[840px] cursor-pointer text-blue-500 font-semibold text-xs hover:underline">
+                                                className="flex justify-start font-poppins w-[840px] cursor-pointer text-blue-500 font-semibold text-base hover:underline">
                                                 {course.name}
                                             </Link>
                                         </div>
-                                        <div className="flex text-11 gap-4 mt-6">
+                                        <div className="flex text-11 gap-6 mt-6">
                                             <div className="flex items-center gap-2">
                                                 <Ibuilding className="w-3" />
                                                 <p className="font-poppins text-xs">{course.room}</p>
