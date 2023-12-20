@@ -21,24 +21,24 @@ export default function Ass_Grading() {
     }
 
     const handleGrading = (ev: SyntheticEvent) => {
-        setGrade(ev.value)
+        setGrade(ev.target.value)
     };
 
     const handleComment = (ev: SyntheticEvent) => {
-        setComment(ev.value)
+        setComment(ev.target.value)
     };
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         await fetch('/api/grade', {
             method: 'POST',
-            body: JSON.stringify({ assignment_id: localStorage.getItem('assignment_id'), comment, grade, }),
+            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade, }),
             headers: { 'Content-Type': 'application/json' },
         })
-        router.push('/assignments')
+        router.push('/teacher_grading')
     }
     
-    console.log(localStorage.getItem('assignment_id'))
+    //console.log(localStorage.getItem('assignment_id'))
     useEffect(() => {
         fetch('/api/submission_list', {
             method: 'POST',
@@ -60,6 +60,8 @@ export default function Ass_Grading() {
 
     const handleButtonClick = (index: number) => {
         setSelectedButton(index);
+        console.log(localStorage.getItem('submission_id'))
+
         const content = submissions.map((sub, i) => (
             index === i ? (
                 <div key={i}>
@@ -100,7 +102,7 @@ export default function Ass_Grading() {
                                     </div>
                                     {submissions.map((sub, index) => (
                                         <button
-                                            onClick={() => handleButtonClick(index)}
+                                            onClick={() => {handleButtonClick(index), localStorage.setItem('submission_id', sub._id)}}
                                             key={index}
                                             className={`w-full flex items-center  overflow-y-auto border-b py-4 border-stone-300 hover:bg-zinc-100 ${selectedButton === index ? 'bg-zinc-100' : ''}`}>
                                             <Iuser className="w-[3em] fill-zinc-300" />
@@ -133,7 +135,7 @@ export default function Ass_Grading() {
                             <input onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-[136px] focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score" />
 
                             <div className="flex items-center justify-end mr-6 mt-2">
-                                <button className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
+                                <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
                                     Grade
                                 </button>
                             </div>

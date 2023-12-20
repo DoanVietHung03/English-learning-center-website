@@ -205,11 +205,6 @@ export default function Profile() {
                                 onClick={handleFormSubmit}>
                                 Apply
                             </button>
-                            {/* {(error) &&
-                                (
-                                  
-                                )
-                            } */}
                         </div>
 
                     </div>

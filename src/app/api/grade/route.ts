@@ -6,7 +6,8 @@ export async function POST(req: { json: () => any }) {
     mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
     //const IdAssignmentUpDate = new ObjectId('yourObjectId');
     const updatedGrade = {
-        grade: body.grade
+        grade: body.grade,
+        comment: body.comment
     };
     const submissionEdit = await Submission.updateOne({ _id: body.id }, { $set: updatedGrade });
     return Response.json(submissionEdit);
