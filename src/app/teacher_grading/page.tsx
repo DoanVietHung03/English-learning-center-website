@@ -36,6 +36,7 @@ export default function Ass_Grading() {
         router.push('/assignments')
     }
     
+    console.log(localStorage.getItem('assignment_id'))
     useEffect(() => {
         fetch('/api/submission_list',{
             method: 'POST',

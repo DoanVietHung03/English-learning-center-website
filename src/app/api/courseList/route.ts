@@ -52,6 +52,11 @@ export async function POST(req: { json: () => any }) {
           courses.splice(i)
       }
     }
+    var data
+    for (var i = 0; i < courses.length; i++) {
+      if (courses[i] == null)
+        courses.splice(i)
+    }
 
     return Response.json(courses);
   } catch (error) {
