@@ -18,8 +18,8 @@ export default function SideBar() {
     const paths = ["/courseList", "/exercise_bank", "/report_bug", "chat", "/user_management"]
 
     return (
-        <div className="flex bg-[#68C6E3] rounded-tr-3xl rounded-br-3xl mt-16">
-            <div className={` ${open ? "w-72" : "w-24 "} max-h-[500px] p-6 pt-8 relative duration-300`}>
+        <div className="flex bg-[#68C6E3] rounded-tr-3xl rounded-br-3xl mt-16 h-fit pb-8">
+            <div className={` ${open ? "w-72" : "w-24 "} p-6 pt-8 relative duration-300`}>
                 <button className={`absolute cursor-pointer -right-3 top-9 w-7 ${!open && "rotate-180"}`}
                         onClick={() => setOpen(!open)}>
                     <IarrowLeft className="w-[2em] fill-black bg-sky-200 rounded-full p-2 hover:bg-sky-300"/>
@@ -34,7 +34,7 @@ export default function SideBar() {
                         aoe
                     </h1>
                 </div>
-                <ul className="pt-3">
+                <ul className="-pt-2">
                     {Menus.slice(0, 4).map((Menu, index) => (
                         <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>
                             <li
