@@ -10,24 +10,30 @@ import { useEffect, useState } from "react";
 export default function Ass_Grading() {
     const [submissions, setSubmissions] = useState([])
     const [file, setFile] = useState('');
+    const [comment, setComment] = useState('')
+    const [grade, setGrade] = useState(Number)
+    const [submission, setSubmission] = useState('')
+    
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
 
-    function findName(idUser: String){
-        fetch('/api/userName',{
+    const handleGrading = (ev: SyntheticEvent) => {
+        setGrade(ev.value)
+    };
+
+    const handleComment = (ev: SyntheticEvent) => {
+        setComment(ev.value)
+    };
+
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        await fetch('/api/grade', {
             method: 'POST',
-            body: JSON.stringify({ id: idUser }),
+            body: JSON.stringify({ assignment_id: localStorage.getItem('assignment_id'), comment, grade,  }),
             headers: { 'Content-Type': 'application/json' },
         })
-         .then(res => res.json())
-         .then(data => {
-            console.log(data)
-            return data
-         })
-         .catch(error => {
-             console.error('Error fetching data:', error);
-        });
+        router.push('/assignments')
     }
     
     useEffect(() => {
@@ -122,11 +128,11 @@ export default function Ass_Grading() {
                                     </div>
 
                                     <div className="mt-4 mx-[62px]">
-                                        <textarea className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment..."></textarea>
+                                        <textarea onChange={handleComment} className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment..."></textarea>
                                     </div>
 
                                     <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight mt-4 ml-[62px]">Score</p>
-                                    <input className="mt-4 ml-[62px] px-[14] py-3 w-[136px] focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score" />
+                                    <input onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-[136px] focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score" />
                                 </div>
                             </div>
 
