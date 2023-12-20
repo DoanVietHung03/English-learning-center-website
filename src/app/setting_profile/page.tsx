@@ -80,6 +80,12 @@ export default function Profile() {
         }
     }
 
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+    const handleTogglePasswordVisibility = () => {
+        setIsPasswordVisible((prev) => !prev);
+    };
+
     return (
         <>
             <Header />
@@ -167,8 +173,16 @@ export default function Profile() {
                                     Enter new password
                                 </div>
                                 <div className="flex items-center">
-                                    <input onChange={(ev) => { setPassword(ev.target.value) }} className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none border-r-0" type="password" id="myNewPassword" placeholder="New password" />
-                                    <button className="transition transform hover:scale-110 active:scale-100">
+                                    <input 
+                                            onChange={(ev) => { setPassword(ev.target.value) }} 
+                                            className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none border-r-0" 
+                                            type={isPasswordVisible ? 'text' : 'password'} 
+                                            id="myNewPassword" 
+                                            placeholder="New password"
+                                            value={password} />
+                                    <button 
+                                            onClick={handleTogglePasswordVisibility}
+                                            className="transition transform hover:scale-110 active:scale-100">
                                         <Ieye className="w-4 items-center mt-2 ml-2" />
                                     </button>
                                 </div>
@@ -191,8 +205,7 @@ export default function Profile() {
                                 </div>
                                 {(errorPass) &&
                                 (
-                                    <div className="ml-6 mt-5 text-red-800 font-semibold 
-                                        bg-red-300 rounded-lg p-3 mr-5">
+                                    <div className="w-4/5 -ml-2 mt-5 text-red-800 font-semibold bg-red-300 rounded-lg p-3 mr-5">
                                         Wrong password
                                     </div>
                                 )
