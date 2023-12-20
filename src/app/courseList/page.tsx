@@ -17,6 +17,7 @@ export default function CourseList() {
     const type = localStorage.getItem('userType')
 
     useEffect(() => {
+        console.log(localStorage.getItem('userName'))
         /* The code is making a POST request to the '/api/courseList' endpoint with the specified
         headers and request body. The request body contains the username retrieved from the
         localStorage. */
@@ -31,6 +32,7 @@ export default function CourseList() {
             .then(data => {
                 // Hiển thị danh sách khóa học trong giao diện
                 setCourses(data)
+                console.log(data)
                 if (courses == null)
                     setEmptyCourse(true)
                 else
@@ -78,7 +80,7 @@ export default function CourseList() {
 
                                             <div className="flex items-center gap-2">
                                                 <Itarget className="w-3" />
-                                                <p className="font-poppins text-xs">Teacher: {course.teacher_id}</p>
+                                                <p className="font-poppins text-xs">Teacher: {course.teacher_name}</p>
                                             </div>
 
                                             <div className="flex items-center gap-2">
