@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 'use client'
 
 import SideBar from "@/components/layout/sideBar"
@@ -169,7 +170,7 @@ export default function Exercise_bank() {
                         {/* {exercise[0].content} */}
                         {
                             exercises.map(exercise => (
-                                <>
+                                ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
                                     <div className="inline-block bg-white mr-4 pl-10 pr-[95px] py-4 mb-4 rounded-xl">
                                         <div className="font-semibold mb-4">
                                             {exercise.title}
@@ -190,13 +191,14 @@ export default function Exercise_bank() {
                                             <div className="text-blue-400">View Exercise</div>
                                         </Link>
                                     </div>
-                                </>
+                                )
+
                             ))
                         }
 
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
