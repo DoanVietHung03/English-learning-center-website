@@ -107,7 +107,7 @@ export default function ExBank() {
                             {exercise.title}
                         </div>
                         <div className="p-2 ml-2 text-black text-base font-semibold font-['Poppins']">
-                            Module {' '} {exercise.title}
+                            Module {' '} {exercise.module}
                         </div>
                         <div className="p-2 ml-2 text-black text-base font-semibold font-['Poppins']">
                             Skill {' '} {exercise.skill}
