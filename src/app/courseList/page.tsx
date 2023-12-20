@@ -50,7 +50,8 @@ export default function CourseList() {
                             Courses List
                         </div>
                         {(type == 'Admin') &&
-                            <Link href='/course_add' className="bg-lime-400 flex gap-3 rounded-xl items-center justify-center py-3 px-3">
+                            <Link href='/course_add' className="bg-lime-500 border-2 border-lime-500 text-white hover:bg-lime-200 hover:text-gray-700
+                             flex gap-3 rounded-xl items-center justify-center py-3 px-3 transition-colors">
                                 <div className="text-2xl font-bold">+</div>
                                 <div className="font-bold flex items-center">Add Course</div>
                             </Link>

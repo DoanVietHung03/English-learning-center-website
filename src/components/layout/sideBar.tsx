@@ -38,7 +38,7 @@ export default function SideBar() {
                     {Menus.slice(0, 4).map((Menu, index) => (
                         <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>
                             <li
-                                className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-300
+                                className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-300 transition-colors
                                             ${index === 0 && "bg-transparent"}`}>
                             <Menu.src className="w-8 fill-white"/>
                                 <span className={`${!open && "hidden"} origin-left duration-200 ml-4`}>
