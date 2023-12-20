@@ -10,7 +10,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
-
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import * as React from 'react'
 export default function Profile() {
     // useEffect(() => {
     //     let showPassword = false;
@@ -30,41 +31,36 @@ export default function Profile() {
     //       }
     //     };
     //   }, []);
-    const [phone, setPhone] = useState('')
-    const [name, setName] = useState(localStorage.getItem('userFname') || '')
-    const [email, setEmail] = useState('')
-    const [birth, setBirth] = useState('')
-    const [address, setAddress] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState(false)
-    const router = useRouter();
-
+    const [user, setUser] = useState({})
     useEffect(() => {
         fetch('/api/profile', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ phone: localStorage.getItem("userName"), name: localStorage.getItem("userFname") }),
+            body: JSON.stringify({ phone: localStorage.getItem("userName")})
         })
         .then(response => response.json())
-        // .then(data => {
-            
-        // })
-        .catch(error => console.error('Error:', error));
+        .then(data => {
+            setUser(data)
+        })
     }, []);
-
+    const router = useRouter();
+    const [birth, setBirth] = React.useState<dayjs | null>(dayjs(user.birth))
+    console.log(birth)
+    const [error, setError] = useState(false)
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         const response = await fetch('api/profile', {
             method: 'POST',
-            body: JSON.stringify({phone, name, email, birth, address, password}),
+            body: JSON.stringify(user),
             headers: {'Content-Type': 'application/json'},
         })
         if (!response.ok)
             setError(true)
         else {
-            router.push('/profile')
+
+            router.push('/setting_profile')
         }
     }
 
@@ -78,11 +74,11 @@ export default function Profile() {
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
                         Profile
                     </div>
-                    <div className="bg-white rounded pb-3">
+                    <div className="bg-white rounded pb-3"> 
                         <div className="flex items-center p-5">
                             <ProfileUser />
                             <p className="ml-4 text-2xl font-semibold font-poppins">
-                                {localStorage.getItem('userFname')}
+                                {user.name}
                             </p>
                         </div>
 
@@ -103,7 +99,8 @@ export default function Profile() {
                                 <input
                                     className="w-4/5 text-gray-400 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none"
                                     type="text"
-                                    value={localStorage.getItem('userName')}
+                                    value={user.phone}
+
                                     readOnly
                                 />
                                 
@@ -113,28 +110,40 @@ export default function Profile() {
                                 <input
                                     className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none"
                                     type="text"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    value={user.name}
+                                    onChange={(e) => user.name = e.target.value}
                                 />
 
                                 <div className="font-poppins text-sm mt-4">
                                     Email
                                 </div>
-                                <input className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" type="text" id="myEmail" placeholder="...@gmail.com" 
-                                    onChange={ev => setEmail(ev.target.value)}
+                                <input className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" 
+                                type="text" id="myEmail" placeholder={user.email}
+                                    onChange={ev => user.email = ev.target.value}
                                 /> 
                                 
 
                                 <div className="font-poppins text-sm mt-4">
                                     Date of Birth
                                 </div>
-                                <input className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" type="text" id="myBirthDate" placeholder="dd/mm/yyyy" />
-                                
-                                a
+                                <div>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DemoContainer components={['DatePicker']}>
+                                            <DatePicker value={birth} onChange={(ev) => setBirth(ev.target.value)}
+                                                className="w-3/4"
+                                            />
+                                        </DemoContainer>
+                                    </LocalizationProvider>
+                                </div>
+                            
                                 <div className="font-poppins text-sm mt-4">
                                     Address 
                                 </div>
-                                <input className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" type="text" id="myAddress" placeholder="...." />
+                                <input className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none"
+                                 type="text" id="myAddress"
+                                 placeholder={user.address}
+                                    onChange={ev => user.address = ev.target.value}
+                                />
                             </div>
 
                             <div className="pl-5 pt-5 ml-8">
@@ -160,7 +169,8 @@ export default function Profile() {
                         </div>
 
                         <div className="items-center justify-center flex mt-6">
-                            <button className="bg-sky-300 rounded-lg border border-stone-300 pt-1 pb-1 pl-3 pr-3">
+                            <button className="bg-sky-300 rounded-lg border border-stone-300 pt-1 pb-1 pl-3 pr-3"
+                                onClick={handleFormSubmit}>
                                 Apply
                             </button>
                         </div>
