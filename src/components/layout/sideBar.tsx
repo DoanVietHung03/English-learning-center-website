@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import IarrowLeft from "../icons/icon_arrow_left"
 import dynamic from "next/dynamic"
 
@@ -25,8 +25,18 @@ export default function SideBar() {
 
     const paths = ["/courseList", "/exercise_bank", "/report_bug", "chat", "/user_management"]
 
-    const menuIconAdmin = Menus[4].src;
-    const menuIconNotAdmin = Menus[3].src;
+    const [currentPage, setCurrentPage] = useState("");
+
+    useEffect(() => {
+        const savedPage = localStorage.getItem("currentPage");
+        if (savedPage) {
+            setCurrentPage(savedPage);
+        }
+    }, []);
+    
+    useEffect(() => {
+        localStorage.setItem("currentPage", currentPage);
+    }, [currentPage]);    
 
     return (
         <div className="flex bg-[#68C6E3] rounded-tr-3xl rounded-br-3xl mt-16 h-fit pb-8">
@@ -51,7 +61,8 @@ export default function SideBar() {
                         <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>
                             <li
                                 className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-300 transition-colors
-                                            ${index === 0 && "bg-transparent"}`}>
+                                            ${currentPage === paths[index] && "bg-sky-500"}`}
+                                            onClick={() => setCurrentPage(paths[index])}>
                                 {index < 3 ? (Menu.src) : (type !== 'Admin' ? <IconChat className="w-8 fill-white"/> : <IconUser className="w-8 fill-white"/>)}
                                 <span className={`${!open && "hidden"} origin-left duration-200 ml-4`}>
                                     {index < 3 ? Menu.title : (type !== 'Admin' ? Menus[3].title : Menus[4].title)}
