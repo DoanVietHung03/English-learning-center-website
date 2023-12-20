@@ -76,7 +76,7 @@ export default function ExBank() {
     //     }
     // );
     const [exercise, setExercise] = useState({})
-    const [viewRes]
+    //const [viewRes]
     useEffect(() => {
         fetch('/api/exercise', {
             method: 'POST',
