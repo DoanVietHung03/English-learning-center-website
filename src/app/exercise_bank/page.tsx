@@ -15,17 +15,11 @@ export default function Exercise_bank() {
     const [content, setContent] = useState<ReactElement | any | null>(null)
     const [exercises, setExercises] = useState([])
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
-
-
+    const [emptyFilter, setEmptyfilter] = useState(true)
+    const [resetKey, setResetKey] = useState(0);
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
     };
-
-
-
-
-    // Mặc định hiển thị nội dung khi trang được tải
-
     useEffect(() => {
         fetch('/api/exercisesBank')
             .then(res => res.json())
@@ -38,87 +32,18 @@ export default function Exercise_bank() {
                 console.error('Error fetching data:', error);
             });
     }, []);
-
-    // if (selectedButton == null) {
-    //     setContent(
-    //         <div className="flex justify-between mt-10 gap-2">
-    //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-    //                 <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].module</p>
-    //                 <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-    //                     <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].title</p>
-    //                 </div>
-
-    //                 <div className="mt-10 ml-4">
-    //                     <Link href={"/exercise_bank/ex_in_exbank"}>
-    //                         <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-    //                             <Ieye className="w-[1em] fill-blue-400" />
-    //                             <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-    //                         </button>
-    //                     </Link>
-    //                 </div>
-    //             </div>
-    {/* 
-                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].title</p>
-                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].module</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].skill</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1"></p>
-                        </div>
-
-                        <div className="mt-10 ml-4">
-                            <Link href={"/exercise_bank/ex_in_exbank"}>
-                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-                                    <Ieye className="w-[1em] fill-blue-400" />
-                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-                        <p className="text-center text-black text-base font-semibold font-['Poppins'] mt-4">exercise[0].title</p>
-                        <div className="flex items-center justify-between mt-4 border-b border-stone-200 pb-4">
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].module</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1">exercise[0].skill</p>
-                            <p className="rounded-md border-2 border-stone-300 text-center text-stone-300 text-base font-semibold font-['Poppins'] px-1"></p>
-                        </div>
-
-                        <div className="mt-10 ml-4">
-                            <Link href={"/exercise_bank/ex_in_exbank"}>
-                                <button className="flex items-center gap-2 bg-stone-300 rounded-md px-3 py-1 hover:bg-stone-200">
-                                    <Ieye className="w-[1em] fill-blue-400" />
-                                    <p className="text-sky-400 text-sm font-medium font-['Poppins']">View Exercise</p>
-                                </button>
-                            </Link>
-                        </div>
-            </div> */}
-    //         </div>
-    //     );
-    // }
-
-    // if (selectedButton !== null) {
-    //     if (selectedButton === 1) {
-    //         setContent('');
-    //     } else if (selectedButton === 2) {
-    //         setContent(
-    //             <div className="w-1/3 bg-white rounded-xl border border-zinc-300 px-2 pb-4">
-    //                 {/* Nội dung cho Button 2 */}
-    //             </div>
-    //         );
-    //     }
-    // }
-
-
-
-    //console.log(exercise)
-
     const handleChangeModule = (ev) => {
         setModule(ev.value);
     };
 
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
+    };
+    const handleChangeRemoveF = (ev) => {
+        setEmptyfilter(true);
+        setModule('');
+        setSkill('');
+        setResetKey((prevKey) => prevKey + 1);
     };
 
     return (
@@ -133,17 +58,19 @@ export default function Exercise_bank() {
                     </div>
                     <div className="bg-white rounded pb-3">
                         <div className="flex gap-32 justify-center px-11 py-7">
-                            <Select options={optionModule} onChange={handleChangeModule} className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Module" />
-                            <Select options={optionSkill} onChange={handleChangeSkill} className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Skill" />
+                            <Select key={`module-select-${resetKey}`}
+                                options={optionModule}
+                                onChange={handleChangeModule}
+                                className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Module" />
+                            <Select key={`skill-select-${resetKey}`}
+                                options={optionSkill}
+                                onChange={handleChangeSkill}
+                                className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Skill" />
                         </div>
 
                         <div className="mt-16 flex items-center ml-9 gap-2">
-                            <button className="bg-purple-500 rounded-lg text-white text-base font-medium px-6 py-1 
-                            hover:bg-purple-400 transition-colors duration-300">
-                                Sort Data
-                            </button>
-
-                            <button className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px]
+                            <button onClick={handleChangeRemoveF}
+                                className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px]
                              hover:bg-red-200 transition-colors duration-300">
                                 Remove filter
                             </button>
@@ -167,7 +94,6 @@ export default function Exercise_bank() {
                     </div>
 
                     <div className="inline-block mt-4">
-                        {/* {exercise[0].content} */}
                         {
                             exercises.map(exercise => (
                                 ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
