@@ -46,7 +46,7 @@ export default function Assigments() {
                     </div>
 
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_id")}</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_name")}</div>
                     </div>
 
 

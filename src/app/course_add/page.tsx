@@ -63,7 +63,7 @@ export default function Course_Add() {
             setError(true)
         else {
 
-            router.push('/assignments')
+            router.push('/courseList')
         }
     }
     const [teachers, setTeachers] = useState([]);

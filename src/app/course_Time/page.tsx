@@ -12,6 +12,7 @@ export default function CourseTime() {
     const [course, setCourse] = useState('')
     const [sessions, setSessions] = useState([])
     const [attendances, setAttendances] = useState([])
+    const [teacher, setTeacher] = useState('')
     const type = localStorage.getItem("userType")
     useEffect(() => {
         fetch('/api/session', {
@@ -27,6 +28,7 @@ export default function CourseTime() {
                 setCourse(data.course)
                 setSessions(data.sessions)
                 setAttendances(data.attendance)
+                setTeacher(data.teacherName.name)
                 //console.log("123", data.attendance)
                 // sessions = data.sessions
             })
@@ -65,7 +67,7 @@ export default function CourseTime() {
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
-                                    Teacher: {course.teacher_id}
+                                    Teacher: {teacher}
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">

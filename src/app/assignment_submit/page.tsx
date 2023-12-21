@@ -6,11 +6,14 @@ import Link from "next/link"
 import React from "react"
 import { SyntheticEvent, useEffect, useState } from "react"
 import ReactAudioPlayer from "react-audio-player"
+import { useRouter } from "next/navigation";
 
 export default function Do_Assignment() {
     const [assignment, SetAssignment] = useState([])
     const [answer, SetAnswer] = useState('')
     const [file, setFile] = useState('');
+    const router = useRouter();
+
     function handleChangeFile(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
@@ -66,6 +69,7 @@ export default function Do_Assignment() {
             body: JSON.stringify({ answer, id_student: localStorage.getItem("userName"), id_assignment: localStorage.getItem("assignment_id"), file }),
             headers: { 'Content-Type': 'application/json' },
         })
+        router.push('/assignments')
     }
 
 
@@ -81,7 +85,7 @@ export default function Do_Assignment() {
                         Assignments
                     </div>
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_id")}</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_name")}</div>
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded">

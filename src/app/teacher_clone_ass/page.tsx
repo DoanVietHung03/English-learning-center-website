@@ -41,7 +41,7 @@ export default function Clone_Assignment() {
     if (courses)
         optionCourses = courses.map(function (course) {
             return {
-                value: course.name,
+                value: course.course_id,
                 label: course.name
             }
         })
@@ -185,7 +185,3 @@ const optionModule = [
     { value: "TOEFL", label: "TOEFL" }
 ];
 
-const optionCourse = [
-    {},
-
-];

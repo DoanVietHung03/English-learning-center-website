@@ -90,7 +90,7 @@ export default function Ass_Grading() {
                         Assignments
                     </div>
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_id")}</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_name")}</div>
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded px-7">

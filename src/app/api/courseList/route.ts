@@ -70,6 +70,7 @@ export async function POST(req: { json: () => any }) {
 
     var combinedCourses = courses.map((course,i) => {
       return {
+        course_id: course._id,
         name: course.name,
         startDate: course.startDate,
         module: course.module,
