@@ -68,8 +68,6 @@ export async function POST(req: { json: () => any }) {
       data.push(teacherName.name)
     }
 
-
-
     var combinedCourses = courses.map((course,i) => {
       return {
         name: course.name,

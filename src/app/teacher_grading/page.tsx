@@ -32,13 +32,13 @@ export default function Ass_Grading() {
         ev.preventDefault()
         await fetch('/api/grade', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade, }),
+            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade}),
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/teacher_grading')
     }
     
-    //console.log(localStorage.getItem('assignment_id'))
+    console.log(localStorage.getItem('assignment_id'))
     useEffect(() => {
         fetch('/api/submission_list', {
             method: 'POST',
@@ -48,7 +48,7 @@ export default function Ass_Grading() {
             .then(res => res.json())
             .then(data => {
                 setSubmissions(data)
-                console.log(data)
+                //console.log(data)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -66,7 +66,7 @@ export default function Ass_Grading() {
             index === i ? (
                 <div key={i}>
                     <div className="mt-10 ml-[34px] text-black text-sm font-semibold font-poppins mb-2">
-                        <p>{sub.student_id}</p>
+                        <p>{sub.student_Name}</p>
                     </div>
                     <div className="mx-[34px] px-7 py-4 border-t border-b border-stone-300 overflow-y-auto h-80 h-fixed">
                         <div className="text-black text-base font-normal font-poppins leading-tight tracking-tight">
@@ -106,7 +106,7 @@ export default function Ass_Grading() {
                                             key={index}
                                             className={`w-full flex items-center  overflow-y-auto border-b py-4 border-stone-300 hover:bg-zinc-100 ${selectedButton === index ? 'bg-zinc-100' : ''}`}>
                                             <Iuser className="w-[3em] fill-zinc-300" />
-                                            <p className="text-black text-sm font-semibold font-poppins ml-4">{sub.student_id}</p>
+                                            <p className="text-black text-sm font-semibold font-poppins ml-4">{sub.student_Name} - {sub.student_id}</p>
                                         </button>
                                     ))}
                                 </div>
