@@ -4,7 +4,6 @@ import { User } from "@/models/user"
 const courseSchema = new Schema({
     name: {
         type: String,
-        unique: true,
         required: false
     },
     startDate: {
