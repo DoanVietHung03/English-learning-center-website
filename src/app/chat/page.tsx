@@ -54,6 +54,7 @@ export default function Chat() {
     // }))
 
     useEffect(() => {
+        localStorage.setItem('sidebar', 3)
         fetch('/api/message', {
             method: 'POST',
             headers: {

@@ -3,10 +3,22 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Ihand from "@/components/icons/icon_hand"
-import RpDropdown from "./report_dropdown"
 import Link from "next/link"
+import Select from "react-select";
+import * as React from 'react';
+import { ReactElement, useState, useEffect } from "react"
 
 export default function RP() {
+    const [status, setStatus] = useState('')
+
+    const handleChangeStatus = (ev) => {
+        setStatus(ev.value);
+    };
+
+    useEffect(() => {
+        localStorage.setItem('sidebar', 2)
+    })
+
     return (
         <>
             <Header />
@@ -27,8 +39,11 @@ export default function RP() {
                             </Link>
                         </div>
 
-                        <div className="ml-10 mt-4">
-                            <RpDropdown />
+                        <div className="ml-10 mt-4 w-[141px]">
+                            <Select 
+                                options={optionStatus}
+                                onChange={handleChangeStatus}
+                                placeholder="Status" />
                         </div>
 
                         <div className="mt-12 mx-10">
@@ -64,3 +79,8 @@ export default function RP() {
         </>
     )
 }
+
+const optionStatus = [
+    { value: "Completed", label: "Completed" },
+    { value: "Uncompleted", label: "Uncompleted" }
+];
