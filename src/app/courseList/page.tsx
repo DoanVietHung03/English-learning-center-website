@@ -18,6 +18,7 @@ export default function CourseList() {
 
     useEffect(() => {
         console.log(localStorage.getItem('userName'))
+        localStorage.setItem('sidebar', 0)
         /* The code is making a POST request to the '/api/courseList' endpoint with the specified
         headers and request body. The request body contains the username retrieved from the
         localStorage. */

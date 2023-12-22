@@ -21,6 +21,7 @@ export default function Exercise_bank() {
         setSelectedButton(buttonNumber);
     };
     useEffect(() => {
+        localStorage.setItem('sidebar', 1)
         fetch('/api/exercisesBank')
             .then(res => res.json())
             .then(data => {
