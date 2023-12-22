@@ -11,8 +11,8 @@ import { useRouter } from "next/navigation";
 export default function Ass_Grading() {
     const [submissions, setSubmissions] = useState([])
     const [file, setFile] = useState('');
-    const [comment, setComment] = useState('')
-    const [grade, setGrade] = useState(Number)
+    const [comment, setComment] = useState<ReactElement | any | string>('')
+    const [grade, setGrade] = useState('')
     const [submission, setSubmission] = useState('')
     const router = useRouter();
 
@@ -77,6 +77,32 @@ export default function Ass_Grading() {
             ) : null
         ));
         setStudentContent(content);
+        
+        const comments = submissions.map((sub, i) => (
+            index === i ? (
+                sub.comment !== null ? (
+                    <div key={i}>
+                        <textarea onChange={handleComment} readOnly className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
+                            {sub.comment}
+                        </textarea>
+                    </div>
+                ) : null
+            ) : null
+        ));
+        setComment(comments);
+
+        const grades = submissions.map((sub, i) => (
+            index === i ? (
+                sub.grade !== null ? (
+                    <div key={i}>
+                        <textarea onChange={handleGrading} readonly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                            {sub.grade}
+                        </textarea>
+                    </div>
+                ) : null
+            ) : null
+        ));
+        setGrade(grades);
     }
 
 
@@ -128,11 +154,11 @@ export default function Ass_Grading() {
                             </div>
 
                             <div className="mt-4 mx-[62px]">
-                                <textarea onChange={handleComment} className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment..."></textarea>
+                                {comment}
                             </div>
 
                             <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight mt-4 ml-[62px]">Score</p>
-                            <input onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-[136px] focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score" />
+                            <div>{grade}</div>
 
                             <div className="flex items-center justify-end mr-6 mt-2">
                                 <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
