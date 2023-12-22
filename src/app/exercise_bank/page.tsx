@@ -93,11 +93,11 @@ export default function Exercise_bank() {
                         </button>
                     </div>
 
-                    <div className="inline-block mt-4">
+                    <div className="grid grid-cols-3 mt-4">
                         {
                             exercises.map(exercise => (
                                 ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
-                                    <div className="inline-block bg-white mr-4 pl-10 pr-[95px] py-4 mb-4 rounded-xl">
+                                    <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
                                         <div className="font-semibold mb-4">
                                             {exercise.title}
                                         </div>
@@ -118,10 +118,8 @@ export default function Exercise_bank() {
                                         </Link>
                                     </div>
                                 )
-
                             ))
                         }
-
                     </div>
                 </div>
             </div >
