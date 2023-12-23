@@ -11,8 +11,10 @@ export async function POST(req: { json: () => any }) {
         answer: body.answer,
         grade: null,
         comment: null,
+        status: 'Pending',
         attachedFile: body.file
     })
+    console.log(createdSubmission)
     return Response.json(createdSubmission);
 }
 

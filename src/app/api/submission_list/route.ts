@@ -26,8 +26,10 @@ export async function POST(req: { json: () => any }) {
         grade: submission.grade,
         attachedFile: submission.attachedFile,
         student_id: submission.student_id,
+        status: submission.status,
         student_Name: data[i], 
       };
     });
+    console.log(combinedSubmissions)
     return Response.json(combinedSubmissions);
 }

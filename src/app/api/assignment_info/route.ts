@@ -7,6 +7,6 @@ export async function POST(req: { json: () => any }) {
     mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
     // console.log(body)
     const createdAssignment = await Assignment.findOne({ _id: body.id })
-    //   console.log(createdAssignment)
+    console.log(createdAssignment)
     return Response.json(createdAssignment)
 }
