@@ -15,7 +15,7 @@ export default function SideBar() {
         { title: "Chat", src: dynamic(() => import("../icons/icon_chat")) },
         { title: "User Management", src: dynamic(() => import("../icons/icon_user")) }
     ];
-    const paths = ["/courseList", "/exercise_bank", "/report_bug", "chat", "/user_management"]
+    const paths = ["/courseList", "/exercise_bank", "/report_bug", "/chat", "/user_management"]
 
     return (
         <div className="flex bg-[#68C6E3] rounded-tr-3xl rounded-br-3xl mt-16 h-fit pb-8">
@@ -34,12 +34,13 @@ export default function SideBar() {
                         aoe
                     </h1>
                 </div>
+
                 <ul className="-pt-2">
                     {Menus.slice(0, 4).map((Menu, index) => (
                         <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>
                             <li
-                                className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-300 transition-colors
-                                            ${index === 0 && "bg-transparent"}`}>
+                                className={`w-full mt-8 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4
+                                 hover:bg-sky-300 transition-colors ${index === 0 && "bg-transparent"}`}>
                             <Menu.src className="w-8 fill-white"/>
                                 <span className={`${!open && "hidden"} origin-left duration-200 ml-4`}>
                                     {index < 3 ? Menu.title : (type !== 'Admin' ? Menus[3].title : Menus[4].title)}
