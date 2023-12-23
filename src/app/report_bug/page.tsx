@@ -10,6 +10,7 @@ import { ReactElement, useState, useEffect } from "react"
 
 export default function RP() {
     const [status, setStatus] = useState('')
+    const [reports, setReports] = useState([])
 
     const handleChangeStatus = (ev) => {
         setStatus(ev.value);
@@ -17,6 +18,24 @@ export default function RP() {
 
     useEffect(() => {
         localStorage.setItem('sidebar', 2)
+        fetch('/api/report_list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: localStorage.getItem("userName") }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Hiển thị danh sách khóa học trong giao diện
+                setReports(data)
+                console.log(data)
+                // if (courses == null)
+                //     setEmptyCourse(true)
+                // else
+                //     setEmptyCourse(false)
+            })
+            .catch(error => console.error('Error:', error));
     })
 
     return (
