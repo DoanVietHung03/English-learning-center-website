@@ -60,6 +60,7 @@ export default function Profile() {
     const [error, setError] = useState(false)
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+        localStorage.setItem('userFname', user.name)
         console.log(user)
         if(errorPass === false){
             setError(false)

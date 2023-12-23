@@ -6,14 +6,25 @@ import { User } from "@/models/user"
 export async function POST(req: { json: () => any }) {
     try {
         const body = await req.json();
-        mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");        
-        const updatedInfo = {
-            name: body.userName,
-            email: body.userEmail,
-            birth: body.userBirth,
-            address: body.userAddress,
-            password: body.userPassword
-        };
+        var updatedInfo
+        mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
+        if(body.userPassword != ''){        
+            updatedInfo = {
+                name: body.userName,
+                email: body.userEmail,
+                birth: body.userBirth,
+                address: body.userAddress,
+                password: body.userPassword
+            };
+        }
+        else{
+            updatedInfo = {
+                name: body.userName,
+                email: body.userEmail,
+                birth: body.userBirth,
+                address: body.userAddress
+            };
+        }
         console.log(updatedInfo)
         const submissionEdit = await User.updateOne({ phone: body.userID }, { $set: updatedInfo });
         return Response.json(submissionEdit);
