@@ -27,7 +27,7 @@ export default function SideBar() {
 
 
     return (
-        <div className="flex bg-[#68C6E3] rounded-tr-3xl rounded-br-3xl mt-16 h-fit pb-8">
+        <div className="flex bg-[#8edaf1] rounded-tr-3xl rounded-br-3xl mt-16 h-fit pb-8">
             <div className={` ${open ? "w-72" : "w-24 "} p-6 pt-8 relative duration-300`}>
                 <button className={`absolute cursor-pointer -right-3 top-9 w-7 ${!open && "rotate-180"}`}
                         onClick={() => setOpen(!open)}>
@@ -48,8 +48,8 @@ export default function SideBar() {
                         
                         <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>
                             <li
-                                className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-300 transition-colors 
-                                            ${localStorage.getItem('sidebar') == index ? "bg-sky-400" : ""}`}
+                                className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-400 transition-colors 
+                                            ${localStorage.getItem('sidebar') == index ? "bg-sky-400" : "bg-transparent"}`}
                                             >
                                 {index < 3 ? (Menu.src) : (type !== 'Admin' ? <IconChat className="w-8 fill-white"/> : <IconUser className="w-8 fill-white"/>)}
                                 <span className={`${!open && "hidden"} origin-left duration-200 ml-4`}>

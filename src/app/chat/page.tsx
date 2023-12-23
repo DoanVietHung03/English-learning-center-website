@@ -55,21 +55,22 @@ export default function Chat() {
 
     useEffect(() => {
         localStorage.setItem('sidebar', 3)
-        fetch('/api/message', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({sender: localStorage.getItem("phone")}),
-       })
-            .then(res => res.json())
-            .then(data => {
-                // setTeachers(data.teachers)
-                // setStudents(data.students)
-                setReceiver(data.receiver)
+        console.log("hello")
+    //     fetch('/api/message', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({sender: localStorage.getItem("phone")}),
+    //    })
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             // setTeachers(data.teachers)
+    //             // setStudents(data.students)
+    //             setReceiver(data.receiver)
             
-            })
-            .catch(error => console.error('Error:', error));
+    //         })
+    //         .catch(error => console.error('Error:', error));
     }, []);
 
 
