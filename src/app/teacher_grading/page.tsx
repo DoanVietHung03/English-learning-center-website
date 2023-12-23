@@ -6,7 +6,8 @@ import Imicro from "@/components/icons/microphone";
 import Iuser from "@/components/icons/icon_user";
 import * as React from 'react';
 import { useEffect, useState, ReactElement } from "react";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
+import { useRouter } from 'next/router';
 
 export default function Ass_Grading() {
     const [submissions, setSubmissions] = useState([])
@@ -16,7 +17,7 @@ export default function Ass_Grading() {
     const [gradeContent, setGradeContent] = useState<ReactElement | any | string>('')
     const [grade, setGrade] = useState('')
     const [submission, setSubmission] = useState('')
-    const router = useRouter();
+
 
     console.log(localStorage.getItem('assignment_id'))
     function handleChangeImage(ev) {
@@ -32,13 +33,13 @@ export default function Ass_Grading() {
     };
 
     async function handleFormSubmit(ev: SyntheticEvent) {
-        ev.preventDefault()
+        ev.preventDefault();
         await fetch('/api/grade', {
             method: 'POST',
             body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade}),
             headers: { 'Content-Type': 'application/json' },
         })
-        router.push('/teacher_grading')
+        window.location.reload(true);
     }
     
     console.log(localStorage.getItem('assignment_id'))
@@ -84,12 +85,14 @@ export default function Ass_Grading() {
         const comments = submissions.map((sub, i) => (
             index === i ? (
                 sub.comment !== null ? (
+                    setComment(sub.comment),
                     <div key={i}>
-                        <textarea onChange={handleComment} readOnly className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
+                        <textarea readOnly className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
                             {sub.comment}
                         </textarea>
                     </div>
                 ) : (
+                    //setComment(null),
                     <div key={i}>
                         <textarea onChange={handleComment} className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
         
@@ -98,18 +101,19 @@ export default function Ass_Grading() {
                 )
             ) : null
         ));
-        //setComment(temp_comment);
         setCommentContent(comments)
 
         const grades = submissions.map((sub, i) => (
             index === i ? (
                 sub.grade !== null ? (
+                    setGrade(sub.grade),
                     <div key={i}>
-                        <textarea onChange={handleGrading} readonly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        <textarea  readOnly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
                             {sub.grade}
                         </textarea>
                     </div>
                 ) : (
+                    //setGrade(null),
                     <div key={i}>
                         <textarea onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
                         </textarea>

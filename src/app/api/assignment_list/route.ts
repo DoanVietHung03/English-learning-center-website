@@ -25,7 +25,7 @@ export async function POST(req: { json: () => any }) {
 
     var combinedAssignments = listAssignment.map((assignment,i) => {
         return {
-          id: assignment._id,
+          _id: assignment._id,
           content: assignment.content,
           skill: assignment.skill,
           deadline: assignment.deadline,
