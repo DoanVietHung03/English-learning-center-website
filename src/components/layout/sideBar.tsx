@@ -23,7 +23,7 @@ export default function SideBar() {
         { title: 'User Management', src: <IconUser className="w-8 fill-white" /> },
       ];
 
-    const paths = ["/courseList", "/exercise_bank", "/report_bug", "chat", "/user_management"]
+    const paths = ["/courseList", "/exercise_bank", "/report_bug", "/chat", "/user_management"]
 
 
     return (
@@ -45,11 +45,10 @@ export default function SideBar() {
                 </div>
                 <ul className="-pt-2">
                     {Menus.slice(0, 4).map((Menu, index) => (
-                        
                         <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>
                             <li
                                 className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-400 transition-colors 
-                                            ${localStorage.getItem('sidebar') == index ? "bg-sky-400" : "bg-transparent"}`}
+                                            ${localStorage.getItem('sidebar') == index ? "bg-sky-400" : ""}`}
                                             >
                                 {index < 3 ? (Menu.src) : (type !== 'Admin' ? <IconChat className="w-8 fill-white"/> : <IconUser className="w-8 fill-white"/>)}
                                 <span className={`${!open && "hidden"} origin-left duration-200 ml-4`}>

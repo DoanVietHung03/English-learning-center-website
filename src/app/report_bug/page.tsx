@@ -5,8 +5,7 @@ import Header from "@/components/layout/header"
 import Ihand from "@/components/icons/icon_hand"
 import Link from "next/link"
 import Select from "react-select";
-import * as React from 'react';
-import { ReactElement, useState, useEffect } from "react"
+import React, { ReactElement, useState, useEffect } from "react"
 import moment from 'moment';
 
 export default function RP() {
@@ -18,7 +17,6 @@ export default function RP() {
     };
 
     useEffect(() => {
-        localStorage.setItem('sidebar', 2)
         fetch('/api/report_list', {
             method: 'POST',
             headers: {
@@ -31,7 +29,8 @@ export default function RP() {
                 setReports(data)
             })
             .catch(error => console.error('Error:', error));
-    })
+        localStorage.setItem('sidebar', 2)
+    }, []);
 
     return (
         <>
