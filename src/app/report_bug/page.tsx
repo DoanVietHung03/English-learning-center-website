@@ -7,6 +7,8 @@ import Link from "next/link"
 import Select from "react-select";
 import React, { ReactElement, useState, useEffect } from "react"
 import moment from 'moment';
+import Popup from 'reactjs-popup'
+import 'reactjs-popup/dist/index'
 
 export default function RP() {
     const [status, setStatus] = useState('')
@@ -60,72 +62,45 @@ export default function RP() {
                         </div>
 
                         <div className="mt-12 mx-10">
+                            <div className="grid grid-cols-6 items-center">
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">ID</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Title</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Type</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Date Created</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Date Completed</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Status</p>
+                            </div>
                             {reports.map((rep, index) => (
-                                <>
-                                    <div key={index} className="grid grid-cols-6 items-center">
-                                        <div>
-                                            <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">ID</p>
-                                            <div key={index}>
-                                                <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
-                                                    <div>{rep.userID}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div >
-                                            <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Title</p>
-                                            <div key={index}>
-                                                <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
-                                                    <div>{rep.title}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div >
-                                            <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Type</p>
-                                            <div key={index}>
-                                                <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
-                                                    <div>{rep.type}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div >
-                                            <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Date Created</p>
-                                            <div key={index}>
-                                                <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
-                                                    <div>{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div >
-                                            <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Date Completed</p>
-                                            <div key={index}>
-                                                <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
-                                                    <div>{(rep.date_completed === null ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div >
-                                            <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Status</p>
-                                            <div key={index}>
-                                                <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
-                                                    <div>{rep.status}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </>))}
-                        </div>
-                        {/* {reports.map((rep, index) => (
-                                <div key={index}>
-                                    <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
+                                <div key={index} className="grid grid-cols-6 items-center">
+                                    <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
                                         <div>{rep.userID}</div>
-                                        <div className="ml-3">{rep.title}</div>
-                                        <div className="bg-rose-200 text-red-600 font-semibold px-2 py-1">{rep.type}</div>
-                                        <div className="ml-2">{rep.status}</div>
-                                        <div className="ml-10">{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
-                                        <div className="ml-16">{moment.utc(rep.date_completed).format('MM/DD/YYYY')}</div>
                                     </div>
-                                </div>
-                            ))} */}
+                                    <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                        <Popup trigger={<button>{rep.title}</button>} position={"right bottom"}>
+                                            <div className="bg-white w-52 h-52 rounded-md border-2 border-zinc-300">
+                                                <div className="overflow-y-auto">
+                                                    {rep.content}
+                                                </div>
+                                                <div>
+                                                   
+                                                </div>
+                                            </div>             
+                                        </Popup>
+                                    </div>
+                                    <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                        <div>{rep.type}</div>
+                                    </div>
+                                    <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                        <div>{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
+                                    </div>
+                                    <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                        <div>{(rep.date_completed === null ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
+                                    </div>
+                                    <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
+                                        <div>{(rep.status === 'Uncompleted' ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">{rep.status}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{rep.status}</div>)}</div>
+                                    </div>
+                                </div>))}
+                        </div>
                     </div>
 
                 </div>
