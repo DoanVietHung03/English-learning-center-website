@@ -9,6 +9,23 @@ import React, { ReactElement, useState, useEffect } from "react"
 import moment from 'moment';
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
+import { alpha, styled } from "@mui/material/styles";
+import { pink } from "@mui/material/colors";
+import Switch from "@mui/material/Switch";
+
+const PinkSwitch = styled(Switch)(({ theme }) => ({
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      color: pink[600],
+      "&:hover": {
+        backgroundColor: alpha(pink[600], theme.palette.action.hoverOpacity),
+      },
+    },
+    "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+      backgroundColor: pink[600],
+    },
+  }));
+  
+const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 export default function RP() {
     const [status, setStatus] = useState('')
@@ -17,6 +34,8 @@ export default function RP() {
     const handleChangeStatus = (ev) => {
         setStatus(ev.value);
     };
+
+    const [isCompleted, setIsCompleted] = useState(false);
 
     useEffect(() => {
         fetch('/api/report_list', {
@@ -76,13 +95,19 @@ export default function RP() {
                                         <div>{rep.userID}</div>
                                     </div>
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                        <Popup trigger={<button>{rep.title}</button>} position={"right bottom"}>
-                                            <div className="bg-white w-52 h-52 rounded-md border-2 border-zinc-300">
-                                                <div className="overflow-y-auto">
+                                        <Popup trigger={<button className="hover:underline">{rep.title}</button>} position={"right bottom"}>
+                                            <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
+                                                <div className="overflow-y-auto h-44 border border-zinc-200 px-1">
                                                     {rep.content}
                                                 </div>
-                                                <div>
-                                                   
+                                                <div className="flex items-center ml-4">
+                                                    <PinkSwitch 
+                                                        
+                                                        {...label} 
+                                                        defaultChecked={isCompleted}
+                                                        checked={isCompleted}
+                                                        onChange={() => setIsCompleted(!isCompleted)} />
+                                                    {isCompleted && <span>Completed</span>}
                                                 </div>
                                             </div>             
                                         </Popup>
@@ -97,7 +122,7 @@ export default function RP() {
                                         <div>{(rep.date_completed === null ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
                                     </div>
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
-                                        <div>{(rep.status === 'Uncompleted' ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">{rep.status}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{rep.status}</div>)}</div>
+                                        <div>{(!isCompleted ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">Uncompleted</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">Completed</div>)}</div>
                                     </div>
                                 </div>))}
                         </div>

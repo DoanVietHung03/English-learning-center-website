@@ -82,7 +82,7 @@ export default function Ass_Grading() {
             index === i ? (
                 sub.comment !== null ? (
                     <div key={i}>
-                        <textarea onChange={handleComment} readOnly className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
+                        <textarea onChange={handleComment} className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
                             {sub.comment}
                         </textarea>
                     </div>
@@ -95,7 +95,7 @@ export default function Ass_Grading() {
             index === i ? (
                 sub.grade !== null ? (
                     <div key={i}>
-                        <textarea onChange={handleGrading} readonly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        <textarea onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
                             {sub.grade}
                         </textarea>
                     </div>
