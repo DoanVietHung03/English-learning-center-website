@@ -35,7 +35,15 @@ export default function RP() {
         setStatus(ev.value);
     };
 
-    const [isCompleted, setIsCompleted] = useState(false);
+    const [isCompleted, setIsCompleted] = useState(Array(reports.length).fill(false));
+
+    const handleSwitchChange = (index: number) => {
+        setIsCompleted((prevStates) => {
+          const newStates = [...prevStates];
+          newStates[index] = !newStates[index];
+          return newStates;
+        });
+      };
 
     useEffect(() => {
         fetch('/api/report_list', {
@@ -102,11 +110,11 @@ export default function RP() {
                                                 </div>
                                                 <div className="flex items-center ml-4">
                                                     <PinkSwitch 
-                                                        
+                                                        id={String(index)}
                                                         {...label} 
-                                                        defaultChecked={isCompleted}
-                                                        checked={isCompleted}
-                                                        onChange={() => setIsCompleted(!isCompleted)} />
+                                                        defaultChecked={isCompleted[index]}
+                                                        checked={isCompleted[index]}
+                                                        onChange={() => handleSwitchChange(index)} />
                                                     {isCompleted && <span>Completed</span>}
                                                 </div>
                                             </div>             
@@ -122,7 +130,7 @@ export default function RP() {
                                         <div>{(rep.date_completed === null ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
                                     </div>
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
-                                        <div>{(!isCompleted ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">Uncompleted</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">Completed</div>)}</div>
+                                        <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">{rep.status}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{rep.status}</div>)}</div>
                                     </div>
                                 </div>))}
                         </div>
