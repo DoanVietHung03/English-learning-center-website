@@ -49,11 +49,11 @@ export default function RP() {
                     </div>
 
                     <div className="bg-white rounded pb-16">
-                        <div className="pl-10 pt-7">
+                        <div className="pl-10 pt-7 w-fit">
                             <Link href="/create_report">
                                 <button className="flex items-center gap-2 px-4 py-4 bg-lime-300 rounded-lg justify-center hover:bg-lime-400">
                                     <Ihand />
-                                    <p className="text-center text-black text-sm font-['Poppins'] leading-tight tracking-tight">Create feedback</p>
+                                    <p className="text-center text-black text-sm font-['Poppins'] leading-tight tracking-tight">Create report</p>
                                 </button>
                             </Link>
                         </div>
