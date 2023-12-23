@@ -1,6 +1,10 @@
 import { Schema, model, models } from "mongoose";
 
 const reportSchema = new Schema({
+    userID:{
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
