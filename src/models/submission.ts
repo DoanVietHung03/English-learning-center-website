@@ -13,6 +13,10 @@ const submissionSchema = new Schema({
         type: String,
         required: false
     },
+    comment:{
+        type: String,
+        required: false
+    },
     grade:{
         type: Number,
         required: false

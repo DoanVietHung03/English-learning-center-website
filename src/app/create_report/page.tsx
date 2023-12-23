@@ -7,6 +7,7 @@ import IfileExport from "@/components/icons/file_export"
 import Select from "react-select";
 import Image from "next/image"
 import { SyntheticEvent, useState } from "react"
+import {useRouter} from 'next/navigation'
 
 export default function Create_RP() {
     const [title, setTitle] = useState('')
@@ -15,7 +16,8 @@ export default function Create_RP() {
     const [file, setFile] = useState('');
     const [date_created, setDate_created] = useState(Date.now());
     const [date_completed, setDate_completed] = useState(null);
-    const [status, setStatus] = useState('Not completed');
+    const [status, setStatus] = useState('Uncompleted');
+    const router = useRouter()
     const handleChangeType = (ev) => {
         setType(ev.value);
     };
@@ -26,11 +28,13 @@ export default function Create_RP() {
     
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+        console.log(localStorage.getItem('userName'))
         await fetch('/api/report', {
             method: 'POST',
-            body: JSON.stringify({ title, type, content, file, date_created, date_completed, status }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'),title, type, content, file, date_created, date_completed, status }),
             headers: { 'Content-Type': 'application/json' },
         })
+        router.push('/report_bug')
     }
 
     return (

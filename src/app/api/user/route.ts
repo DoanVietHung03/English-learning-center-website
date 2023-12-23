@@ -18,6 +18,9 @@ export async function POST(req: { json: () => any }) {
         password: body.password,
         name: body.name,
         type: body.type, // Đảm bảo giữ nguyên giá trị từ request body
+        email: null,
+        birth: null,
+        address: null,
     })
     return Response.json(createdUser)
 }

@@ -20,7 +20,7 @@ export default function Assigments() {
     useEffect(() => {
         fetch('/api/assignment_list', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('course_id') }),
+            body: JSON.stringify({ id: localStorage.getItem('course_id'), userID: localStorage.getItem('userName') }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())
@@ -46,7 +46,7 @@ export default function Assigments() {
                     </div>
 
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_id")}</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_name")}</div>
                     </div>
 
 
@@ -98,7 +98,7 @@ export default function Assigments() {
                                 )))}
 
                                 {assignments.map(assignment => (type === "Teacher" && (
-                                    <Link href={'/teacher_grading'} onClick={() => { localStorage.setItem("assignment_id", assignment._id) }}
+                                    <Link href={'/teacher_grading'} onClick={() => { localStorage.setItem('assignment_id', assignment._id) }}
                                         className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
                                         <div className=" p-2 flex items-center ">
                                             <Ibook />

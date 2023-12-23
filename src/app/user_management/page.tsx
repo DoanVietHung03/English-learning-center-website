@@ -11,6 +11,7 @@ export default function UserManagement() {
     const [teachers, setTeachers] = useState([]);
     const [students, setStudents] = useState([]);
     useEffect(() => {
+        localStorage.setItem('sidebar', 3)
         fetch('/api/user')
             .then(res => res.json())
             .then(data => {
@@ -36,13 +37,13 @@ export default function UserManagement() {
                             <div className="font-bold flex items-center">Add User</div>
                         </Link>
                     </div>
-                    <div className="bg-white flex mt-3 rounded-lg pt-6 pb-6">
-                        <div className="w-1/2 flex flex-col gap-3 border-r-2 border-black pr-7">
+                    <div className="bg-white grid grid-cols-2 mt-3 rounded-lg pt-6 pb-6 h-[475px]">
+                        <div className="gap-3 border-r-2 border-black pr-7 overflow-y-auto">
                             <div className="flex items-center justify-center font-bold text-xl">Teacher</div>
                             {
                                 teachers.map(teacher => (
                                     // eslint-disable-next-line react/jsx-key
-                                    <div className="flex gap-3 p-3 items-center bg-gray-300 ml-5 rounded-xl">
+                                    <div className="flex gap-3 p-3 items-center bg-gray-300 ml-5 rounded-xl mt-2">
                                         <Iteacher className="flex w-8 fill-gray-500" />
                                         <div className="flex gap-4">
                                             <div className="text-gray-500">{teacher.phone}</div>
@@ -52,13 +53,13 @@ export default function UserManagement() {
                                 ))
                             }
                         </div>
-                        <div className="w-1/2 flex flex-col gap-3 pr-6">
+                        <div className="gap-3 pr-6 ml-[10px] overflow-y-auto">
                             <div className="flex items-center justify-center font-bold text-xl">Student</div>
                             {
                                 students.map(student => (
                                     // eslint-disable-next-line react/jsx-key
-                                    <div className="flex gap-3 p-3 items-center bg-gray-300 ml-5 rounded-xl">
-                                        <Istudent className="flex w-8 fill-gray-500" />
+                                    <div className="flex gap-3 p-3 items-center bg-gray-300 ml-5 rounded-xl mt-2">
+                                        <Istudent className="flex w-[28.5px] fill-gray-500" />
                                         <div className="flex gap-4">
                                             <div className="text-gray-500">{student.phone}</div>
                                             <div className="text-gray-500"> {student.name}</div>

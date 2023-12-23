@@ -32,6 +32,8 @@ export default function Profile() {
     //     };
     //   }, []);
     const [user, setUser] = useState({})
+    const [password, setPassword] = useState('')
+    const [errorPass, setErrorPass] = useState(false);
     useEffect(() => {
         fetch('/api/profile', {
             method: 'POST',
@@ -45,24 +47,45 @@ export default function Profile() {
             setUser(data)
         })
     }, []);
+
+
+    const handleCheckPass = (ev: SyntheticEvent) => {
+        console.log(ev.value)
+        
+    };
+
     const router = useRouter();
     const [birth, setBirth] = React.useState<dayjs | null>(dayjs(user.birth))
     console.log(birth)
     const [error, setError] = useState(false)
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        const response = await fetch('api/profile', {
-            method: 'POST',
-            body: JSON.stringify(user),
-            headers: {'Content-Type': 'application/json'},
-        })
-        if (!response.ok)
-            setError(true)
-        else {
+        localStorage.setItem('userFname', user.name)
+        console.log(user)
+        if(errorPass === false){
+            setError(false)
+            const response = await fetch('api/update_profile', {
+                method: 'POST',
+                body: JSON.stringify({userID: user.phone, userBirth: birth, userName: user.name, userEmail: user.email, userAddress: user.address, userPassword: password }),
+                headers: {'Content-Type': 'application/json'},
+            })
+            if (!response.ok)
+                setError(true)
+            else {
 
-            router.push('/setting_profile')
+                router.push('/setting_profile')
+            }
+        }
+        else{
+            setError(true)
         }
     }
+
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+    const handleTogglePasswordVisibility = () => {
+        setIsPasswordVisible((prev) => !prev);
+    };
 
     return (
         <>
@@ -110,15 +133,15 @@ export default function Profile() {
                                 <input
                                     className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none"
                                     type="text"
-                                    value={user.name}
-                                    onChange={(e) => user.name = e.target.value}
+                                    placeholder={user.name}
+                                    onChange={ev => user.name = ev.target.value}
                                 />
 
                                 <div className="font-poppins text-sm mt-4">
                                     Email
                                 </div>
                                 <input className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" 
-                                type="text" id="myEmail" placeholder={user.email}
+                                type="text" placeholder={user.email}
                                     onChange={ev => user.email = ev.target.value}
                                 /> 
                                 
@@ -151,8 +174,16 @@ export default function Profile() {
                                     Enter new password
                                 </div>
                                 <div className="flex items-center">
-                                    <input className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none border-r-0" type="password" id="myNewPassword" placeholder="New password" />
-                                    <button className="transition transform hover:scale-110 active:scale-100">
+                                    <input 
+                                            onChange={(ev) => { setPassword(ev.target.value) }} 
+                                            className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none border-r-0" 
+                                            type={isPasswordVisible ? 'text' : 'password'} 
+                                            id="myNewPassword" 
+                                            placeholder="New password"
+                                            value={password} />
+                                    <button 
+                                            onClick={handleTogglePasswordVisibility}
+                                            className="transition transform hover:scale-110 active:scale-100">
                                         <Ieye className="w-4 items-center mt-2 ml-2" />
                                     </button>
                                 </div>
@@ -160,11 +191,26 @@ export default function Profile() {
                                     Confirm new password
                                 </div>
                                 <div className="flex items-center">
-                                <input className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" type="password" id="myConfirmPassword" placeholder="Confirm password" />
+                                <input onChange={(ev) => {
+                                    console.log(password)
+                                    if(ev.target.value === password){
+                                        setErrorPass(false);
+                                    }
+                                    else{
+                                        setErrorPass(true);
+                                    }
+                                }} className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" type="password" id="myConfirmPassword" placeholder="Confirm password" />
                                     <button className="transition transform hover:scale-110 active:scale-100">
                                         <Ieye className="w-4 items-center mt-2 ml-2" />
                                     </button>
                                 </div>
+                                {(errorPass) &&
+                                (
+                                    <div className="w-4/5 -ml-2 mt-5 text-red-800 font-semibold bg-red-300 rounded-lg p-3 mr-5">
+                                        Wrong password
+                                    </div>
+                                )
+                            }
                             </div>
                         </div>
 
