@@ -11,11 +11,14 @@ import { useRouter } from "next/navigation";
 export default function Ass_Grading() {
     const [submissions, setSubmissions] = useState([])
     const [file, setFile] = useState('');
-    const [comment, setComment] = useState<ReactElement | any | string>('')
+    const [comment, setComment] = useState('')
+    const [commentContent, setCommentContent] = useState<ReactElement | any | string>('')
+    const [gradeContent, setGradeContent] = useState<ReactElement | any | string>('')
     const [grade, setGrade] = useState('')
     const [submission, setSubmission] = useState('')
     const router = useRouter();
 
+    console.log(localStorage.getItem('assignment_id'))
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
@@ -48,7 +51,7 @@ export default function Ass_Grading() {
             .then(res => res.json())
             .then(data => {
                 setSubmissions(data)
-                //console.log(data)
+                console.log(data)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -60,7 +63,7 @@ export default function Ass_Grading() {
 
     const handleButtonClick = (index: number) => {
         setSelectedButton(index);
-        console.log(localStorage.getItem('submission_id'))
+
 
         const content = submissions.map((sub, i) => (
             index === i ? (
@@ -86,10 +89,17 @@ export default function Ass_Grading() {
                             {sub.comment}
                         </textarea>
                     </div>
-                ) : null
+                ) : (
+                    <div key={i}>
+                        <textarea onChange={handleComment} className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
+        
+                        </textarea>
+                    </div>
+                )
             ) : null
         ));
-        setComment(comments);
+        //setComment(temp_comment);
+        setCommentContent(comments)
 
         const grades = submissions.map((sub, i) => (
             index === i ? (
@@ -99,10 +109,15 @@ export default function Ass_Grading() {
                             {sub.grade}
                         </textarea>
                     </div>
-                ) : null
+                ) : (
+                    <div key={i}>
+                        <textarea onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        </textarea>
+                    </div>
+                )
             ) : null
         ));
-        setGrade(grades);
+        setGradeContent(grades);
     }
 
 
@@ -154,11 +169,11 @@ export default function Ass_Grading() {
                             </div>
 
                             <div className="mt-4 mx-[62px]">
-                                {comment}
+                                {commentContent}
                             </div>
 
                             <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight mt-4 ml-[62px]">Score</p>
-                            <div>{grade}</div>
+                            <div>{gradeContent}</div>
 
                             <div className="flex items-center justify-end mr-6 mt-2">
                                 <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">

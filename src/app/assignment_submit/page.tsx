@@ -63,6 +63,8 @@ export default function Do_Assignment() {
     }, []);
 
     async function handleFormSubmit(ev: SyntheticEvent) {
+        console.log(localStorage.getItem("userName"))
+        console.log(localStorage.getItem("assignment_id"))
         ev.preventDefault()
         const response = await fetch('/api/submission', {
             method: 'POST',

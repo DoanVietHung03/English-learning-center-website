@@ -25,6 +25,10 @@ const submissionSchema = new Schema({
         type: String,
         required: false
     },
+    status:{
+        type: String,
+        required: false
+    }
 }, { timestamps: true });
 
 export const Submission = models?.Submission || model('Submission', submissionSchema)

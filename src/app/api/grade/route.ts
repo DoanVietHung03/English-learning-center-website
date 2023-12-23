@@ -8,7 +8,8 @@ export async function POST(req: { json: () => any }) {
     //const IdAssignmentUpDate = new ObjectId('yourObjectId');
     const updatedGrade = {
         grade: body.grade,
-        comment: body.comment
+        comment: body.comment,
+        status: "Marked"
     };
     const submissionEdit = await Submission.updateOne({ _id: body.id }, { $set: updatedGrade });
     return Response.json(submissionEdit);
