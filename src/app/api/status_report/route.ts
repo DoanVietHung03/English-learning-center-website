@@ -3,8 +3,6 @@ import mongoose from "mongoose"
 
 export async function POST(req: { json: () => any }) {
     const body = await req.json()
-    console.log(body.status)
-    console.log(body.id)
     var date
     if(body.status == 'Completed'){
         date = new Date()

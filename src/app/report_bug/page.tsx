@@ -35,7 +35,8 @@ export default function RP() {
     const [status, setStatus] = useState('')
     const [reports, setReports] = useState([])
     const router = useRouter();
-
+    const mongoose = require('mongoose');
+    const { Date } = mongoose.Schema.Types;
 
     const handleChangeStatus = (ev) => {
         setStatus(ev.value);
