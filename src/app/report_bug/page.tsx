@@ -14,6 +14,7 @@ import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
 import { set } from "mongoose"
 import { useRouter } from "next/navigation";
+import { Date } from "mongoose"
 
 
 const PinkSwitch = styled(Switch)(({ theme }) => ({
@@ -42,7 +43,8 @@ export default function RP() {
 
     const [isCompleted, setIsCompleted] = useState(Array(reports.length).fill(false));
     const [checkStatus, setCheckStatus] = useState(Array(reports.length).fill('Uncompleted'))
-
+    const [completionDates, setCompletionDates] = useState(Array(reports.length).fill(null));
+    var currentDate
     useEffect(() => {
         fetch('/api/report_list', {
             method: 'POST',
@@ -66,6 +68,12 @@ export default function RP() {
                         dt.status === 'Completed' ? newIsCompleted[i] = true : newIsCompleted[i] = false;
                         return newIsCompleted;
                     });
+
+                    setCompletionDates((prevCompletionDates) => {
+                        const newCompletionDates = [...prevCompletionDates];
+                        newCompletionDates[i] = dt.date_completed
+                        return newCompletionDates;
+                    });
                 })
             })
             .catch(error => console.error('Error:', error));
@@ -80,6 +88,12 @@ export default function RP() {
                 const newStatus = [...prevStatus]
                 newStatus[index] = newStates[index] == true ? 'Completed' : 'Uncompleted';
                 localStorage.setItem('status', newStatus[index])
+                setCompletionDates((prevDate) =>{
+                    const newDate = [...prevDate]
+                    currentDate = new Date()
+                    newDate[index] = newStates[index] == true ? currentDate : null; 
+                    return newDate;
+                })
                 return newStatus;
             });
 
@@ -95,11 +109,13 @@ export default function RP() {
 
         await fetch('/api/status_report', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('report_id'), status: localStorage.getItem('status') }),
+            body: JSON.stringify({ id: localStorage.getItem('report_id'), status: localStorage.getItem('status')}),
             headers: { 'Content-Type': 'application/json' },
         })
         //window.location.reload(true);
         //router.push('/report_bug')
+
+        
     }
 
     return (
@@ -172,7 +188,7 @@ export default function RP() {
                                         <div>{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
                                     </div>
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                        <div>{(rep.date_completed === null ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
+                                        <div>{(completionDates[index] === null ? <div>Not yet</div> : moment.utc(completionDates[index]).format('MM/DD/YYYY'))}</div>
                                     </div>
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
                                         <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{checkStatus[index]}</div>)}</div>
