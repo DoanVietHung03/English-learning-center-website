@@ -76,7 +76,7 @@ export default function RP() {
 
     };
 
-    async function handleFormSubmit(ev: SyntheticEvent) {
+    async function handleFormSubmit(ev: React.SyntheticEvent) {
         ev.preventDefault()
         console.log(localStorage.getItem('report_id'))
         console.log(localStorage.getItem('status'))
@@ -143,9 +143,9 @@ export default function RP() {
                                                         {...label}
                                                         defaultChecked={isCompleted[index]}
                                                         checked={isCompleted[index]}
-                                                        onChange={() => { localStorage.setItem('report_id', rep[index]._id);
+                                                        onChange={(ev) => { localStorage.setItem('report_id', rep._id);
                                                                         handleSwitchChange(index);
-                                                                        handleFormSubmit}} />
+                                                                        handleFormSubmit(ev)}} />
                                                     {isCompleted[index] && <span>Completed</span>}
                                                 </div>
                                             </div>
