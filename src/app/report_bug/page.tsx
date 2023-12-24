@@ -46,6 +46,15 @@ export default function RP() {
     const [checkStatus, setCheckStatus] = useState(Array(reports.length).fill('Uncompleted'))
     const [completionDates, setCompletionDates] = useState(Array(reports.length).fill(null));
     var currentDate
+    const [resetKey, setResetKey] = useState(0);
+    const [emptyFilter, setEmptyfilter] = useState(true)
+
+    const handleChangeRemoveF = (ev) => {
+        setEmptyfilter(true);
+        setStatus('');
+        setResetKey((prevKey) => prevKey + 1);
+    };
+
     useEffect(() => {
         fetch('/api/report_list', {
             method: 'POST',
@@ -138,12 +147,18 @@ export default function RP() {
                                 </button>
                             </Link>
                         </div>
-
-                        <div className="ml-10 mt-4 w-[141px]">
-                            <Select
-                                options={optionStatus}
-                                onChange={handleChangeStatus}
-                                placeholder="Status" />
+                        <div className="flex items-center mt-4 gap-4">
+                            <div className="ml-10 w-[141px]">
+                                <Select key={`status-select-${resetKey}`}
+                                    options={optionStatus}
+                                    onChange={handleChangeStatus}
+                                    placeholder="Status" />
+                            </div>
+                            <button onClick={handleChangeRemoveF}
+                                className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px]
+                             hover:bg-red-200 transition-colors duration-300">
+                                Remove filter
+                            </button>
                         </div>
 
                         <div className="mt-12 mx-10">
@@ -156,6 +171,7 @@ export default function RP() {
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Status</p>
                             </div>
                             {reports.map((rep, index) => (
+                                ((checkStatus[index] == status || status == '') &&
                                 <div key={index} className="grid grid-cols-6 items-center">
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
                                         <div>{rep.userID}</div>
@@ -194,7 +210,7 @@ export default function RP() {
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
                                         <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{checkStatus[index]}</div>)}</div>
                                     </div>
-                                </div>))}
+                                </div>)))}
                         </div>
                     </div>
                 </div>
