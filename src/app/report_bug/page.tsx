@@ -183,6 +183,7 @@ export default function RP() {
                                                     {rep.content}
                                                 </div>
                                                 <div className="flex items-center ml-4">
+                                                    {(localStorage.getItem('userType') === 'Admin') && ( 
                                                     <PinkSwitch
                                                         id={String(index)}
                                                         {...label}
@@ -192,7 +193,7 @@ export default function RP() {
                                                             localStorage.setItem('report_id', rep._id);
                                                             handleSwitchChange(index);
                                                             handleFormSubmit(ev)
-                                                        }} />
+                                                        }} />)}
                                                     {isCompleted[index] && <span>Completed</span>}
                                                 </div>
                                             </div>
