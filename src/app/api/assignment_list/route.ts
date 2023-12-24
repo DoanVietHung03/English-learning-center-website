@@ -18,7 +18,7 @@ export async function POST(req: { json: () => any }) {
                 statusList.push(submission.status)
             }
             else{
-                statusList.push("null")
+                statusList.push('null')
             }
         } 
     }

@@ -77,7 +77,8 @@ export default function Assigments() {
                             <div className="h-80 overflow-y-scroll">
                                 {assignments.map(assignment => (type === "Student" && (
                                     <Link href={'/assignment_submit'}
-                                        onClick={() => { localStorage.setItem("assignment_id", assignment._id) }}
+                                        onClick={() => { localStorage.setItem("assignment_id", assignment._id),
+                                                        console.log(assignment.status) }}
                                         className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
                                         <div className=" p-2 flex items-center ">
                                             <Ibook />
