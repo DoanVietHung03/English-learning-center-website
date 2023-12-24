@@ -11,6 +11,8 @@ import Image from "next/image"
 import Select from "react-select";
 import { useRouter } from 'next/navigation'
 import moment from "moment"
+import Popup from 'reactjs-popup'
+import 'reactjs-popup/dist/index'
 
 export default function Chat() {
     const [message, setMessage] = useState('')
@@ -125,21 +127,31 @@ export default function Chat() {
                 <>
                     {message_sent.map((mes_send, i) => (
                         <div key={i}>
-                            <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
-                                <div className="flex items-center pl-7 pt-4">
-                                    <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                    <p className="text-black text-sm font-semibold font-['Poppins']">{mes_send.receiver_name}</p>
+                            <div className="bg-zinc-300 rounded-lg mr-8 mt-3 grid grid-cols-2 pb-1">
+                                <div>
+                                    <div className="flex items-center pl-7 pt-4">
+                                        <Iuser className="w-10 fill-zinc-400 mr-4" />
+                                        <p className="text-black text-sm font-semibold font-['Poppins']">{mes_send.receiver_name}</p>
+                                    </div>
+
+                                    <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
+                                        Send date: {moment.utc(mes_send.sendDate).format('MM/DD/YYYY')}
+                                    </div>
                                 </div>
 
-                                <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
-                                    Send date: {moment.utc(mes_send.sendDate).format('MM/DD/YYYY')}
-                                </div>
+                                <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-8 hover:underline cursor-pointer">
+                                                    {(mes_send.content.length <= 20 ? <div>{mes_send.content}</div> : <div>{mes_send.content.substring(0, 20)}...</div>)}
+                                                </div>} 
+                                        position="right top"
+                                        contentStyle={{right: '20px', margin: '0 0 0 10px'}}>
+                                    <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
+                                        <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
+                                            {mes_send.content}
+                                        </div>
+                                    </div>
+                                </Popup>
 
-                                {/* <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
-                                    {mes_send.content}
-                                </div>
-
-                                <button className="flex items-center pl-7 mt-3 pb-6">
+                                {/* <button className="flex items-center pl-7 mt-3 pb-6">
                                     <Iimage className="w-6 mr-2 fill-zinc-500" />
                                     <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
                                 </button> */}
