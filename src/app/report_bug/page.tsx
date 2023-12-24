@@ -41,6 +41,7 @@ export default function RP() {
     };
 
     const [isCompleted, setIsCompleted] = useState(Array(reports.length).fill(false));
+    const [checkStatus, setCheckStatus] = useState(Array(reports.length).fill('Uncompleted'))
 
     useEffect(() => {
         fetch('/api/report_list', {
@@ -53,12 +54,23 @@ export default function RP() {
             .then(response => response.json())
             .then(data => {
                 setReports(data)
+                data.forEach((dt, i) => {
+                    setCheckStatus((prevCheckStatus) => {
+                        const newCheckStatus = [...prevCheckStatus];
+                        newCheckStatus[i] = dt.status;
+                        return newCheckStatus;
+                    });
+
+                    setIsCompleted((prevIsCompleted) => {
+                        const newIsCompleted = [...prevIsCompleted];
+                        dt.status === 'Completed' ? newIsCompleted[i] = true : newIsCompleted[i] = false;
+                        return newIsCompleted;
+                    });
+                })
             })
             .catch(error => console.error('Error:', error));
         localStorage.setItem('sidebar', 2)
     }, []);
-
-    const [checkStatus, setCheckStatus] = useState(Array(reports.length).fill('Uncompleted'))
 
     const handleSwitchChange = (index: number) => {
         setIsCompleted((prevStates) => {
@@ -143,9 +155,11 @@ export default function RP() {
                                                         {...label}
                                                         defaultChecked={isCompleted[index]}
                                                         checked={isCompleted[index]}
-                                                        onChange={(ev) => { localStorage.setItem('report_id', rep._id);
-                                                                        handleSwitchChange(index);
-                                                                        handleFormSubmit(ev)}} />
+                                                        onChange={(ev) => {
+                                                            localStorage.setItem('report_id', rep._id);
+                                                            handleSwitchChange(index);
+                                                            handleFormSubmit(ev)
+                                                        }} />
                                                     {isCompleted[index] && <span>Completed</span>}
                                                 </div>
                                             </div>
