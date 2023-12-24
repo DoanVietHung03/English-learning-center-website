@@ -72,8 +72,8 @@ export default function Do_Assignment() {
             .then(data => {
                 setSubmission(data)
                 console.log(data)
-        })
-        
+            })
+
     }, []);
 
     async function handleFormSubmit(ev: SyntheticEvent) {
@@ -88,9 +88,6 @@ export default function Do_Assignment() {
         router.push('/assignments')
     }
 
-
-
-
     return (
         <>
             <Header />
@@ -104,34 +101,66 @@ export default function Do_Assignment() {
                         <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_name")}</div>
                     </div>
 
-                    <div className="bg-white mt-2 pb-8 rounded">
+                    <div className="bg-white mt-2 pb-10 rounded">
                         <div className="flex items-center justify-between py-2 border-b border-stone-300 mx-4">
                             <div className="font-bold">
                                 Title:{" " + assignment.title}
                             </div>
-                            <Link href={''}>
+                            {(submission === null) ? <Link href={''}>
                                 <button onClick={handleFormSubmit}
                                     className="flex items-center bg-lime-500 rounded-lg px-3 py-1 font-poppins text-sm
-                                    font-bold text-white hover:bg-lime-300 hover:text-gray-600 transition-colors py-2">
+                                                            font-bold text-white hover:bg-lime-300 hover:text-gray-600 transition-colors">
                                     Submit
                                 </button>
-                            </Link>
+                            </Link> : (submission.grade !== null) ?
+                                <div className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-medium
+                                                        font-semibold">
+                                    Grade: {submission.grade}
+                                </div> : <div className="flex items-center bg-yellow-200 rounded-lg px-3 py-1 font-poppins text-medium
+                                                                font-semibold">
+                                    Grade: Pending
+                                </div>}
                         </div>
 
 
-                        <div className="grid grid-cols-2 mt-4 py-4 mx-4 gap-6">
-                            <span className="rounded-lg border border-stone-300 pl-6 py-8 pr-4"
-                                style={{ wordWrap: 'break-word' }}>
-                                {assignment.content}
-                            </span>
+                        <div className="grid grid-cols-2 py-4 mx-4 gap-6">
+                            <div>
+                                <p className="text-base font-medium leading-tight tracking-tight">Content</p>
+                                <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 h-[371px] overflow-y-auto"
+                                    style={{ wordWrap: 'break-word' }}>
+                                    {assignment.content}
+                                </div>
+                            </div>
 
-                            <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center inline-flex p-4">
-                                <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..." ></textarea>
+                            <div>
+                                <p className="text-base font-medium leading-tight tracking-tight">Answer</p>
+                                <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center pl-4 pt-4">
+                                    {(submission !== null) ?
+                                        <div className="h-[266px]" style={{ wordWrap: 'break-word' }}>{submission.answer}</div> :
+                                        <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full h-[348px] rounded-lg border border-zinc-400 p-3 focus:outline-none" id="myText" placeholder="Type..." ></textarea>}
+                                </div>
+                                
+                                <div>
+                                    {(submission !== null &&
+                                        <div className="flex items-center">
+                                            <div className="w-full h-10">
+                                                <p className="mt-3 text-base font-medium leading-tight tracking-tight">Comment</p>
+                                                {submission.comment !== null ? <div className="rounded pl-2 py-1 border border-stone-300 w-full h-[55px] overflow-y-auto bg-lime-100">
+                                                                                    {submission.comment}
+                                                                                </div> : 
+                                                                                <div className="rounded pl-2 py-1 border border-stone-300 w-full h-[55px] overflow-y-auto">
+                                                                                    No comment
+                                                                                </div>}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                                
                             </div>
                         </div>
 
 
-                        {(assignment.skill === "Speaking" &&
+                        {(assignment.skill === "Speaking" && submission === null &&
                             <div className="bg-white p-3 rounded-lg border-2">
                                 <h2>Add your file:</h2>
                                 <input type="file" accept="audio" onChange={handleChangeFile} />
