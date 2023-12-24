@@ -51,7 +51,7 @@ export async function POST(req: { json: () => any }) {
         schedule: course.schedule,
         teacher_id: course.teacher_id,
         student_id: course.student_id,
-        teacher_name: data[i], // Giả sử id của sinh viên tương ứng với index của giáo viên trong mảng teachers
+        teacher_name: data[i], 
       };
     });
     //console.log(combinedCourses)

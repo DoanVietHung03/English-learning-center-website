@@ -27,7 +27,7 @@ export default function Chat() {
     const [message_sent, SetMessageSent] = useState([]);
     const [message_received, SetMessageReceived] = useState([]);
 
-    const type = localStorage.getItem('phone')
+    const type = localStorage.getItem('userName')
     
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
@@ -55,22 +55,44 @@ export default function Chat() {
 
     useEffect(() => {
         localStorage.setItem('sidebar', 3)
-    //     fetch('/api/message', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({sender: localStorage.getItem("phone")}),
-    //    })
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             // setTeachers(data.teachers)
-    //             // setStudents(data.students)
-    //             setReceiver(data.receiver)
-            
-    //         })
-    //         .catch(error => console.error('Error:', error));
+        fetch('/api/message_list', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({id: localStorage.getItem("userName")}),
+        })
+            .then(res => res.json())
+            .then(data => {
+                // setTeachers(data.teachers)
+                // setStudents(data.students)
+                SetMessageSent(data.combinedSentMessages)
+                SetMessageReceived(data.combinedReceivedMessages)
+                console.log(data.combinedSentMessages)
+                console.log(data.combinedReceivedMessages)
+            })
+            .catch(error => console.error('Error:', error));
+        
+        fetch('/api/user')
+        .then(res => res.json())
+        .then(data => {
+            setTeachers(data.teachers)
+            setStudents(data.students)
+        })
     }, []);
+
+    const allUsers = [...teachers, ...students];
+    const filteredUsers = allUsers.filter(user => user.phone !== localStorage.getItem("userName"));
+    console.log(filteredUsers)
+
+    const optionReceivers = filteredUsers.map(
+        function (user) {
+            return {
+                value: user.phone,
+                label: user.phone + " - " + user.name
+            }
+        }
+    );
 
 
     function handleChangeFile(ev) {
@@ -81,7 +103,7 @@ export default function Chat() {
         ev.preventDefault()
         const response = await fetch('/api/message', {
             method: 'POST',
-            body: JSON.stringify({ sender, receiver, content, date, file }),
+            body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, date, file }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
@@ -168,7 +190,7 @@ export default function Chat() {
                                 <div className="mt-6 ml-7">
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Choose receiver</p>
                                     {/* Dropdown list */}
-                                    <Select options={optionReceiver} onChange={handleChangeReceiver}
+                                    <Select options={optionReceivers} onChange={handleChangeReceiver}
                                         className="w-[380px] mt-2 mr-3" placeholder="Select receiver" />
                                 </div>
 
