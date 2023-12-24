@@ -23,7 +23,7 @@ export async function POST(req: { json: () => any }) {
       courses = courses
       .filter(course => course.student_id.includes(body.userName))
       .filter(course => course !== null);
-      console.log(courses)
+      //console.log(courses)
 
       // for (var i = 0; i < courses.length; i++) {
       //   if (courses[i] == null)

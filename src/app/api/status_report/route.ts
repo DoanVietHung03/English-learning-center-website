@@ -6,7 +6,7 @@ export async function POST(req: { json: () => any }) {
     console.log(body.status)
     console.log(body.id)
     var date
-    if(body.status === 'Completed'){
+    if(body.status == 'Completed'){
         date = new Date()
     }
     else{
