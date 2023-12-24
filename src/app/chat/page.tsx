@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation'
 import moment from "moment"
 
 export default function Chat() {
-    const [sender, setSender] = useState('')
     const [message, setMessage] = useState('')
     const [receiver, setReceiver] = useState('')
     const [content, setContent] = useState('')
@@ -28,30 +27,10 @@ export default function Chat() {
     const [message_received, SetMessageReceived] = useState([]);
 
     const type = localStorage.getItem('userName')
-    
+
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
     };
-
-    const optionReceiver = receivers.map(receiver => {
-        return {
-            
-            value: receiver.phone,
-            label: receiver.type + " - " + receiver.name
-        }
-    })
-
-    // const optionReceiver = teachers.map(teacher => {
-    //     return {
-    //         value: teacher.phone,
-    //         label: teacher.type + " - " + teacher.name
-    //     }
-    // }).concat(students.map(student => {
-    //     return {
-    //         value: student.phone,
-    //         label: student.type + " - " + student.name
-    //     }
-    // }))
 
     useEffect(() => {
         localStorage.setItem('sidebar', 3)
@@ -60,7 +39,7 @@ export default function Chat() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({id: localStorage.getItem("userName")}),
+            body: JSON.stringify({ id: localStorage.getItem("userName") }),
         })
             .then(res => res.json())
             .then(data => {
@@ -72,13 +51,13 @@ export default function Chat() {
                 console.log(data.combinedReceivedMessages)
             })
             .catch(error => console.error('Error:', error));
-        
+
         fetch('/api/user')
-        .then(res => res.json())
-        .then(data => {
-            setTeachers(data.teachers)
-            setStudents(data.students)
-        })
+            .then(res => res.json())
+            .then(data => {
+                setTeachers(data.teachers)
+                setStudents(data.students)
+            })
     }, []);
 
     const allUsers = [...teachers, ...students];
@@ -103,7 +82,7 @@ export default function Chat() {
         ev.preventDefault()
         const response = await fetch('/api/message', {
             method: 'POST',
-            body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, date, file }),
+            body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file }),
             headers: { 'Content-Type': 'application/json' },
         })
     }
@@ -115,39 +94,59 @@ export default function Chat() {
         setSelectedButton(buttonNumber);
         if (buttonNumber === 1) {
             setContentChat(
-                <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
-                    <div className="flex items-center pl-7 pt-4">
-                        <Iuser className="w-10 fill-zinc-400 mr-4" />
-                        <p className="text-black text-sm font-semibold font-['Poppins']">Do Hoang Khanh Duy</p>
-                    </div>
+                <>
+                    {message_received.map((mes_receive, i) => (
+                        <div key={i}>
+                            <button className="bg-zinc-200 rounded-lg mr-8 mt-3 w-3/4">
+                                <div className="flex items-center pl-7 pt-4">
+                                    <Iuser className="w-10 fill-zinc-400 mr-4" />
+                                    <p className="text-black text-lg font-semibold">{mes_receive.sender_name}</p>
+                                </div>
 
-                    <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
-                        {message.sender}
-                    </div>
+                                <div className="">
+                                    Send date: {moment.utc(mes_receive.sendDate).format('MM/DD/YYYY')}
+                                </div>
 
-                    <button className="flex items-center pl-7 mt-3 pb-6">
-                        <Iimage className="w-6 mr-2 fill-zinc-500" />
-                        <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
-                    </button>
-                </div>
+                                {/* <div style={{ wordWrap: 'break-word' }} className="text-stone-400 text-sm font-semibold px-7 mt-3">
+                                    {mes_receive.content}
+                                </div>
+
+                                <button className="flex items-center pl-7 mt-3 pb-6">
+                                    <Iimage className="w-6 mr-2 fill-zinc-500" />
+                                    <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
+                                </button> */}
+                            </button>
+                        </div>
+                    ))}
+                </>
             )
         } else if (buttonNumber === 2) {
             setContentChat(
-                <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
-                    <div className="flex items-center pl-7 pt-4">
-                        <Iuser className="w-10 fill-zinc-400 mr-4" />
-                        <p className="text-black text-sm font-semibold font-['Poppins']">Do Hoang Khanh Duy</p>
-                    </div>
+                <>
+                    {message_sent.map((mes_send, i) => (
+                        <div key={i}>
+                            <div className="bg-zinc-200 rounded-lg mr-8 mt-3">
+                                <div className="flex items-center pl-7 pt-4">
+                                    <Iuser className="w-10 fill-zinc-400 mr-4" />
+                                    <p className="text-black text-sm font-semibold font-['Poppins']">{mes_send.receiver_name}</p>
+                                </div>
 
-                    <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
-                        You need to do it yourself, remember there’s nothing that you cannot do my son. There’s no room for self-doubt.
-                    </div>
+                                <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
+                                    Send date: {moment.utc(mes_send.sendDate).format('MM/DD/YYYY')}
+                                </div>
 
-                    <button className="flex items-center pl-7 mt-3 pb-6">
-                        <Iimage className="w-6 mr-2 fill-zinc-500" />
-                        <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
-                    </button>
-                </div>
+                                {/* <div className="text-stone-400 text-sm font-semibold pl-7 mt-3">
+                                    {mes_send.content}
+                                </div>
+
+                                <button className="flex items-center pl-7 mt-3 pb-6">
+                                    <Iimage className="w-6 mr-2 fill-zinc-500" />
+                                    <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
+                                </button> */}
+                            </div>
+                        </div>
+                    ))}
+                </>
             )
         }
     };
