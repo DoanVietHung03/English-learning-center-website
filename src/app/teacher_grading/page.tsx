@@ -6,8 +6,7 @@ import Imicro from "@/components/icons/microphone";
 import Iuser from "@/components/icons/icon_user";
 import * as React from 'react';
 import { useEffect, useState, ReactElement } from "react";
-//import { useRouter } from "next/navigation";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/navigation";
 
 export default function Ass_Grading() {
     const [submissions, setSubmissions] = useState([])

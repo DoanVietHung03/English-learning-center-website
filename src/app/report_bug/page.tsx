@@ -5,7 +5,7 @@ import Header from "@/components/layout/header"
 import Ihand from "@/components/icons/icon_hand"
 import Link from "next/link"
 import Select from "react-select";
-import React, { ReactElement, useState, useEffect } from "react"
+import React, { ReactElement, useState, useEffect, SyntheticEvent } from "react"
 import moment from 'moment';
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
@@ -13,6 +13,8 @@ import { alpha, styled } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
 import { set } from "mongoose"
+import { useRouter } from "next/navigation";
+
 
 const PinkSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
@@ -31,6 +33,8 @@ const label = { inputProps: { "aria-label": "Color switch demo" } };
 export default function RP() {
     const [status, setStatus] = useState('')
     const [reports, setReports] = useState([])
+    const router = useRouter();
+
 
     const handleChangeStatus = (ev) => {
         setStatus(ev.value);
@@ -63,11 +67,28 @@ export default function RP() {
             setCheckStatus((prevStatus) => {
                 const newStatus = [...prevStatus]
                 newStatus[index] = newStates[index] == true ? 'Completed' : 'Uncompleted';
+                localStorage.setItem('status', newStatus[index])
                 return newStatus;
             });
+
             return newStates;
         });
+
     };
+
+    async function handleFormSubmit(ev: SyntheticEvent) {
+        ev.preventDefault()
+        console.log(localStorage.getItem('report_id'))
+        console.log(localStorage.getItem('status'))
+
+        await fetch('/api/status_report', {
+            method: 'POST',
+            body: JSON.stringify({ id: localStorage.getItem('report_id'), status: localStorage.getItem('status') }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        //window.location.reload(true);
+        //router.push('/report_bug')
+    }
 
     return (
         <>
@@ -122,7 +143,9 @@ export default function RP() {
                                                         {...label}
                                                         defaultChecked={isCompleted[index]}
                                                         checked={isCompleted[index]}
-                                                        onChange={() => handleSwitchChange(index)} />
+                                                        onChange={() => { localStorage.setItem('report_id', rep[index]._id);
+                                                                        handleSwitchChange(index);
+                                                                        handleFormSubmit}} />
                                                     {isCompleted[index] && <span>Completed</span>}
                                                 </div>
                                             </div>
