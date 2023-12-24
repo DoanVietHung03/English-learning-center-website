@@ -12,6 +12,7 @@ export default function Do_Assignment() {
     const [assignment, SetAssignment] = useState([])
     const [answer, SetAnswer] = useState('')
     const [file, setFile] = useState('');
+    const [submission, setSubmission] = useState([])
     const router = useRouter();
 
     function handleChangeFile(ev) {
@@ -59,8 +60,20 @@ export default function Do_Assignment() {
             .then(res => res.json())
             .then(data => {
                 SetAssignment(data)
-                console.log(data)
+                //console.log(data)
             })
+
+        fetch('/api/submission_info', {
+            method: 'POST',
+            body: JSON.stringify({ assignment_id: localStorage.getItem("assignment_id"), id: localStorage.getItem('userName') }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then(res => res.json())
+            .then(data => {
+                setSubmission(data)
+                console.log(data)
+        })
+        
     }, []);
 
     async function handleFormSubmit(ev: SyntheticEvent) {
