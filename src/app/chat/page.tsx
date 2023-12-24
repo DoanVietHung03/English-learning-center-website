@@ -5,14 +5,15 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
 import Iimage from "@/components/icons/icon_image"
-//import Example from "./chat_dropdown"
-import { SyntheticEvent, useEffect, useState, ReactElement } from "react"
+import React, { SyntheticEvent, useEffect, useState, ReactElement } from "react"
 import Image from "next/image"
 import Select from "react-select";
 import { useRouter } from 'next/navigation'
 import moment from "moment"
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function Chat() {
     const [message, setMessage] = useState('')
@@ -99,25 +100,50 @@ export default function Chat() {
                 <>
                     {message_received.map((mes_receive, i) => (
                         <div key={i}>
-                            <button className="bg-zinc-200 rounded-lg mr-8 mt-3 w-3/4">
-                                <div className="flex items-center pl-7 pt-4">
-                                    <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                    <p className="text-black text-lg font-semibold">{mes_receive.sender_name}</p>
+                            <div className="bg-zinc-300 rounded-lg mr-8 mt-3 grid grid-cols-2 pb-1">
+                                <div>
+                                    <div className="flex items-center pl-7 pt-4">
+                                        <Iuser className="w-10 fill-zinc-400 mr-4" />
+                                        <p className="text-black text-sm font-semibold font-['Poppins']">{mes_receive.receiver_name}</p>
+                                    </div>
+
+                                    <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
+                                        Send date: {moment.utc(mes_receive.sendDate).format('MM/DD/YYYY')}
+                                    </div>
                                 </div>
 
-                                <div className="">
-                                    Send date: {moment.utc(mes_receive.sendDate).format('MM/DD/YYYY')}
-                                </div>
+                                <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-8 hover:underline cursor-pointer">
+                                    {(mes_receive.content.length <= 20 ?
+                                        <div>
+                                            <Grid item>
+                                                <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                    <div>{mes_receive.content}</div>
+                                                </Tooltip>
+                                            </Grid>
 
-                                {/* <div style={{ wordWrap: 'break-word' }} className="text-stone-400 text-sm font-semibold px-7 mt-3">
-                                    {mes_receive.content}
-                                </div>
+                                        </div> :
+                                        <div>
+                                            <Grid item>
+                                                <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                    <div>{mes_receive.content.substring(0, 20)}...</div>
+                                                </Tooltip>
+                                            </Grid>
+                                        </div>)}
+                                </div>}
+                                    position="right top"
+                                    contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
+                                    <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
+                                        <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
+                                            {mes_receive.content}
+                                        </div>
+                                    </div>
+                                </Popup>
 
-                                <button className="flex items-center pl-7 mt-3 pb-6">
+                                {/* <button className="flex items-center pl-7 mt-3 pb-6">
                                     <Iimage className="w-6 mr-2 fill-zinc-500" />
                                     <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
                                 </button> */}
-                            </button>
+                            </div>
                         </div>
                     ))}
                 </>
@@ -140,10 +166,25 @@ export default function Chat() {
                                 </div>
 
                                 <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-8 hover:underline cursor-pointer">
-                                                    {(mes_send.content.length <= 20 ? <div>{mes_send.content}</div> : <div>{mes_send.content.substring(0, 20)}...</div>)}
-                                                </div>} 
-                                        position="right top"
-                                        contentStyle={{right: '20px', margin: '0 0 0 10px'}}>
+                                    {(mes_send.content.length <= 20 ?
+                                        <div>
+                                            <Grid item>
+                                                <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                    <div>{mes_send.content}</div>
+                                                </Tooltip>
+                                            </Grid>
+
+                                        </div> :
+                                        <div>
+                                            <Grid item>
+                                                <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                    <div>{mes_send.content.substring(0, 20)}...</div>
+                                                </Tooltip>
+                                            </Grid>
+                                        </div>)}
+                                </div>}
+                                    position="right top"
+                                    contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
                                     <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
                                         <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
                                             {mes_send.content}
@@ -178,17 +219,17 @@ export default function Chat() {
                             <div className="border-r-2 border-black mt-6 ml-9">
                                 <button
                                     onClick={() => handleButtonClick(1)}
-                                    className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 1 ? 'bg-sky-600' : ''}`}>
+                                    className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 1 ? 'bg-sky-500' : ''}`}>
                                     Chat received
                                 </button>
 
                                 <button
                                     onClick={() => handleButtonClick(2)}
-                                    className={`ml-6 bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-sky-600' : ''}`}>
+                                    className={`ml-6 bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-sky-500' : ''}`}>
                                     Chat sent
                                 </button>
 
-                                <div className="mt-6">
+                                <div className="mt-6 h-[450px] overflow-y-auto">
                                     {contentChat}
                                 </div>
                             </div>
