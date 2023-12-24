@@ -12,19 +12,20 @@ import 'reactjs-popup/dist/index'
 import { alpha, styled } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
+import { set } from "mongoose"
 
 const PinkSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
-      color: pink[600],
-      "&:hover": {
-        backgroundColor: alpha(pink[600], theme.palette.action.hoverOpacity),
-      },
+        color: pink[600],
+        "&:hover": {
+            backgroundColor: alpha(pink[600], theme.palette.action.hoverOpacity),
+        },
     },
     "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-      backgroundColor: pink[600],
+        backgroundColor: pink[600],
     },
-  }));
-  
+}));
+
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 export default function RP() {
@@ -36,14 +37,6 @@ export default function RP() {
     };
 
     const [isCompleted, setIsCompleted] = useState(Array(reports.length).fill(false));
-
-    const handleSwitchChange = (index: number) => {
-        setIsCompleted((prevStates) => {
-          const newStates = [...prevStates];
-          newStates[index] = !newStates[index];
-          return newStates;
-        });
-      };
 
     useEffect(() => {
         fetch('/api/report_list', {
@@ -60,6 +53,21 @@ export default function RP() {
             .catch(error => console.error('Error:', error));
         localStorage.setItem('sidebar', 2)
     }, []);
+
+    const [checkStatus, setCheckStatus] = useState(Array(reports.length).fill('Uncompleted'))
+
+    const handleSwitchChange = (index: number) => {
+        setIsCompleted((prevStates) => {
+            const newStates = [...prevStates];
+            newStates[index] = !newStates[index];
+            setCheckStatus((prevStatus) => {
+                const newStatus = [...prevStatus]
+                newStatus[index] = newStates[index] == true ? 'Completed' : 'Uncompleted';
+                return newStatus;
+            });
+            return newStates;
+        });
+    };
 
     return (
         <>
@@ -109,15 +117,15 @@ export default function RP() {
                                                     {rep.content}
                                                 </div>
                                                 <div className="flex items-center ml-4">
-                                                    <PinkSwitch 
+                                                    <PinkSwitch
                                                         id={String(index)}
-                                                        {...label} 
+                                                        {...label}
                                                         defaultChecked={isCompleted[index]}
                                                         checked={isCompleted[index]}
                                                         onChange={() => handleSwitchChange(index)} />
-                                                    {isCompleted && <span>Completed</span>}
+                                                    {isCompleted[index] && <span>Completed</span>}
                                                 </div>
-                                            </div>             
+                                            </div>
                                         </Popup>
                                     </div>
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
@@ -130,12 +138,11 @@ export default function RP() {
                                         <div>{(rep.date_completed === null ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
                                     </div>
                                     <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
-                                        <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">{rep.status}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{rep.status}</div>)}</div>
+                                        <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{checkStatus[index]}</div>)}</div>
                                     </div>
                                 </div>))}
                         </div>
                     </div>
-
                 </div>
             </div>
         </>
