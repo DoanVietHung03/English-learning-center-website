@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 
 export default function ExBank() {    
     const [exercise, setExercise] = useState([])
+    const [progress, setProgress] = useState([])
 
     useEffect(() => {
         fetch('/api/exercise', {
@@ -28,22 +29,27 @@ export default function ExBank() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ user_id: localStorage.getItem("userName"), ex_id:  }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID")}),
         })
             .then(response => response.json())
             .then(data => {
-                setExercise(data)
+                setProgress(data)
+                if(data !== null){
+                    localStorage.setItem('saved', 'already')
+                }
+                else{
+                    localStorage.setItem('saved', 'new')
+                }
                 console.log(data)
-                console.log(exercise)
             })
             .catch(error => console.error('Error:', error));
     }, []);
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        const response = await fetch('/api/exercise_progress', {
+        const response = await fetch('/api/save_progress', {
             method: 'POST',
-            body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'), ex_id: localStorage.getItem("exerciseID"), status: localStorage.getItem('saved'), progress}),
             headers: { 'Content-Type': 'application/json' },
         })
     }
