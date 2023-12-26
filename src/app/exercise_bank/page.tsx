@@ -14,6 +14,7 @@ export default function Exercise_bank() {
     const [skill, setSkill] = useState('')
     const [content, setContent] = useState<ReactElement | any | null>(null)
     const [exercises, setExercises] = useState([])
+    const [exerciseList, setExerciseList] = useState([])
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
     const [emptyFilter, setEmptyfilter] = useState(true)
     const [resetKey, setResetKey] = useState(0);
@@ -32,6 +33,24 @@ export default function Exercise_bank() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+
+        fetch('/api/exDone_list' , {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: localStorage.getItem("userName") }),
+        })
+        .then(res => res.json())
+        .then(data => {
+            setExerciseList(data)
+            console.log(data)
+            //console.log(exercises)
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+        
     }, []);
     const handleChangeModule = (ev) => {
         setModule(ev.value);
