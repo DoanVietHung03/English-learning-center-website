@@ -45,7 +45,7 @@ export default function ExBank() {
 
             })
             .catch(error => console.error('Error:', error));
-            
+
     }, []);
 
     async function handleFormSubmit(ev: SyntheticEvent) {
@@ -90,12 +90,12 @@ export default function ExBank() {
 
                     <div className="bg-white mt-2 pb-8 rounded">
                         <div className="flex items-center justify-end py-2 border-b border-stone-300 mx-4">
-                            <Link href={''}>
-                                <button className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm"
-                                    onClick={handleFormSubmit}>
-                                    Save your progress
-                                </button>
-                            </Link>
+
+                            <button className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm"
+                                onClick={handleFormSubmit}>
+                                Save your progress
+                            </button>
+
                         </div>
                         <div className="grid grid-cols-2 mt-4 py-4 mx-4 gap-6">
                             <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 overflow-y-scroll h-[450px]">
@@ -105,15 +105,15 @@ export default function ExBank() {
                             </div>
                             {localStorage.getItem('saved') === 'already' ?
                                 ex_progress.map((exercise, index) => (
-                                <div key={index} className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
-                                    <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{exercise.progress}</textarea>
-                                    <div className="w-full flex items-center mr-12 mt-10 justify-end">
-                                        <button
-                                            className="rounded-md bg-lime-200 hover:bg-lime-300 px-3 py-1 font-medium leading-tight tracking-tight">
-                                            View result
-                                        </button>
-                                    </div>
-                                </div>)) :
+                                    <div key={index} className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
+                                        <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{exercise.progress}</textarea>
+                                        <div className="w-full flex items-center mr-12 mt-10 justify-end">
+                                            <button
+                                                className="rounded-md bg-lime-200 hover:bg-lime-300 px-3 py-1 font-medium leading-tight tracking-tight">
+                                                View result
+                                            </button>
+                                        </div>
+                                    </div>)) :
                                 <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
                                     <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
                                     <div className="w-full flex items-center mr-12 mt-10 justify-end">

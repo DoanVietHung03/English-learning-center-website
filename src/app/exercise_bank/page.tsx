@@ -111,7 +111,7 @@ export default function Exercise_bank() {
                                             </div>
                                         </div>
                                         <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
-                                            href='/exercise_bank/ex_in_exbank'
+                                            href='/ex_in_exbank'
                                             className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
                                                     transition-colors duration-300">
                                             <Ieye className="fill-blue-400 w-6" />
