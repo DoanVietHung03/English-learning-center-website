@@ -51,15 +51,6 @@ export default function ExBank() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        //console.log(ex_progress);
-
-        // var lastProgress
-        // if (localStorage.getItem('saved') === 'already') {
-        //     lastProgress = ex_progress + progress
-        // }
-        // else {
-        //     lastProgress = progress
-        // }
         const response = await fetch('/api/save_progress', {
             method: 'POST',
             body: JSON.stringify({ id: localStorage.getItem('userName'), ex_id: localStorage.getItem("exerciseID"), status: localStorage.getItem('saved'), progress: progress }),
