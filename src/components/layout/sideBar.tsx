@@ -4,6 +4,8 @@ import Link from "next/link"
 import React, { useState, useEffect, ReactElement } from "react"
 import IarrowLeft from "../icons/icon_arrow_left"
 import dynamic from "next/dynamic"
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function SideBar() {
     const type = localStorage.getItem('userType')
@@ -48,12 +50,20 @@ export default function SideBar() {
                         <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>
                             <li
                                 className={`w-full mt-6 p-2 flex cursor-pointer rounded-lg text-white font-bold text-base items-center gap-x-4 hover:bg-sky-400 transition-colors 
-                                            ${localStorage.getItem('sidebar') == index ? "bg-sky-400" : ""}`}
-                                            >
-                                {index < 3 ? (Menu.src) : (type !== 'Admin' ? <IconChat className="w-8 fill-white"/> : <IconUser className="w-8 fill-white"/>)}
-                                <span className={`${!open && "hidden"} origin-left duration-200 ml-4`}>
+                                            ${localStorage.getItem('sidebar') == index ? "bg-sky-400" : ""}`}>
+                                {!open ? 
+                                <div>
+                                    <Tooltip disableFocusListener disableTouchListener title={index < 3 ? Menu.title : (type !== 'Admin' ? Menus[3].title : Menus[4].title)}>
+                                        <Grid item>
+                                            {index < 3 ? (Menu.src) : (type !== 'Admin' ? <IconChat className="w-8 fill-white"/> : <IconUser className="w-8 fill-white"/>)}
+                                       </Grid>
+                                    </Tooltip>   
+                                </div> : 
+                                <div>{index < 3 ? (Menu.src) : (type !== 'Admin' ? <IconChat className="w-8 fill-white"/> : <IconUser className="w-8 fill-white"/>)}</div>}
+                                
+                                <div className={`${!open && "hidden"} origin-left duration-200 ml-4`}>
                                     {index < 3 ? Menu.title : (type !== 'Admin' ? Menus[3].title : Menus[4].title)}
-                                </span>
+                                </div>
                             </li>
                         </Link>
                     ))}
