@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"
 
 export default function ExBank() {
     const [exercise, setExercise] = useState([])
-    const [ex_progress, setExProgress] = useState(null)
+    const [ex_progress, setExProgress] = useState([])
     const [progress, setProgress] = useState('')
     const router = useRouter()
     var progress1
@@ -23,79 +23,50 @@ export default function ExBank() {
             .then(response => response.json())
             .then(data => {
                 setExercise(data)
-                console.log(data)
+                //console.log(data)
             })
             .catch(error => console.error('Error:', error));
-        // fetch('/api/exercise_progress', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID") }),
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         setExProgress(data)
-        //         //console.log(data)
+        fetch('/api/exercise_progress', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID") }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log(data)
 
-        //         if (data !== null) {
-        //             localStorage.setItem('saved', 'already')
-        //             //progress1 = data
-        //         }
-        //         else {
-        //             localStorage.setItem('saved', 'new')
-        //         }
+                if (data.length !== 0) {
+                    localStorage.setItem('saved', 'already')
+                    localStorage.setItem('progress', data) 
+                    setExProgress(data)
+                }
+                else {
+                    localStorage.setItem('saved', 'new')
+                    localStorage.removeItem('progress') 
+                }
 
-        //     })
-        //     .catch(error => console.error('Error:', error));
-        
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/exercise_progress', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID") }),
-                });
-    
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-    
-                const data = await response.json();
-    
-                setExProgress(data);
-                console.log(data);
-    
-                if (data !== null) {
-                    localStorage.setItem('saved', 'already');
-                } else {
-                    localStorage.setItem('saved', 'new');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
-    
-        fetchData();
+            })
+            .catch(error => console.error('Error:', error));
             
     }, []);
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        console.log(data);
+        //console.log(ex_progress);
 
-        var lastProgress
-        if (localStorage.getItem('saved') === 'already') {
-            lastProgress = ex_progress + progress
-        }
-        else {
-            lastProgress = progress
-        }
+        // var lastProgress
+        // if (localStorage.getItem('saved') === 'already') {
+        //     lastProgress = ex_progress + progress
+        // }
+        // else {
+        //     lastProgress = progress
+        // }
         const response = await fetch('/api/save_progress', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('userName'), ex_id: localStorage.getItem("exerciseID"), status: localStorage.getItem('saved'), progress: lastProgress }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'), ex_id: localStorage.getItem("exerciseID"), status: localStorage.getItem('saved'), progress: progress }),
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/exercise_bank')
@@ -138,15 +109,16 @@ export default function ExBank() {
                                 </span>
                             </div>
                             {localStorage.getItem('saved') === 'already' ?
-                                <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
-                                    <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{ex_progress}</textarea>
+                                ex_progress.map((exercise, index) => (
+                                <div key={index} className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
+                                    <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{exercise.progress}</textarea>
                                     <div className="w-full flex items-center mr-12 mt-10 justify-end">
                                         <button
                                             className="rounded-md bg-lime-200 hover:bg-lime-300 px-3 py-1 font-medium leading-tight tracking-tight">
                                             View result
                                         </button>
                                     </div>
-                                </div> :
+                                </div>)) :
                                 <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
                                     <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
                                     <div className="w-full flex items-center mr-12 mt-10 justify-end">
