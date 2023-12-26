@@ -38,6 +38,7 @@ export default function ExBank() {
                 if (data.length !== 0) {
                     localStorage.setItem('saved', 'already')
                     setExProgress(data)
+                    setProgress(data.progress)
                 }
                 else {
                     localStorage.setItem('saved', 'new')
