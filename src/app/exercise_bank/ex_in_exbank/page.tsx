@@ -3,11 +3,14 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 export default function ExBank() {
     const [exercise, setExercise] = useState([])
-    const [ex_progress, setProgress] = useState([])
+    const [ex_progress, setExProgress] = useState(null)
+    const [progress, setProgress] = useState('')
+    const router = useRouter()
+    var progress1
 
     useEffect(() => {
         fetch('/api/exercise', {
@@ -21,37 +24,81 @@ export default function ExBank() {
             .then(data => {
                 setExercise(data)
                 console.log(data)
-                console.log(exercise)
             })
             .catch(error => console.error('Error:', error));
-        fetch('/api/exercise_progress', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID") }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                setProgress(data)
+        // fetch('/api/exercise_progress', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID") }),
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         setExProgress(data)
+        //         //console.log(data)
+
+        //         if (data !== null) {
+        //             localStorage.setItem('saved', 'already')
+        //             //progress1 = data
+        //         }
+        //         else {
+        //             localStorage.setItem('saved', 'new')
+        //         }
+
+        //     })
+        //     .catch(error => console.error('Error:', error));
+        
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/exercise_progress', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID") }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+    
+                const data = await response.json();
+    
+                setExProgress(data);
+                console.log(data);
+    
                 if (data !== null) {
-                    localStorage.setItem('saved', 'already')
+                    localStorage.setItem('saved', 'already');
+                } else {
+                    localStorage.setItem('saved', 'new');
                 }
-                else {
-                    localStorage.setItem('saved', 'new')
-                }
-                console.log(data)
-            })
-            .catch(error => console.error('Error:', error));
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+    
+        fetchData();
+            
     }, []);
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+        console.log(data);
+
+        var lastProgress
+        if (localStorage.getItem('saved') === 'already') {
+            lastProgress = ex_progress + progress
+        }
+        else {
+            lastProgress = progress
+        }
         const response = await fetch('/api/save_progress', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('userName'), ex_id: localStorage.getItem("exerciseID"), status: localStorage.getItem('saved'), progress: ex_progress.progress }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'), ex_id: localStorage.getItem("exerciseID"), status: localStorage.getItem('saved'), progress: lastProgress }),
             headers: { 'Content-Type': 'application/json' },
         })
+        router.push('/exercise_bank')
     }
 
     return (
@@ -78,7 +125,8 @@ export default function ExBank() {
                     <div className="bg-white mt-2 pb-8 rounded">
                         <div className="flex items-center justify-end py-2 border-b border-stone-300 mx-4">
                             <Link href={''}>
-                                <button className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm">
+                                <button className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm"
+                                    onClick={handleFormSubmit}>
                                     Save your progress
                                 </button>
                             </Link>
@@ -89,21 +137,18 @@ export default function ExBank() {
                                     {exercise.content}
                                 </span>
                             </div>
-                            {localStorage.getItem('saved') === 'already' ? ex_progress.map((pro, i) => (
-                                <div key={i}>
-                                    <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
-                                        <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{pro.progress}</textarea>
-                                        <div className="w-full flex items-center mr-12 mt-10 justify-end">
-                                            <button
-                                                className="rounded-md bg-lime-200 hover:bg-lime-300 px-3 py-1 font-medium leading-tight tracking-tight">
-                                                View result
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )) :
+                            {localStorage.getItem('saved') === 'already' ?
                                 <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
-                                    <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
+                                    <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{ex_progress}</textarea>
+                                    <div className="w-full flex items-center mr-12 mt-10 justify-end">
+                                        <button
+                                            className="rounded-md bg-lime-200 hover:bg-lime-300 px-3 py-1 font-medium leading-tight tracking-tight">
+                                            View result
+                                        </button>
+                                    </div>
+                                </div> :
+                                <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
+                                    <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
                                     <div className="w-full flex items-center mr-12 mt-10 justify-end">
                                         <button
                                             className="rounded-md bg-lime-200 hover:bg-lime-300 px-3 py-1 font-medium leading-tight tracking-tight">
@@ -117,4 +162,8 @@ export default function ExBank() {
             </div>
         </>
     )
+}
+
+function typeOf(ex_progress: string): any {
+    throw new Error("Function not implemented.")
 }
