@@ -35,17 +35,12 @@ export default function ExBank() {
         })
             .then(response => response.json())
             .then(data => {
-                
-                console.log(data)
-
                 if (data.length !== 0) {
                     localStorage.setItem('saved', 'already')
-                    localStorage.setItem('progress', data) 
                     setExProgress(data)
                 }
                 else {
                     localStorage.setItem('saved', 'new')
-                    localStorage.removeItem('progress') 
                 }
 
             })
