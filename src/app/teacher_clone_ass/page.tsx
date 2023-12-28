@@ -18,7 +18,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
-    const [assi, setAssi] = useState([])
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [assignments, setAssignments] = useState([])
     const [assignmentChoosed, setAssignmentChoosed] = useState(Number)

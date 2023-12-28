@@ -35,7 +35,7 @@ export default function Ass_Grading() {
         ev.preventDefault();
         await fetch('/api/grade', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade}),
+            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade, assignment_id: localStorage.getItem('assignment_id')}),
             headers: { 'Content-Type': 'application/json' },
         })
         window.location.reload(true);

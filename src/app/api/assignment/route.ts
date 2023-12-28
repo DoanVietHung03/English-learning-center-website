@@ -13,6 +13,7 @@ export async function POST(req: { json: () => any }) {
         skill: body.skill,
         attachedFile: body.file,
         course_id: body.id,
+        graded: 0
     })
     console.log(createdAssignment)
     return Response.json(createdAssignment)
