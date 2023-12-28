@@ -72,7 +72,8 @@ export default function Ass_Grading() {
                         <p>{sub.student_Name}</p>
                     </div>
                     <div className="mx-[34px] px-7 py-4 border-t border-b border-stone-300 overflow-y-auto h-80 h-fixed">
-                        <div className="text-black text-base font-normal font-poppins leading-tight tracking-tight">
+                        <div className="text-black text-base font-normal font-poppins leading-tight tracking-tight"
+                            style={{ wordWrap: 'break-word' }}>
                             {sub.answer}
                         </div>
                     </div>
@@ -150,7 +151,11 @@ export default function Ass_Grading() {
                                             key={index}
                                             className={`w-full flex items-center  overflow-y-auto border-b py-4 border-stone-300 hover:bg-zinc-100 ${selectedButton === index ? 'bg-zinc-100' : ''}`}>
                                             <Iuser className="w-[3em] fill-zinc-300" />
-                                            <p className="text-black text-sm font-semibold font-poppins ml-4">{sub.student_Name} - {sub.student_id}</p>
+                                            <div>
+                                                <p className="text-black text-sm font-semibold font-poppins ml-4">{sub.student_Name} - {sub.student_id}</p>
+                                                {sub.grade !== null ? 
+                                                    <p className="text-zinc-400 text-sm font-semibold font-poppins ml-4">Marked</p> : null}
+                                            </div>
                                         </button>
                                     ))}
                                 </div>
