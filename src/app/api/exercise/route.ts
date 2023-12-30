@@ -31,13 +31,37 @@ export async function POST(req: { json: () => any }) {
             }
             return Response.json(list_ex_done);
         }
-        else{
-
+        else if (body.method === 'getProgress'){
+            const progress = await Ex_Submission.find({ exercise_id: body.ex_id, student_id: body.id}, {progress: 1, _id:0})
+            return Response.json(progress);
+        }
+        else if (body.method === 'saveProgress'){
+            if(body.progress === ''){
+                const deleteProgress = await Ex_Submission.deleteOne({student_id: body.id, exercise_id: body.ex_id})
+                return Response.json(deleteProgress);
+            }
+            else{
+                if(body.status === 'already'){
+                    const updatedProgress = {
+                        progress: body.progress
+                    };
+                    const progressEdit = await Ex_Submission.updateOne({ student_id: body.id, exercise_id: body.ex_id }, { $set: updatedProgress});
+                    return Response.json(progressEdit);
+                }
+                else{
+                    const createdProgress = await Ex_Submission.create({
+                        student_id: body.id,
+                        exercise_id: body.ex_id,
+                        progress: body.progress
+                    })
+                    return Response.json(createdProgress);
+                }
+            }
         }
     } catch (error) {
         return new Response(
             JSON.stringify(
-                { ok: false, message: 'Exercise not existed' }), {
+                { ok: false, message: 'Exercise fetching failed' }), {
             headers: { 'Content-Type': 'application/json' },
             status: 500,
         });

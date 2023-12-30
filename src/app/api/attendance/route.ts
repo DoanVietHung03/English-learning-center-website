@@ -21,7 +21,7 @@ export async function POST(req: { json: () => any }) {
     } catch (error) {
         return new Response(
             JSON.stringify(
-                { ok: false, message: 'User not existed' }), {
+                { ok: false, message: 'Attendance fetching failed' }), {
             headers: { 'Content-Type': 'application/json' },
             status: 500,
         });

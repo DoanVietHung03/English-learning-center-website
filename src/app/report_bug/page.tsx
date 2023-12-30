@@ -58,12 +58,12 @@ export default function RP() {
     };
 
     useEffect(() => {
-        fetch('/api/report_list', {
+        fetch('/api/report', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("userName") }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), userType: localStorage.getItem("userType"), method: 'getList' }),
         })
             .then(response => response.json())
             .then(data => {
@@ -116,16 +116,11 @@ export default function RP() {
 
     async function handleFormSubmit(ev: React.SyntheticEvent) {
         ev.preventDefault()
-        console.log(localStorage.getItem('report_id'))
-        console.log(localStorage.getItem('status'))
-
-        await fetch('/api/status_report', {
+        await fetch('/api/report', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('report_id'), status: localStorage.getItem('status') }),
+            body: JSON.stringify({ id: localStorage.getItem('report_id'), status: localStorage.getItem('status'), method: 'changeStatus' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        //window.location.reload(true);
-        //router.push('/report_bug')
     }
 
     const [currentPage, setCurrentPage] = useState(1);

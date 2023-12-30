@@ -36,12 +36,12 @@ export default function Chat() {
 
     useEffect(() => {
         localStorage.setItem('sidebar', 3)
-        fetch('/api/message_list', {
+        fetch('/api/message', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("userName") }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), method: 'getList' }),
         })
             .then(res => res.json())
             .then(data => {
@@ -79,7 +79,7 @@ export default function Chat() {
         ev.preventDefault()
         const response = await fetch('/api/message', {
             method: 'POST',
-            body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file }),
+            body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
     }

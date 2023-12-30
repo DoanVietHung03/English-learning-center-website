@@ -30,10 +30,10 @@ export default function Create_RP() {
         ev.preventDefault()
         await fetch('/api/report', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('userName'),title, type, content, file, date_created, date_completed, status }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'),title, type, content, file, date_created, date_completed, status, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        router.push('/report_bug')
+        window.location.reload(true);
     }
 
     return (

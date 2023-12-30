@@ -18,36 +18,7 @@ export default function Do_Assignment() {
     function handleChangeFile(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
-    //get CourseID
-    //lay info assignment where ass.idCourse = Course.idCourse
-    //luu info submission voi id ass
 
-    // const blobUrl = 'blob:http://localhost:3000/audio/5089f84a-e6bb-4787-8baa-00f695f275ae';
-    // function handlePlayMp3() {
-    //     console.log("aaaaa")
-    //     fetch(blobUrl)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Network response was not ok');
-    //             }
-    //             return response.blob();
-    //         })
-    //         .then(blob => {
-    //             // Tạo URL từ blob
-    //             const objectUrl = URL.createObjectURL(blob);
-
-    //             // Sử dụng URL trong một đối tượng Audio
-    //             const audioElement = new Audio(objectUrl);
-    //             audioElement.play();
-
-    //             // Nếu bạn muốn hiển thị nó trong một thẻ audio
-    //             const audioPlayer = document.getElementById('audioPlayer');
-    //             audioPlayer.src = objectUrl;
-    //         })
-    //         .catch(error => {
-    //             console.error('There was a problem with the fetch operation:', error);
-    //         });
-    // }
 
     useEffect(() => {
         fetch('/api/assignment', {
@@ -76,7 +47,7 @@ export default function Do_Assignment() {
         ev.preventDefault()
         const response = await fetch('/api/submission', {
             method: 'POST',
-            body: JSON.stringify({ answer, id_student: localStorage.getItem("userName"), id_assignment: localStorage.getItem("assignment_id"), file }),
+            body: JSON.stringify({ answer, id_student: localStorage.getItem("userName"), id_assignment: localStorage.getItem("assignment_id"), file, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/assignments')

@@ -10,7 +10,6 @@ export default function ExBank() {
     const [ex_progress, setExProgress] = useState([])
     const [progress, setProgress] = useState('')
     const router = useRouter()
-    var progress1
 
     useEffect(() => {
         fetch('/api/exercise', {
@@ -25,12 +24,12 @@ export default function ExBank() {
                 setExercise(data)
             })
             .catch(error => console.error('Error:', error));
-        fetch('/api/exercise_progress', {
+        fetch('/api/exercise', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID") }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), ex_id: localStorage.getItem("exerciseID"), method: 'getProgress' }),
         })
             .then(response => response.json())
             .then(data => {
@@ -50,9 +49,10 @@ export default function ExBank() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        const response = await fetch('/api/save_progress', {
+        console.log(progress)
+        const response = await fetch('/api/exercise', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('userName'), ex_id: localStorage.getItem("exerciseID"), status: localStorage.getItem('saved'), progress: progress }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'), ex_id: localStorage.getItem("exerciseID"), status: localStorage.getItem('saved'), progress: progress, method: 'saveProgress' }),
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/exercise_bank')

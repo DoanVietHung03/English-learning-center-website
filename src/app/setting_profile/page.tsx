@@ -17,12 +17,12 @@ export default function Profile() {
     const [password, setPassword] = useState('')
     const [errorPass, setErrorPass] = useState(false);
     useEffect(() => {
-        fetch('/api/profile', {
+        fetch('/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ phone: localStorage.getItem("userName")})
+            body: JSON.stringify({ phone: localStorage.getItem("userName"), method: 'getInfo'})
         })
         .then(response => response.json())
         .then(data => {
@@ -38,15 +38,14 @@ export default function Profile() {
         localStorage.setItem('userFname', user.name)
         if(errorPass === false){
             setError(false)
-            const response = await fetch('api/update_profile', {
+            const response = await fetch('api/user', {
                 method: 'POST',
-                body: JSON.stringify({userID: user.phone, userBirth: birth, userName: user.name, userEmail: user.email, userAddress: user.address, userPassword: password }),
+                body: JSON.stringify({userID: user.phone, userBirth: birth, userName: user.name, userEmail: user.email, userAddress: user.address, userPassword: password, method: 'changeInfo' }),
                 headers: {'Content-Type': 'application/json'},
             })
             if (!response.ok)
                 setError(true)
             else {
-
                 router.push('/setting_profile')
             }
         }

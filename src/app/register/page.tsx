@@ -30,20 +30,23 @@ export default function Register() {
             clearInterval(countdownTimer);
         };
     }, [regProgress]);
+    
     useEffect(() => {
         if (countdown === 0) {
             setRegProgress(false);
-            setCountdown(4); // Reset countdown for the next registration
+            setCountdown(4); 
         }
     }, [countdown]);
+
     const handleChange = (ev) => {
         setType(ev.value);
     };
+
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         const response = await fetch('/api/user', {
             method: 'POST',
-            body: JSON.stringify({ phone, password, name, type }),
+            body: JSON.stringify({ phone, password, name, type, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         if (!response.ok) {

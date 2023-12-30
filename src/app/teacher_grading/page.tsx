@@ -31,18 +31,18 @@ export default function Ass_Grading() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault();
-        await fetch('/api/grade', {
+        await fetch('/api/submission', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade, assignment_id: localStorage.getItem('assignment_id')}),
+            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade, assignment_id: localStorage.getItem('assignment_id'), method: 'grading'}),
             headers: { 'Content-Type': 'application/json' },
         })
         window.location.reload(true);
     }
 
     useEffect(() => {
-        fetch('/api/submission_list', {
+        fetch('/api/submission', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('assignment_id') }),
+            body: JSON.stringify({ id: localStorage.getItem('assignment_id'), method: 'getList' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())

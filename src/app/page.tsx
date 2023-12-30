@@ -6,8 +6,6 @@ import Iman from "@/components/icons/icon_man"
 import { SyntheticEvent, useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { getCookies, setCookie } from 'cookies-next'
 
 
 export default function Login() {
@@ -23,12 +21,12 @@ export default function Login() {
         var checkUser
         var userType
         var name
-        await fetch('/api/authentication', {
+        await fetch('/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ phone, password }), // Gửi dữ liệu
+            body: JSON.stringify({ phone, password, method : 'check' }), 
         })
             .then(response => response.json())
             .then(data => {

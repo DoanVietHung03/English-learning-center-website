@@ -1,9 +1,6 @@
 import { Course } from "@/models/course"
 import { Session } from "@/models/session";
 import { User } from "@/models/user"
-import { Attendance } from "@/models/attendance";
-
-
 import { connectToDatabase } from '../../../connection';
 
 export async function POST(req: { json: () => any }) {
@@ -80,7 +77,7 @@ export async function POST(req: { json: () => any }) {
     } catch (error) {
         return new Response(
             JSON.stringify(
-                { ok: false, message: 'User not existed' }), {
+                { ok: false, message: 'Course fetching failed' }), {
             headers: { 'Content-Type': 'application/json' },
             status: 500,
         });

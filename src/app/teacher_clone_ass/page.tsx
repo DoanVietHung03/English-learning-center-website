@@ -54,7 +54,8 @@ export default function Clone_Assignment() {
                 skill: assignments[assignmentChoosed].skill,
                 deadline: deadline,
                 attachedFile: assignments[assignmentChoosed].attachedFile,
-                id: localStorage.getItem('course_id')
+                id: localStorage.getItem('course_id'),
+                method: 'add'
             }),
             headers: { 'Content-Type': 'application/json' },
         })
