@@ -2,7 +2,7 @@
 
 import Header from "@/components/layout/header";
 import SideBar from "@/components/layout/sideBar";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, SyntheticEvent } from "react";
 import Link from "next/link";
 import Ibuilding from "@/components/icons/icon_building";
 import IfileAdd from "@/components/icons/icon_file_add";
@@ -27,16 +27,17 @@ export default function CourseList() {
     const type = localStorage.getItem('userType')
     const router = useRouter();
 
-    var delete_course: any
+    var delete_course
 
     async function handleDelete(ev: SyntheticEvent) {
         ev.preventDefault()
-        const response = await fetch('/api/assignment', {
+        console.log(delete_course)
+        const response = await fetch('/api/course', {
             method: 'POST',
-            body: JSON.stringify({ assignment_id: delete_course, method: 'delete' }),
+            body: JSON.stringify({ course_id: delete_course, method: 'delete' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        router.push('/assignments')
+        window.location.reload(true);
     }
 
     const handleActionClick = (link) => {
@@ -150,7 +151,7 @@ export default function CourseList() {
                                                 <div className="mt-4">
                                                     <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                     <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                        <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course._id, handleDelete(ev) }}>
+                                                        <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
                                                             Yes
                                                         </button>
 

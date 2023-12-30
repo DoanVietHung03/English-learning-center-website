@@ -35,7 +35,7 @@ export default function Assigments() {
             body: JSON.stringify({ assignment_id: delete_assignment, method: 'delete' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        router.push('/assignments')
+        window.location.reload(true);
     }
 
     useEffect(() => {
