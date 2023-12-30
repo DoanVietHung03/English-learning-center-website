@@ -172,7 +172,7 @@ export default function RP() {
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Date Completed</p>
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Status</p>
                             </div>
-                            <div className="h-56">
+                            <div className="h-fit">
                                 {currentRP.map((rep, index) => (
                                     ((checkStatus[index] == status || status == '') &&
                                         <div key={index} className="grid grid-cols-6 items-center text-center">
@@ -221,7 +221,7 @@ export default function RP() {
                                             </div>
                                         </div>)))}
                             </div>
-                            <div className="flex justify-center">
+                            <div className="flex justify-center mt-8">
                                 <Pagination
                                     count={Math.ceil(reports.length / rpPerPage)}
                                     shape="rounded"

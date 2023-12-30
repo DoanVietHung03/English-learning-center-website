@@ -112,15 +112,15 @@ export default function Exercise_bank() {
                                 rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 1 ? 'bg-sky-500' : 'bg-white'}`}>
                                 All
                             </button>
-
-                            <button
-                                onClick={() => handleButtonClick(2)}
-                                className={`hover:bg-sky-500 text-black hover:text-white text-base font-medium px-4 py-2
-                                rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 2 ? 'bg-sky-500' : 'bg-white'}`}>
-                                Your Exercises
-                            </button>
+                            {localStorage.getItem('userType') === 'Student' ?
+                                <button
+                                    onClick={() => handleButtonClick(2)}
+                                    className={`hover:bg-sky-500 text-black hover:text-white text-base font-medium px-4 py-2
+                                    rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 2 ? 'bg-sky-500' : 'bg-white'}`}>
+                                    Your Exercises
+                                </button> : null}
                         </div>
-                        {localStorage.getItem('userType') !== 'Student' ?
+                        {localStorage.getItem('userType') === 'Teacher' ?
                             <Link href={'./exbank_add'}>
                                 <button className="bg-lime-300 hover:bg-lime-400 px-4 py-2 text-black text-base font-medium rounded-lg leading-tight tracking-tight mr-4">
                                     Add Exercise
