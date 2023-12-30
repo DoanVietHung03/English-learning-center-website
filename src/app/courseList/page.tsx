@@ -67,7 +67,7 @@ export default function CourseList() {
                         }
 
                     </div>
-                    <div className="flex flex-col gap-4 overflow-y-auto h-[480px]">
+                    <div className="flex flex-col gap-4 h-[480px]">
                         {!emptyCourse && (
                             currentCourse.map(course => (
                                 // eslint-disable-next-line react/jsx-key

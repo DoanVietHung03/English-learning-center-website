@@ -8,6 +8,7 @@ import Ibook from "@/components/icons/icon_book"
 import { useEffect, useState } from "react"
 import moment from "moment"
 import IcirclePlus from "@/components/icons/circlePlus"
+import Pagination from '@mui/material/Pagination';
 
 export default function Assigments() {
     const type = localStorage.getItem('userType')
@@ -33,7 +34,9 @@ export default function Assigments() {
             });
     }, []);
 
-    //console.log(assignments)
+    const [currentPage, setCurrentPage] = useState(1);
+    const coursePerPage = 4; // Adjust as needed
+    const currentAss = assignments.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
 
     return (
         <>
@@ -74,8 +77,8 @@ export default function Assigments() {
                                     </Link>
                                 }
                             </div>
-                            <div className="h-80 overflow-y-scroll">
-                                {assignments.map(assignment => (type === "Student" && (
+                            <div className="h-80">
+                                {currentAss.map(assignment => (type === "Student" && (
                                     <Link href={'/assignment_submit'}
                                         onClick={() => {
                                             localStorage.setItem("assignment_id", assignment._id),
@@ -100,7 +103,7 @@ export default function Assigments() {
                                     </Link>
                                 )))}
 
-                                {assignments.map(assignment => (type === "Teacher" && (
+                                {currentAss.map(assignment => (type === "Teacher" && (
                                     <Link href={'/teacher_grading'} onClick={() => { localStorage.setItem('assignment_id', assignment._id) }}
                                         className="mt-10 flex items-center justify-between border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
                                         <div className=" p-2 flex items-center ">
@@ -110,23 +113,23 @@ export default function Assigments() {
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-3">
-                                            {assignment.numSub != localStorage.getItem('course_student') ? 
+                                            {assignment.numSub != localStorage.getItem('course_student') ?
                                                 <p className="text-red-400 leading-tight tracking-tight font-medium text-base mr-2">Submitted: {assignment.numSub}/{localStorage.getItem('course_student')}</p>
-                                                : 
+                                                :
                                                 <p className="text-green-400 leading-tight tracking-tight font-medium text-base mr-2">Submitted: {assignment.numSub}/{localStorage.getItem('course_student')}</p>
-                                            }                                
+                                            }
                                             {((assignment.graded === assignment.numSub) && (assignment.numSub !== 0)) ?
                                                 <div className="flex items-center mr-4">
                                                     <p className="text-green-400 leading-tight tracking-tight font-medium text-base">Fully marked</p>
                                                 </div> :
-                                                <div className="flex items-center mr-5">                            
-                                                    <p className="text-red-400 leading-tight tracking-tight font-medium text-base">Marked: {assignment.graded}/{assignment.numSub}</p>                                                   
+                                                <div className="flex items-center mr-5">
+                                                    <p className="text-red-400 leading-tight tracking-tight font-medium text-base">Marked: {assignment.graded}/{assignment.numSub}</p>
                                                 </div>}
                                         </div>
                                     </Link>
                                 )))}
 
-                                {assignments.map(assignment => (type === "Admin" && (
+                                {currentAss.map(assignment => (type === "Admin" && (
                                     <div className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
                                         <div className=" p-2 flex items-center ">
                                             <Ibook />
@@ -136,6 +139,15 @@ export default function Assigments() {
                                         </div>
                                     </div>
                                 )))}
+                            </div>
+                            <div className="flex justify-center">
+                                <Pagination
+                                    count={Math.ceil(assignments.length / coursePerPage)}
+                                    shape="rounded"
+                                    onChange={(event, newPage) => setCurrentPage(newPage)}
+                                    className=""
+                                    color="primary"
+                                />
                             </div>
                         </div>
                     </div>
