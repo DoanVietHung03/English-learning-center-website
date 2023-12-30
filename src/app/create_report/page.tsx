@@ -28,7 +28,6 @@ export default function Create_RP() {
     
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        console.log(localStorage.getItem('userName'))
         await fetch('/api/report', {
             method: 'POST',
             body: JSON.stringify({ id: localStorage.getItem('userName'),title, type, content, file, date_created, date_completed, status }),

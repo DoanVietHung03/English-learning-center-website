@@ -7,11 +7,10 @@ export async function POST(req: { json: () => any }) {
     const body = await req.json();
     var courses;
     mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
-    const user = await User.findOne({ phone: body.userName })
-    if (user.type == "Teacher") {
-      courses = await Course.find({ teacher_id: body.userName })
+    if (body.userType == "Teacher") {
+      courses = await Course.find({ teacher_id: body.id })
     }
-    else if (user.type == "Admin") {
+    else if (body.userType == "Admin") {
       courses = await Course.find({})
     }
     else {
@@ -21,7 +20,7 @@ export async function POST(req: { json: () => any }) {
       //     return course
       // })
       courses = courses
-      .filter(course => course.student_id.includes(body.userName))
+      .filter(course => course.student_id.includes(body.id))
       .filter(course => course !== null);
       //console.log(courses)
 
