@@ -68,19 +68,19 @@ export default function ExBank() {
                         Exercises Bank
                     </div>
                     <div className="flex mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 text-black text-base font-semibold font-['Poppins']">
+                        <div className="px-2 ml-2 my-2 text-black text-base font-semibold font-['Poppins'] border-r border-stone-300">
                             {exercise.title}
                         </div>
-                        <div className="p-2 ml-2 text-black text-base font-semibold font-['Poppins']">
+                        <div className="px-2 ml-2 my-2 text-black text-base font-semibold font-['Poppins'] border-r border-stone-300">
                             Module {' '} {exercise.module}
                         </div>
-                        <div className="p-2 ml-2 text-black text-base font-semibold font-['Poppins']">
+                        <div className="px-2 ml-2 my-2 text-black text-base font-semibold font-['Poppins']">
                             Skill {' '} {exercise.skill}
                         </div>
                     </div>
 
-                    <div className="bg-white mt-2 pb-8 rounded">
-                        {localStorage.getItem('userType') !== 'Admin' ?
+                    <div className="bg-white mt-2 pb-[13px] rounded">
+                        {localStorage.getItem('userType') === 'Student' ?
                             (<>
                                 <div className="flex items-center justify-end py-2 border-b border-stone-300 mx-4">
 
@@ -119,9 +119,11 @@ export default function ExBank() {
                                 </div>
                             </>) :
                             (<>
-                                <div className="mt-4 py-4 mx-4">
-                                    <div className="rounded-lg border border-stone-300 pl-6 py-8 overflow-y-auto h-[450px]">
-                                        <span className="text-black text-base font-normal">
+                                <div className="mt-4 pt-4 mx-4">
+                                    <p className="ml-4 mb-2 text-base font-medium leading-tight tracking-tight">Content</p>
+                                    <div className="rounded-lg border border-stone-300 pl-6 pt-8 overflow-y-auto h-[350px]">
+                                        <span className="text-black text-base font-normal"
+                                            style={{ wordWrap: 'break-word' }}>
                                             {exercise.content}
                                         </span>
                                     </div>

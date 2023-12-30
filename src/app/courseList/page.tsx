@@ -49,7 +49,7 @@ export default function CourseList() {
             <Header />
             <div className='flex gap-6'>
                 <SideBar />
-                <div className="w-2/3">
+                <div className="w-2/3 ml-14">
                     <div className="flex justify-between pt-3 pb-2 mb-2 border-b border-black">
                         <div className="font-poppins font-bold text-5xl">
                             Courses List
@@ -69,10 +69,12 @@ export default function CourseList() {
                                 // eslint-disable-next-line react/jsx-key
                                 <>
                                     <div className="w-full h-36 p-8 rounded-xl bg-white">
-                                        <div className="flex w-full mb-4">
-                                            <Link href={'/course_Time'} onClick={() => { localStorage.setItem("course_id", course.course_id), localStorage.setItem("course_name", course.name), localStorage.setItem("course_student", course.student_id.length)}}
-                                                className="flex justify-start font-poppins w-[840px] cursor-pointer text-blue-500 font-semibold text-base hover:underline">
-                                                {course.name}
+                                        <div className="flex mb-4">
+                                            <Link href={'/course_Time'} onClick={() => { localStorage.setItem("course_id", course.course_id), localStorage.setItem("course_name", course.name), localStorage.setItem("course_student", course.student_id.length)}}>
+                                                <button className="flex justify-start font-poppins w-fit cursor-pointer text-blue-500 font-semibold text-base hover:underline">
+                                                    {course.name}
+                                                </button>
+                                                
                                             </Link>
                                         </div>
                                         <div className="flex text-11 gap-6 mt-6">
