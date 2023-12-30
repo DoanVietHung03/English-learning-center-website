@@ -17,7 +17,6 @@ export default function CourseList() {
     const type = localStorage.getItem('userType')
 
     useEffect(() => {
-        console.log(localStorage.getItem('userName'))
         localStorage.setItem('sidebar', 0)
         /* The code is making a POST request to the '/api/courseList' endpoint with the specified
         headers and request body. The request body contains the username retrieved from the
@@ -27,7 +26,7 @@ export default function CourseList() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userName: localStorage.getItem("userName") }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), userType: localStorage.getItem("userType") }),
         })
             .then(response => response.json())
             .then(data => {

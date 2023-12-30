@@ -41,7 +41,7 @@ export default function Ass_Grading() {
         window.location.reload(true);
     }
     
-    console.log(localStorage.getItem('assignment_id'))
+    //console.log(localStorage.getItem('assignment_id'))
     useEffect(() => {
         fetch('/api/submission_list', {
             method: 'POST',
