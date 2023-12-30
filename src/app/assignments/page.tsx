@@ -64,6 +64,7 @@ export default function Assigments() {
                                 <div className="font-semibold items-center">
                                     {assignments.length + " "} assignments in this course
                                 </div>
+
                                 {(type == 'Teacher') &&
                                     <Link href={'/teacher_add_ass'}
                                         className="flex float-right font-semibold bg-zinc-100 border border-stone-300 hover:bg-green-300 p-2 rounded-lg ml-8 transition-colors duration-300 gap-4">
@@ -71,6 +72,7 @@ export default function Assigments() {
                                         Add assignment
                                     </Link>
                                 }
+                                
                             </div>
                             <div className="h-80">
                                 {currentAss.map(assignment => (type === "Student" && (
