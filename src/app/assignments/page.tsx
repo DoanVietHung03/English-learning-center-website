@@ -1,11 +1,10 @@
-/* eslint-disable react/jsx-key */
 'use client'
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
-import { useEffect, useState } from "react"
+import { SyntheticEvent, useEffect, useState } from "react"
 import moment from "moment"
 import IfileAdd from "@/components/icons/icon_file_add"
 import IfileDelete from "@/components/icons/icon_file_delete"
@@ -24,10 +23,21 @@ export default function Assigments() {
     const [assignments, setAssignment] = useState([])
     const router = useRouter();
 
+    var delete_assignment
+
     const handleActionClick = (link) => {
         router.push(link);
     };
 
+    async function handleDelete(ev: SyntheticEvent) {
+        ev.preventDefault()
+        const response = await fetch('/api/assignment', {
+            method: 'POST',
+            body: JSON.stringify({ assignment_id: delete_assignment, method: 'delete' }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        router.push('/assignments')
+    }
 
     useEffect(() => {
         fetch('/api/assignment', {
@@ -155,7 +165,7 @@ export default function Assigments() {
                                                 </div>
                                             </Link>
                                             <Popup
-                                                trigger={<button className="p-3 -mr-2">
+                                                trigger={<button className="p-3 -mr-2" >
                                                     <IfileDelete />
                                                 </button>}
                                                 position={"center"}
@@ -164,7 +174,7 @@ export default function Assigments() {
                                                     <div className="mt-4">
                                                         <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                         <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2">
+                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => {delete_assignment = assignment._id, handleDelete(ev)}}>
                                                                 Yes
                                                             </button>
                                                             <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2">
