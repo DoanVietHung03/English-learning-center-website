@@ -85,34 +85,21 @@ export default function Clone_Assignment() {
             <Header />
             <div className="flex">
                 <SideBar />
-                <div className="ml-14">
+                <div className="ml-14 w-2/3">
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
                         Assignments
                     </div>
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASS] aoe - Q.5 ClassRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem('course_name')}</div>
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded px-7">
                         <div className="mx-6 border-b border-stone-300 pb-2">
-                            <div className="grid grid-cols-2">
-                                <div className="flex items-center justify-start mt-4">
-                                    <Link href={"/teacher_add_ass"}>
-                                        <button className="rounded-tl rounded-bl border border-stone-300 bg-white hover:bg-blue-300 text-center text-black text-xs font-bold font-poppins leading-tight tracking-tight hover:text-white px-[60px] pb-3 pt-[10px] transition-colors duration-300">
-                                            Add
-                                        </button>
-                                    </Link>
-                                    <button className="rounded-tr rounded-br border border-stone-300 bg-blue-300 text-center text-black text-xs font-bold font-poppins leading-tight tracking-tight px-[60px] pb-3 pt-[10px]">
-                                        Clone
-                                    </button>
-                                </div>
-
-                                <div className="flex items-end justify-end">
-                                    <button onClick={handleFormSubmit}
-                                        className="bg-lime-400 text-white hover:bg-lime-200 hover:text-gray-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight transition-colors duration-300">
-                                        Clone
-                                    </button>
-                                </div>
+                            <div className="flex items-center justify-end pt-4">                            
+                                <button onClick={handleFormSubmit}
+                                    className="bg-lime-400 text-white hover:bg-lime-200 hover:text-gray-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight transition-colors duration-300">
+                                    Clone
+                                </button>                     
                             </div>
                         </div>
 

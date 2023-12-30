@@ -54,11 +54,13 @@ export default function CourseTime() {
                                     <Icalendar />
                                     <p className="ml-2">Timetable</p>
                                 </button>
-                                <button className="flex items-center justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg ml-8
-                                    transition-colors duration-300">
-                                    <Ibook />
-                                    <Link href={'/assignments'} className="ml-2">Assignments</Link>
-                                </button>
+                                <Link href={'/assignments'}>
+                                    <button className="flex items-center justify-center bg-zinc-100 border border-stone-300 hover:bg-blue-300 p-2 rounded-lg ml-8
+                                        transition-colors duration-300">
+                                        <Ibook />
+                                        <div className="ml-2">Assignments</div>
+                                    </button>
+                                </Link>
                             </div>
 
                             <div className="flex p-4 justify-between">

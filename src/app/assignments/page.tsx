@@ -7,8 +7,15 @@ import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
 import { useEffect, useState } from "react"
 import moment from "moment"
-import IcirclePlus from "@/components/icons/circlePlus"
+import IfileAdd from "@/components/icons/icon_file_add"
+import IfileDelete from "@/components/icons/icon_file_delete"
+import IfileClone from "@/components/icons/icon_file_clone"
 import Pagination from '@mui/material/Pagination';
+import Box from "@mui/material/Box";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import { useRouter } from "next/navigation";
 
 export default function Assigments() {
     const type = localStorage.getItem('userType')
@@ -16,6 +23,12 @@ export default function Assigments() {
 
     console.log(localStorage.getItem('userType'))
     console.log(localStorage.getItem('course_id'))
+
+    const router = useRouter();
+
+    const handleActionClick = (link) => {
+        router.push(link);
+    };
 
 
     useEffect(() => {
@@ -38,6 +51,12 @@ export default function Assigments() {
     const coursePerPage = 4; // Adjust as needed
     const currentAss = assignments.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
 
+    const actions = [
+        { icon: <IfileAdd />, name: "Add Assignment", link: '/teacher_add_ass' },
+        { icon: <IfileDelete />, name: "Delete Assignment", link: '/' },
+        { icon: <IfileClone />, name: "Clone Assignment", link: '/teacher_clone_ass' },
+    ];
+
     return (
         <>
             <Header />
@@ -55,31 +74,39 @@ export default function Assigments() {
 
                     <div className="bg-white mt-2 pb-8 rounded">
                         <div className="flex-col ml-6 mr-6">
-                            <div className="flex items-center p-4 border-b border-black mb-5">
-                                <button className="flex items-center font-poppins justify-center border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
-                                    <Icalendar />
-                                    <Link href={'/course_Time'} className="ml-2">Timetable</Link>
-                                </button>
+                            <div className="flex items-center p-4 border-b border-black">
+                                <Link href={'/course_Time'}>
+                                    <button className="flex items-center font-poppins justify-center border border-stone-300 hover:bg-blue-300 p-2 rounded-lg">
+                                        <Icalendar />
+                                        <div className="ml-2">Timetable</div>
+                                    </button>   
+                                </Link>
                                 <button className="flex items-center font-poppins justify-center  border border-stone-300 bg-blue-300 p-2 rounded-lg ml-8">
                                     <Ibook />
                                     <p className="ml-2">Assignments</p>
-                                </button>
-                            </div>
-                            <div className="flex justify-between pb-3 px-3 border-b-2 border-gray-300">
-                                <div className="font-semibold items-center">
-                                    {assignments.length + " "} assignments in this course
-                                </div>
-
+                                </button>   
                                 {(type == 'Teacher') &&
-                                    <Link href={'/teacher_add_ass'}
-                                        className="flex float-right font-semibold bg-zinc-100 border border-stone-300 hover:bg-green-300 p-2 rounded-lg ml-8 transition-colors duration-300 gap-4">
-                                        <IcirclePlus className="w-5 fill-black" />
-                                        Add assignment
-                                    </Link>
+                                    <Box sx={{transform: "translateZ(0px)", flexGrow: 1 }}>
+                                        <SpeedDial
+                                            ariaLabel="SpeedDial basic example"
+                                            sx={{ transform: "translateZ(0px)", flexGrow: 1 }}
+                                            icon={<SpeedDialIcon />}
+                                            direction="left"
+                                            FabProps={{ size: "small" }}
+                                        >
+                                            {actions.map((action) => (                                          
+                                                    <SpeedDialAction
+                                                        key={action.name}
+                                                        icon={action.icon}
+                                                        tooltipTitle={action.name}
+                                                        onClick={() => handleActionClick(action.link)}
+                                                    />
+                                            ))}
+                                        </SpeedDial>
+                                    </Box>
                                 }
-                                
                             </div>
-                            <div className="h-80">
+                            <div className="h-72">
                                 {currentAss.map(assignment => (type === "Student" && (
                                     <Link href={'/assignment_submit'}
                                         onClick={() => {

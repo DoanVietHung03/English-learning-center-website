@@ -4,7 +4,6 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
-import Iimage from "@/components/icons/icon_image"
 import React, { SyntheticEvent, useEffect, useState, ReactElement } from "react"
 import Image from "next/image"
 import Select from "react-select";
@@ -104,7 +103,7 @@ export default function Chat() {
                                 <div>
                                     <div className="flex items-center pl-7 pt-4">
                                         <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                        <p className="text-black text-sm font-semibold font-['Poppins']">{mes_receive.receiver_name}</p>
+                                        <p className="text-black text-sm font-semibold font-['Poppins']">{mes_receive.sender_name}</p>
                                     </div>
 
                                     <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
@@ -219,13 +218,13 @@ export default function Chat() {
                             <div className="border-r-2 border-black mt-6 ml-9">
                                 <button
                                     onClick={() => handleButtonClick(1)}
-                                    className={`bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 1 ? 'bg-sky-500' : ''}`}>
+                                    className={`hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 1 ? 'bg-sky-400' : ''}`}>
                                     Chat received
                                 </button>
 
                                 <button
                                     onClick={() => handleButtonClick(2)}
-                                    className={`ml-6 bg-white hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-sky-500' : ''}`}>
+                                    className={`ml-6 hover:bg-sky-200 text-black hover:text-white text-base font-medium px-4 py-2 rounded-lg border border-zinc-300 ${selectedButton === 2 ? 'bg-sky-400' : ''}`}>
                                     Chat sent
                                 </button>
 
