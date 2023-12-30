@@ -4,7 +4,7 @@ import Header from "@/components/layout/header"
 import Link from "next/link"
 import Icalendar from "@/components/icons/icon_cal"
 import Ibook from "@/components/icons/icon_book"
-import { SyntheticEvent, useEffect, useState } from "react"
+import { SyntheticEvent, useEffect, useState, useRef } from "react"
 import moment from "moment"
 import IfileAdd from "@/components/icons/icon_file_add"
 import IfileDelete from "@/components/icons/icon_file_delete"
@@ -23,7 +23,7 @@ export default function Assigments() {
     const [assignments, setAssignment] = useState([])
     const router = useRouter();
 
-    var delete_assignment
+    var delete_assignment: any
     const handleActionClick = (link) => {
         router.push(link);
     };
@@ -61,6 +61,8 @@ export default function Assigments() {
         { icon: <IfileAdd />, name: "Add Assignment", link: '/teacher_add_ass' },
         { icon: <IfileClone />, name: "Clone Assignment", link: '/teacher_clone_ass' },
     ];
+
+    const popupRef = useRef();
 
     return (
         <>
@@ -112,28 +114,30 @@ export default function Assigments() {
                             </div>
                             <div className="h-72">
                                 {currentAss.map(assignment => (type === "Student" && (
-                                    <Link href={'/assignment_submit'}
-                                        onClick={() => {
-                                            localStorage.setItem("assignment_id", assignment._id),
-                                                console.log(assignment.status)
-                                        }}
-                                        className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
-                                        <div className=" p-2 flex items-center ">
-                                            <Ibook />
-                                            <div className="ml-4 font-poppins">
-                                                {assignment.title} - {assignment.skill}
+                                    <>
+                                        <Link href={'/assignment_submit'}
+                                            onClick={() => {
+                                                localStorage.setItem("assignment_id", assignment._id),
+                                                    console.log(assignment.status)
+                                            }}
+                                            className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
+                                            <div className=" p-2 flex items-center ">
+                                                <Ibook />
+                                                <div className="ml-4 font-poppins">
+                                                    {assignment.title} - {assignment.skill}
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div className=" p-2 flex items-center justify-end">
+                                            <div className=" p-2 flex items-center justify-end">
 
-                                            <div className="ml-1 font-poppins">
-                                                {(assignment.status === 'null' ? <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('MM/DD/YYYY')}</div> :
-                                                    (assignment.status === 'Marked' ? <div className="font-poppins font-medium text-green-400">{assignment.status}</div> :
-                                                        <div className="font-poppins font-medium text-red-400">{assignment.status}</div>))}
+                                                <div className="ml-1 font-poppins">
+                                                    {(assignment.status === 'null' ? <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('MM/DD/YYYY')}</div> :
+                                                        (assignment.status === 'Marked' ? <div className="font-poppins font-medium text-green-400">{assignment.status}</div> :
+                                                            <div className="font-poppins font-medium text-red-400">{assignment.status}</div>))}
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Link>
+                                        </Link>
+                                    </>
                                 )))}
 
                                 {currentAss.map(assignment => (type === "Teacher" && (
@@ -163,19 +167,19 @@ export default function Assigments() {
                                                 </div>
                                             </Link>
                                             <Popup
+                                                ref={popupRef}
                                                 trigger={<button className="p-3 -mr-2" >
                                                     <IfileDelete />
-                                                </button>}
-                                                position={"center"}
-                                                contentStyle={{ margin: '0 0 0 10px' }}>
+                                                </button>}>
                                                 <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
                                                     <div className="mt-4">
                                                         <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                         <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => {delete_assignment = assignment._id, handleDelete(ev)}}>
+                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_assignment = assignment._id, handleDelete(ev) }}>
                                                                 Yes
                                                             </button>
-                                                            <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2">
+                                                            <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
+                                                                onClick={() => {popupRef.current.close()}}>
                                                                 No
                                                             </button>
                                                         </div>
@@ -187,14 +191,16 @@ export default function Assigments() {
                                 )))}
 
                                 {currentAss.map(assignment => (type === "Admin" && (
-                                    <div className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
-                                        <div className=" p-2 flex items-center ">
-                                            <Ibook />
-                                            <div className="ml-4 font-poppins">
-                                                {assignment.title} - {assignment.skill}
+                                    <>
+                                        <div className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
+                                            <div className=" p-2 flex items-center ">
+                                                <Ibook />
+                                                <div className="ml-4 font-poppins">
+                                                    {assignment.title} - {assignment.skill}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </>
                                 )))}
                             </div>
                             <div className="flex justify-center">
