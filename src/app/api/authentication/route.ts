@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import { User } from "@/models/user";
+import { connectToDatabase } from '../../../connection';
 
 export async function POST(req) {
     try {
@@ -7,9 +7,8 @@ export async function POST(req) {
         const phone = body.phone;
         const password = body.password;
 
-        // Kết nối Cơ sở dữ liệu (nên đặt ở một nơi khác, không nên đặt trong mỗi request)
-        await mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
-
+        // Kết nối đến MongoDB
+        connectToDatabase();
         const userCheck = await User.findOne({ phone });
 
         if (!userCheck) {

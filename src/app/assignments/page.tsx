@@ -20,10 +20,6 @@ import { useRouter } from "next/navigation";
 export default function Assigments() {
     const type = localStorage.getItem('userType')
     const [assignments, setAssignment] = useState([])
-
-    console.log(localStorage.getItem('userType'))
-    console.log(localStorage.getItem('course_id'))
-
     const router = useRouter();
 
     const handleActionClick = (link) => {
@@ -32,15 +28,14 @@ export default function Assigments() {
 
 
     useEffect(() => {
-        fetch('/api/assignment_list', {
+        fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('course_id'), userType: localStorage.getItem('userType'), userID: localStorage.getItem('userName') }),
+            body: JSON.stringify({ id: localStorage.getItem('course_id'), userType: localStorage.getItem('userType'), userID: localStorage.getItem('userName'), method: 'getList' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())
             .then(data => {
                 setAssignment(data)
-                console.log(data)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -48,7 +43,7 @@ export default function Assigments() {
     }, []);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const coursePerPage = 4; // Adjust as needed
+    const coursePerPage = 4; 
     const currentAss = assignments.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
 
     const actions = [

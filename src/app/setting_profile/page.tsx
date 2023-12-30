@@ -13,24 +13,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import * as React from 'react'
 export default function Profile() {
-    // useEffect(() => {
-    //     let showPassword = false;
-    //     const passwordInput = document.getElementById('myNewPassword');
-    //     const toggleButton = document.getElementById('togglePasswordButton');
-    //     const togglePasswordVisibility = () => {
-    //       showPassword = !showPassword;
-    //       passwordInput.type = showPassword ? 'text' : 'password';
-    //     };
-    //     if (toggleButton) {
-    //       toggleButton.addEventListener('click', togglePasswordVisibility);
-    //     }
-    //     // Hủy đăng ký sự kiện khi component unmount
-    //     return () => {
-    //       if (toggleButton) {
-    //         toggleButton.removeEventListener('click', togglePasswordVisibility);
-    //       }
-    //     };
-    //   }, []);
     const [user, setUser] = useState({})
     const [password, setPassword] = useState('')
     const [errorPass, setErrorPass] = useState(false);
@@ -48,20 +30,12 @@ export default function Profile() {
         })
     }, []);
 
-
-    const handleCheckPass = (ev: SyntheticEvent) => {
-        console.log(ev.value)
-        
-    };
-
     const router = useRouter();
     const [birth, setBirth] = React.useState<dayjs | null>(dayjs(user.birth))
-    console.log(birth)
     const [error, setError] = useState(false)
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         localStorage.setItem('userFname', user.name)
-        console.log(user)
         if(errorPass === false){
             setError(false)
             const response = await fetch('api/update_profile', {

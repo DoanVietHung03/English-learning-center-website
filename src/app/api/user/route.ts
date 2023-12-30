@@ -1,9 +1,10 @@
 import { User } from "@/models/user"
-import mongoose from "mongoose"
+import { connectToDatabase } from '../../../connection';
+
 
 export async function POST(req: { json: () => any }) {
     const body = await req.json()
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
+    connectToDatabase();
     const pass = body.password;
     if ((!pass?.length || pass.length < 5)) {
         return new Response(
@@ -17,7 +18,7 @@ export async function POST(req: { json: () => any }) {
         phone: body.phone,
         password: body.password,
         name: body.name,
-        type: body.type, // Đảm bảo giữ nguyên giá trị từ request body
+        type: body.type, 
         email: null,
         birth: null,
         address: null,
@@ -26,7 +27,7 @@ export async function POST(req: { json: () => any }) {
 }
 
 export async function GET() {
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
+    connectToDatabase();
     const teachers = await User.find({ type: 'Teacher' });
     const students = await User.find({ type: 'Student' });
     return Response.json({ teachers, students })

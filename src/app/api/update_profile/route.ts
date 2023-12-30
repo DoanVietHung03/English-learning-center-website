@@ -1,13 +1,11 @@
-import mongoose from "mongoose"
 import { User } from "@/models/user"
-//import { Profile } from "@/models/profile";
+import { connectToDatabase } from '../../../connection';
 
-//create Profile then set name and pass in User == info in profile
 export async function POST(req: { json: () => any }) {
     try {
         const body = await req.json();
         var updatedInfo
-        mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
+        connectToDatabase();
         if(body.userPassword != ''){        
             updatedInfo = {
                 name: body.userName,
@@ -25,7 +23,6 @@ export async function POST(req: { json: () => any }) {
                 address: body.userAddress
             };
         }
-        console.log(updatedInfo)
         const submissionEdit = await User.updateOne({ phone: body.userID }, { $set: updatedInfo });
         return Response.json(submissionEdit);
     } catch (error) {

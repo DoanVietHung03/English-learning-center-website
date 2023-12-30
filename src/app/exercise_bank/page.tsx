@@ -26,7 +26,7 @@ export default function Exercise_bank() {
 
     useEffect(() => {
         localStorage.setItem('sidebar', 1)
-        fetch('/api/exercisesBank')
+        fetch('/api/exercise')
             .then(res => res.json())
             .then(data => {
                 setExercises(data)
@@ -35,18 +35,16 @@ export default function Exercise_bank() {
                 console.error('Error fetching data:', error);
             });
 
-        fetch('/api/exDone_list', {
+        fetch('/api/exercise', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("userName") }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), method: 'getDoneList'}),
         })
             .then(res => res.json())
             .then(data => {
                 setExerciseList(data)
-                console.log(data)
-                //console.log(exercises)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);

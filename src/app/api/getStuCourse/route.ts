@@ -8,8 +8,9 @@ import { stringify } from "querystring";
 export async function POST(req: { json: () => any }) {
     try {
         const body = await req.json();
-        var course;
+        
         mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
+        var course;
         course = await Course.findOne({ _id: body.listStuCourseID })
 
         const studentList = course.student_id;

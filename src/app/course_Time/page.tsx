@@ -29,12 +29,10 @@ export default function CourseTime() {
                 setSessions(data.sessions)
                 setAttendances(data.attendance)
                 setTeacher(data.teacherName.name)
-                //console.log("123", data.attendance)
-                // sessions = data.sessions
             })
             .catch(error => console.error('Error:', error));
     }, []);
-    console.log(attendances)
+
     return (
         <>
             <Header />

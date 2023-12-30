@@ -21,21 +21,17 @@ export default function CourseList() {
 
     useEffect(() => {
         localStorage.setItem('sidebar', 0)
-        /* The code is making a POST request to the '/api/courseList' endpoint with the specified
-        headers and request body. The request body contains the username retrieved from the
-        localStorage. */
-        fetch('/api/courseList', {
+
+        fetch('/api/course', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("userName"), userType: localStorage.getItem("userType") }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), userType: localStorage.getItem("userType"), method: 'getList' }),
         })
             .then(response => response.json())
             .then(data => {
-                // Hiển thị danh sách khóa học trong giao diện
                 setCourses(data)
-                console.log(data)
                 if (courses == null)
                     setEmptyCourse(true)
                 else

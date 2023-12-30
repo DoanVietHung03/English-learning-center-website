@@ -18,12 +18,11 @@ export default function ExBank() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("exerciseID") }),
+            body: JSON.stringify({ id: localStorage.getItem("exerciseID"), method: 'getInfo'}),
         })
             .then(response => response.json())
             .then(data => {
                 setExercise(data)
-                //console.log(data)
             })
             .catch(error => console.error('Error:', error));
         fetch('/api/exercise_progress', {
