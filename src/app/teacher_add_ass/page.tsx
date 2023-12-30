@@ -49,7 +49,7 @@ export default function Add_Ass() {
                         Assignments
                     </div>
                     <div className="mt-4 bg-white rounded-lg">
-                        <div className="p-2 ml-2 font-poppins text-xs">[INTER_CLASS] aoe - Q.5 ClassRoom IELTS 5.5 6.5 | 25/09/2023 Writing, Speaking, Writing Task 1, Writing Task 2</div>
+                        <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem('course_name')}</div>
                     </div>
 
                     <div className="bg-white pb-8 pt-8 rounded px-7 mt-6">
