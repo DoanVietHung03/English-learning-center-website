@@ -79,7 +79,7 @@ export default function Assigments() {
                                     <Link href={'/assignment_submit'}
                                         onClick={() => {
                                             localStorage.setItem("assignment_id", assignment._id),
-                                            console.log(assignment.status)
+                                                console.log(assignment.status)
                                         }}
                                         className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
                                         <div className=" p-2 flex items-center ">
@@ -102,21 +102,26 @@ export default function Assigments() {
 
                                 {assignments.map(assignment => (type === "Teacher" && (
                                     <Link href={'/teacher_grading'} onClick={() => { localStorage.setItem('assignment_id', assignment._id) }}
-                                        className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
+                                        className="mt-10 flex items-center justify-between border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
                                         <div className=" p-2 flex items-center ">
                                             <Ibook />
                                             <div className="ml-4 font-poppins">
                                                 {assignment.title} - {assignment.skill}
                                             </div>
                                         </div>
-
-                                        <div className=" p-2 flex items-center justify-end">
-                                            <div className="font-poppins font-medium">
-                                                Deadline:
-                                            </div>
-                                            <div className="ml-1 font-poppins">
-                                                {moment.utc(assignment.deadline).format('MM/DD/YYYY')}
-                                            </div>
+                                        <div className="flex items-center gap-3">
+                                            {assignment.numSub != localStorage.getItem('course_student') ? 
+                                                <p className="text-red-400 leading-tight tracking-tight font-medium text-base mr-2">Submitted: {assignment.numSub}/{localStorage.getItem('course_student')}</p>
+                                                : 
+                                                <p className="text-green-400 leading-tight tracking-tight font-medium text-base mr-2">Submitted: {assignment.numSub}/{localStorage.getItem('course_student')}</p>
+                                            }                                
+                                            {((assignment.graded === assignment.numSub) && (assignment.numSub !== 0)) ?
+                                                <div className="flex items-center mr-4">
+                                                    <p className="text-green-400 leading-tight tracking-tight font-medium text-base">Fully marked</p>
+                                                </div> :
+                                                <div className="flex items-center mr-5">                            
+                                                    <p className="text-red-400 leading-tight tracking-tight font-medium text-base">Marked: {assignment.graded}/{assignment.numSub}</p>                                                   
+                                                </div>}
                                         </div>
                                     </Link>
                                 )))}
@@ -129,14 +134,11 @@ export default function Assigments() {
                                                 {assignment.title} - {assignment.skill}
                                             </div>
                                         </div>
-
-                                        
                                     </div>
                                 )))}
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div >
         </>

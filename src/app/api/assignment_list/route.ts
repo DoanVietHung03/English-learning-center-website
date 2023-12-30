@@ -40,9 +40,9 @@ export async function POST(req: { json: () => any }) {
           title: assignment.title,
           course_id: assignment.course_id,
           attachedFile: assignment.attachedFile,
-          graded: assignment.graded,
-          numSub: numSubList[i],
-          status: statusList[i], 
+          graded: assignment.graded, //da cham
+          numSub: numSubList[i],//so luong bai da nop
+          status: statusList[i],
         };
     });
     return Response.json(combinedAssignments)
