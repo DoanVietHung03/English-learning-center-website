@@ -9,10 +9,13 @@ export async function POST(req: { json: () => any }) {
     //const listSubmission = await Submission.find({student_id: body.userID}, {assignment_id: 1, status:1, _id: 0})
     var submission
     var statusList = []
+    var numSubList = []
+    var subList
+    var numSub
     if(body.userType == "Student"){
         for (var i =0; i < listAssignment.length; i++){
             submission = await Submission.findOne({student_id: body.userID, assignment_id: listAssignment[i]._id}, {status: 1, _id: 0})
-            if(submission != null){
+            if(submission !== null){
                 statusList.push(submission.status)
             }
             else{
@@ -20,7 +23,14 @@ export async function POST(req: { json: () => any }) {
             }
         } 
     }
-
+    if(body.userType == "Teacher"){
+        for (var i =0; i < listAssignment.length; i++){
+            subList = await Submission.find({assignment_id: listAssignment[i]._id}, {_id: 1})
+            numSubList.push(subList.length)
+        }
+       
+    }
+    //console.log(numSubList)
     var combinedAssignments = listAssignment.map((assignment,i) => {
         return {
           _id: assignment._id,
@@ -31,9 +41,9 @@ export async function POST(req: { json: () => any }) {
           course_id: assignment.course_id,
           attachedFile: assignment.attachedFile,
           graded: assignment.graded,
+          numSub: numSubList[i],
           status: statusList[i], 
         };
     });
-
     return Response.json(combinedAssignments)
 }
