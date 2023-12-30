@@ -101,7 +101,7 @@ export default function Clone_Assignment() {
                         </div>
 
                         <div className="bg-zinc-100 rounded-lg border border-neutral-400 pb-6 mt-4">
-                            <div className="ml-14 py-10">
+                            <div className="ml-14 pt-4">
                                 <div className="flex flex-col justify-center items-center">
                                     <p className="text-black text-base font-medium leading-tight tracking-tigh mb-2">Choose course</p>
                                     <Select options={optionCourses} onChange={handleChangeCourse} className="w-3/4" />

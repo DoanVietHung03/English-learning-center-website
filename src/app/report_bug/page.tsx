@@ -164,22 +164,22 @@ export default function RP() {
                         </div>
 
                         <div className="mt-12 mx-10">
-                            <div className="grid grid-cols-6 items-center">
-                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">ID</p>
-                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Title</p>
-                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Type</p>
-                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Date Created</p>
-                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Date Completed</p>
-                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Status</p>
+                            <div className="grid grid-cols-6 items-center text-center">
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">ID</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Title</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Type</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Date Created</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Date Completed</p>
+                                <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Status</p>
                             </div>
                             <div className="h-56">
                                 {currentRP.map((rep, index) => (
                                     ((checkStatus[index] == status || status == '') &&
-                                        <div key={index} className="grid grid-cols-6 items-center">
-                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                        <div key={index} className="grid grid-cols-6 items-center text-center">
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
                                                 <div>{rep.userID}</div>
                                             </div>
-                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
                                                 <Tooltip disableFocusListener disableTouchListener title='Click to see full'>
                                                     <Grid item>
                                                         <Popup trigger={<button className="hover:underline">{rep.title}</button>} position={"right bottom"}>
@@ -207,17 +207,17 @@ export default function RP() {
                                                     </Grid>
                                                 </Tooltip>
                                             </div>
-                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
                                                 <div>{rep.type}</div>
                                             </div>
-                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <div className="ml-6">{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div>{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
                                             </div>
-                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <div className="ml-8">{(completionDates[index] === null ? <div className="ml-2">Not yet</div> : moment.utc(completionDates[index]).format('MM/DD/YYYY'))}</div>
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div>{(completionDates[index] === null ? <div>Not yet</div> : moment.utc(completionDates[index]).format('MM/DD/YYYY'))}</div>
                                             </div>
-                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
-                                                <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium -ml-2">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{checkStatus[index]}</div>)}</div>
+                                            <div className="flex items-center justify-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
+                                                <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium w-fit">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium w-fit">{checkStatus[index]}</div>)}</div>
                                             </div>
                                         </div>)))}
                             </div>
