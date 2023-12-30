@@ -46,12 +46,8 @@ export default function Chat() {
         })
             .then(res => res.json())
             .then(data => {
-                // setTeachers(data.teachers)
-                // setStudents(data.students)
                 SetMessageSent(data.combinedSentMessages)
                 SetMessageReceived(data.combinedReceivedMessages)
-                console.log(data.combinedSentMessages)
-                console.log(data.combinedReceivedMessages)
             })
             .catch(error => console.error('Error:', error));
 
@@ -65,7 +61,6 @@ export default function Chat() {
 
     const allUsers = [...teachers, ...students];
     const filteredUsers = allUsers.filter(user => user.phone !== localStorage.getItem("userName"));
-    console.log(filteredUsers)
 
     const optionReceivers = filteredUsers.map(
         function (user) {

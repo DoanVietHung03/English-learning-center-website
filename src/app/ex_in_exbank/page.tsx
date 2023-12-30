@@ -23,7 +23,6 @@ export default function ExBank() {
             .then(response => response.json())
             .then(data => {
                 setExercise(data)
-                //console.log(data)
             })
             .catch(error => console.error('Error:', error));
         fetch('/api/exercise_progress', {

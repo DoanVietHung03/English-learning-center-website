@@ -1,17 +1,16 @@
 import { Assignment } from "@/models/assignment"
 import { Submission } from "@/models/submission"
-import mongoose from "mongoose"
+import { connectToDatabase } from '../../../connection';
+
 
 export async function POST(req: { json: () => any }) {
     const body = await req.json()
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
+    connectToDatabase();
     var listAssignment = await Assignment.find({course_id: body.id})
-    //const listSubmission = await Submission.find({student_id: body.userID}, {assignment_id: 1, status:1, _id: 0})
     var submission
     var statusList = []
     var numSubList = []
     var subList
-    var numSub
     if(body.userType == "Student"){
         for (var i =0; i < listAssignment.length; i++){
             submission = await Submission.findOne({student_id: body.userID, assignment_id: listAssignment[i]._id}, {status: 1, _id: 0})
@@ -30,7 +29,6 @@ export async function POST(req: { json: () => any }) {
         }
        
     }
-    //console.log(numSubList)
     var combinedAssignments = listAssignment.map((assignment,i) => {
         return {
           _id: assignment._id,

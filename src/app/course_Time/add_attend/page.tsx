@@ -23,22 +23,21 @@ export default function CreateAttend() {
                 console.error('Error fetching data:', error);
             });
     }, []);
-  //  console.log("1123142", listStudent)
+
     const handleDelete = (index) => {
         // Tạo một bản sao mới của mảng và loại bỏ phần tử tại chỉ mục index
         const updatedArray = [...listStudent.slice(0, index), ...listStudent.slice(index + 1)];
 
         // Cập nhật state với mảng mới
         setListStudent(updatedArray);
-        console.log(listStudent)
     };
     const router = useRouter();
+
     async function handleSubmit(ev: SyntheticEvent) {
         const listStuCreate = listStudent.map(function (student) {
             return student.phone
         })
-    //    console.log(listStuCreate)
-        // console.lo
+
         ev.preventDefault()
         const response = await fetch('/api/createAttend', {
             method: 'POST',
@@ -46,7 +45,8 @@ export default function CreateAttend() {
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/course_Time')
-    }console.log(localStorage.getItem('session_id'))
+    }
+    
     return (
         <>
             <Header />

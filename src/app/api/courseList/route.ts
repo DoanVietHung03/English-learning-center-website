@@ -1,12 +1,12 @@
 import { Course } from "@/models/course"
 import { User } from "@/models/user"
-import mongoose from "mongoose"
+import { connectToDatabase } from '../../../connection';
 
 export async function POST(req: { json: () => any }) {
   try {
     const body = await req.json();
     var courses;
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
+    connectToDatabase();
     if (body.userType == "Teacher") {
       courses = await Course.find({ teacher_id: body.id })
     }
@@ -15,28 +15,14 @@ export async function POST(req: { json: () => any }) {
     }
     else {
       courses = await Course.find()
-      // courses = courses.map(course => {
-      //   if (course.student_id.includes(body.userName))
-      //     return course
-      // })
       courses = courses
       .filter(course => course.student_id.includes(body.id))
       .filter(course => course !== null);
-      //console.log(courses)
-
-      // for (var i = 0; i < courses.length; i++) {
-      //   if (courses[i] == null)
-      //     courses.splice(i)
-      // }
     }
-    console.log(courses)
-
     var data = []
     var teacherName
     for (var i = 0; i < courses.length; i++) {
-      //console.log(courses[i].teacher_id)
       teacherName = await User.findOne({phone: courses[i].teacher_id}, {name: 1, _id: 0})
-      //console.log(teacherName.name)
       data.push(teacherName.name)
     }
 
@@ -53,7 +39,6 @@ export async function POST(req: { json: () => any }) {
         teacher_name: data[i], 
       };
     });
-    //console.log(combinedCourses)
     return Response.json(combinedCourses);
   } catch (error) {
     return new Response(

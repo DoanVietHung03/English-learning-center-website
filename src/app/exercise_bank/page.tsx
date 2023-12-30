@@ -45,8 +45,6 @@ export default function Exercise_bank() {
             .then(res => res.json())
             .then(data => {
                 setExerciseList(data)
-                console.log(data)
-                //console.log(exercises)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);

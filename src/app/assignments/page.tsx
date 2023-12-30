@@ -13,10 +13,6 @@ export default function Assigments() {
     const type = localStorage.getItem('userType')
     const [assignments, setAssignment] = useState([])
 
-    console.log(localStorage.getItem('userType'))
-    console.log(localStorage.getItem('course_id'))
-
-
     useEffect(() => {
         fetch('/api/assignment_list', {
             method: 'POST',
@@ -26,14 +22,12 @@ export default function Assigments() {
             .then(res => res.json())
             .then(data => {
                 setAssignment(data)
-                console.log(data)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []);
 
-    //console.log(assignments)
 
     return (
         <>

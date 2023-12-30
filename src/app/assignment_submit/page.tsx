@@ -60,7 +60,6 @@ export default function Do_Assignment() {
             .then(res => res.json())
             .then(data => {
                 SetAssignment(data)
-                //console.log(data)
             })
 
         fetch('/api/submission_info', {
@@ -71,14 +70,11 @@ export default function Do_Assignment() {
             .then(res => res.json())
             .then(data => {
                 setSubmission(data)
-                console.log(data)
             })
 
     }, []);
 
     async function handleFormSubmit(ev: SyntheticEvent) {
-        console.log(localStorage.getItem("userName"))
-        console.log(localStorage.getItem("assignment_id"))
         ev.preventDefault()
         const response = await fetch('/api/submission', {
             method: 'POST',

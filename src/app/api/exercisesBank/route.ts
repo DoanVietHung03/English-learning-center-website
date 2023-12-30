@@ -1,9 +1,10 @@
 import { Exercise } from "@/models/exercise"
-import mongoose from "mongoose"
+import { connectToDatabase } from '../../../connection';
+
 
 export async function POST(req: { json: () => any }) {
     const body = await req.json()
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
+    connectToDatabase();
     const createdExercise = await Exercise.create({
         title: body.title,
         content: body.content,
@@ -17,7 +18,7 @@ export async function POST(req: { json: () => any }) {
 }
 
 export async function GET() {
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management");
+    connectToDatabase();
     const exbank = await Exercise.find({},{title: 1, module: 1, skill: 1});
     return Response.json(exbank)
 }

@@ -1,11 +1,11 @@
 import { Message } from "@/models/message"
-import mongoose from "mongoose"
-
+import { connectToDatabase } from '../../../connection';
 
 export async function POST(req: { json: () => any }) {
     const body = await req.json()
     const date = new Date()
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
+    connectToDatabase();
+
     const createdMessage = await Message.create({
         sender: body.sender,
         receiver: body.receiver,

@@ -16,9 +16,6 @@ export default function Login() {
     const [loginProgress, setloginProgress] = useState(true);
     const [error, setError] = useState(false);
     const [courses, setCourses] = useState([])
-    // const [checkUser, setCheck] = useState(Boolean)
-    // const [userType, setType] = useState('')
-
 
     const router = useRouter();
     async function handleFormSubmit(ev: SyntheticEvent) {
@@ -26,7 +23,6 @@ export default function Login() {
         var checkUser
         var userType
         var name
-        // try {
         await fetch('/api/authentication', {
             method: 'POST',
             headers: {
@@ -43,15 +39,12 @@ export default function Login() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             })
-        console.log(userType)
 
         if (checkUser) {
             localStorage.setItem('userName', phone)
             localStorage.setItem("userType", userType)
             localStorage.setItem("userFname", name)
-            console.log(localStorage.getItem("userType"))
             router.push('/courseList')
-            console.log(courses)
         }
         else {
             setError(true);

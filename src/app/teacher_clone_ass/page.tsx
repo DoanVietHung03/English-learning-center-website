@@ -75,10 +75,6 @@ export default function Clone_Assignment() {
             });
     };
 
-    // const handleChangeAssignment = (ev: SyntheticEvent) => {
-    //     setAssignmentChoosed(ev.value)
-    //     console.log(ev.value)
-    // };
 
     return (
         <>

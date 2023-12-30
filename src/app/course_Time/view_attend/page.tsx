@@ -7,7 +7,7 @@ import { useState, useEffect } from "react"
 
 export default function ViewAttend() {
     const [attends, setAttend] = useState([]);
-    //console.log(localStorage.getItem('session_id'))
+
 
     useEffect(() => {
         fetch('/api/attendance', {
@@ -18,7 +18,6 @@ export default function ViewAttend() {
             .then(res => res.json())
             .then(data => {
                 setAttend(data.studentList)
-                //console.log(data.studentList)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);

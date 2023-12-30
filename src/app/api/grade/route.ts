@@ -1,10 +1,10 @@
 import { Submission } from "@/models/submission"
 import { Assignment } from "@/models/assignment"
-import mongoose from "mongoose"
+import { connectToDatabase } from '../../../connection';
+
 
 export async function POST(req: { json: () => any }) {
     const body = await req.json()
-    //console.log(body)
     var status
     if(body.grade !== null){
         status = "Marked"
@@ -12,8 +12,7 @@ export async function POST(req: { json: () => any }) {
     else{
         status = "Pending"
     }
-    mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management")
-    //const IdAssignmentUpDate = new ObjectId('yourObjectId');
+    connectToDatabase();
     const updatedGrade = {
         grade: body.grade,
         comment: body.comment,

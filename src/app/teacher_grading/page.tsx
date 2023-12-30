@@ -15,10 +15,8 @@ export default function Ass_Grading() {
     const [commentContent, setCommentContent] = useState<ReactElement | any | string>('')
     const [gradeContent, setGradeContent] = useState<ReactElement | any | string>('')
     const [grade, setGrade] = useState('')
-    const [submission, setSubmission] = useState('')
 
 
-    console.log(localStorage.getItem('assignment_id'))
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
@@ -40,8 +38,7 @@ export default function Ass_Grading() {
         })
         window.location.reload(true);
     }
-    
-    //console.log(localStorage.getItem('assignment_id'))
+
     useEffect(() => {
         fetch('/api/submission_list', {
             method: 'POST',
@@ -51,7 +48,6 @@ export default function Ass_Grading() {
             .then(res => res.json())
             .then(data => {
                 setSubmissions(data)
-                console.log(data)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);

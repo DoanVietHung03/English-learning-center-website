@@ -38,7 +38,6 @@ export default function Register() {
     }, [countdown]);
     const handleChange = (ev) => {
         setType(ev.value);
-        console.log(type);
     };
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
