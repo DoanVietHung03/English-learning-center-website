@@ -1,4 +1,5 @@
 "use client"
+
 import Header from "@/components/layout/header";
 import SideBar from "@/components/layout/sideBar";
 import CourseInfo from "@/components/layout/courseInfo";
@@ -10,6 +11,8 @@ import Itarget from "@/components/icons/icon_target";
 import Imenu from "@/components/icons/icon_menu";
 import Icalendar from "@/components/icons/icon_cal";
 import moment from 'moment';
+import Pagination from '@mui/material/Pagination';
+
 export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
@@ -41,6 +44,10 @@ export default function CourseList() {
             .catch(error => console.error('Error:', error));
     }, []);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const coursePerPage = 3; // Adjust as needed
+    const currentCourse = courses.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
+
     return (
         <>
             <Header />
@@ -62,7 +69,7 @@ export default function CourseList() {
                     </div>
                     <div className="flex flex-col gap-4 overflow-y-auto h-[480px]">
                         {!emptyCourse && (
-                            courses.map(course => (
+                            currentCourse.map(course => (
                                 // eslint-disable-next-line react/jsx-key
                                 <>
                                     <div className="w-full h-36 p-8 rounded-xl bg-white">
@@ -96,6 +103,15 @@ export default function CourseList() {
                                 </>
                             ))
                         )}
+                    </div>
+                    <div className="flex justify-center">
+                        <Pagination
+                            count={Math.ceil(courses.length / coursePerPage)}
+                            shape="rounded"
+                            onChange={(event, newPage) => setCurrentPage(newPage)}
+                            className=""
+                            color="primary"
+                        />
                     </div>
                 </div>
             </div>
