@@ -8,6 +8,7 @@ import Ieye from "@/components/icons/eye"
 import { ReactElement, useState, useEffect } from "react"
 import Select from "react-select";
 import * as React from 'react';
+import Pagination from '@mui/material/Pagination';
 
 export default function Exercise_bank() {
     const [module, setModule] = useState('')
@@ -34,23 +35,23 @@ export default function Exercise_bank() {
                 console.error('Error fetching data:', error);
             });
 
-        fetch('/api/exDone_list' , {
+        fetch('/api/exDone_list', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ id: localStorage.getItem("userName") }),
         })
-        .then(res => res.json())
-        .then(data => {
-            setExerciseList(data)
-            console.log(data)
-            //console.log(exercises)
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-        
+            .then(res => res.json())
+            .then(data => {
+                setExerciseList(data)
+                console.log(data)
+                //console.log(exercises)
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+
     }, []);
     const handleChangeModule = (ev) => {
         setModule(ev.value);
@@ -66,13 +67,22 @@ export default function Exercise_bank() {
         setResetKey((prevKey) => prevKey + 1);
     };
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const exercisesPerPage = 3; // Adjust as needed
+    const currentExercises = exercises.slice((currentPage - 1) * exercisesPerPage, currentPage * exercisesPerPage);
+
+    const [currentPage1, setCurrentPage1] = useState(1);
+    const exercisesPerPage1 = 3; // Adjust as needed
+    const currentExercises1 = exerciseList.slice((currentPage1 - 1) * exercisesPerPage1, currentPage1 * exercisesPerPage1);
+
+
     return (
         <>
             <Header />
             <div className="flex">
                 <SideBar />
 
-                <div className="ml-14 w-2/3">
+                <div className="ml-14 w-2/3 pb-12">
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
                         Exercises Bank
                     </div>
@@ -97,74 +107,108 @@ export default function Exercise_bank() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4 pl-4 pt-3">
-                        <button
-                            onClick={() => handleButtonClick(1)}
-                            className={`hover:bg-sky-500 text-black hover:text-white text-base font-medium px-4 py-2 
-                            rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 1 ? 'bg-sky-500' : 'bg-white'}`}>
-                            All
-                        </button>
+                    <div className="flex items-center justify-between pl-4 pt-3">
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => handleButtonClick(1)}
+                                className={`hover:bg-sky-500 text-black hover:text-white text-base font-medium px-4 py-2 
+                                rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 1 ? 'bg-sky-500' : 'bg-white'}`}>
+                                All
+                            </button>
 
-                        <button
-                            onClick={() => handleButtonClick(2)}
-                            className={`hover:bg-sky-500 text-black hover:text-white text-base font-medium px-4 py-2
-                             rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 2 ? 'bg-sky-500' : 'bg-white'}`}>
-                            Your Exercises
-                        </button>
+                            <button
+                                onClick={() => handleButtonClick(2)}
+                                className={`hover:bg-sky-500 text-black hover:text-white text-base font-medium px-4 py-2
+                                rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 2 ? 'bg-sky-500' : 'bg-white'}`}>
+                                Your Exercises
+                            </button>
+                        </div>
+                        {localStorage.getItem('userType') !== 'Student' ?
+                            <Link href={'./exbank_add'}>
+                                <button className="bg-lime-300 hover:bg-lime-400 px-4 py-2 text-black text-base font-medium rounded-lg leading-tight tracking-tight mr-4">
+                                    Add Exercise
+                                </button>
+                            </Link> : null}
                     </div>
 
-                    <div className="grid grid-cols-3 mt-4">
+                    <div className="mt-4">
                         {
-                            (selectedButton === 2 ? 
-                                exerciseList.map(exercise => (
-                                    ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
-                                        <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
-                                            <div className="font-semibold mb-4">
-                                                {exercise.title}
-                                            </div>
-                                            <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
-                                                <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
-                                                    {exercise.module}
-                                                </div>
-                                                <div className="p-2 border-2 border-gray-300 rounded-lg">
-                                                    {exercise.skill}
-                                                </div>
-                                            </div>
-                                            <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
-                                                href='/ex_in_exbank'
-                                                className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
+                            (selectedButton === 2 ?
+                                <>
+                                    <div className="grid grid-cols-3">
+                                        {currentExercises1.map(exercise => (
+                                            ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
+                                                <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
+                                                    <div className="font-semibold mb-4">
+                                                        {exercise.title}
+                                                    </div>
+                                                    <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
+                                                        <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
+                                                            {exercise.module}
+                                                        </div>
+                                                        <div className="p-2 border-2 border-gray-300 rounded-lg">
+                                                            {exercise.skill}
+                                                        </div>
+                                                    </div>
+                                                    <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
+                                                        href='/ex_in_exbank'
+                                                        className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
                                                         transition-colors duration-300">
-                                                <Ieye className="fill-blue-400 w-6" />
-                                                <div className="text-blue-400">View Exercise</div>
-                                            </Link>
-                                        </div>
-                                    )
-                                )) :
-                                exercises.map(exercise => (
-                                    ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
-                                        <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
-                                            <div className="font-semibold mb-4">
-                                                {exercise.title}
-                                            </div>
-                                            <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
-                                                <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
-                                                    {exercise.module}
+                                                        <Ieye className="fill-blue-400 w-6" />
+                                                        <div className="text-blue-400">View Exercise</div>
+                                                    </Link>
                                                 </div>
-                                                <div className="p-2 border-2 border-gray-300 rounded-lg">
-                                                    {exercise.skill}
-                                                </div>
-                                            </div>
-                                            <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
-                                                href='/ex_in_exbank'
-                                                className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
+                                            )
+                                        ))}
+                                    </div>
+                                    <div className="flex justify-center">
+                                        <Pagination
+                                            count={Math.ceil(exerciseList.length / exercisesPerPage1)}
+                                            shape="rounded"
+                                            onChange={(event, newPage) => setCurrentPage(newPage)}
+                                            className=""
+                                            color="primary"
+                                        />
+                                    </div>
+                                </> :
+                                <>
+                                    <div className="grid grid-cols-3">
+                                        {currentExercises.map(exercise => (
+                                            ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
+                                                <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
+                                                    <div className="font-semibold mb-4">
+                                                        {exercise.title}
+                                                    </div>
+                                                    <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
+                                                        <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
+                                                            {exercise.module}
+                                                        </div>
+                                                        <div className="p-2 border-2 border-gray-300 rounded-lg">
+                                                            {exercise.skill}
+                                                        </div>
+                                                    </div>
+                                                    <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
+                                                        href='/ex_in_exbank'
+                                                        className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
                                                         transition-colors duration-300">
-                                                <Ieye className="fill-blue-400 w-6" />
-                                                <div className="text-blue-400">View Exercise</div>
-                                            </Link>
-                                        </div>
-                                    )
-                                ))      
-                            )   
+                                                        <Ieye className="fill-blue-400 w-6" />
+                                                        <div className="text-blue-400">View Exercise</div>
+                                                    </Link>
+                                                </div>
+                                            )
+                                        ))}
+                                    </div>
+                                    <div className="flex justify-center">
+                                        <Pagination
+                                            count={Math.ceil(exercises.length / exercisesPerPage)}
+                                            shape="rounded"
+                                            onChange={(event, newPage) => setCurrentPage(newPage)}
+                                            className=""
+                                            color="primary"
+                                        />
+                                    </div>
+                                </>
+                            )
                         }
                     </div>
                 </div>

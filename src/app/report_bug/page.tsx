@@ -15,7 +15,8 @@ import Switch from "@mui/material/Switch";
 import { set } from "mongoose"
 import { useRouter } from "next/navigation";
 import { Date } from "mongoose"
-
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
 
 const PinkSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
@@ -147,7 +148,7 @@ export default function RP() {
                                         <div className="text-center text-black text-sm font-['Poppins'] leading-tight tracking-tight">Create report</div>
                                     </button>
                                 </Link>
-                            </div> : 
+                            </div> :
                             <div className="pt-7">
                             </div>}
                         <div className="flex items-center mt-4 gap-4">
@@ -174,49 +175,53 @@ export default function RP() {
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight px-1">Status</p>
                             </div>
                             <div className="overflow-y-auto h-56">
-                            {reports.map((rep, index) => (
-                                ((checkStatus[index] == status || status == '') &&
-                                    <div key={index} className="grid grid-cols-6 items-center">
-                                        <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                            <div>{rep.userID}</div>
-                                        </div>
-                                        <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                            <Popup trigger={<button className="hover:underline">{rep.title}</button>} position={"right bottom"}>
-                                                <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
-                                                    <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
-                                                        style={{ wordWrap: 'break-word' }}>
-                                                        {rep.content}
-                                                    </div>
-                                                    <div className="flex items-center ml-4">
-                                                        {(localStorage.getItem('userType') === 'Admin') && (
-                                                            <PinkSwitch
-                                                                id={String(index)}
-                                                                {...label}
-                                                                defaultChecked={isCompleted[index]}
-                                                                checked={isCompleted[index]}
-                                                                onChange={(ev) => {
-                                                                    localStorage.setItem('report_id', rep._id);
-                                                                    handleSwitchChange(index);
-                                                                    handleFormSubmit(ev)
-                                                                }} />)}
-                                                        {isCompleted[index] && <span>Completed</span>}
-                                                    </div>
-                                                </div>
-                                            </Popup>
-                                        </div>
-                                        <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                            <div>{rep.type}</div>
-                                        </div>
-                                        <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                            <div className="ml-6">{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
-                                        </div>
-                                        <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                            <div className="ml-8">{(completionDates[index] === null ? <div className="ml-2">Not yet</div> : moment.utc(completionDates[index]).format('MM/DD/YYYY'))}</div>
-                                        </div>
-                                        <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
-                                            <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium -ml-2">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{checkStatus[index]}</div>)}</div>
-                                        </div>
-                                    </div>)))}
+                                {reports.map((rep, index) => (
+                                    ((checkStatus[index] == status || status == '') &&
+                                        <div key={index} className="grid grid-cols-6 items-center">
+                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div>{rep.userID}</div>
+                                            </div>
+                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <Tooltip disableFocusListener disableTouchListener title='Click to see full'>
+                                                    <Grid item>
+                                                        <Popup trigger={<button className="hover:underline">{rep.title}</button>} position={"right bottom"}>
+                                                            <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
+                                                                <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
+                                                                    style={{ wordWrap: 'break-word' }}>
+                                                                    {rep.content}
+                                                                </div>
+                                                                <div className="flex items-center ml-4">
+                                                                    {(localStorage.getItem('userType') === 'Admin') && (
+                                                                        <PinkSwitch
+                                                                            id={String(index)}
+                                                                            {...label}
+                                                                            defaultChecked={isCompleted[index]}
+                                                                            checked={isCompleted[index]}
+                                                                            onChange={(ev) => {
+                                                                                localStorage.setItem('report_id', rep._id);
+                                                                                handleSwitchChange(index);
+                                                                                handleFormSubmit(ev)
+                                                                            }} />)}
+                                                                    {isCompleted[index] && <span>Completed</span>}
+                                                                </div>
+                                                            </div>
+                                                        </Popup>
+                                                    </Grid>
+                                                </Tooltip>
+                                            </div>
+                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div>{rep.type}</div>
+                                            </div>
+                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div className="ml-6">{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
+                                            </div>
+                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div className="ml-8">{(completionDates[index] === null ? <div className="ml-2">Not yet</div> : moment.utc(completionDates[index]).format('MM/DD/YYYY'))}</div>
+                                            </div>
+                                            <div className="flex items-center justify-between text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 ">
+                                                <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium -ml-2">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium">{checkStatus[index]}</div>)}</div>
+                                            </div>
+                                        </div>)))}
                             </div>
                         </div>
                     </div>

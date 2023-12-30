@@ -77,8 +77,10 @@ export default function Assigments() {
                             <div className="h-80 overflow-y-scroll">
                                 {assignments.map(assignment => (type === "Student" && (
                                     <Link href={'/assignment_submit'}
-                                        onClick={() => { localStorage.setItem("assignment_id", assignment._id),
-                                                        console.log(assignment.status) }}
+                                        onClick={() => {
+                                            localStorage.setItem("assignment_id", assignment._id),
+                                            console.log(assignment.status)
+                                        }}
                                         className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
                                         <div className=" p-2 flex items-center ">
                                             <Ibook />
@@ -88,11 +90,11 @@ export default function Assigments() {
                                         </div>
 
                                         <div className=" p-2 flex items-center justify-end">
-                                            
+
                                             <div className="ml-1 font-poppins">
-                                                {(assignment.status === 'null' ? <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('MM/DD/YYYY')}</div> : 
-                                                (assignment.status === 'Marked' ? <div className="font-poppins font-medium text-green-400">{assignment.status}</div> : 
-                                                <div className="font-poppins font-medium text-red-400">{assignment.status}</div>))}
+                                                {(assignment.status === 'null' ? <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('MM/DD/YYYY')}</div> :
+                                                    (assignment.status === 'Marked' ? <div className="font-poppins font-medium text-green-400">{assignment.status}</div> :
+                                                        <div className="font-poppins font-medium text-red-400">{assignment.status}</div>))}
                                             </div>
                                         </div>
                                     </Link>
@@ -117,6 +119,19 @@ export default function Assigments() {
                                             </div>
                                         </div>
                                     </Link>
+                                )))}
+
+                                {assignments.map(assignment => (type === "Admin" && (
+                                    <div className="mt-10 grid grid-cols-2 border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
+                                        <div className=" p-2 flex items-center ">
+                                            <Ibook />
+                                            <div className="ml-4 font-poppins">
+                                                {assignment.title} - {assignment.skill}
+                                            </div>
+                                        </div>
+
+                                        
+                                    </div>
                                 )))}
                             </div>
                         </div>
