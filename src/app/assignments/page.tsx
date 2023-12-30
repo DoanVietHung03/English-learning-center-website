@@ -24,7 +24,6 @@ export default function Assigments() {
     const router = useRouter();
 
     var delete_assignment
-
     const handleActionClick = (link) => {
         router.push(link);
     };
