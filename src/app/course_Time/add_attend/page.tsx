@@ -10,9 +10,9 @@ import { useRouter } from 'next/navigation'
 export default function CreateAttend() {
     const [listStudent, setListStudent] = useState([])
     useEffect(() => {
-        fetch('/api/getStuCourse', {
+        fetch('/api/course', {
             method: 'POST',
-            body: JSON.stringify({ listStuCourseID: localStorage.getItem('course_id') }),
+            body: JSON.stringify({ listStuCourseID: localStorage.getItem('course_id'), method: 'getStudentList' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())
@@ -39,9 +39,9 @@ export default function CreateAttend() {
         })
 
         ev.preventDefault()
-        const response = await fetch('/api/createAttend', {
+        const response = await fetch('/api/attendance', {
             method: 'POST',
-            body: JSON.stringify({ course_id: localStorage.getItem('course_id'), session_id: localStorage.getItem('session_id'), studentList: listStuCreate }),
+            body: JSON.stringify({ course_id: localStorage.getItem('course_id'), session_id: localStorage.getItem('session_id'), studentList: listStuCreate, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/course_Time')

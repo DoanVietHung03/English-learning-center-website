@@ -23,12 +23,12 @@ export default function Clone_Assignment() {
     const [assignmentChoosed, setAssignmentChoosed] = useState(Number)
     const router = useRouter();
     useEffect(() => {
-        fetch('/api/courseList', {
+        fetch('/api/course', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ userName: localStorage.getItem("userName") }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), userType: localStorage.getItem("userType"), method: 'getList' }),
         })
             .then(response => response.json())
             .then(data => {
@@ -61,9 +61,9 @@ export default function Clone_Assignment() {
         router.push('/assignments')
     }
     const handleChangeCourse = (ev: SyntheticEvent) => {
-        fetch('/api/assignment_list', {
+        fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ id: ev.value }),
+            body: JSON.stringify({ id: ev.value, method: 'getList' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())

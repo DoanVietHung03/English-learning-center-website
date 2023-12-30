@@ -34,7 +34,7 @@ export default function Add_Ass() {
         ev.preventDefault()
         await fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ title, deadline, content, skill, file, id: localStorage.getItem('course_id') }),
+            body: JSON.stringify({ title, deadline, content, skill, file, id: localStorage.getItem('course_id'), method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/assignments')

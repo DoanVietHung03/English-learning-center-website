@@ -50,11 +50,9 @@ export default function Do_Assignment() {
     // }
 
     useEffect(() => {
-        //handlePlayMp3()
-        console.log(localStorage.getItem("assignment_id"))
-        fetch('/api/assignment_info', {
+        fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem("assignment_id") }),
+            body: JSON.stringify({ id: localStorage.getItem("assignment_id"), method: 'getInfo' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())
@@ -62,9 +60,9 @@ export default function Do_Assignment() {
                 SetAssignment(data)
             })
 
-        fetch('/api/submission_info', {
+        fetch('/api/submission', {
             method: 'POST',
-            body: JSON.stringify({ assignment_id: localStorage.getItem("assignment_id"), id: localStorage.getItem('userName') }),
+            body: JSON.stringify({ assignment_id: localStorage.getItem("assignment_id"), id: localStorage.getItem('userName'), method: 'getInfo' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())

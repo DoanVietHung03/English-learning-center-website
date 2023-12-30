@@ -33,9 +33,9 @@ export default function Exercise_Add() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        await fetch('/api/exercisesBank', {
+        await fetch('/api/exercise', {
             method: 'POST',
-            body: JSON.stringify({ title, filemp3, content, skill, file, module}),
+            body: JSON.stringify({ title, filemp3, content, skill, file, module, method: 'add'}),
             headers: { 'Content-Type': 'application/json' },
         })
     }

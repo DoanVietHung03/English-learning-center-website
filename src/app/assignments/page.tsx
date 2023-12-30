@@ -15,9 +15,9 @@ export default function Assigments() {
     const [assignments, setAssignment] = useState([])
 
     useEffect(() => {
-        fetch('/api/assignment_list', {
+        fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('course_id'), userType: localStorage.getItem('userType'), userID: localStorage.getItem('userName') }),
+            body: JSON.stringify({ id: localStorage.getItem('course_id'), userType: localStorage.getItem('userType'), userID: localStorage.getItem('userName'), method: 'getList' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())
@@ -30,7 +30,7 @@ export default function Assigments() {
     }, []);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const coursePerPage = 4; // Adjust as needed
+    const coursePerPage = 4; 
     const currentAss = assignments.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
 
     return (

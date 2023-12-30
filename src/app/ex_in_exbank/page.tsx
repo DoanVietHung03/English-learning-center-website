@@ -18,7 +18,7 @@ export default function ExBank() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("exerciseID") }),
+            body: JSON.stringify({ id: localStorage.getItem("exerciseID"), method: 'getInfo'}),
         })
             .then(response => response.json())
             .then(data => {

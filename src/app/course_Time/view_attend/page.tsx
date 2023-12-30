@@ -12,7 +12,7 @@ export default function ViewAttend() {
     useEffect(() => {
         fetch('/api/attendance', {
             method: 'POST',
-            body: JSON.stringify({ session_id: localStorage.getItem('session_id'), course_id: localStorage.getItem('course_id') }),
+            body: JSON.stringify({ session_id: localStorage.getItem('session_id'), course_id: localStorage.getItem('course_id'), method: 'getInfo' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())

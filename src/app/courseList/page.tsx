@@ -22,12 +22,12 @@ export default function CourseList() {
     useEffect(() => {
         localStorage.setItem('sidebar', 0)
 
-        fetch('/api/courseList', {
+        fetch('/api/course', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("userName"), userType: localStorage.getItem("userType") }),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), userType: localStorage.getItem("userType"), method: 'getList' }),
         })
             .then(response => response.json())
             .then(data => {
