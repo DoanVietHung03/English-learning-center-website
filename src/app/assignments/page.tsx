@@ -67,7 +67,6 @@ export default function Assigments() {
                         <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem("course_name")}</div>
                     </div>
 
-
                     <div className="bg-white mt-2 pb-8 rounded">
                         <div className="flex-col ml-6 mr-6">
                             <div className="flex items-center p-4 border-b border-black">

@@ -2,22 +2,31 @@
 
 import Header from "@/components/layout/header";
 import SideBar from "@/components/layout/sideBar";
-import CourseInfo from "@/components/layout/courseInfo";
 import { useEffect, useState } from "react";
-import { POST } from "../api/assignment/route";
 import Link from "next/link";
 import Ibuilding from "@/components/icons/icon_building";
+import IfileAdd from "@/components/icons/icon_file_add";
 import Itarget from "@/components/icons/icon_target";
 import Imenu from "@/components/icons/icon_menu";
 import Icalendar from "@/components/icons/icon_cal";
 import moment from 'moment';
 import Pagination from '@mui/material/Pagination';
+import Box from "@mui/material/Box";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import { useRouter } from "next/navigation";
 
 export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
     const [name, setName] = useState('')
     const type = localStorage.getItem('userType')
+    const router = useRouter();
+
+    const handleActionClick = (link) => {
+        router.push(link);
+    };
 
     useEffect(() => {
         localStorage.setItem('sidebar', 0)
@@ -44,6 +53,10 @@ export default function CourseList() {
     const coursePerPage = 3; // Adjust as needed
     const currentCourse = courses.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
 
+    const actions = [
+        { icon: <IfileAdd className="w-6" />, name: "Add Assignment", link: '/course_add' },
+    ];
+
     return (
         <>
             <Header />
@@ -55,13 +68,25 @@ export default function CourseList() {
                             Courses List
                         </div>
                         {(type == 'Admin') &&
-                            <Link href='/course_add' className="bg-lime-500 border-2 border-lime-500 text-white hover:bg-lime-200 hover:text-gray-700
-                             flex gap-3 rounded-xl items-center justify-center py-3 px-3 transition-colors">
-                                <div className="text-2xl font-bold">+</div>
-                                <div className="font-bold flex items-center">Add Course</div>
-                            </Link>
+                            <Box sx={{ transform: "translateZ(0px)", flexGrow: 1 }}>
+                            <SpeedDial
+                                ariaLabel="SpeedDial basic example"
+                                sx={{ transform: "translateZ(0px)", flexGrow: 1 }}
+                                icon={<SpeedDialIcon />}
+                                direction="left"
+                            >
+                                {actions.map((action) => (
+                                    <SpeedDialAction
+                                        key={action.name}
+                                        icon={action.icon}
+                                        tooltipTitle={action.name}
+                                        onClick={() => handleActionClick(action.link)}
+                                        FabProps={{ size: "large" }}
+                                    />
+                                ))}
+                            </SpeedDial>
+                        </Box>
                         }
-
                     </div>
                     <div className="flex flex-col gap-4 h-[480px]">
                         {!emptyCourse && (
