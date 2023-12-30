@@ -79,7 +79,6 @@ export default function Exercise_bank() {
             <Header />
             <div className="flex">
                 <SideBar />
-
                 <div className="ml-14 w-2/3 pb-12">
                     <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
                         Exercises Bank
