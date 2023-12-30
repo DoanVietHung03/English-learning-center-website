@@ -20,7 +20,7 @@ export default function Assigments() {
     useEffect(() => {
         fetch('/api/assignment_list', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('course_id'), userType: localStorage.getItem('userType') }),
+            body: JSON.stringify({ id: localStorage.getItem('course_id'), userType: localStorage.getItem('userType'), userID: localStorage.getItem('userName') }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())
