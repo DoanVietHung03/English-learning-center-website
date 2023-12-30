@@ -1,6 +1,10 @@
 import { Course } from "@/models/course"
 import { Session } from "@/models/session";
 import { User } from "@/models/user"
+import { Assignment } from "@/models/assignment"
+import { Submission } from "@/models/submission"
+import { Attendance } from "@/models/attendance";
+
 import { connectToDatabase } from '../../../connection';
 
 export async function POST(req: { json: () => any }) {
@@ -73,6 +77,14 @@ export async function POST(req: { json: () => any }) {
                 listStudent.push(temp)
             }
             return Response.json(listStudent);
+        }
+        else{
+            const deleteAssignment = await Assignment.deleteMany({course_id : body.course_id})
+            const deleteSubmission = await Submission.deleteMany({course_id : body.course_id})
+            const deleteSession = await Session.deleteMany({course_id : body.course_id})
+            const deleteAttendance = await Attendance.deleteMany({course_id : body.course_id})
+            const deleteCourse = await Course.deleteOne({_id : body.course_id})
+            Response.json({deleteAssignment, deleteSubmission, deleteSession,deleteAttendance, deleteCourse })
         }
     } catch (error) {
         return new Response(
