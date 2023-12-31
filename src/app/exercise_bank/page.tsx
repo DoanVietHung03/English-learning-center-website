@@ -74,8 +74,12 @@ export default function Exercise_bank() {
         setResetKey((prevKey) => prevKey + 1);
     };
 
-    const handleActionClick = (link) => {
-        router.push(link)
+    const handleActionClick = (link, name) => {
+        if (name && name.startsWith("Delete")) {
+            
+        } else {
+            router.push(link);
+        }
     };
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -221,16 +225,19 @@ export default function Exercise_bank() {
                                                                 direction="right"
                                                             >
                                                                 {actions.map((action) => (
+
                                                                     <SpeedDialAction
                                                                         key={action.name}
                                                                         icon={action.icon}
                                                                         tooltipTitle={action.name}
-                                                                        onClick={() => { handleActionClick(action.link)}}                                                             
+                                                                        onClick={() => { handleActionClick(action.link, action.name) }}
                                                                         FabProps={{ size: "small" }}
                                                                     />
+
+
                                                                 ))}
                                                             </SpeedDial>
-                                                            
+
                                                         </Box>}
                                                 </div>
                                             )
