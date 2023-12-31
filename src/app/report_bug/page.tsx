@@ -172,7 +172,7 @@ export default function RP() {
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Date Completed</p>
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Status</p>
                             </div>
-                            <div className="h-fit">
+                            <div className="h-[253px]">
                                 {currentRP.map((rep, index) => (
                                     ((checkStatus[index] == status || status == '') &&
                                         <div key={index} className="grid grid-cols-6 items-center text-center">

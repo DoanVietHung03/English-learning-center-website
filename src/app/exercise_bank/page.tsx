@@ -168,8 +168,8 @@ export default function Exercise_bank() {
                                     <div className="grid grid-cols-3">
                                         {currentExercises1.map(exercise => (
                                             ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
-                                                <div className="inline-block bg-white pl-10 pr-10 py-4 mb-4 rounded-xl">
-                                                    <div className="font-semibold mb-4">
+                                                <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
+                                                    <div className="font-semibold mb-4 h-[48px]">
                                                         {exercise.title}
                                                     </div>
                                                     <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
