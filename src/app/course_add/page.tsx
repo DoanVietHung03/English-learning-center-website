@@ -52,9 +52,17 @@ export default function Course_Add() {
     }
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+        console.log(title)
+        console.log(schedule)
+        console.log(room)
+        console.log(module)
+        console.log(teacher)
+        console.log(sDate)
+        console.log(student_added)
+
         const response = await fetch('/api/course', {
             method: 'POST',
-            body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added }),
+            body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         if (!response.ok)
