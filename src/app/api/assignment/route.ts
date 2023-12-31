@@ -60,6 +60,7 @@ export async function POST(req: { json: () => any }) {
                 status: statusList[i],
                 };
             });
+            combinedAssignments.reverse()
             return Response.json(combinedAssignments)
         }
         else{

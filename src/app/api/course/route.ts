@@ -63,6 +63,7 @@ export async function POST(req: { json: () => any }) {
                 teacher_name: data[i], 
             };
             });
+            combinedCourses.reverse()
             return Response.json(combinedCourses);
         }
         else if (body.method === 'getStudentList'){

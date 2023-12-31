@@ -41,6 +41,7 @@ export async function POST(req: { json: () => any }) {
                     student_Name: data[i], 
                 };
             });
+            combinedSubmissions.reverse()
             return Response.json(combinedSubmissions);
         }
         else if(body.method === 'getInfo'){

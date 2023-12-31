@@ -38,6 +38,7 @@ export async function POST(req: { json: () => any }) {
                     receiver_name: receivers[i], 
                 };
             });
+            combinedSentMessages.reverse()
 
             var senders = []
             var senderName
@@ -55,6 +56,7 @@ export async function POST(req: { json: () => any }) {
                     sender_name: senders[i], 
                 };
             });
+            combinedReceivedMessages.reverse()
             return Response.json({combinedSentMessages, combinedReceivedMessages});  
         }
     } catch (error) {

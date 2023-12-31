@@ -1,6 +1,4 @@
 'use client'
-
-//Thiếu người gửi
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
@@ -45,6 +43,7 @@ export default function Chat() {
         })
             .then(res => res.json())
             .then(data => {
+                console.log(data)
                 SetMessageSent(data.combinedSentMessages)
                 SetMessageReceived(data.combinedReceivedMessages)
             })
