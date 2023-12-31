@@ -112,7 +112,7 @@ export default function CourseList() {
                                 // eslint-disable-next-line react/jsx-key
                                 <>
                                     <div className="w-full h-36 rounded-xl bg-white flex mt-2">
-                                        <div className="w-5/6 border-r border-stone-300 p-8">
+                                        <div className="w-5/6 p-8">
                                             <div className="flex mb-4">
                                                 <Link href={'/course_Time'} onClick={() => { localStorage.setItem("course_id", course.course_id), localStorage.setItem("course_name", course.name), localStorage.setItem("course_student", course.student_id.length) }}>
                                                     <button className="flex justify-start font-poppins w-fit cursor-pointer text-blue-500 font-semibold text-base hover:underline">
@@ -142,9 +142,10 @@ export default function CourseList() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <Popup
+                                        {type === "Admin" ?
+                                            <Popup
                                             ref={popupRef}
-                                            trigger={<button className="flex justify-center items-center h-full w-1/6 bg-red-400 hover:bg-red-500 rounded-r-xl">
+                                            trigger={<button className="flex justify-center items-center h-full w-1/6 bg-red-400 hover:bg-red-500 rounded-r-xl border-l border-stone-300">
                                                 <IfileDelete className="w-8" />
                                             </button>}>
                                             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
@@ -162,7 +163,8 @@ export default function CourseList() {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </Popup>
+                                        </Popup> : null}
+                                        
                                     </div>
                                 </>
                             ))
