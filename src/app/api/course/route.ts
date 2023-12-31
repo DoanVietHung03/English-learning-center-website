@@ -79,12 +79,15 @@ export async function POST(req: { json: () => any }) {
             return Response.json(listStudent);
         }
         else{
+            const listAssignment = await Assignment.find({course_id : body.course_id},{_id: 1})
+            for(var i = 0; i < listAssignment.length;i++){
+                await Submission.deleteMany({assignment_id : listAssignment[i]._id})
+            }
             const deleteAssignment = await Assignment.deleteMany({course_id : body.course_id})
-            const deleteSubmission = await Submission.deleteMany({course_id : body.course_id})
             const deleteSession = await Session.deleteMany({course_id : body.course_id})
             const deleteAttendance = await Attendance.deleteMany({course_id : body.course_id})
             const deleteCourse = await Course.deleteOne({_id : body.course_id})
-            Response.json({deleteAssignment, deleteSubmission, deleteSession,deleteAttendance, deleteCourse })
+            Response.json({deleteAssignment, deleteSession,deleteAttendance, deleteCourse })
         }
     } catch (error) {
         return new Response(
