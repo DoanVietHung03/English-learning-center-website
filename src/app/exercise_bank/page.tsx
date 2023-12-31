@@ -33,6 +33,19 @@ export default function Exercise_bank() {
         setSelectedButton(buttonNumber);
     };
 
+    // var delete_course
+
+    // async function handleDelete(ev: SyntheticEvent) {
+    //     ev.preventDefault()
+    //     console.log(delete_course)
+    //     const response = await fetch('/api/course', {
+    //         method: 'POST',
+    //         body: JSON.stringify({ course_id: delete_course, method: 'delete' }),
+    //         headers: { 'Content-Type': 'application/json' },
+    //     })
+    //     window.location.reload(true);
+    // }
+
     useEffect(() => {
         localStorage.setItem('sidebar', 1)
         fetch('/api/exercise')
@@ -74,12 +87,8 @@ export default function Exercise_bank() {
         setResetKey((prevKey) => prevKey + 1);
     };
 
-    const handleActionClick = (link, name) => {
-        if (name && name.startsWith("Delete")) {
-            
-        } else {
-            router.push(link);
-        }
+    const handleActionClick = (link) => {
+        router.push(link);
     };
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -197,10 +206,10 @@ export default function Exercise_bank() {
                                         {currentExercises.map(exercise => (
                                             ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
                                                 <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
-                                                    <div className="font-semibold mb-4">
+                                                    <div className="font-semibold mb-4 h-[48px]">
                                                         {exercise.title}
                                                     </div>
-                                                    <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
+                                                    <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400 ">
                                                         <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
                                                             {exercise.module}
                                                         </div>
@@ -217,7 +226,7 @@ export default function Exercise_bank() {
                                                             <div className="text-blue-400">View Exercise</div>
                                                         </Link>
                                                         :
-                                                        <Box sx={{ position: 'relative', mt: 1, transform: "translateZ(0px)", flexGrow: 1 }}>
+                                                        <Box sx={{ mt: 1, transform: "translateZ(0px)", flexGrow: 1 }}>
                                                             <SpeedDial
                                                                 ariaLabel="SpeedDial basic example"
                                                                 sx={{ transform: "translateZ(0px)", flexGrow: 1 }}
@@ -225,19 +234,39 @@ export default function Exercise_bank() {
                                                                 direction="right"
                                                             >
                                                                 {actions.map((action) => (
-
                                                                     <SpeedDialAction
                                                                         key={action.name}
                                                                         icon={action.icon}
                                                                         tooltipTitle={action.name}
-                                                                        onClick={() => { handleActionClick(action.link, action.name) }}
+                                                                        onClick={() => {
+                                                                            if (action.name === 'View Exercise') {
+                                                                                handleActionClick(action.link)
+                                                                            } else {
+                                                                                popupRef.current.open();
+                                                                            }
+                                                                        }}
                                                                         FabProps={{ size: "small" }}
                                                                     />
-
-
                                                                 ))}
                                                             </SpeedDial>
+                                                            <Popup
+                                                                ref={popupRef}>
+                                                                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
+                                                                    <div className="mt-4">
+                                                                        <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
+                                                                        <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
+                                                                                Yes
+                                                                            </button>
 
+                                                                            <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
+                                                                                onClick={() => { popupRef.current.close() }}>
+                                                                                No
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Popup>
                                                         </Box>}
                                                 </div>
                                             )
