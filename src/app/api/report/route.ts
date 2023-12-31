@@ -29,6 +29,8 @@ export async function POST(req: { json: () => any }) {
             }
             reports = reports
             .filter(report => report !== null);
+
+            reports.reverse()
             return Response.json(reports);
         }
         else if (body.method === 'changeStatus'){

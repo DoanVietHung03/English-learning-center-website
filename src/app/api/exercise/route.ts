@@ -29,10 +29,11 @@ export async function POST(req: { json: () => any }) {
                 ex_done = await Exercise.findOne({_id: idEx[i].exercise_id})
                 list_ex_done.push(ex_done)
             }
+            list_ex_done.reverse()
             return Response.json(list_ex_done);
         }
         else if (body.method === 'getProgress'){
-            const progress = await Ex_Submission.find({ exercise_id: body.ex_id, student_id: body.id}, {progress: 1, _id:0})
+            const progress = await Ex_Submission.findOne({ exercise_id: body.ex_id, student_id: body.id}, {progress: 1, _id:0})
             return Response.json(progress);
         }
         else if (body.method === 'saveProgress'){
@@ -71,5 +72,6 @@ export async function POST(req: { json: () => any }) {
 export async function GET() {
     connectToDatabase();
     const exbank = await Exercise.find({},{title: 1, module: 1, skill: 1});
+    exbank.reverse()
     return Response.json(exbank)
 }
