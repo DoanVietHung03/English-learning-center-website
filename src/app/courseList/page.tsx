@@ -70,7 +70,7 @@ export default function CourseList() {
     const currentCourse = courses.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
 
     const actions = [
-        { icon: <IfileAdd className="w-6" />, name: "Add Assignment", link: '/course_add' },
+        { icon: <IfileAdd className="w-6" />, name: "Add Course", link: '/course_add' },
     ];
 
     const popupRef = useRef();

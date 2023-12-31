@@ -5,10 +5,18 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import Ieye from "@/components/icons/eye"
-import { ReactElement, useState, useEffect } from "react"
+import IfileDelete from "@/components/icons/icon_file_delete"
+import { ReactElement, useState, useEffect, useRef } from "react"
 import Select from "react-select";
 import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
+import Box from "@mui/material/Box";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import { useRouter } from "next/navigation";
+import Popup from 'reactjs-popup'
+import 'reactjs-popup/dist/index'
 
 export default function Exercise_bank() {
     const [module, setModule] = useState('')
@@ -19,6 +27,7 @@ export default function Exercise_bank() {
     const [selectedButton, setSelectedButton] = useState<number | null>(1);
     const [emptyFilter, setEmptyfilter] = useState(true)
     const [resetKey, setResetKey] = useState(0);
+    const router = useRouter()
 
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
@@ -40,7 +49,7 @@ export default function Exercise_bank() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("userName"), method: 'getDoneList'}),
+            body: JSON.stringify({ id: localStorage.getItem("userName"), method: 'getDoneList' }),
         })
             .then(res => res.json())
             .then(data => {
@@ -65,6 +74,10 @@ export default function Exercise_bank() {
         setResetKey((prevKey) => prevKey + 1);
     };
 
+    const handleActionClick = (link) => {
+        router.push(link)
+    };
+
     const [currentPage, setCurrentPage] = useState(1);
     const exercisesPerPage = 3; // Adjust as needed
     const currentExercises = exercises.slice((currentPage - 1) * exercisesPerPage, currentPage * exercisesPerPage);
@@ -73,6 +86,12 @@ export default function Exercise_bank() {
     const exercisesPerPage1 = 3; // Adjust as needed
     const currentExercises1 = exerciseList.slice((currentPage1 - 1) * exercisesPerPage1, currentPage1 * exercisesPerPage1);
 
+    const actions = [
+        { icon: <Ieye />, name: "View Exercise", link: '/ex_in_exbank' },
+        { icon: <IfileDelete />, name: "Delete Exercise" },
+    ];
+
+    const popupRef = useRef();
 
     return (
         <>
@@ -106,12 +125,13 @@ export default function Exercise_bank() {
 
                     <div className="flex items-center justify-between pl-4 pt-3">
                         <div className="flex items-center gap-4">
-                            <button
-                                onClick={() => handleButtonClick(1)}
-                                className={`hover:bg-sky-500 text-black hover:text-white text-base font-medium px-4 py-2 
-                                rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 1 ? 'bg-sky-500' : 'bg-white'}`}>
-                                All
-                            </button>
+                            {localStorage.getItem('userType') === 'Student' ?
+                                <button
+                                    onClick={() => handleButtonClick(1)}
+                                    className={`hover:bg-sky-500 text-black hover:text-white text-base font-medium px-4 py-2 
+                                    rounded-lg border border-zinc-300 transition-colors duration-300 ${selectedButton === 1 ? 'bg-sky-500' : 'bg-white'}`}>
+                                    All
+                                </button> : null}
                             {localStorage.getItem('userType') === 'Student' ?
                                 <button
                                     onClick={() => handleButtonClick(2)}
@@ -128,14 +148,14 @@ export default function Exercise_bank() {
                             </Link> : null}
                     </div>
 
-                    <div className="mt-4">
+                    <div className="mt-4 -mr-3">
                         {
                             (selectedButton === 2 ?
                                 <>
                                     <div className="grid grid-cols-3">
                                         {currentExercises1.map(exercise => (
                                             ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
-                                                <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
+                                                <div className="inline-block bg-white pl-10 pr-10 py-4 mb-4 rounded-xl">
                                                     <div className="font-semibold mb-4">
                                                         {exercise.title}
                                                     </div>
@@ -184,13 +204,34 @@ export default function Exercise_bank() {
                                                             {exercise.skill}
                                                         </div>
                                                     </div>
-                                                    <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
-                                                        href='/ex_in_exbank'
-                                                        className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
+                                                    {localStorage.getItem('userType') !== 'Admin' ?
+                                                        <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
+                                                            href='/ex_in_exbank'
+                                                            className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
                                                         transition-colors duration-300">
-                                                        <Ieye className="fill-blue-400 w-6" />
-                                                        <div className="text-blue-400">View Exercise</div>
-                                                    </Link>
+                                                            <Ieye className="fill-blue-400 w-6" />
+                                                            <div className="text-blue-400">View Exercise</div>
+                                                        </Link>
+                                                        :
+                                                        <Box sx={{ position: 'relative', mt: 1, transform: "translateZ(0px)", flexGrow: 1 }}>
+                                                            <SpeedDial
+                                                                ariaLabel="SpeedDial basic example"
+                                                                sx={{ transform: "translateZ(0px)", flexGrow: 1 }}
+                                                                icon={<SpeedDialIcon />}
+                                                                direction="right"
+                                                            >
+                                                                {actions.map((action) => (
+                                                                    <SpeedDialAction
+                                                                        key={action.name}
+                                                                        icon={action.icon}
+                                                                        tooltipTitle={action.name}
+                                                                        onClick={() => { handleActionClick(action.link)}}                                                             
+                                                                        FabProps={{ size: "small" }}
+                                                                    />
+                                                                ))}
+                                                            </SpeedDial>
+                                                            
+                                                        </Box>}
                                                 </div>
                                             )
                                         ))}
