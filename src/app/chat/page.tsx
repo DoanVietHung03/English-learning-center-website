@@ -6,7 +6,7 @@ import React, { SyntheticEvent, useEffect, useState, ReactElement } from "react"
 import Image from "next/image"
 import Select from "react-select";
 import { useRouter } from 'next/navigation'
-import moment from 'moment-timezone';
+import moment from 'moment';
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
 import Grid from "@mui/material/Grid";
@@ -102,7 +102,7 @@ export default function Chat() {
                                     </div>
 
                                     <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
-                                        Send date: {moment.utc(mes_receive.sendDate).format('MM/DD/YYYY')}
+                                        Send date: {moment.utc(mes_receive.sentDate).format('MM/DD/YYYY')}
                                     </div>
                                 </div>
 
@@ -155,7 +155,7 @@ export default function Chat() {
                                     </div>
 
                                     <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
-                                        Send date: {moment.utc(mes_send.sendDate).format('MM/DD/YYYY')}
+                                        Send date: {moment.utc(mes_send.sentDate).format('MM/DD/YYYY')}
                                     </div>
                                 </div>
 
