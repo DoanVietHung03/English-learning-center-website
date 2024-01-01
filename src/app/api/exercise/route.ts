@@ -59,6 +59,11 @@ export async function POST(req: { json: () => any }) {
                 }
             }
         }
+        else{
+            const deleteSubmission = await Ex_Submission.deleteMany({exercise_id : body.ex_id})
+            const deleteExercise = await Exercise.deleteOne({_id : body.ex_id})
+            return Response.json({deleteSubmission, deleteExercise});
+        }
     } catch (error) {
         return new Response(
             JSON.stringify(

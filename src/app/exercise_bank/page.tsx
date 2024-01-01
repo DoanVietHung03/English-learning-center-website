@@ -28,23 +28,22 @@ export default function Exercise_bank() {
     const [emptyFilter, setEmptyfilter] = useState(true)
     const [resetKey, setResetKey] = useState(0);
     const router = useRouter()
-
+    
+    var delete_ex
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
     };
 
-    // var delete_course
-
-    // async function handleDelete(ev: SyntheticEvent) {
-    //     ev.preventDefault()
-    //     console.log(delete_course)
-    //     const response = await fetch('/api/course', {
-    //         method: 'POST',
-    //         body: JSON.stringify({ course_id: delete_course, method: 'delete' }),
-    //         headers: { 'Content-Type': 'application/json' },
-    //     })
-    //     window.location.reload(true);
-    // }
+    async function handleDelete(ev: SyntheticEvent) {
+        ev.preventDefault()
+        console.log(delete_ex)
+        const response = await fetch('/api/exercise', {
+            method: 'POST',
+            body: JSON.stringify({ ex_id: delete_ex, method: 'delete' }),
+            headers: { 'Content-Type': 'application/json' },
+        })
+        window.location.reload(true);
+    }
 
     useEffect(() => {
         localStorage.setItem('sidebar', 1)
@@ -255,7 +254,7 @@ export default function Exercise_bank() {
                                                                     <div className="mt-4">
                                                                         <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                                         <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_ex = exercise._id, handleDelete(ev) }}>
                                                                                 Yes
                                                                             </button>
 
