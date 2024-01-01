@@ -6,7 +6,7 @@ import React, { SyntheticEvent, useEffect, useState, ReactElement } from "react"
 import Image from "next/image"
 import Select from "react-select";
 import { useRouter } from 'next/navigation'
-import moment from "moment"
+import moment from 'moment-timezone';
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
 import Grid from "@mui/material/Grid";

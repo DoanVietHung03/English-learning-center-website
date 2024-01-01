@@ -12,7 +12,7 @@ import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
 import Box from "@mui/material/Box";
 import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import ItripleBar from "@/components/icons/icon_triple_bars"
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import { useRouter } from "next/navigation";
 import Popup from 'reactjs-popup'
@@ -230,7 +230,7 @@ export default function Exercise_bank() {
                                                             <SpeedDial
                                                                 ariaLabel="SpeedDial basic example"
                                                                 sx={{ transform: "translateZ(0px)", flexGrow: 1 }}
-                                                                icon={<SpeedDialIcon />}
+                                                                icon={<ItripleBar />}
                                                                 direction="right"
                                                             >
                                                                 {actions.map((action) => (
