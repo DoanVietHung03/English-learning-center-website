@@ -9,6 +9,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
+import { useRouter } from 'next/navigation'
+
 
 export default function Exercise_Add() {
     const [skill, setSkill] = useState('')
@@ -17,6 +19,8 @@ export default function Exercise_Add() {
     const [file, setFile] = useState('');
     const [filemp3, setFilemp3] = useState('');
     const [content, setContent] = useState('');
+    const router = useRouter();
+
 
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
@@ -38,6 +42,8 @@ export default function Exercise_Add() {
             body: JSON.stringify({ title, filemp3, content, skill, file, module, method: 'add'}),
             headers: { 'Content-Type': 'application/json' },
         })
+        router.push('/exercise_bank')
+
     }
     return (
         <>

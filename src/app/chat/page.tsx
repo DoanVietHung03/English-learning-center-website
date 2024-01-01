@@ -20,13 +20,13 @@ export default function Chat() {
     const [students, setStudents] = useState([]);
     const [date, setDate] = useState(Date.now());
     const [file, setFile] = useState('');
-    const router = useRouter();
     const [receivers, setReceivers] = useState([])
 
     const [message_sent, SetMessageSent] = useState([]);
     const [message_received, SetMessageReceived] = useState([]);
 
     const type = localStorage.getItem('userName')
+
 
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
@@ -81,6 +81,7 @@ export default function Chat() {
             body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
+        window.location.reload(true);
     }
 
     const [contentChat, setContentChat] = useState<ReactElement | null>(null);
