@@ -3,6 +3,8 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import { SyntheticEvent, useState, useEffect } from "react"
 import Select from "react-select";
+import { useRouter } from 'next/navigation'
+
 
 const options = [
     { value: "Student", label: "Student" },
@@ -17,6 +19,8 @@ export default function Register() {
     const [error, setError] = useState(false);
     const [regProgress, setRegProgress] = useState(false);
     const [countdown, setCountdown] = useState(4);
+    const router = useRouter();
+
     useEffect(() => {
         let countdownTimer;
 
@@ -55,6 +59,8 @@ export default function Register() {
         else {
             setError(false)
             setRegProgress(true)
+            router.push('/user_management')
+
         }
     }
 

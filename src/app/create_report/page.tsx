@@ -33,7 +33,7 @@ export default function Create_RP() {
             body: JSON.stringify({ id: localStorage.getItem('userName'),title, type, content, file, date_created, date_completed, status, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        window.location.reload(true);
+        router.push('/report_bug')
     }
 
     return (
