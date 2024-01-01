@@ -2,9 +2,10 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Iuser from "@/components/icons/icon_user"
-import React, { SyntheticEvent, useEffect, useState, ReactElement } from "react"
+import React, { SyntheticEvent, useEffect, useState, ReactElement, useRef } from "react"
 import Image from "next/image"
 import Select from "react-select";
+import Ixmark from "@/components/icons/icon_xmark"
 import { useRouter } from 'next/navigation'
 import moment from 'moment';
 import Popup from 'reactjs-popup'
@@ -87,6 +88,7 @@ export default function Chat() {
     const [contentChat, setContentChat] = useState<ReactElement | null>(null);
     const [selectedButton, setSelectedButton] = useState<number | null>(null);
 
+    const popupRef = useRef();
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
         if (buttonNumber === 1) {
@@ -105,33 +107,59 @@ export default function Chat() {
                                         Send date: {moment.utc(mes_receive.sentDate).format('MM/DD/YYYY')}
                                     </div>
                                 </div>
+                                <div>
+                                    <Popup
+                                        ref={popupRef}
+                                        trigger={<div className="mt-2 flex items-center justify-end w-full">
+                                            <button className="mr-4">
+                                                <Ixmark />
+                                            </button>
+                                        </div>}>
 
-                                <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-8 hover:underline cursor-pointer">
-                                    {(mes_receive.content.length <= 20 ?
-                                        <div>
-                                            <Grid item>
-                                                <Tooltip disableFocusListener disableTouchListener title="Click to read full">
-                                                    <div>{mes_receive.content}</div>
-                                                </Tooltip>
-                                            </Grid>
+                                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
+                                            <div className="mt-4">
+                                                <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
+                                                <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
+                                                    <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
+                                                        Yes
+                                                    </button>
 
-                                        </div> :
-                                        <div>
-                                            <Grid item>
-                                                <Tooltip disableFocusListener disableTouchListener title="Click to read full">
-                                                    <div>{mes_receive.content.substring(0, 20)}...</div>
-                                                </Tooltip>
-                                            </Grid>
-                                        </div>)}
-                                </div>}
-                                    position="right top"
-                                    contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
-                                    <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
-                                        <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
-                                            {mes_receive.content}
+                                                    <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
+                                                        onClick={() => { popupRef.current.close() }}>
+                                                        No
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Popup>
+                                    </Popup>
+
+                                    <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-2 hover:underline cursor-pointer">
+                                        {(mes_receive.content.length <= 20 ?
+                                            <div>
+                                                <Grid item>
+                                                    <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                        <div>{mes_receive.content}</div>
+                                                    </Tooltip>
+                                                </Grid>
+
+                                            </div> :
+                                            <div>
+                                                <Grid item>
+                                                    <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                        <div>{mes_receive.content.substring(0, 20)}...</div>
+                                                    </Tooltip>
+                                                </Grid>
+                                            </div>)}
+                                    </div>}
+                                        position="right top"
+                                        contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
+                                        <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
+                                            <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
+                                                {mes_receive.content}
+                                            </div>
+                                        </div>
+                                    </Popup>
+                                </div>
 
                                 {/* <button className="flex items-center pl-7 mt-3 pb-6">
                                     <Iimage className="w-6 mr-2 fill-zinc-500" />
@@ -158,33 +186,59 @@ export default function Chat() {
                                         Send date: {moment.utc(mes_send.sentDate).format('MM/DD/YYYY')}
                                     </div>
                                 </div>
+                                <div>
+                                    <Popup
+                                        ref={popupRef}
+                                        trigger={<div className="mt-2 flex items-center justify-end w-full">
+                                            <button className="mr-4">
+                                                <Ixmark />
+                                            </button>
+                                        </div>}>
 
-                                <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-8 hover:underline cursor-pointer">
-                                    {(mes_send.content.length <= 20 ?
-                                        <div>
-                                            <Grid item>
-                                                <Tooltip disableFocusListener disableTouchListener title="Click to read full">
-                                                    <div>{mes_send.content}</div>
-                                                </Tooltip>
-                                            </Grid>
+                                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
+                                            <div className="mt-4">
+                                                <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
+                                                <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
+                                                    <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
+                                                        Yes
+                                                    </button>
 
-                                        </div> :
-                                        <div>
-                                            <Grid item>
-                                                <Tooltip disableFocusListener disableTouchListener title="Click to read full">
-                                                    <div>{mes_send.content.substring(0, 20)}...</div>
-                                                </Tooltip>
-                                            </Grid>
-                                        </div>)}
-                                </div>}
-                                    position="right top"
-                                    contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
-                                    <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
-                                        <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
-                                            {mes_send.content}
+                                                    <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
+                                                        onClick={() => { popupRef.current.close() }}>
+                                                        No
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Popup>
+                                    </Popup>
+
+                                    <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-2 hover:underline cursor-pointer">
+                                        {(mes_send.content.length <= 20 ?
+                                            <div>
+                                                <Grid item>
+                                                    <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                        <div>{mes_send.content}</div>
+                                                    </Tooltip>
+                                                </Grid>
+
+                                            </div> :
+                                            <div>
+                                                <Grid item>
+                                                    <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                        <div>{mes_send.content.substring(0, 20)}...</div>
+                                                    </Tooltip>
+                                                </Grid>
+                                            </div>)}
+                                    </div>}
+                                        position="right top"
+                                        contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
+                                        <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
+                                            <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
+                                                {mes_send.content}
+                                            </div>
+                                        </div>
+                                    </Popup>
+                                </div>
 
                                 {/* <button className="flex items-center pl-7 mt-3 pb-6">
                                     <Iimage className="w-6 mr-2 fill-zinc-500" />
