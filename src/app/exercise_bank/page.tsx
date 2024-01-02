@@ -194,7 +194,7 @@ export default function Exercise_bank() {
                                         <Pagination
                                             count={Math.ceil(exerciseList.length / exercisesPerPage1)}
                                             shape="rounded"
-                                            onChange={(event, newPage) => setCurrentPage(newPage)}
+                                            onChange={(event, newPage) => setCurrentPage1(newPage)}
                                             className=""
                                             color="primary"
                                         />
