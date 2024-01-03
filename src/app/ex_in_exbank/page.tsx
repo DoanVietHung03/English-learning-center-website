@@ -4,6 +4,7 @@ import Header from "@/components/layout/header"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { DateCalendar } from "@mui/x-date-pickers"
 
 export default function ExBank() {
     const [exercise, setExercise] = useState([])
@@ -36,6 +37,7 @@ export default function ExBank() {
                 if (data.length !== 0) {
                     localStorage.setItem('saved', 'already')
                     setExProgress(data)
+                    console.log(data)
                     setProgress(data.progress)
                 }
                 else {

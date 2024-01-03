@@ -33,7 +33,7 @@ export async function POST(req: { json: () => any }) {
             return Response.json(list_ex_done);
         }
         else if (body.method === 'getProgress'){
-            const progress = await Ex_Submission.findOne({ exercise_id: body.ex_id, student_id: body.id}, {progress: 1, _id:0})
+            const progress = await Ex_Submission.find({ exercise_id: body.ex_id, student_id: body.id}, {progress: 1, _id:0})
             return Response.json(progress);
         }
         else if (body.method === 'saveProgress'){
