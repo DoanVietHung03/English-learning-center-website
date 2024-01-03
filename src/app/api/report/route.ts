@@ -30,11 +30,37 @@ export async function POST(req: { json: () => any }) {
             reports = reports
             .filter(report => report !== null);
 
+            var isCompleted = []
+            for(var i = 0; i < reports.length; i++){
+                if(reports[i].status === 'Completed'){
+                    isCompleted.push(true)
+                }
+                else{
+                    isCompleted.push(false)
+                }
+            }
+            const combinesReports = reports.map((report,i) => {
+                return {
+                    _id: report._id,
+                    userID: report.userID,
+                    title: report.title,
+                    type: report.type,
+                    content: report.content,
+                    file: report.file,
+                    date_created: report.date_created,
+                    date_completed: report.date_completed,
+                    status: report.status,
+                    isCompleted: isCompleted[i],
+                    index: i, 
+                }
+            })
+
             reports.reverse()
-            return Response.json(reports);
+            return Response.json(combinesReports);
         }
         else if (body.method === 'changeStatus'){
             var date
+            var isComplete
             if(body.status == 'Completed'){
                 date = new Date()
             }

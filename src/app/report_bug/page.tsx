@@ -18,6 +18,7 @@ import { Date } from "mongoose"
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import Pagination from '@mui/material/Pagination';
+import { COMPILER_INDEXES } from "next/dist/shared/lib/constants"
 
 const PinkSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
@@ -34,28 +35,51 @@ const PinkSwitch = styled(Switch)(({ theme }) => ({
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 export default function RP() {
-    const [status, setStatus] = useState('')
-    const [reports, setReports] = useState([])
-    const router = useRouter();
+    var [reports, setReports] = useState([])
     const mongoose = require('mongoose');
     const { Date } = mongoose.Schema.Types;
 
+
+    var currentRP: any[]
+
     const handleChangeStatus = (ev) => {
-        setStatus(ev.value);
+        localStorage.setItem('status_filter', ev.value) 
     };
 
-    const [isCompleted, setIsCompleted] = useState(Array(reports.length).fill(false));
-    const [checkStatus, setCheckStatus] = useState(Array(reports.length).fill('Uncompleted'))
-    const [completionDates, setCompletionDates] = useState(Array(reports.length).fill(null));
-    var currentDate
+    var [length, setLength] = useState(Number)
     const [resetKey, setResetKey] = useState(0);
-    const [emptyFilter, setEmptyfilter] = useState(true)
+    const [currentRP3, setReport] = useState([])
+
+    var filteredReport: any[]
+    const [currentPage, setCurrentPage] = useState(1);
+    const rpPerPage = 7;
+    currentRP = reports.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
+    var currentRP2: any[]
 
     const handleChangeRemoveF = (ev) => {
-        setEmptyfilter(true);
-        setStatus('');
+        setLength(reports.length)
+        console.log(reports.length)
+        localStorage.setItem('status_filter', '')
         setResetKey((prevKey) => prevKey + 1);
+
     };
+
+    const handleFilter = (ev) => {
+        console.log(ev)
+        filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
+        setLength(filteredReport.length)
+        currentRP2 = filteredReport.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
+        setReport(currentRP2)
+    }
+
+    const handlePageChange = (index: number) => {
+        setCurrentPage(index)
+        if (localStorage.getItem('status_filter') === 'Completed' || localStorage.getItem('status_filter') === 'Uncompleted'){
+            filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
+            currentRP2 = filteredReport.slice((index - 1) * rpPerPage, index * rpPerPage), setReport(currentRP2)
+        }
+    }
+
 
     useEffect(() => {
         fetch('/api/report', {
@@ -68,50 +92,44 @@ export default function RP() {
             .then(response => response.json())
             .then(data => {
                 setReports(data)
-                data.forEach((dt, i) => {
-                    setCheckStatus((prevCheckStatus) => {
-                        const newCheckStatus = [...prevCheckStatus];
-                        newCheckStatus[i] = dt.status;
-                        return newCheckStatus;
-                    });
-
-                    setIsCompleted((prevIsCompleted) => {
-                        const newIsCompleted = [...prevIsCompleted];
-                        dt.status === 'Completed' ? newIsCompleted[i] = true : newIsCompleted[i] = false;
-                        return newIsCompleted;
-                    });
-
-                    setCompletionDates((prevCompletionDates) => {
-                        const newCompletionDates = [...prevCompletionDates];
-                        newCompletionDates[i] = dt.date_completed
-                        return newCompletionDates;
-                    });
-                })
+                setLength(data.length)
             })
             .catch(error => console.error('Error:', error));
+
         localStorage.setItem('sidebar', 2)
+        localStorage.setItem('status_filter', '')
+        //console.log(filteredReport)
+        //status = 'Completed'
+
+        //filteredReport = reports.filter(report => report.status == status)
+        //console.log(filteredReport)
+
     }, []);
 
     const handleSwitchChange = (index: number) => {
-        setIsCompleted((prevStates) => {
-            const newStates = [...prevStates];
-            newStates[index] = !newStates[index];
-            setCheckStatus((prevStatus) => {
-                const newStatus = [...prevStatus]
-                newStatus[index] = newStates[index] == true ? 'Completed' : 'Uncompleted';
-                localStorage.setItem('status', newStatus[index])
-                setCompletionDates((prevDate) => {
-                    const newDate = [...prevDate]
-                    currentDate = new Date()
-                    newDate[index] = newStates[index] == true ? currentDate : null;
-                    return newDate;
-                })
-                return newStatus;
-            });
+        if(reports[index].isCompleted === false){
+            reports[index].status = 'Completed'
+            reports[index].date_completed = new Date()
+            reports[index].isCompleted = true
+            localStorage.setItem('status', 'Completed') 
+        }
+        else{
+            reports[index].status = 'Uncompleted'
+            reports[index].date_completed = null
+            reports[index].isCompleted = false
+            localStorage.setItem('status', 'Uncompleted') 
+        }
 
-            return newStates;
-        });
-
+  
+        filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
+        if(localStorage.getItem('status_filter') === ''){
+            setLength(reports.length)
+        }  
+        else{
+            setLength(filteredReport.length)
+        }
+        currentRP2 = filteredReport.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
+        setReport(currentRP2)   
     };
 
     async function handleFormSubmit(ev: React.SyntheticEvent) {
@@ -123,9 +141,13 @@ export default function RP() {
         })
     }
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const rpPerPage = 7;
-    const currentRP = reports.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
+
+
+
+
+    // if (filteredReport !== null && filteredReport !== undefined) {
+    //     currentRP = filteredReport.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
+    // }
 
     return (
         <>
@@ -153,7 +175,7 @@ export default function RP() {
                             <div className="ml-10 w-[141px]">
                                 <Select key={`status-select-${resetKey}`}
                                     options={optionStatus}
-                                    onChange={handleChangeStatus}
+                                    onChange={(ev) => { handleChangeStatus(ev); handleFilter(ev) }}
                                     placeholder="Status" />
                             </div>
                             <button onClick={handleChangeRemoveF}
@@ -173,8 +195,9 @@ export default function RP() {
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Status</p>
                             </div>
                             <div className="h-[253px]">
-                                {currentRP.map((rep, index) => (
-                                    ((checkStatus[index] == status || status == '') &&
+                                {((localStorage.getItem('status_filter') === 'Completed') || (localStorage.getItem('status_filter') === 'Uncompleted'))   ?
+                                    currentRP3.map((rep, index) => (
+                                        // ((checkStatus[index] == status || status == '') &&
                                         <div key={index} className="grid grid-cols-6 items-center text-center">
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
                                                 <div>{rep.userID}</div>
@@ -193,14 +216,14 @@ export default function RP() {
                                                                         <PinkSwitch
                                                                             id={String(index)}
                                                                             {...label}
-                                                                            defaultChecked={isCompleted[index]}
-                                                                            checked={isCompleted[index]}
+                                                                            defaultChecked={rep.isCompleted}
+                                                                            checked={rep.isCompleted}
                                                                             onChange={(ev) => {
                                                                                 localStorage.setItem('report_id', rep._id);
-                                                                                handleSwitchChange(index);
+                                                                                handleSwitchChange(rep.index);
                                                                                 handleFormSubmit(ev)
                                                                             }} />)}
-                                                                    {isCompleted[index] && <span>Completed</span>}
+                                                                    {rep.isCompleted && <span>Completed</span>}
                                                                 </div>
                                                             </div>
                                                         </Popup>
@@ -214,18 +237,66 @@ export default function RP() {
                                                 <div>{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <div>{(completionDates[index] === null ? <div>Not yet</div> : moment.utc(completionDates[index]).format('MM/DD/YYYY'))}</div>
+                                                <div>{(rep.status === 'Uncompleted' ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
                                             </div>
                                             <div className="flex items-center justify-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
-                                                <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium w-fit">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium w-fit">{checkStatus[index]}</div>)}</div>
+                                                <div>{(rep.status === 'Uncompleted' ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium w-fit">{rep.status}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium w-fit">{rep.status}</div>)}</div>
                                             </div>
-                                        </div>)))}
+                                        </div>)) :
+                                    currentRP.map((rep, index) => (
+                                        // ((checkStatus[index] == status || status == '') &&
+                                        <div key={index} className="grid grid-cols-6 items-center text-center">
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div>{rep.userID}</div>
+                                            </div>
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <Tooltip disableFocusListener disableTouchListener title='Click to see full'>
+                                                    <Grid item>
+                                                        <Popup trigger={<button className="hover:underline">{rep.title}</button>} position={"right bottom"}>
+                                                            <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
+                                                                <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
+                                                                    style={{ wordWrap: 'break-word' }}>
+                                                                    {rep.content}
+                                                                </div>
+                                                                <div className="flex items-center ml-4">
+                                                                    {(localStorage.getItem('userType') === 'Admin') && (
+                                                                        <PinkSwitch
+                                                                            id={String(index)}
+                                                                            {...label}
+                                                                            defaultChecked={rep.isCompleted}
+                                                                            checked={rep.isCompleted}
+                                                                            onChange={(ev) => {
+                                                                                localStorage.setItem('report_id', rep._id);
+                                                                                handleSwitchChange(rep.index);
+                                                                                handleFormSubmit(ev)
+                                                                            }} />)}
+                                                                    {rep.isCompleted && <span>Completed</span>}
+                                                                </div>
+                                                            </div>
+                                                        </Popup>
+                                                    </Grid>
+                                                </Tooltip>
+                                            </div>
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div>{rep.type}</div>
+                                            </div>
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div>{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
+                                            </div>
+                                            <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
+                                                <div>{(rep.status === 'Uncompleted' ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
+                                            </div>
+                                            <div className="flex items-center justify-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
+                                                <div>{(rep.status === 'Uncompleted' ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium w-fit">{rep.status}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium w-fit">{rep.status}</div>)}</div>
+                                            </div>
+                                        </div>))}
+
                             </div>
                             <div className="flex justify-center mt-8">
                                 <Pagination
-                                    count={Math.ceil(reports.length / rpPerPage)}
+                                    count={Math.ceil(length / rpPerPage)}
                                     shape="rounded"
-                                    onChange={(event, newPage) => setCurrentPage(newPage)}
+                                    onChange={(event, newPage) => handlePageChange(newPage)}
                                     className=""
                                     color="primary"
                                 />
