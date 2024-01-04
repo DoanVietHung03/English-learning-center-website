@@ -5,19 +5,15 @@ import Header from "@/components/layout/header"
 import Ihand from "@/components/icons/icon_hand"
 import Link from "next/link"
 import Select from "react-select";
-import React, { ReactElement, useState, useEffect, SyntheticEvent } from "react"
+import React, { useState, useEffect, SyntheticEvent } from "react"
 import moment from 'moment';
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
 import { alpha, styled } from "@mui/material/styles";
 import { pink } from "@mui/material/colors";
 import Switch from "@mui/material/Switch";
-import { set } from "mongoose"
-import { useRouter } from "next/navigation";
-import { Date } from "mongoose"
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
-import Pagination from '@mui/material/Pagination';
 
 const PinkSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
@@ -36,7 +32,6 @@ const label = { inputProps: { "aria-label": "Color switch demo" } };
 export default function RP() {
     const [status, setStatus] = useState('')
     const [reports, setReports] = useState([])
-    const router = useRouter();
     const mongoose = require('mongoose');
     const { Date } = mongoose.Schema.Types;
 
@@ -123,10 +118,6 @@ export default function RP() {
         })
     }
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const rpPerPage = 7;
-    const currentRP = reports.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
-
     return (
         <>
             <Header />
@@ -172,8 +163,8 @@ export default function RP() {
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Date Completed</p>
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Status</p>
                             </div>
-                            <div className="h-[253px]">
-                                {currentRP.map((rep, index) => (
+                            <div className="h-[253px] overflow-y-auto">
+                                {reports.map((rep, index) => (
                                     ((checkStatus[index] == status || status == '') &&
                                         <div key={index} className="grid grid-cols-6 items-center text-center">
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
@@ -220,15 +211,6 @@ export default function RP() {
                                                 <div>{(!isCompleted[index] ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium w-fit">{checkStatus[index]}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium w-fit">{checkStatus[index]}</div>)}</div>
                                             </div>
                                         </div>)))}
-                            </div>
-                            <div className="flex justify-center mt-8">
-                                <Pagination
-                                    count={Math.ceil(reports.length / rpPerPage)}
-                                    shape="rounded"
-                                    onChange={(event, newPage) => setCurrentPage(newPage)}
-                                    className=""
-                                    color="primary"
-                                />
                             </div>
                         </div>
                     </div>
