@@ -5,7 +5,7 @@ import Header from "@/components/layout/header"
 import Ihand from "@/components/icons/icon_hand"
 import Link from "next/link"
 import Select from "react-select";
-import React, { useState, useEffect, SyntheticEvent } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import moment from 'moment';
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
@@ -15,7 +15,6 @@ import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import Pagination from '@mui/material/Pagination';
-import { COMPILER_INDEXES } from "next/dist/shared/lib/constants"
 
 const PinkSwitch = styled(Switch)(({ theme }) => ({
     "& .MuiSwitch-switchBase.Mui-checked": {
@@ -96,12 +95,6 @@ export default function RP() {
 
         localStorage.setItem('sidebar', 2)
         localStorage.setItem('status_filter', '')
-        //console.log(filteredReport)
-        //status = 'Completed'
-
-        //filteredReport = reports.filter(report => report.status == status)
-        //console.log(filteredReport)
-
     }, []);
 
     const handleSwitchChange = (index: number) => {
@@ -139,13 +132,7 @@ export default function RP() {
         })
     }
 
-
-
-
-
-    // if (filteredReport !== null && filteredReport !== undefined) {
-    //     currentRP = filteredReport.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
-    // }
+    const popupRef = useRef();
 
     return (
         <>
@@ -201,9 +188,15 @@ export default function RP() {
                                                 <div>{rep.userID}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <Tooltip disableFocusListener disableTouchListener title='Click to see full'>
+                                                <Tooltip 
+                                                disableFocusListener 
+                                                disableTouchListener 
+                                                title='Click to see full'>
                                                     <Grid item>
-                                                        <Popup trigger={<button className="hover:underline">{rep.title}</button>} position={"right bottom"}>
+                                                        <Popup 
+                                                            ref={popupRef} 
+                                                            trigger={<button className="hover:underline">{rep.title}</button>} 
+                                                            position={"right bottom"}>
                                                             <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
                                                                 <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
                                                                     style={{ wordWrap: 'break-word' }}>
@@ -220,6 +213,7 @@ export default function RP() {
                                                                                 localStorage.setItem('report_id', rep._id);
                                                                                 handleSwitchChange(rep.index);
                                                                                 handleFormSubmit(ev)
+                                                                                popupRef.current.close()                                                                            
                                                                             }} />)}
                                                                     {rep.isCompleted && <span>Completed</span>}
                                                                 </div>
