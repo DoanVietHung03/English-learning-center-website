@@ -29,6 +29,8 @@ export async function POST(req: { json: () => any }) {
             }
             reports = reports
             .filter(report => report !== null);
+            reports.reverse()
+
 
             var isCompleted = []
             for(var i = 0; i < reports.length; i++){
@@ -39,6 +41,7 @@ export async function POST(req: { json: () => any }) {
                     isCompleted.push(false)
                 }
             }
+
             const combinesReports = reports.map((report,i) => {
                 return {
                     _id: report._id,
@@ -55,7 +58,6 @@ export async function POST(req: { json: () => any }) {
                 }
             })
 
-            reports.reverse()
             return Response.json(combinesReports);
         }
         else if (body.method === 'changeStatus'){

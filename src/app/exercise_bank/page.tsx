@@ -25,7 +25,6 @@ export default function Exercise_bank() {
     const [exercises, setExercises] = useState([])
     const [exerciseList, setExerciseList] = useState([])
     const [selectedButton, setSelectedButton] = useState<number | null>(1);
-    const [emptyFilter, setEmptyfilter] = useState(true)
     const [resetKey, setResetKey] = useState(0);
     const router = useRouter()
     
@@ -34,9 +33,16 @@ export default function Exercise_bank() {
         setSelectedButton(buttonNumber);
     };
 
+    const handleFilter = (ev) => {
+        console.log(ev)
+        filteredReport = reports.filter(report => report.status == localStorage.getItem('module_filter'))
+        setLength(filteredReport.length)
+        currentRP2 = filteredReport.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
+        setReport(currentRP2)
+    }
+
     async function handleDelete(ev: SyntheticEvent) {
         ev.preventDefault()
-        console.log(delete_ex)
         const response = await fetch('/api/exercise', {
             method: 'POST',
             body: JSON.stringify({ ex_id: delete_ex, method: 'delete' }),
@@ -47,6 +53,9 @@ export default function Exercise_bank() {
 
     useEffect(() => {
         localStorage.setItem('sidebar', 1)
+        localStorage.setItem('module_filter', '')
+        localStorage.setItem('skill_filter', '')
+
         fetch('/api/exercise')
             .then(res => res.json())
             .then(data => {
@@ -80,7 +89,6 @@ export default function Exercise_bank() {
         setSkill(ev.value);
     };
     const handleChangeRemoveF = (ev) => {
-        setEmptyfilter(true);
         setModule('');
         setSkill('');
         setResetKey((prevKey) => prevKey + 1);

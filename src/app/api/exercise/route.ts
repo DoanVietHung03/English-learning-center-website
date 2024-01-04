@@ -78,5 +78,18 @@ export async function GET() {
     connectToDatabase();
     const exbank = await Exercise.find({},{title: 1, module: 1, skill: 1});
     exbank.reverse()
-    return Response.json(exbank)
+    const combinesExbank = exbank.map((ex,i) => {
+        return {
+            _id: ex._id,
+            title: ex.title,
+            module: ex.module,
+            skill: ex.skill,
+            content: ex.content,
+            solution: ex.solution,
+            attachedFile: ex.attachedFile,
+            index: i, 
+        }
+    })
+
+    return Response.json(combinesExbank)
 }

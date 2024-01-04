@@ -58,14 +58,15 @@ export default function RP() {
         console.log(reports.length)
         localStorage.setItem('status_filter', '')
         setResetKey((prevKey) => prevKey + 1);
-
+        setCurrentPage(1)
     };
 
     const handleFilter = (ev) => {
         console.log(ev)
         filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
         setLength(filteredReport.length)
-        currentRP2 = filteredReport.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
+        currentRP2 = filteredReport.slice((1 - 1) * rpPerPage, 1 * rpPerPage);
+        setCurrentPage(1)
         setReport(currentRP2)
     }
 
