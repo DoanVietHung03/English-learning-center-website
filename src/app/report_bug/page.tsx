@@ -40,6 +40,8 @@ export default function RP() {
 
     const handleChangeStatus = (ev) => {
         localStorage.setItem('status_filter', ev.value) 
+        setCurrentPage(1)
+        console.log(currentPage)
     };
 
     var [length, setLength] = useState(Number)
@@ -61,12 +63,11 @@ export default function RP() {
     };
 
     const handleFilter = (ev) => {
-        console.log(ev)
         filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
         setLength(filteredReport.length)
         currentRP2 = filteredReport.slice((1 - 1) * rpPerPage, 1 * rpPerPage);
-        setCurrentPage(1)
         setReport(currentRP2)
+        setCurrentPage(1)
     }
 
     const handlePageChange = (index: number) => {
@@ -111,7 +112,6 @@ export default function RP() {
             localStorage.setItem('status', 'Uncompleted') 
         }
 
-  
         filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
         if(localStorage.getItem('status_filter') === ''){
             setLength(reports.length)
