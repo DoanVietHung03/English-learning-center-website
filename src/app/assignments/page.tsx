@@ -17,6 +17,7 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import { useRouter } from "next/navigation";
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function Assigments() {
     const type = localStorage.getItem('userType')
@@ -133,7 +134,10 @@ export default function Assigments() {
                                                 <div className="ml-1 font-poppins">
                                                     {(assignment.status === 'null' ? <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('MM/DD/YYYY')}</div> :
                                                         (assignment.status === 'Marked' ? <div className="font-poppins font-medium text-green-400">{assignment.status}</div> :
-                                                            <div className="font-poppins font-medium text-red-400">{assignment.status}</div>))}
+                                                            <div className="flex gap-2 items-center font-poppins font-medium text-red-500">
+                                                                {assignment.status}
+                                                                <CircularProgress size={'1em'} style={{ color: 'red' }}/>
+                                                            </div>))}
                                                 </div>
                                             </div>
                                         </Link>
