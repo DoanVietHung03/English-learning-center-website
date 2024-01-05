@@ -50,15 +50,20 @@ export default function Exercise_bank() {
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
         setCurrentPage(1)
-
+        if(buttonNumber === 2){
+            setLength(exerciseList.length)
+        }
+        else{
+            setLength(exercises.length)
+        }
     };
 
 
     const handleChangeRemoveF = (ev) => {
-        if(selectedButton === 2){
+        if (selectedButton === 2) {
             setLength(exerciseList.length)
         }
-        else{
+        else {
             setLength(exercises.length)
 
         }
@@ -79,15 +84,15 @@ export default function Exercise_bank() {
                 .filter(ex => ex.module == localStorage.getItem('module_filter'))
 
             filteredExList = exerciseList
-            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
-            .filter(ex => ex.module == localStorage.getItem('module_filter'))
+                .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+                .filter(ex => ex.module == localStorage.getItem('module_filter'))
         }
         else {
             filteredEx = exercises
                 .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
-            
+
             filteredExList = exerciseList
-            .filter(ex => ex.skill === localStorage.getItem('skill_filter'))
+                .filter(ex => ex.skill === localStorage.getItem('skill_filter'))
         }
 
         currentExList2 = filteredExList.slice(0, exPerPage);
@@ -98,10 +103,10 @@ export default function Exercise_bank() {
         setCurrentFilteredEx(filteredEx)
         setCurrentEx(currentEx2)
 
-        if(selectedButton === 2){
+        if (selectedButton === 2) {
             setLength(filteredExList.length)
         }
-        else{
+        else {
             setLength(filteredEx.length)
         }
 
@@ -117,17 +122,17 @@ export default function Exercise_bank() {
             filteredEx = exercises
                 .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
                 .filter(ex => ex.module == localStorage.getItem('module_filter'))
-            
+
             filteredExList = exerciseList
-            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
-            .filter(ex => ex.module == localStorage.getItem('module_filter'))
+                .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+                .filter(ex => ex.module == localStorage.getItem('module_filter'))
         }
         else {
             filteredEx = exercises
                 .filter(ex => ex.module === localStorage.getItem('module_filter'))
 
             filteredExList = exerciseList
-            .filter(ex => ex.module === localStorage.getItem('module_filter'))
+                .filter(ex => ex.module === localStorage.getItem('module_filter'))
         }
 
         currentExList2 = filteredExList.slice(0, exPerPage);
@@ -138,10 +143,10 @@ export default function Exercise_bank() {
         setCurrentFilteredEx(filteredEx)
         setCurrentEx(currentEx2)
 
-        if(selectedButton === 2){
+        if (selectedButton === 2) {
             setLength(filteredExList.length)
         }
-        else{
+        else {
             setLength(filteredEx.length)
         }
 
@@ -149,13 +154,13 @@ export default function Exercise_bank() {
 
     const handlePageChange = (index: number) => {
         setCurrentPage(index)
-        if(selectedButton === 2){
+        if (selectedButton === 2) {
             currentExList2 = currentFilteredExList.slice((index - 1) * exPerPage, index * exPerPage);
             setCurrentExList(currentExList2)
         }
-        else{
-            currentEx2 = currentFilteredEx.slice((index - 1) * exPerPage, index * exPerPage), 
-            setCurrentEx(currentEx2)
+        else {
+            currentEx2 = currentFilteredEx.slice((index - 1) * exPerPage, index * exPerPage),
+                setCurrentEx(currentEx2)
         }
     }
 
@@ -183,7 +188,7 @@ export default function Exercise_bank() {
                 console.error('Error fetching data:', error);
             });
 
-        if(localStorage.getItem('userType') === 'Student'){
+        if (localStorage.getItem('userType') === 'Student') {
             fetch('/api/exercise', {
                 method: 'POST',
                 headers: {
@@ -236,7 +241,7 @@ export default function Exercise_bank() {
                                 className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Skill" />
                         </div>
 
-                        <div className="mt-16 flex items-center ml-9 gap-2">
+                        <div className="mt-[52px] flex items-center ml-9 gap-2">
                             <button onClick={handleChangeRemoveF}
                                 className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px]
                              hover:bg-red-200 transition-colors duration-300">
@@ -274,37 +279,65 @@ export default function Exercise_bank() {
                         {
                             (selectedButton === 2 ?
                                 <div>
-                                    <div className="grid grid-cols-3">
-                                        {currentEx.map(exercise => (
-                                            ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
-                                                <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
-                                                    <div className="font-semibold mb-4 h-[48px]">
-                                                        {exercise.title}
-                                                    </div>
-                                                    <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
-                                                        <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
-                                                            {exercise.module}
+                                    {((localStorage.getItem('module_filter') === 'IELTS') || (localStorage.getItem('module_filter') === 'TOEFL') || (localStorage.getItem('module_filter') === 'TOEIC') || (localStorage.getItem('skill_filter') === 'Listening') || (localStorage.getItem('skill_filter') === 'Speaking') || (localStorage.getItem('skill_filter') === 'Writing') || (localStorage.getItem('skill_filter') === 'Reading')) ?
+                                        <div>
+                                            <div className="grid grid-cols-3">
+                                                {currentExList3.map(exercise => (
+                                                    <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
+                                                        <div className="font-semibold mb-4 h-[48px]">
+                                                            {exercise.title}
                                                         </div>
-                                                        <div className="p-2 border-2 border-gray-300 rounded-lg">
-                                                            {exercise.skill}
+                                                        <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
+                                                            <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
+                                                                {exercise.module}
+                                                            </div>
+                                                            <div className="p-2 border-2 border-gray-300 rounded-lg">
+                                                                {exercise.skill}
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
-                                                        href='/ex_in_exbank'
-                                                        className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
+                                                        <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
+                                                            href='/ex_in_exbank'
+                                                            className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
                                                         transition-colors duration-300">
-                                                        <Ieye className="fill-blue-400 w-6" />
-                                                        <div className="text-blue-400">View Exercise</div>
-                                                    </Link>
-                                                </div>
-                                            )
-                                        ))}
-                                    </div>
+                                                            <Ieye className="fill-blue-400 w-6" />
+                                                            <div className="text-blue-400">View Exercise</div>
+                                                        </Link>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div> :
+                                        <div>
+                                            <div className="grid grid-cols-3">
+                                                {currentExList.map(exercise => (
+                                                    <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
+                                                        <div className="font-semibold mb-4 h-[48px]">
+                                                            {exercise.title}
+                                                        </div>
+                                                        <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400">
+                                                            <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
+                                                                {exercise.module}
+                                                            </div>
+                                                            <div className="p-2 border-2 border-gray-300 rounded-lg">
+                                                                {exercise.skill}
+                                                            </div>
+                                                        </div>
+                                                        <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
+                                                            href='/ex_in_exbank'
+                                                            className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
+                                                    transition-colors duration-300">
+                                                            <Ieye className="fill-blue-400 w-6" />
+                                                            <div className="text-blue-400">View Exercise</div>
+                                                        </Link>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>}
                                     <div className="flex justify-center">
                                         <Pagination
-                                            count={Math.ceil(exerciseList.length / exercisesPerPage1)}
+                                            count={Math.ceil(length / exPerPage)}
                                             shape="rounded"
-                                            onChange={(event, newPage) => setCurrentPage1(newPage)}
+                                            page={currentPage}
+                                            onChange={(event, newPage) => handlePageChange(newPage)}
                                             className=""
                                             color="primary"
                                         />
@@ -447,7 +480,7 @@ export default function Exercise_bank() {
                                                                     <div className="mt-4">
                                                                         <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                                         <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => {handleDelete(ev)}}>
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { handleDelete(ev) }}>
                                                                                 Yes
                                                                             </button>
 
