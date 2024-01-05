@@ -51,10 +51,10 @@ export default function Exercise_bank() {
         setSelectedButton(buttonNumber);
         setCurrentPage(1)
         if(buttonNumber === 2){
-            setLength(exerciseList.length)
+            setLength(currentFilteredExList.length)
         }
         else{
-            setLength(exercises.length)
+            setLength(currentFilteredEx.length)
         }
     };
 
@@ -69,6 +69,9 @@ export default function Exercise_bank() {
         }
         localStorage.setItem('skill_filter', '')
         localStorage.setItem('module_filter', '')
+        setCurrentFilteredEx(exercises)
+        setCurrentFilteredExList(exerciseList)
+
         setResetKey((prevKey) => prevKey + 1);
         setCurrentPage(1)
     };
@@ -160,7 +163,7 @@ export default function Exercise_bank() {
         }
         else {
             currentEx2 = currentFilteredEx.slice((index - 1) * exPerPage, index * exPerPage),
-                setCurrentEx(currentEx2)
+            setCurrentEx(currentEx2)
         }
     }
 
@@ -183,6 +186,7 @@ export default function Exercise_bank() {
             .then(res => res.json())
             .then(data => {
                 setExercises(data)
+                setCurrentFilteredEx(data)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -199,11 +203,13 @@ export default function Exercise_bank() {
                 .then(res => res.json())
                 .then(data => {
                     setExerciseList(data)
+                    setCurrentFilteredExList(data)
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
         }
+        
 
     }, []);
 
