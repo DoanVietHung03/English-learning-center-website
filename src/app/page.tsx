@@ -1,12 +1,11 @@
 'use client';
-import Image from "next/image"
-import Link from "next/link"
+
 import Ilock from "@/components/icons/icon_lock"
 import Iman from "@/components/icons/icon_man"
-import { SyntheticEvent, useState, useEffect } from "react"
-import { signIn } from "next-auth/react"
+import { SyntheticEvent, useState } from "react"
 import { useRouter } from 'next/navigation'
-
+import Head from 'next/head';
+import RootLayout from "./layout";
 
 export default function Login() {
     const [phone, setPhone] = useState('')
@@ -49,9 +48,8 @@ export default function Login() {
         }
     }
 
-
     return (
-        <>
+        <RootLayout>
             <div className="mt-20 rounded-lg mx-auto my-auto w-2/3 h-[550px] bg-white border-gray-200 border-2">
                 <div className="flex h-full">
                     <div className="w-1/2">
@@ -107,6 +105,6 @@ export default function Login() {
                     </div>
                 </div>
             </div>
-        </>
+        </RootLayout>
     )
 }
