@@ -289,6 +289,7 @@ export default function RP() {
                                 <Pagination
                                     count={Math.ceil(length / rpPerPage)}
                                     shape="rounded"
+                                    page={currentPage}
                                     onChange={(event, newPage) => handlePageChange(newPage)}
                                     className=""
                                     color="primary"
