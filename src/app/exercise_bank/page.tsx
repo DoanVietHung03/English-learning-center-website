@@ -26,19 +26,69 @@ export default function Exercise_bank() {
     const [exerciseList, setExerciseList] = useState([])
     const [selectedButton, setSelectedButton] = useState<number | null>(1);
     const [resetKey, setResetKey] = useState(0);
+    const [currentEx3, setCurrentEx] = useState([])
+
     const router = useRouter()
-    
+
+    var currentEx: any[]
+    const [currentPage, setCurrentPage] = useState(1);
+    const exPerPage = 3; 
+    currentEx = exercises.slice((currentPage - 1) * exPerPage, currentPage * exPerPage);
+    var currentEx2: any[]
+    var filteredEx: any[]
+    var [length, setLength] = useState(Number)
+
+
+
     var delete_ex
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
     };
 
-    const handleFilter = (ev) => {
+
+    const handleChangeRemoveF = (ev) => {
+        setLength(exercises.length)
+        localStorage.setItem('skill_filter', '')
+        localStorage.setItem('module_filter', '')
+        setResetKey((prevKey) => prevKey + 1);
+        setCurrentPage(1)
+    };
+
+    const handleSkillFilter = (ev) => {
         console.log(ev)
-        filteredReport = reports.filter(report => report.status == localStorage.getItem('module_filter'))
-        setLength(filteredReport.length)
-        currentRP2 = filteredReport.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
-        setReport(currentRP2)
+        localStorage.setItem('skill_filter', ev.value)
+        if (localStorage.getItem('module_filter') === 'IELTS' || localStorage.getItem('module_filter') === 'TOEFL' || localStorage.getItem('module_filter') === 'TOEIC' ){
+            filteredEx = exercises
+            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+            .filter(ex => ex.module == localStorage.getItem('module_filter'))
+        }
+        else{
+            filteredEx = exercises
+            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+        }
+        setLength(filteredEx.length)
+        currentEx2 = filteredEx.slice((1 - 1) * exPerPage, 1 * exPerPage);
+        //setCurrentPage(1)
+        setCurrentEx(currentEx2)
+    }
+
+    const handleModuleFilter = (ev) => {
+        console.log(ev)
+        localStorage.setItem('module_filter', ev.value)
+
+        if (localStorage.getItem('skill_filter') === 'Listening' || localStorage.getItem('skill_filter') === 'Speaking' || localStorage.getItem('skill_filter') === 'Reading' || localStorage.getItem('skill_filter') === 'Writing'){
+            filteredEx = exercises
+            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+            .filter(ex => ex.module == localStorage.getItem('module_filter'))
+        }
+        else{
+            filteredEx = exercises
+            .filter(ex => ex.skill == localStorage.getItem('module_filter'))
+        }
+        setLength(filteredEx.length)
+        currentEx2 = filteredEx.slice((1 - 1) * exPerPage, 1 * exPerPage);
+        //setCurrentPage(1)
+        setCurrentEx(currentEx2)
     }
 
     async function handleDelete(ev: SyntheticEvent) {
@@ -88,19 +138,13 @@ export default function Exercise_bank() {
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
     };
-    const handleChangeRemoveF = (ev) => {
-        setModule('');
-        setSkill('');
-        setResetKey((prevKey) => prevKey + 1);
-    };
+
 
     const handleActionClick = (link) => {
         router.push(link);
     };
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const exercisesPerPage = 3; // Adjust as needed
-    const currentExercises = exercises.slice((currentPage - 1) * exercisesPerPage, currentPage * exercisesPerPage);
+
 
     const [currentPage1, setCurrentPage1] = useState(1);
     const exercisesPerPage1 = 3; // Adjust as needed
@@ -173,7 +217,7 @@ export default function Exercise_bank() {
                             (selectedButton === 2 ?
                                 <>
                                     <div className="grid grid-cols-3">
-                                        {currentExercises1.map(exercise => (
+                                        {currentEx.map(exercise => (
                                             ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
                                                 <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
                                                     <div className="font-semibold mb-4 h-[48px]">
@@ -210,7 +254,7 @@ export default function Exercise_bank() {
                                 </> :
                                 <>
                                     <div className="grid grid-cols-3">
-                                        {currentExercises.map(exercise => (
+                                        {currentEx.map(exercise => (
                                             ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
                                                 <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
                                                     <div className="font-semibold mb-4 h-[48px]">
@@ -281,7 +325,7 @@ export default function Exercise_bank() {
                                     </div>
                                     <div className="flex justify-center">
                                         <Pagination
-                                            count={Math.ceil(exercises.length / exercisesPerPage)}
+                                            count={Math.ceil(exercises.length / exPerPage)}
                                             shape="rounded"
                                             onChange={(event, newPage) => setCurrentPage(newPage)}
                                             className=""

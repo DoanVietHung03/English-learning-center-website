@@ -1,5 +1,4 @@
 import { Report } from "@/models/report"
-import { User } from "@/models/user"
 import { connectToDatabase } from '../../../connection';
 
 export async function POST(req: { json: () => any }) {
