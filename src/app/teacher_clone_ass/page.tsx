@@ -7,14 +7,19 @@ import { SyntheticEvent, useState, useEffect } from "react"
 import { useRouter } from 'next/navigation'
 import Select from "react-select";
 import * as React from 'react';
-import Link from "next/link";
-import Icheck from "@/components/icons/icon_check";
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
+import Fab from "@mui/material/Fab";
+import Icheck from "@/components/icons/icon_check"
+import CheckIcon from "@mui/icons-material/Check";
+import IfileClone from "@/components/icons/icon_file_clone"
+import { green } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
 
 export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
@@ -59,7 +64,9 @@ export default function Clone_Assignment() {
             }),
             headers: { 'Content-Type': 'application/json' },
         })
-        router.push('/assignments')
+        setTimeout(() => {
+            router.push('/assignments')
+        }, 2000);
     }
     const handleChangeCourse = (ev: SyntheticEvent) => {
         fetch('/api/assignment', {
@@ -76,6 +83,36 @@ export default function Clone_Assignment() {
             });
     };
 
+    //Function for add
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const timer = React.useRef<number>();
+
+    const buttonSx = {
+        ...(success && {
+            bgcolor: green[500],
+            "&:hover": {
+                bgcolor: green[700],
+            },
+        }),
+    };
+
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonClick = (ev) => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 800);
+        }
+    };
 
     return (
         <>
@@ -92,11 +129,55 @@ export default function Clone_Assignment() {
 
                     <div className="bg-white mt-2 pb-8 rounded px-7">
                         <div className="mx-6 border-b border-stone-300 pb-2">
-                            <div className="flex items-center justify-end pt-4">                            
-                                <button onClick={handleFormSubmit}
-                                    className="bg-lime-400 text-white hover:bg-lime-200 hover:text-gray-400 rounded-lg px-4 py-1 font-medium leading-tight tracking-tight transition-colors duration-300">
-                                    Clone
-                                </button>                     
+                            <div className="flex items-center justify-end pt-4">
+                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                    <Box sx={{ m: 1, position: "relative" }}>
+                                        <Fab
+                                            aria-label="save"
+                                            color="primary"
+                                            sx={buttonSx}
+                                            onClick={handleButtonClick}
+                                        >
+                                            {success ? <CheckIcon /> : <IfileClone />}
+                                        </Fab>
+                                        {loading && (
+                                            <CircularProgress
+                                                size={68}
+                                                sx={{
+                                                    color: green[500],
+                                                    position: "absolute",
+                                                    top: -6,
+                                                    left: -6,
+                                                    zIndex: 1,
+                                                }}
+                                            />
+                                        )}
+                                    </Box>
+                                    <Box sx={{ m: 1, position: "relative" }}>
+                                        <Button
+                                            type="submit"
+                                            variant="contained"
+                                            sx={buttonSx}
+                                            disabled={loading}
+                                            onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
+                                        >
+                                            Clone
+                                        </Button>
+                                        {loading && (
+                                            <CircularProgress
+                                                size={24}
+                                                sx={{
+                                                    color: green[500],
+                                                    position: "absolute",
+                                                    top: "50%",
+                                                    left: "50%",
+                                                    marginTop: "-12px",
+                                                    marginLeft: "-12px",
+                                                }}
+                                            />
+                                        )}
+                                    </Box>
+                                </Box>
                             </div>
                         </div>
 
@@ -147,7 +228,7 @@ export default function Clone_Assignment() {
                                 }
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

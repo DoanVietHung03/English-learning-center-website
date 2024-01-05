@@ -46,7 +46,7 @@ export default function Add_Ass() {
           }, 2000);
     }
 
-    //Function for submit animation
+    //Function for add
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
     const timer = React.useRef<number>();
