@@ -32,7 +32,7 @@ export default function Exercise_bank() {
 
     var currentEx: any[]
     const [currentPage, setCurrentPage] = useState(1);
-    const exPerPage = 3; 
+    const exPerPage = 3;
     currentEx = exercises.slice((currentPage - 1) * exPerPage, currentPage * exPerPage);
     var currentEx2: any[]
     var filteredEx: any[]
@@ -57,14 +57,14 @@ export default function Exercise_bank() {
     const handleSkillFilter = (ev) => {
         console.log(ev)
         localStorage.setItem('skill_filter', ev.value)
-        if (localStorage.getItem('module_filter') === 'IELTS' || localStorage.getItem('module_filter') === 'TOEFL' || localStorage.getItem('module_filter') === 'TOEIC' ){
+        if (localStorage.getItem('module_filter') === 'IELTS' || localStorage.getItem('module_filter') === 'TOEFL' || localStorage.getItem('module_filter') === 'TOEIC') {
             filteredEx = exercises
-            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
-            .filter(ex => ex.module == localStorage.getItem('module_filter'))
+                .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+                .filter(ex => ex.module == localStorage.getItem('module_filter'))
         }
-        else{
+        else {
             filteredEx = exercises
-            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+                .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
         }
         setLength(filteredEx.length)
         currentEx2 = filteredEx.slice((1 - 1) * exPerPage, 1 * exPerPage);
@@ -76,14 +76,14 @@ export default function Exercise_bank() {
         console.log(ev)
         localStorage.setItem('module_filter', ev.value)
 
-        if (localStorage.getItem('skill_filter') === 'Listening' || localStorage.getItem('skill_filter') === 'Speaking' || localStorage.getItem('skill_filter') === 'Reading' || localStorage.getItem('skill_filter') === 'Writing'){
+        if (localStorage.getItem('skill_filter') === 'Listening' || localStorage.getItem('skill_filter') === 'Speaking' || localStorage.getItem('skill_filter') === 'Reading' || localStorage.getItem('skill_filter') === 'Writing') {
             filteredEx = exercises
-            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
-            .filter(ex => ex.module == localStorage.getItem('module_filter'))
+                .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+                .filter(ex => ex.module == localStorage.getItem('module_filter'))
         }
-        else{
+        else {
             filteredEx = exercises
-            .filter(ex => ex.skill == localStorage.getItem('module_filter'))
+                .filter(ex => ex.skill == localStorage.getItem('module_filter'))
         }
         setLength(filteredEx.length)
         currentEx2 = filteredEx.slice((1 - 1) * exPerPage, 1 * exPerPage);
@@ -215,7 +215,7 @@ export default function Exercise_bank() {
                     <div className="mt-4 -mr-3">
                         {
                             (selectedButton === 2 ?
-                                <>
+                                <div>
                                     <div className="grid grid-cols-3">
                                         {currentEx.map(exercise => (
                                             ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
@@ -251,11 +251,11 @@ export default function Exercise_bank() {
                                             color="primary"
                                         />
                                     </div>
-                                </> :
-                                <>
-                                    <div className="grid grid-cols-3">
-                                        {currentEx.map(exercise => (
-                                            ((((exercise.module == module || module == '') && (exercise.skill == skill || skill == ''))) &&
+                                </div> :
+                                ((localStorage.getItem('module_filter') === 'IELTS') || (localStorage.getItem('module_filter') === 'TOEFL') || (localStorage.getItem('module_filter') === 'TOEIC') || (localStorage.getItem('skill_filter') === 'Listening') || (localStorage.getItem('skill_filter') === 'Speaking') || (localStorage.getItem('skill_filter') === 'Writing') || (localStorage.getItem('skill_filter') === 'Reading')) ?
+                                    <div>
+                                        <div className="grid grid-cols-3">
+                                            {currentEx3.map((exercise) => (
                                                 <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
                                                     <div className="font-semibold mb-4 h-[48px]">
                                                         {exercise.title}
@@ -321,23 +321,102 @@ export default function Exercise_bank() {
                                                         </Box>}
                                                 </div>
                                             )
-                                        ))}
-                                    </div>
-                                    <div className="flex justify-center">
-                                        <Pagination
-                                            count={Math.ceil(exercises.length / exPerPage)}
-                                            shape="rounded"
-                                            onChange={(event, newPage) => setCurrentPage(newPage)}
-                                            className=""
-                                            color="primary"
-                                        />
-                                    </div>
-                                </>
-                            )
+                                            )}
+                                        </div>
+                                        <div className="flex justify-center">
+                                            <Pagination
+                                                count={Math.ceil(exercises.length / exPerPage)}
+                                                shape="rounded"
+                                                onChange={(event, newPage) => setCurrentPage(newPage)}
+                                                className=""
+                                                color="primary"
+                                            />
+                                        </div>
+                                    </div> :
+                                    <div>
+                                        <div className="grid grid-cols-3">
+                                            {currentEx.map((exercise) => (
+                                                <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
+                                                    <div className="font-semibold mb-4 h-[48px]">
+                                                        {exercise.title}
+                                                    </div>
+                                                    <div className="flex text-gray-400 text-sm font-medium pb-3 border-b-2 border-gray-400 ">
+                                                        <div className="p-2 border-2 border-gray-300 rounded-lg mr-10">
+                                                            {exercise.module}
+                                                        </div>
+                                                        <div className="p-2 border-2 border-gray-300 rounded-lg">
+                                                            {exercise.skill}
+                                                        </div>
+                                                    </div>
+                                                    {localStorage.getItem('userType') !== 'Admin' ?
+                                                        <Link onClick={() => localStorage.setItem('exerciseID', exercise._id)}
+                                                            href='/ex_in_exbank'
+                                                            className="flex p-2 mt-3 w-full items-center gap-4 border-2 bg-gray-300 rounded-lg hover:bg-gray-50
+                                                     transition-colors duration-300">
+                                                            <Ieye className="fill-blue-400 w-6" />
+                                                            <div className="text-blue-400">View Exercise</div>
+                                                        </Link>
+                                                        :
+                                                        <Box sx={{ mt: 1, transform: "translateZ(0px)", flexGrow: 1 }}>
+                                                            <SpeedDial
+                                                                ariaLabel="SpeedDial basic example"
+                                                                sx={{ transform: "translateZ(0px)", flexGrow: 1 }}
+                                                                icon={<ItripleBar />}
+                                                                direction="right"
+                                                            >
+                                                                {actions.map((action) => (
+                                                                    <SpeedDialAction
+                                                                        key={action.name}
+                                                                        icon={action.icon}
+                                                                        tooltipTitle={action.name}
+                                                                        onClick={() => {
+                                                                            if (action.name === 'View Exercise') {
+                                                                                handleActionClick(action.link)
+                                                                            } else {
+                                                                                popupRef.current.open();
+                                                                            }
+                                                                        }}
+                                                                        FabProps={{ size: "small" }}
+                                                                    />
+                                                                ))}
+                                                            </SpeedDial>
+                                                            <Popup
+                                                                ref={popupRef}>
+                                                                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
+                                                                    <div className="mt-4">
+                                                                        <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
+                                                                        <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_ex = exercise._id, handleDelete(ev) }}>
+                                                                                Yes
+                                                                            </button>
+
+                                                                            <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
+                                                                                onClick={() => { popupRef.current.close() }}>
+                                                                                No
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Popup>
+                                                        </Box>}
+                                                </div>
+                                            )
+                                            )}
+                                        </div>
+                                        <div className="flex justify-center">
+                                            <Pagination
+                                                count={Math.ceil(exercises.length / exPerPage)}
+                                                shape="rounded"
+                                                onChange={(event, newPage) => setCurrentPage(newPage)}
+                                                className=""
+                                                color="primary"
+                                            />
+                                        </div>
+                                    </div>)
                         }
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     )
 }
