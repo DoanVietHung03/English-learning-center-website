@@ -19,35 +19,49 @@ import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
 
 export default function Exercise_bank() {
-    const [module, setModule] = useState('')
-    const [skill, setSkill] = useState('')
-    const [content, setContent] = useState<ReactElement | any | null>(null)
-    const [exercises, setExercises] = useState([])
-    const [exerciseList, setExerciseList] = useState([])
     const [selectedButton, setSelectedButton] = useState<number | null>(1);
     const [resetKey, setResetKey] = useState(0);
+
+    const [exercises, setExercises] = useState([])
+    const [exerciseList, setExerciseList] = useState([])
+
     const [currentEx3, setCurrentEx] = useState([])
+    const [currentExList3, setCurrentExList] = useState([])
 
+    const [currentFilteredEx, setCurrentFilteredEx] = useState([])
+    const [currentFilteredExList, setCurrentFilteredExList] = useState([])
+
+    var [length, setLength] = useState(Number)
     const router = useRouter()
-
-    var currentEx: any[]
     const [currentPage, setCurrentPage] = useState(1);
+
     const exPerPage = 3;
+    var currentEx: any[]
     currentEx = exercises.slice((currentPage - 1) * exPerPage, currentPage * exPerPage);
     var currentEx2: any[]
     var filteredEx: any[]
-    var [length, setLength] = useState(Number)
 
 
+    var currentExList: any[]
+    currentExList = exerciseList.slice((currentPage - 1) * exPerPage, currentPage * exPerPage);
+    var currentExList2: any[]
+    var filteredExList: any[]
 
-    var delete_ex
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
+        setCurrentPage(1)
+
     };
 
 
     const handleChangeRemoveF = (ev) => {
-        setLength(exercises.length)
+        if(selectedButton === 2){
+            setLength(exerciseList.length)
+        }
+        else{
+            setLength(exercises.length)
+
+        }
         localStorage.setItem('skill_filter', '')
         localStorage.setItem('module_filter', '')
         setResetKey((prevKey) => prevKey + 1);
@@ -56,46 +70,100 @@ export default function Exercise_bank() {
 
     const handleSkillFilter = (ev) => {
         console.log(ev)
+        setCurrentPage(1)
+
         localStorage.setItem('skill_filter', ev.value)
         if (localStorage.getItem('module_filter') === 'IELTS' || localStorage.getItem('module_filter') === 'TOEFL' || localStorage.getItem('module_filter') === 'TOEIC') {
             filteredEx = exercises
                 .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
                 .filter(ex => ex.module == localStorage.getItem('module_filter'))
+
+            filteredExList = exerciseList
+            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+            .filter(ex => ex.module == localStorage.getItem('module_filter'))
         }
         else {
             filteredEx = exercises
                 .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+            
+            filteredExList = exerciseList
+            .filter(ex => ex.skill === localStorage.getItem('skill_filter'))
         }
-        setLength(filteredEx.length)
-        currentEx2 = filteredEx.slice((1 - 1) * exPerPage, 1 * exPerPage);
-        //setCurrentPage(1)
+
+        currentExList2 = filteredExList.slice(0, exPerPage);
+        setCurrentFilteredExList(filteredExList)
+        setCurrentExList(currentExList2)
+
+        currentEx2 = filteredEx.slice(0, exPerPage);
+        setCurrentFilteredEx(filteredEx)
         setCurrentEx(currentEx2)
+
+        if(selectedButton === 2){
+            setLength(filteredExList.length)
+        }
+        else{
+            setLength(filteredEx.length)
+        }
+
     }
 
     const handleModuleFilter = (ev) => {
-        console.log(ev)
-        localStorage.setItem('module_filter', ev.value)
+        console.log(exerciseList)
+        setCurrentPage(1)
 
+        localStorage.setItem('module_filter', ev.value)
+        console.log(localStorage.getItem('module_filter'))
         if (localStorage.getItem('skill_filter') === 'Listening' || localStorage.getItem('skill_filter') === 'Speaking' || localStorage.getItem('skill_filter') === 'Reading' || localStorage.getItem('skill_filter') === 'Writing') {
             filteredEx = exercises
                 .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
                 .filter(ex => ex.module == localStorage.getItem('module_filter'))
+            
+            filteredExList = exerciseList
+            .filter(ex => ex.skill == localStorage.getItem('skill_filter'))
+            .filter(ex => ex.module == localStorage.getItem('module_filter'))
         }
         else {
             filteredEx = exercises
-                .filter(ex => ex.skill == localStorage.getItem('module_filter'))
+                .filter(ex => ex.module === localStorage.getItem('module_filter'))
+
+            filteredExList = exerciseList
+            .filter(ex => ex.module === localStorage.getItem('module_filter'))
         }
-        setLength(filteredEx.length)
-        currentEx2 = filteredEx.slice((1 - 1) * exPerPage, 1 * exPerPage);
-        //setCurrentPage(1)
+
+        currentExList2 = filteredExList.slice(0, exPerPage);
+        setCurrentFilteredExList(filteredExList)
+        setCurrentExList(currentExList2)
+
+        currentEx2 = filteredEx.slice(0, exPerPage);
+        setCurrentFilteredEx(filteredEx)
         setCurrentEx(currentEx2)
+
+        if(selectedButton === 2){
+            setLength(filteredExList.length)
+        }
+        else{
+            setLength(filteredEx.length)
+        }
+
+    }
+
+    const handlePageChange = (index: number) => {
+        setCurrentPage(index)
+        if(selectedButton === 2){
+            currentExList2 = currentFilteredExList.slice((index - 1) * exPerPage, index * exPerPage);
+            setCurrentExList(currentExList2)
+        }
+        else{
+            currentEx2 = currentFilteredEx.slice((index - 1) * exPerPage, index * exPerPage), 
+            setCurrentEx(currentEx2)
+        }
     }
 
     async function handleDelete(ev: SyntheticEvent) {
         ev.preventDefault()
         const response = await fetch('/api/exercise', {
             method: 'POST',
-            body: JSON.stringify({ ex_id: delete_ex, method: 'delete' }),
+            body: JSON.stringify({ ex_id: localStorage.getItem('exerciseID'), method: 'delete' }),
             headers: { 'Content-Type': 'application/json' },
         })
         window.location.reload(true);
@@ -115,40 +183,30 @@ export default function Exercise_bank() {
                 console.error('Error fetching data:', error);
             });
 
-        fetch('/api/exercise', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id: localStorage.getItem("userName"), method: 'getDoneList' }),
-        })
-            .then(res => res.json())
-            .then(data => {
-                setExerciseList(data)
+        if(localStorage.getItem('userType') === 'Student'){
+            fetch('/api/exercise', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: localStorage.getItem("userName"), method: 'getDoneList' }),
             })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
+                .then(res => res.json())
+                .then(data => {
+                    setExerciseList(data)
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
 
     }, []);
-    const handleChangeModule = (ev) => {
-        setModule(ev.value);
-    };
-
-    const handleChangeSkill = (ev) => {
-        setSkill(ev.value);
-    };
 
 
     const handleActionClick = (link) => {
         router.push(link);
     };
 
-
-
-    const [currentPage1, setCurrentPage1] = useState(1);
-    const exercisesPerPage1 = 3; // Adjust as needed
-    const currentExercises1 = exerciseList.slice((currentPage1 - 1) * exercisesPerPage1, currentPage1 * exercisesPerPage1);
 
     const actions = [
         { icon: <Ieye />, name: "View Exercise", link: '/ex_in_exbank' },
@@ -170,11 +228,11 @@ export default function Exercise_bank() {
                         <div className="flex gap-32 justify-center px-11 py-7">
                             <Select key={`module-select-${resetKey}`}
                                 options={optionModule}
-                                onChange={handleChangeModule}
+                                onChange={handleModuleFilter}
                                 className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Module" />
                             <Select key={`skill-select-${resetKey}`}
                                 options={optionSkill}
-                                onChange={handleChangeSkill}
+                                onChange={handleSkillFilter}
                                 className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Skill" />
                         </div>
 
@@ -204,7 +262,7 @@ export default function Exercise_bank() {
                                     Your Exercises
                                 </button> : null}
                         </div>
-                        {localStorage.getItem('userType') === 'Teacher' ?
+                        {localStorage.getItem('userType') !== 'Student' ?
                             <Link href={'./exbank_add'}>
                                 <button className="bg-lime-300 hover:bg-lime-400 px-4 py-2 text-black text-base font-medium rounded-lg leading-tight tracking-tight mr-4">
                                     Add Exercise
@@ -290,6 +348,7 @@ export default function Exercise_bank() {
                                                                         icon={action.icon}
                                                                         tooltipTitle={action.name}
                                                                         onClick={() => {
+                                                                            localStorage.setItem('exerciseID', exercise._id);
                                                                             if (action.name === 'View Exercise') {
                                                                                 handleActionClick(action.link)
                                                                             } else {
@@ -325,9 +384,10 @@ export default function Exercise_bank() {
                                         </div>
                                         <div className="flex justify-center">
                                             <Pagination
-                                                count={Math.ceil(exercises.length / exPerPage)}
+                                                count={Math.ceil(length / exPerPage)}
                                                 shape="rounded"
-                                                onChange={(event, newPage) => setCurrentPage(newPage)}
+                                                page={currentPage}
+                                                onChange={(event, newPage) => handlePageChange(newPage)}
                                                 className=""
                                                 color="primary"
                                             />
@@ -370,6 +430,7 @@ export default function Exercise_bank() {
                                                                         icon={action.icon}
                                                                         tooltipTitle={action.name}
                                                                         onClick={() => {
+                                                                            localStorage.setItem('exerciseID', exercise._id)
                                                                             if (action.name === 'View Exercise') {
                                                                                 handleActionClick(action.link)
                                                                             } else {
@@ -386,7 +447,7 @@ export default function Exercise_bank() {
                                                                     <div className="mt-4">
                                                                         <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                                         <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_ex = exercise._id, handleDelete(ev) }}>
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => {handleDelete(ev)}}>
                                                                                 Yes
                                                                             </button>
 
@@ -407,6 +468,7 @@ export default function Exercise_bank() {
                                             <Pagination
                                                 count={Math.ceil(exercises.length / exPerPage)}
                                                 shape="rounded"
+                                                page={currentPage}
                                                 onChange={(event, newPage) => setCurrentPage(newPage)}
                                                 className=""
                                                 color="primary"

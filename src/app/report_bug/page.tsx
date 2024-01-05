@@ -72,11 +72,12 @@ export default function RP() {
     }
 
     const handlePageChange = (index: number) => {
-        setCurrentPage(index)
         if (localStorage.getItem('status_filter') === 'Completed' || localStorage.getItem('status_filter') === 'Uncompleted'){
             filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
             currentRP2 = filteredReport.slice((index - 1) * rpPerPage, index * rpPerPage), setReport(currentRP2)
         }
+        setCurrentPage(index)
+        
     }
 
 
@@ -98,6 +99,7 @@ export default function RP() {
         localStorage.setItem('sidebar', 2)
         localStorage.setItem('status_filter', '')
     }, []);
+
 
     const handleSwitchChange = (index: number) => {
         if(reports[index].isCompleted === false){
@@ -289,6 +291,7 @@ export default function RP() {
                                 <Pagination
                                     count={Math.ceil(length / rpPerPage)}
                                     shape="rounded"
+                                    page={currentPage}
                                     onChange={(event, newPage) => handlePageChange(newPage)}
                                     className=""
                                     color="primary"
