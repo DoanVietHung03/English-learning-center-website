@@ -19,6 +19,7 @@ import { green } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import axios from 'axios';
 
 export default function Add_Ass() {
     const [skill, setSkill] = useState('')
@@ -27,6 +28,30 @@ export default function Add_Ass() {
     const [file, setFile] = useState('');
     const [content, setContent] = useState('');
     const router = useRouter();
+
+
+    const [selectedMP3, setSelectedMP3] = useState(null);
+
+    function handleMP3Change (event){
+        setSelectedMP3(event.target.files[0]);
+    };
+
+    async function handleUpload (ev: SyntheticEvent){
+        //const formData = new FormData();
+        console.log(selectedMP3)
+        //formData.append('mp3', selectedMP3);
+        //console.log(formData)
+
+        // try {
+        // await axios.post('http://localhost:3000/upload', formData);
+        // console.log('MP3 uploaded successfully!');
+        // } catch (error) {
+        // console.error('Failed to upload MP3', error);
+        // }
+    };
+
+
+
     function handleChangeImage(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
@@ -116,16 +141,30 @@ export default function Add_Ass() {
                                         </div>
                                         {(skill == "Listening") &&
                                             (
-                                                <div className="bg-white p-3 rounded-lg border-2">
-                                                    <h2>Choose file Listening:</h2>
-                                                    <input type="file" accept="audio" onChange={handleChangeImage} />
-                                                    <ReactAudioPlayer
-                                                        src={file}
-                                                        autoPlay
-                                                        controls
-                                                        className="w-full"
+                                                <div className="container mx-auto mt-8">
+                                                    <input
+                                                        type="file"
+                                                        accept="audio/mpeg"
+                                                        onChange={handleMP3Change}
+                                                        className="mb-4"
                                                     />
+                                                    {selectedMP3 && (
+                                                        <p>Selected MP3: {selectedMP3.name}</p>
+                                                    )}
+                                                    <button onClick={handleUpload} className="bg-blue-500 text-white py-2 px-4 rounded">
+                                                        Upload MP3
+                                                    </button>
                                                 </div>
+                                                // <div className="bg-white p-3 rounded-lg border-2">
+                                                //     <h2>Choose file Listening:</h2>
+                                                //     <input type="file" accept="audio" onChange={handleChangeImage} />
+                                                //     <ReactAudioPlayer
+                                                //         src={file}
+                                                //         autoPlay
+                                                //         controls
+                                                //         className="w-full"
+                                                //     />
+                                                // </div>
                                             )
                                         }
                                     </div>
