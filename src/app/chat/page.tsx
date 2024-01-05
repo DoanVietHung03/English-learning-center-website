@@ -6,7 +6,6 @@ import React, { SyntheticEvent, useEffect, useState, ReactElement, useRef } from
 import Image from "next/image"
 import Select from "react-select";
 import Ixmark from "@/components/icons/icon_xmark"
-import { useRouter } from 'next/navigation'
 import moment from 'moment';
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
@@ -25,9 +24,6 @@ export default function Chat() {
 
     const [message_sent, SetMessageSent] = useState([]);
     const [message_received, SetMessageReceived] = useState([]);
-
-    const type = localStorage.getItem('userName')
-
 
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
