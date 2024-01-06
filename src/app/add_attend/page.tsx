@@ -3,9 +3,7 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import { useState, useEffect } from "react"
-import Select from "react-select";
 import Idelete from "@/components/icons/delete";
-import Link from "next/link";
 import { useRouter } from 'next/navigation'
 export default function CreateAttend() {
     const [listStudent, setListStudent] = useState([])
