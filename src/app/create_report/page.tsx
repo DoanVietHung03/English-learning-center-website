@@ -15,12 +15,15 @@ import { green } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import { Cloudinary } from 'cloudinary-core';
+
+const cloudinary = new Cloudinary({ cloud_name: 'dzdmbflvk', api_key: '255688826461671', api_secret: '_tIBX9mwSbKrEJK2qQRem8Fj-CE' });
 
 export default function Create_RP() {
     const [title, setTitle] = useState('')
     const [type, setType] = useState('')
     const [content, setContent] = useState('')
-    const [file, setFile] = useState('');
+    const [file, setFile] = useState(null);
     const [date_created, setDate_created] = useState(Date.now());
     const [date_completed, setDate_completed] = useState(null);
     const [status, setStatus] = useState('Uncompleted');
@@ -29,9 +32,33 @@ export default function Create_RP() {
         setType(ev.value);
     };
 
-    function handleChangeFile(ev) {
-        setFile(URL.createObjectURL(ev.target.files[0]));
-    }
+    const handleChangeFile = (event) => {
+        const selectedFile = event.target.files[0];
+        setFile(selectedFile);
+    };
+
+    const handleUpload = async () => {
+        if (file) {
+            try {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const response = await fetch(cloudinary.url('upload', { upload_preset: 'introSE' }), {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Upload successful:', result);
+                } else {
+                    console.error('Upload failed');
+                }
+            } catch (error) {
+                console.error('Error during upload:', error);
+            }
+        }
+    };
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
@@ -154,7 +181,7 @@ export default function Create_RP() {
                                         variant="contained"
                                         sx={buttonSx}
                                         disabled={loading}
-                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
+                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev); handleUpload }}
                                     >
                                         Create
                                     </Button>

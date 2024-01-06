@@ -100,7 +100,7 @@ export default function Chat() {
                                     </div>
 
                                     <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
-                                        Send date: {moment.utc(mes_receive.sentDate).format('MM/DD/YYYY')}
+                                        Send date: {moment.utc(mes_receive.sentDate).format('DD/MM/YYYY')}
                                     </div>
                                 </div>
                                 <div>
@@ -179,7 +179,7 @@ export default function Chat() {
                                     </div>
 
                                     <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
-                                        Send date: {moment.utc(mes_send.sentDate).format('MM/DD/YYYY')}
+                                        Send date: {moment.utc(mes_send.sentDate).format('DD/MM/YYYY')}
                                     </div>
                                 </div>
                                 <div>
