@@ -22,7 +22,7 @@ import Button from "@mui/material/Button";
 
 export default function Add_Ass() {
     const [skill, setSkill] = useState('')
-    const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
+    const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs());
     const [title, setTitle] = useState('')
     const [file, setFile] = useState('');
     const [content, setContent] = useState('');

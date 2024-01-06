@@ -153,7 +153,7 @@ export default function RP() {
                                 <Link href="/create_report">
                                     <button className="flex items-center gap-2 px-4 py-4 bg-lime-300 rounded-lg justify-center hover:bg-lime-400">
                                         <Ihand />
-                                        <div className="text-center text-black text-sm font-['Poppins'] leading-tight tracking-tight">Create report</div>
+                                        <div className="text-center text-black text-sm font-medium leading-tight tracking-tight">Create report</div>
                                     </button>
                                 </Link>
                             </div> :

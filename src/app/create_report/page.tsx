@@ -6,8 +6,15 @@ import Iimage from "@/components/icons/icon_image"
 import IfileExport from "@/components/icons/file_export"
 import Select from "react-select";
 import Image from "next/image"
+import * as React from 'react';
 import { SyntheticEvent, useState } from "react"
-import {useRouter} from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import Fab from "@mui/material/Fab";
+import CheckIcon from "@mui/icons-material/Check";
+import { green } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
 
 export default function Create_RP() {
     const [title, setTitle] = useState('')
@@ -25,16 +32,49 @@ export default function Create_RP() {
     function handleChangeFile(ev) {
         setFile(URL.createObjectURL(ev.target.files[0]));
     }
-    
+
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         await fetch('/api/report', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('userName'),title, type, content, file, date_created, date_completed, status, method: 'add' }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'), title, type, content, file, date_created, date_completed, status, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        router.push('/report_bug')
+        setTimeout(() => {
+            router.push('/report_bug')
+        }, 2000);
     }
+
+    //Function for add
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const timer = React.useRef<number>();
+
+    const buttonSx = {
+        ...(success && {
+            bgcolor: green[500],
+            "&:hover": {
+                bgcolor: green[700],
+            },
+        }),
+    };
+
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonClick = (ev) => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 800);
+        }
+    };
 
     return (
         <>
@@ -68,10 +108,10 @@ export default function Create_RP() {
                                 placeholder="Type content of the report"></textarea>
                         </div>
 
-                        <button className="flex items-center ml-14 mt-2 gap-2 bg-gray-200 rounded-xl px-3 py-2 hover:bg-gray-300">
+                        <div className="flex items-center ml-14 mt-2 gap-2 bg-gray-200 rounded-xl px-3 py-2 w-fit">
                             <Iimage />
                             <p className=" text-zinc-500 text-base leading-tight tracking-tight">Attached image</p>
-                        </button>
+                        </div>
 
                         <div className="rounded-md border border-zinc-400 ml-14 mr-12 mt-2 pl-2 py-1">
                             <input
@@ -81,16 +121,58 @@ export default function Create_RP() {
                             <Image
                                 src={file}
                                 width={300}
-                                height={300} alt={""}                            />
+                                height={300} alt={""} />
                         </div>
 
-                        <div className="ml-14 mt-16">
-                            <button
-                                onClick={handleFormSubmit}
-                                className="flex items-center gap-2 bg-lime-300 rounded-lg px-4 py-1 hover:bg-lime-400">
-                                <p className="text-base leading-tight tracking-tight font-medium">Send</p>
-                                <IfileExport />
-                            </button>
+                        <div className="flex items-center justify-end mr-12 mt-12">
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <Box sx={{ m: 1, position: "relative" }}>
+                                    <Fab
+                                        aria-label="save"
+                                        color="primary"
+                                        sx={buttonSx}
+                                        onClick={handleButtonClick}
+                                    >
+                                        {success ? <CheckIcon /> : <IfileExport />}
+                                    </Fab>
+                                    {loading && (
+                                        <CircularProgress
+                                            size={68}
+                                            sx={{
+                                                color: green[500],
+                                                position: "absolute",
+                                                top: -6,
+                                                left: -6,
+                                                zIndex: 1,
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+                                <Box sx={{ m: 1, position: "relative" }}>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        sx={buttonSx}
+                                        disabled={loading}
+                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
+                                    >
+                                        Create
+                                    </Button>
+                                    {loading && (
+                                        <CircularProgress
+                                            size={24}
+                                            sx={{
+                                                color: green[500],
+                                                position: "absolute",
+                                                top: "50%",
+                                                left: "50%",
+                                                marginTop: "-12px",
+                                                marginLeft: "-12px",
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+                            </Box>
                         </div>
 
                     </div>
