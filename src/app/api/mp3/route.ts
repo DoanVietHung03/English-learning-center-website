@@ -1,46 +1,49 @@
+// app.js
 const express = require('express');
 const mongoose = require('mongoose');
 const multer = require('multer');
-const path = require('path');
+const Grid = require('gridfs-stream');
+const GridFsStorage = require('multer-gridfs-storage');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
+app.use(cors());
 
-// Kết nối MongoDB
 mongoose.connect("mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-// Định nghĩa schema cho collection mp3
-const mp3Schema = new mongoose.Schema({
-  data: Buffer,
-  contentType: String,
+
+const conn = mongoose.connection;
+Grid.mongo = mongoose.mongo;
+const gfs = Grid(conn.db);
+
+// Set up GridFS storage engine using multer-gridfs-storage
+const storage = new GridFsStorage({
+  url: "mongodb+srv://learning-management:Abuo65lscK5pOUms@cluster0.nwhbe5i.mongodb.net/learning-management",
+  file: (req, file) => {
+    return {
+      bucketName: 'uploads', // Name of your collection
+      filename: file.originalname,
+    };
+  },
 });
 
-const MP3 = mongoose.model('MP3', mp3Schema);
+const upload = multer({ storage });
 
-// Sử dụng multer để xử lý upload mp3
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+app.post('/upload', upload.single('audio'), (req, res) => {
+  console.log('Audio uploaded successfully')
+  res.status(201).send('Audio uploaded successfully');
 
-// Endpoint để upload mp3
-app.post('/upload', upload.single('mp3'), async (req, res) => {
-  try {
-    const newMP3 = new MP3({
-      data: req.file.buffer,
-      contentType: req.file.mimetype,
-    });
-    console.log("aaaaaaaaaaaaaaa")
-    await newMP3.save();
+});
 
-    res.status(201).json({ message: 'MP3 uploaded successfully!' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
+app.get('/audio/:filename', (req, res) => {
+  const readstream = gfs.createReadStream({ filename: req.params.filename });
+  readstream.pipe(res);
 });
 
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });

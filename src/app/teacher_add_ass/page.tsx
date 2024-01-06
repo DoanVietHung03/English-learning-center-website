@@ -25,36 +25,44 @@ export default function Add_Ass() {
     const [skill, setSkill] = useState('')
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [title, setTitle] = useState('')
-    const [file, setFile] = useState('');
+    //const [file, setFile] = useState('');
     const [content, setContent] = useState('');
     const router = useRouter();
 
 
-    const [selectedMP3, setSelectedMP3] = useState(null);
+    const [file, setFile] = useState(null);
 
-    function handleMP3Change (event){
-        setSelectedMP3(event.target.files[0]);
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0].name;
+        setFile(selectedFile);
     };
 
-    async function handleUpload (ev: SyntheticEvent){
-        //const formData = new FormData();
-        console.log(selectedMP3)
-        //formData.append('mp3', selectedMP3);
-        //console.log(formData)
+    const handleUpload = async () => {
+        if (file) {
+        const formData = new FormData();
+        formData.append('audio', file);
 
-        // try {
-        // await axios.post('http://localhost:3000/upload', formData);
-        // console.log('MP3 uploaded successfully!');
-        // } catch (error) {
-        // console.error('Failed to upload MP3', error);
-        // }
+        try {
+            const response = await axios.post('http://localhost:3000/api/mp3/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            });
+
+            console.log('Audio uploaded successfully:', response.data);
+        } catch (error) {
+            console.error('Error uploading audio:', error);
+        }
+        } else {
+        console.warn('No file selected');
+        }
     };
 
 
 
-    function handleChangeImage(ev) {
-        setFile(URL.createObjectURL(ev.target.files[0]));
-    }
+    // function handleChangeImage(ev) {
+    //     setFile(URL.createObjectURL(ev.target.files[0]));
+    // }
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
     };
@@ -145,11 +153,20 @@ export default function Add_Ass() {
                                                     <input
                                                         type="file"
                                                         accept="audio/mpeg"
-                                                        onChange={handleMP3Change}
+                                                        onChange={handleFileChange}
                                                         className="mb-4"
                                                     />
-                                                    {selectedMP3 && (
-                                                        <p>Selected MP3: {selectedMP3.name}</p>
+                                                    {file && (
+                                                        <>
+                                                        <p>Selected MP3: {file.name}</p>
+                                                        <audio controls>
+                                                            <source src={URL.createObjectURL(file)} type="audio/mpeg" />
+                                                            Your browser does not support the audio tag.
+                                                        </audio>
+                                                        </>
+                                                    )}
+                                                    {file && (
+                                                        <p>Selected MP3: {file.name}</p>
                                                     )}
                                                     <button onClick={handleUpload} className="bg-blue-500 text-white py-2 px-4 rounded">
                                                         Upload MP3

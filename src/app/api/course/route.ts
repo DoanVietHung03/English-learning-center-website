@@ -3,7 +3,6 @@ import { Session } from "@/models/session";
 import { User } from "@/models/user"
 import { Assignment } from "@/models/assignment"
 import { Submission } from "@/models/submission"
-import { Attendance } from "@/models/attendance";
 
 import { connectToDatabase } from '../../../connection';
 
@@ -29,6 +28,24 @@ export async function POST(req: { json: () => any }) {
             }
             return Response.json(createdCourse);
         }
+        else if(body.method === 'getInfo'){
+            const course = await Course.findOne({_id: body.id})
+            const teacher = await User.findOne({phone: course.teacher_id},{name: 1, _id: 0})
+
+            const combinedCourse = {
+                _id: course._id,
+                name: course.name,
+                startDate: course.startDate,
+                module: course.module,
+                room: course.room,
+                schedule: course.schedule,
+                teacher_id: course.teacher_id,
+                student_id: course.student_id,
+                teacher_name: teacher.name
+            }
+            return Response.json(combinedCourse);
+        }
+
         else if (body.method === 'getList'){
             var courses;
             if (body.userType == "Teacher") {
@@ -68,7 +85,7 @@ export async function POST(req: { json: () => any }) {
         }
         else if (body.method === 'getStudentList'){
             var course;
-            course = await Course.findOne({ _id: body.listStuCourseID })
+            course = await Course.findOne({ _id: body.id })
 
             const studentList = course.student_id;
 
@@ -78,6 +95,46 @@ export async function POST(req: { json: () => any }) {
                 listStudent.push(temp)
             }
             return Response.json(listStudent);
+        }
+        else if (body.method === 'getAttendList'){
+            const studentListAttend = await Session.findOne({_id: body.id}, {attendList: 1, _id: 0})
+            const studentList = await Course.findOne({_id: body.course_id}, {student_id: 1, _id: 0})
+
+            var student_name = []
+            var attend = []
+            var name
+
+            for(var i = 0; i < studentList.student_id.length; i++){
+                if(studentListAttend.attendList.includes(studentList.student_id[i]) === true){
+                    attend.push(true)
+                }
+                else{
+                    attend.push(false)
+                }
+                name = await User.findOne({phone: studentList.student_id[i]}, {name: 1, _id: 0})
+                student_name.push(name.name)
+            }
+
+            const student_list = studentList.student_id.map((student, i) => {
+                return {
+                    id: student,
+                    name: student_name[i], 
+                    isAttended: attend[i]
+                };
+            })
+            return Response.json(student_list);
+        }
+        else if (body.method === 'updateAttend'){
+            const updatedAttend = {
+                attendList: body.studentList
+            };
+            const attendEdit = await Session.updateOne({ _id: body.id, course_id: body.course_id }, { $set: updatedAttend });
+
+            return Response.json(attendEdit);
+        }
+        else if (body.method === 'getSessionList'){
+            const sessionList = await Session.find({course_id: body.id})
+            return Response.json(sessionList);
         }
         else{
             const listAssignment = await Assignment.find({course_id : body.course_id},{_id: 1})
