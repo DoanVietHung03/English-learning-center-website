@@ -11,26 +11,35 @@ import Ieye from "@/components/icons/eye"
 export default function CourseTime() {
     const [course, setCourse] = useState('')
     const [sessions, setSessions] = useState([])
-    const [attendances, setAttendances] = useState([])
-    const [teacher, setTeacher] = useState('')
     const type = localStorage.getItem("userType")
     useEffect(() => {
-        fetch('/api/session', {
+        fetch('/api/course', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("course_id") }),
+            body: JSON.stringify({ id: localStorage.getItem("course_id"), method: 'getSessionList' }),
         })
             .then(response => response.json())
             .then(data => {
-                // Hiển thị danh sách khóa học trong giao diện
-                setCourse(data.course)
-                setSessions(data.sessions)
-                setAttendances(data.attendance)
-                setTeacher(data.teacherName.name)
+                console.log(data)
+                setSessions(data)
             })
             .catch(error => console.error('Error:', error));
+        
+        fetch('/api/course', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id: localStorage.getItem("course_id"), method: 'getInfo' }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                setCourse(data)
+            })
+            .catch(error => console.error('Error:', error));
+
     }, []);
 
     return (
@@ -67,7 +76,7 @@ export default function CourseTime() {
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
-                                    Teacher: {teacher}
+                                    Teacher: {course.teacher_name}
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
@@ -108,18 +117,18 @@ export default function CourseTime() {
                                                 {(i % 3 == 1) &&
                                                     <div className="font-bold">Skill: Speaking</div>
                                                 }
-                                                {(type == 'Teacher') && (!attendances[i]) &&
-                                                    <Link onClick={() => localStorage.setItem("session_id", session.name)} 
-                                                    href='/add_attend'
+                                                {(type == 'Teacher') && (session.attendList.length === 0) &&
+                                                    <Link onClick={() => {localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name)}} 
+                                                    href='/attendance_add'
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
                                                          hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <IcirclePlus className="w-5 fill-blue-400" />
                                                         Create Attendance List
                                                     </Link>
                                                 }
-                                                {(type == 'Teacher' || type == 'Admin') && (attendances[i]) &&
-                                                    <Link onClick={() => localStorage.setItem("session_id", session.name)}
-                                                     href='/view_attend' 
+                                                {(type == 'Teacher' || type == 'Admin') && (session.attendList.length !== 0) &&
+                                                    <Link onClick={() => {localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name)}}
+                                                     href='/attendance_view' 
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
                                                         hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <Ieye className="w-5 fill-blue-400" />

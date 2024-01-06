@@ -19,17 +19,50 @@ import { green } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import axios from 'axios';
 
 export default function Add_Ass() {
     const [skill, setSkill] = useState('')
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs());
     const [title, setTitle] = useState('')
-    const [file, setFile] = useState('');
+    //const [file, setFile] = useState('');
     const [content, setContent] = useState('');
     const router = useRouter();
-    function handleChangeImage(ev) {
-        setFile(URL.createObjectURL(ev.target.files[0]));
-    }
+
+
+    const [file, setFile] = useState(null);
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0].name;
+        setFile(selectedFile);
+    };
+
+    const handleUpload = async () => {
+        if (file) {
+        const formData = new FormData();
+        formData.append('audio', file);
+
+        try {
+            const response = await axios.post('http://localhost:3000/api/mp3/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+            });
+
+            console.log('Audio uploaded successfully:', response.data);
+        } catch (error) {
+            console.error('Error uploading audio:', error);
+        }
+        } else {
+        console.warn('No file selected');
+        }
+    };
+
+
+
+    // function handleChangeImage(ev) {
+    //     setFile(URL.createObjectURL(ev.target.files[0]));
+    // }
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
     };
@@ -116,16 +149,39 @@ export default function Add_Ass() {
                                         </div>
                                         {(skill == "Listening") &&
                                             (
-                                                <div className="bg-white p-3 rounded-lg border-2">
-                                                    <h2>Choose file Listening:</h2>
-                                                    <input type="file" accept="audio" onChange={handleChangeImage} />
-                                                    <ReactAudioPlayer
-                                                        src={file}
-                                                        autoPlay
-                                                        controls
-                                                        className="w-full"
+                                                <div className="container mx-auto mt-8">
+                                                    <input
+                                                        type="file"
+                                                        accept="audio/mpeg"
+                                                        onChange={handleFileChange}
+                                                        className="mb-4"
                                                     />
+                                                    {file && (
+                                                        <>
+                                                        <p>Selected MP3: {file.name}</p>
+                                                        <audio controls>
+                                                            <source src={URL.createObjectURL(file)} type="audio/mpeg" />
+                                                            Your browser does not support the audio tag.
+                                                        </audio>
+                                                        </>
+                                                    )}
+                                                    {file && (
+                                                        <p>Selected MP3: {file.name}</p>
+                                                    )}
+                                                    <button onClick={handleUpload} className="bg-blue-500 text-white py-2 px-4 rounded">
+                                                        Upload MP3
+                                                    </button>
                                                 </div>
+                                                // <div className="bg-white p-3 rounded-lg border-2">
+                                                //     <h2>Choose file Listening:</h2>
+                                                //     <input type="file" accept="audio" onChange={handleChangeImage} />
+                                                //     <ReactAudioPlayer
+                                                //         src={file}
+                                                //         autoPlay
+                                                //         controls
+                                                //         className="w-full"
+                                                //     />
+                                                // </div>
                                             )
                                         }
                                     </div>

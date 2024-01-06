@@ -81,6 +81,7 @@ export async function POST(req: { json: () => any }) {
             const submissionEdit = await User.updateOne({ phone: body.userID }, { $set: updatedInfo });
             return Response.json(submissionEdit);
         }
+
     } catch (error) {
         return new Response(
             JSON.stringify(

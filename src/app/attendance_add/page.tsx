@@ -2,7 +2,7 @@
 
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
-import { useState, useEffect } from "react"
+import { useState, useEffect, SyntheticEvent } from "react"
 import { useRouter } from 'next/navigation'
 import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
@@ -16,39 +16,44 @@ import Button from "@mui/material/Button";
 
 export default function CreateAttend() {
     const [listStudent, setListStudent] = useState([])
+    var [checked, setChecked] = useState([]);
+
+    var check = []
     useEffect(() => {
         fetch('/api/course', {
             method: 'POST',
-            body: JSON.stringify({ listStuCourseID: localStorage.getItem('course_id'), method: 'getStudentList' }),
+            body: JSON.stringify({ id: localStorage.getItem('course_id'), method: 'getStudentList' }),
             headers: { 'Content-Type': 'application/json' },
         })
             .then(res => res.json())
             .then(data => {
                 setListStudent(data)
+                check = Array(data.length).fill(false)
+                setChecked(check)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
     }, []);
 
-    const handleDelete = (index) => {
-        // Tạo một bản sao mới của mảng và loại bỏ phần tử tại chỉ mục index
-        const updatedArray = [...listStudent.slice(0, index), ...listStudent.slice(index + 1)];
-
-        // Cập nhật state với mảng mới
-        setListStudent(updatedArray);
-    };
     const router = useRouter();
 
     async function handleSubmit(ev: SyntheticEvent) {
-        const listStuCreate = listStudent.map(function (student) {
-            return student.phone
+        var listAttend = []
+        listStudent.map((student, i) => {
+            if(checked[i] === true){
+                listAttend.push(student.phone)
+            }
         })
+        console.log(listAttend)
+        console.log(localStorage.getItem('course_id'))
+        console.log(localStorage.getItem('session_id'))
+
 
         ev.preventDefault()
-        const response = await fetch('/api/attendance', {
+        const response = await fetch('/api/course', {
             method: 'POST',
-            body: JSON.stringify({ course_id: localStorage.getItem('course_id'), session_id: localStorage.getItem('session_id'), studentList: listStuCreate, method: 'add' }),
+            body: JSON.stringify({ course_id: localStorage.getItem('course_id'), id: localStorage.getItem('session_id'), studentList: listAttend, method: 'updateAttend' }),
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/course_Time')
@@ -85,10 +90,15 @@ export default function CreateAttend() {
         }
     };
 
-    const [checked, setChecked] = React.useState(true);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setChecked(event.target.checked);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>, i: number) => {
+        //console.log(checked)
+        if(checked[i] === true){
+            checked[i] = false
+        }
+        else{
+            checked[i] = true
+        }
         console.log(checked)
     };
 
@@ -115,8 +125,8 @@ export default function CreateAttend() {
                                                     {student.name} - {student.phone}
                                                 </div>
                                                 <button>
-                                                    <Checkbox checked={checked}
-                                                        onChange={handleChange}
+                                                    <Checkbox checked={checked[i].check}
+                                                        onChange={(ev) => {handleChange(ev, i)}}
                                                         inputProps={{ 'aria-label': 'controlled' }} />
                                                 </button>
                                             </div>}
