@@ -1,10 +1,19 @@
-/* eslint-disable react/jsx-key */
 'use client'
+
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import { useState, useEffect } from "react"
-import Idelete from "@/components/icons/delete";
 import { useRouter } from 'next/navigation'
+import * as React from 'react';
+import Checkbox from '@mui/material/Checkbox';
+import IuserPlus from "@/components/icons/icon_userPlus"
+import Fab from "@mui/material/Fab";
+import CheckIcon from "@mui/icons-material/Check";
+import { green } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
+
 export default function CreateAttend() {
     const [listStudent, setListStudent] = useState([])
     useEffect(() => {
@@ -44,7 +53,45 @@ export default function CreateAttend() {
         })
         router.push('/course_Time')
     }
-    
+
+    //Function for add
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const timer = React.useRef<number>();
+
+    const buttonSx = {
+        ...(success && {
+            bgcolor: green[500],
+            "&:hover": {
+                bgcolor: green[700],
+            },
+        }),
+    };
+
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonClick = (ev) => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 800);
+        }
+    };
+
+    const [checked, setChecked] = React.useState(true);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setChecked(event.target.checked);
+        console.log(checked)
+    };
+
     return (
         <>
             <Header />
@@ -54,35 +101,81 @@ export default function CreateAttend() {
                     <div className="font-poppins font-bold text-5xl">
                         Create Attendance List
                     </div>
-                    <div className="flex bg-white mt-4 py-2 px-3 text-sky-300 justify-center items-center rounded-lg font-bold">
-                        {localStorage.getItem('session_id')}
-                    </div>
-                    <div className="bg-white h-1/2 mt-4">
-                        {
-                            listStudent.map((student, i) => (
-                                <div className="inline-block mt-4 ml-4">
-                                    {student &&
-                                        <div className="inline-block mr-4 bg-gray-200 p-3 rounded-lg">
-                                            <div className="flex gap-3">
+                    <div className="bg-white mt-4 py-4">
+                        <div className="justify-center text-gray-700 items-center rounded-lg font-bold flex mb-2 text-lg ml-2">
+                            {localStorage.getItem('session_id')}
+                        </div>
+                        <div className="h-[331px] border border-zinc-200 mx-2 rounded-lg">
+                            <div className="grid grid-cols-3 overflow-y-auto items-center justify-center px-4 py-4 gap-2">
+                                {listStudent.map((student, i) => (
+                                    <div key={i} className="inline-block bg-gray-200 rounded-lg text-center items-center justify-center">
+                                        {student &&
+                                            <div className="flex gap-6 items-center justify-center ml-4">
                                                 <div>
-                                                    {i}: {student.phone} - {student.name}
+                                                    {student.name} - {student.phone}
                                                 </div>
-                                                <button onClick={() => handleDelete(i)}>
-                                                    <Idelete />
+                                                <button>
+                                                    <Checkbox checked={checked}
+                                                        onChange={handleChange}
+                                                        inputProps={{ 'aria-label': 'controlled' }} />
                                                 </button>
-                                            </div>
-                                        </div>}
-                                </div>
-                            ))
-                        }
-                        <div className="flex justify-end">
-                            <button onClick={handleSubmit}
-                                className="bg-lime-300 p-3 rounded-md mr-4 my-4">
-                                Submit
-                            </button>
+                                            </div>}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="flex justify-end mr-4 mt-2">
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <Box sx={{ m: 1, position: "relative" }}>
+                                    <Fab
+                                        aria-label="save"
+                                        color="primary"
+                                        sx={buttonSx}
+                                        onClick={handleButtonClick}
+                                    >
+                                        {success ? <CheckIcon /> : <IuserPlus />}
+                                    </Fab>
+                                    {loading && (
+                                        <CircularProgress
+                                            size={68}
+                                            sx={{
+                                                color: green[500],
+                                                position: "absolute",
+                                                top: -6,
+                                                left: -6,
+                                                zIndex: 1,
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+                                <Box sx={{ m: 1, position: "relative" }}>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        sx={buttonSx}
+                                        disabled={loading}
+                                        onClick={(ev) => { handleButtonClick(ev); handleSubmit(ev) }}
+                                    >
+                                        Submit
+                                    </Button>
+                                    {loading && (
+                                        <CircularProgress
+                                            size={24}
+                                            sx={{
+                                                color: green[500],
+                                                position: "absolute",
+                                                top: "50%",
+                                                left: "50%",
+                                                marginTop: "-12px",
+                                                marginLeft: "-12px",
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+                            </Box>
 
                         </div>
-                    </div>                   
+                    </div>
                 </div>
             </div>
         </>
