@@ -24,7 +24,7 @@ export default function Course_Add() {
     const [title, setTitle] = useState('')
     const [module, setModule] = useState('')
     const [teacher, setTeacher] = useState('')
-    const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
+    const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs(dayjs()));
     const [schedule, setSchedule] = useState('')
     const [room, setRoom] = useState('')
     const [student, setStudent] = useState()
