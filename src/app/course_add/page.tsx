@@ -32,10 +32,7 @@ export default function Course_Add() {
     var [student_added, setStudentAdded] = useState([])
     const router = useRouter();
     const handleDelete = (index) => {
-        // Tạo một bản sao mới của mảng và loại bỏ phần tử tại chỉ mục index
         const updatedArray = [...student_added.slice(0, index), ...student_added.slice(index + 1)];
-
-        // Cập nhật state với mảng mới
         setStudentAdded(updatedArray);
     };
     const handleChangeModule = (ev) => {
