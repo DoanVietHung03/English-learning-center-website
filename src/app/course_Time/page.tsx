@@ -84,7 +84,7 @@ export default function CourseTime() {
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">
-                                    Start date: {moment.utc(course.startDate).format('MM/DD/YYYY')}
+                                    Start date: {moment.utc(course.startDate).format('DD/MM/YYYY')}
                                 </div>
 
                                 <div className=" font-poppins text-blue-500 bg-white border p-1 text-sm rounded-lg px-3 py-2">

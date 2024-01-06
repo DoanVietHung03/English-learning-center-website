@@ -229,10 +229,10 @@ export default function RP() {
                                                 <div>{rep.type}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <div>{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
+                                                <div>{moment.utc(rep.date_created).format('DD/MM/YYYY')}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <div>{(rep.status === 'Uncompleted' ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
+                                                <div>{(rep.status === 'Uncompleted' ? <div>Not yet</div> : moment.utc(rep.date_completed).format('DD/MM/YYYY'))}</div>
                                             </div>
                                             <div className="flex items-center justify-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
                                                 <div>{(rep.status === 'Uncompleted' ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium w-fit">{rep.status}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium w-fit">{rep.status}</div>)}</div>
@@ -276,10 +276,10 @@ export default function RP() {
                                                 <div>{rep.type}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <div>{moment.utc(rep.date_created).format('MM/DD/YYYY')}</div>
+                                                <div>{moment.utc(rep.date_created).format('DD/MM/YYYY')}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <div>{(rep.status === 'Uncompleted' ? <div>Not yet</div> : moment.utc(rep.date_completed).format('MM/DD/YYYY'))}</div>
+                                                <div>{(rep.status === 'Uncompleted' ? <div>Not yet</div> : moment.utc(rep.date_completed).format('DD/MM/YYYY'))}</div>
                                             </div>
                                             <div className="flex items-center justify-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300">
                                                 <div>{(rep.status === 'Uncompleted' ? <div className="bg-rose-200 text-red-500 px-2 py-1 font-medium w-fit">{rep.status}</div> : <div className="bg-lime-100 text-green-500 px-2 py-1 font-medium w-fit">{rep.status}</div>)}</div>

@@ -132,7 +132,7 @@ export default function Assigments() {
                                             <div className=" p-2 flex items-center justify-end">
 
                                                 <div className="ml-1 font-poppins">
-                                                    {(assignment.status === 'null' ? <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('MM/DD/YYYY')}</div> :
+                                                    {(assignment.status === 'null' ? <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('DD/MM/YYYY')}</div> :
                                                         (assignment.status === 'Marked' ? <div className="font-poppins font-medium text-green-400">{assignment.status}</div> :
                                                             <div className="flex gap-2 items-center font-poppins font-medium text-red-500">
                                                                 {assignment.status}

@@ -138,7 +138,7 @@ export default function CourseList() {
                                                 </div>
                                                 <div className="flex items-center gap-2">
                                                     <Icalendar className="w-4" />
-                                                    <p className="font-poppins text-xs">Start date:{" " + moment.utc(course.startDate).format('MM/DD/YYYY')}-{course.schedule}</p>
+                                                    <p className="font-poppins text-xs">Start date:{" " + moment.utc(course.startDate).format('DD/MM/YYYY')}-{course.schedule}</p>
                                                 </div>
                                             </div>
                                         </div>

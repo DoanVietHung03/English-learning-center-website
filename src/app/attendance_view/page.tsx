@@ -2,10 +2,12 @@
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import { useState, useEffect } from "react"
-//import { useRouter } from 'next/navigation'
+import Icheck from "@/components/icons/icon_check"
+import IcircleXmark from "@/components/icons/icon_circle_xmark"
 
 export default function ViewAttend() {
     const [attends, setAttend] = useState([]);
+    
 
     useEffect(() => {
         console.log(localStorage.getItem('session_id'))
@@ -18,8 +20,10 @@ export default function ViewAttend() {
         })
             .then(res => res.json())
             .then(data => {
-                setAttend(data)
-                console.log(data)
+                const attend = data.filter(at => at.isAttended === true)
+                const absent = data.filter(at => at.isAttended === false)
+                const attendance = [...attend, ...absent]
+                setAttend(attendance)
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -35,25 +39,38 @@ export default function ViewAttend() {
                     <div className="font-poppins font-bold text-5xl">
                         View Attendance List
                     </div>
-                    <div className="flex mt-4 bg-white text-sky-300 py-2 px-3 justify-center items-center rounded-lg font-bold">
-                        {localStorage.getItem('session_name')}
-                    </div>
-                    <div className="bg-white h-1/2 mt-4">
-                        {
-                            attends.map((attend, i) => (
-                                <div className="inline-block mt-4 ml-4">
-                                    {attend &&
-                                        <div className="inline-block mr-4 bg-gray-200 p-3 rounded-lg">
-                                            <div className="flex gap-3">
-                                                {i}: {attend.id} - {attend.name} - {String(attend.isAttended)}
-                                            </div>
-                                        </div>}
-                                </div>
-                            ))
-                        }
+                    <div className="bg-white mt-4 py-4">
+                        <div className="justify-center text-gray-700 items-center rounded-lg font-bold flex mb-2 text-lg ml-2">
+                            {localStorage.getItem('session_name')}
+                        </div>
+                        <div className="h-[331px] border border-zinc-200 mx-2 rounded-lg">
+                            <div className="grid grid-cols-3 overflow-y-auto items-center justify-center px-4 py-4 gap-2">
+                                {attends.map((student, i) => (
+                                    <div key={i} className="inline-block rounded-lg text-center items-center justify-center">
+                                        {(student.isAttended) ?
+                                            <div className="flex gap-6 items-center justify-center ml-4 p-2 bg-green-200">
+                                                <div className="w-2/3">
+                                                    {student.name} - {student.id}
+                                                </div>
+                                                <div>
+                                                    <Icheck className="w-[2em]"/>
+                                                </div>
+                                            </div> : 
+                                            <div className="flex gap-6 items-center justify-center ml-4 p-2 bg-rose-200">
+                                                <div className="w-2/3">
+                                                    {student.name} - {student.id}
+                                                </div>
+                                                <div>
+                                                    <IcircleXmark />
+                                                </div>
+                                            </div>}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
+            </>
+            )
 }

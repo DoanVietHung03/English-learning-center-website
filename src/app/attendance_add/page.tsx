@@ -113,7 +113,7 @@ export default function CreateAttend() {
                     </div>
                     <div className="bg-white mt-4 py-4">
                         <div className="justify-center text-gray-700 items-center rounded-lg font-bold flex mb-2 text-lg ml-2">
-                            {localStorage.getItem('session_id')}
+                            {localStorage.getItem('session_name')}
                         </div>
                         <div className="h-[331px] border border-zinc-200 mx-2 rounded-lg">
                             <div className="grid grid-cols-3 overflow-y-auto items-center justify-center px-4 py-4 gap-2">
