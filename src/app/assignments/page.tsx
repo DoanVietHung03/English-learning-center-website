@@ -24,6 +24,8 @@ export default function Assigments() {
     const [assignments, setAssignment] = useState([])
     const router = useRouter();
 
+    const currentDate = moment();
+
     var delete_assignment: any
     const handleActionClick = (link) => {
         router.push(link);
@@ -132,11 +134,11 @@ export default function Assigments() {
                                             <div className=" p-2 flex items-center justify-end">
 
                                                 <div className="ml-1 font-poppins">
-                                                    {(assignment.status === 'null' ? <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('DD/MM/YYYY')}</div> :
+                                                    {(assignment.status === 'null' ? (currentDate.isAfter(moment.utc(assignment.deadline))) ? <div className="font-poppins font-medium text-red-600">Overdue: {Math.floor(((moment.duration(currentDate.diff(moment.utc(assignment.deadline))).asDays())))}d {Math.floor((((moment.duration(currentDate.diff(moment.utc(assignment.deadline)))).asDays()) - Math.floor(((moment.duration(currentDate.diff(moment.utc(assignment.deadline)))).asDays()))) * 24)}h</div> : <div className="font-poppins font-medium">Deadline: {moment.utc(assignment.deadline).format('DD/MM/YYYY')}</div> :
                                                         (assignment.status === 'Marked' ? <div className="font-poppins font-medium text-green-400">{assignment.status}</div> :
-                                                            <div className="flex gap-2 items-center font-poppins font-medium text-red-500">
+                                                            <div className="flex gap-2 items-center font-poppins font-medium text-yellow-500">
                                                                 {assignment.status}
-                                                                <CircularProgress size={'1em'} style={{ color: 'red' }}/>
+                                                                <CircularProgress size={'1em'} style={{ color: 'rgba(255, 215, 0, 1)' }}/>
                                                             </div>))}
                                                 </div>
                                             </div>
