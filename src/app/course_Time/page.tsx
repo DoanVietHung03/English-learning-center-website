@@ -110,7 +110,7 @@ export default function CourseTime() {
                                                 }
                                                 {(type == 'Teacher') && (!attendances[i]) &&
                                                     <Link onClick={() => localStorage.setItem("session_id", session.name)} 
-                                                    href='/course_Time/add_attend'
+                                                    href='/add_attend'
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
                                                          hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <IcirclePlus className="w-5 fill-blue-400" />
@@ -119,7 +119,7 @@ export default function CourseTime() {
                                                 }
                                                 {(type == 'Teacher' || type == 'Admin') && (attendances[i]) &&
                                                     <Link onClick={() => localStorage.setItem("session_id", session.name)}
-                                                     href='/course_Time/view_attend' 
+                                                     href='/view_attend' 
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
                                                         hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <Ieye className="w-5 fill-blue-400" />

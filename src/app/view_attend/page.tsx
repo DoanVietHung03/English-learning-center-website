@@ -8,7 +8,6 @@ import { useState, useEffect } from "react"
 export default function ViewAttend() {
     const [attends, setAttend] = useState([]);
 
-
     useEffect(() => {
         fetch('/api/attendance', {
             method: 'POST',
