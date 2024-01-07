@@ -35,7 +35,7 @@ export default function Create_RP() {
     const handleChangeFile = (event) => {
         const selectedFile = event.target.files[0];
         setImage(selectedFile)
-        setFile(selectedFile)
+        setFile(URL.createObjectURL(selectedFile))
     };
 
     async function handleFormSubmit(ev: SyntheticEvent) {
