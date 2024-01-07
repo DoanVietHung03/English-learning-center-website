@@ -18,7 +18,7 @@ import Button from '@mui/material/Button';
 import IcircleXmark from "@/components/icons/icon_circle_xmark"
 import Fab from "@mui/material/Fab";
 import CheckIcon from "@mui/icons-material/Check";
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Isend from "@/components/icons/icon_send"
@@ -36,6 +36,8 @@ export default function Chat() {
     const [message_sent, SetMessageSent] = useState([]);
     const [message_received, SetMessageReceived] = useState([]);
     const [image, setImage] = useState("")
+    const [error, setError] = useState(false)
+
     var delete_message = ''
 
     const handleChangeReceiver = (ev) => {
@@ -130,8 +132,15 @@ export default function Chat() {
             body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file: fileSave, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        // //window.location.reload(true);
+        if (!response.ok) {
+            setError(true)
+        }
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 2000);
     }
+    // //window.location.reload(true);
+
 
     const [contentChat, setContentChat] = useState<ReactElement | null>(null);
     const [selectedButton, setSelectedButton] = useState<number | null>(1);
@@ -164,15 +173,24 @@ export default function Chat() {
     const timer = React.useRef<number>();
 
     const buttonSx = {
-        ...(success && {
+        ...((success && !error) && {
             bgcolor: green[500],
             "&:hover": {
                 bgcolor: green[700],
             },
         }),
+        ...((success && error) && {
+            bgcolor: red[500],
+            "&:hover": {
+                bgcolor: red[700],
+            },
+        }),
+
     };
 
     React.useEffect(() => {
+        setError(false)
+        setSuccess(false)
         return () => {
             clearTimeout(timer.current);
         };
@@ -185,7 +203,7 @@ export default function Chat() {
             timer.current = window.setTimeout(() => {
                 setSuccess(true);
                 setLoading(false);
-            }, 800);
+            }, 1500);
         }
     };
 
@@ -469,10 +487,10 @@ export default function Chat() {
                                         placeholder="Type content..." onChange={ev => setContent(ev.target.value)}></textarea>
                                 </div>
                                 {(file !== '') ?
-                                    <>  
+                                    <>
                                         <div className="flex items-center justify-end mr-6">
                                             <button onClick={handleDeleteImage}>
-                                                <IcircleXmark className="w-[1.5em]"/>
+                                                <IcircleXmark className="w-[1.5em]" />
                                             </button>
                                         </div>
                                         <div className="bg-white w-[380px] h-[200px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
@@ -484,54 +502,35 @@ export default function Chat() {
                                     </> : null}
 
                                 <div className="flex mt-8 mr-4 justify-end pb-8">
-                                <Box sx={{ display: "flex", alignItems: "center" }}>
-                                        <Box sx={{ m: 1, position: "relative" }}>
-                                            <Fab
-                                                aria-label="save"
-                                                color="primary"
-                                                sx={buttonSx}
-                                                onClick={handleButtonSend}
-                                            >
-                                                {success ? <CheckIcon /> : <Isend />}
-                                            </Fab>
-                                            {loading && (
-                                                <CircularProgress
-                                                    size={68}
-                                                    sx={{
-                                                        color: green[500],
-                                                        position: "absolute",
-                                                        top: -6,
-                                                        left: -6,
-                                                        zIndex: 1,
-                                                    }}
-                                                />
-                                            )}
-                                        </Box>
-                                        <Box sx={{ m: 1, position: "relative" }}>
-                                            <Button
-                                                type="submit"
-                                                variant="contained"
-                                                sx={buttonSx}
-                                                disabled={loading}
-                                                onClick={(ev) => {handleButtonSend(ev); handleFormSubmit(ev)}}
-                                            >
-                                                Add
-                                            </Button>
-                                            {loading && (
-                                                <CircularProgress
-                                                    size={24}
-                                                    sx={{
-                                                        color: green[500],
-                                                        position: "absolute",
-                                                        top: "50%",
-                                                        left: "50%",
-                                                        marginTop: "-12px",
-                                                        marginLeft: "-12px",
-                                                    }}
-                                                />
-                                            )}
-                                        </Box>
-                                    </Box>
+                                    <Grid item>
+                                        <Tooltip disableFocusListener disableTouchListener title="Click to send">
+                                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                                <Box sx={{ m: 1, position: "relative" }}>
+                                                    <Fab
+                                                        aria-label="save"
+                                                        color="primary"
+                                                        sx={buttonSx}
+                                                        onClick={(ev) => { handleButtonSend(ev); handleFormSubmit(ev) }}
+                                                    >
+                                                        {success ? (!error ? <CheckIcon /> : <Ixmark /> )  : <Isend />}
+                                                    </Fab>
+                                                    {loading && (
+                                                        <CircularProgress
+                                                            size={68}
+                                                            sx={{
+                                                                color: green[500],
+                                                                position: "absolute",
+                                                                top: -6,
+                                                                left: -6,
+                                                                zIndex: 1,
+                                                            }}
+                                                        />
+                                                    )}
+                                                </Box>
+                                            </Box>
+                                        </Tooltip>
+                                    </Grid>
+
                                 </div>
                             </div>
                         </div>
@@ -540,4 +539,8 @@ export default function Chat() {
             </div>
         </>
     )
+}
+
+function setError(arg0: boolean) {
+    throw new Error("Function not implemented.")
 }
