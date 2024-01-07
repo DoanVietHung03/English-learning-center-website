@@ -10,6 +10,16 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import Image from "next/image";
 import ReactAudioPlayer from 'react-audio-player';
 import { useRouter } from 'next/navigation'
+import Fab from "@mui/material/Fab";
+import CheckIcon from "@mui/icons-material/Check";
+import { green, red } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
+import Ixmark from "@/components/icons/icon_xmark"
+import Grid from "@mui/material/Grid";
+import Tooltip from "@mui/material/Tooltip";
+import IfileAdd from "@/components/icons/icon_file_add";
 
 
 export default function Exercise_Add() {
@@ -19,6 +29,7 @@ export default function Exercise_Add() {
     const [file, setFile] = useState('');
     const [filemp3, setFilemp3] = useState('');
     const [content, setContent] = useState('');
+    const [error, setError] = useState(false)
     const router = useRouter();
 
 
@@ -37,14 +48,63 @@ export default function Exercise_Add() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        await fetch('/api/exercise', {
+        const response = await fetch('/api/exercise', {
             method: 'POST',
             body: JSON.stringify({ title, filemp3, content, skill, file, module, method: 'add'}),
             headers: { 'Content-Type': 'application/json' },
         })
-        router.push('/exercise_bank')
-
+        if (!response.ok) {
+            setError(true)
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 2000);
+        }
+        else {
+            setTimeout(() => {
+                router.push('/exercise_bank')
+            }, 2000)
+        }
     }
+
+    //Function for add
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const timer = React.useRef<number>();
+
+    const buttonSx = {
+        ...((success && !error) && {
+            bgcolor: green[500],
+            "&:hover": {
+                bgcolor: green[700],
+            },
+        }),
+        ...((success && error) && {
+            bgcolor: red[500],
+            "&:hover": {
+                bgcolor: red[700],
+            },
+        }),
+
+    };
+
+    React.useEffect(() => {
+        setError(false)
+        setSuccess(false)
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonSend = (ev) => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 1500);
+        }
+    };
     return (
         <>
             <Header />
@@ -106,10 +166,34 @@ export default function Exercise_Add() {
 
                             </div>
                             <div className="flex items-center justify-end mt-16 mr-4">
-                                <button type="submit" onClick={handleFormSubmit}
-                                    className="bg-lime-300 rounded-lg text-center text-sm font-poppins leading-tight tracking-tight px-[30px] pb-3 pt-[10px] font-bold hover:bg-lime-400">
-                                    Add
-                                </button>
+                            <Grid item>
+                                        <Tooltip disableFocusListener disableTouchListener title="Click to add">
+                                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                                <Box sx={{ m: 1, position: "relative" }}>
+                                                    <Fab
+                                                        aria-label="save"
+                                                        color="primary"
+                                                        sx={buttonSx}
+                                                        onClick={(ev) => { handleButtonSend(ev); handleFormSubmit(ev) }}
+                                                    >
+                                                        {success ? (!error ? <CheckIcon /> : <Ixmark /> )  : <IfileAdd />}
+                                                    </Fab>
+                                                    {loading && (
+                                                        <CircularProgress
+                                                            size={68}
+                                                            sx={{
+                                                                color: green[500],
+                                                                position: "absolute",
+                                                                top: -6,
+                                                                left: -6,
+                                                                zIndex: 1,
+                                                            }}
+                                                        />
+                                                    )}
+                                                </Box>
+                                            </Box>
+                                        </Tooltip>
+                                    </Grid>
                             </div>
                         </form>
                     </div>
