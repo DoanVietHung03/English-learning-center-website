@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import SideBar from "@/components/layout/sideBar"
@@ -40,7 +41,7 @@ export default function RP() {
     var currentRP: any[]
 
     const handleChangeStatus = (ev) => {
-        localStorage.setItem('status_filter', ev.value) 
+        localStorage.setItem('status_filter', ev.value)
         setCurrentPage(1)
         console.log(currentPage)
     };
@@ -72,12 +73,12 @@ export default function RP() {
     }
 
     const handlePageChange = (index: number) => {
-        if (localStorage.getItem('status_filter') === 'Completed' || localStorage.getItem('status_filter') === 'Uncompleted'){
+        if (localStorage.getItem('status_filter') === 'Completed' || localStorage.getItem('status_filter') === 'Uncompleted') {
             filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
             currentRP2 = filteredReport.slice((index - 1) * rpPerPage, index * rpPerPage), setReport(currentRP2)
         }
         setCurrentPage(index)
-        
+
     }
 
 
@@ -102,28 +103,28 @@ export default function RP() {
 
 
     const handleSwitchChange = (index: number) => {
-        if(reports[index].isCompleted === false){
+        if (reports[index].isCompleted === false) {
             reports[index].status = 'Completed'
             reports[index].date_completed = new Date()
             reports[index].isCompleted = true
-            localStorage.setItem('status', 'Completed') 
+            localStorage.setItem('status', 'Completed')
         }
-        else{
+        else {
             reports[index].status = 'Uncompleted'
             reports[index].date_completed = null
             reports[index].isCompleted = false
-            localStorage.setItem('status', 'Uncompleted') 
+            localStorage.setItem('status', 'Uncompleted')
         }
 
         filteredReport = reports.filter(report => report.status == localStorage.getItem('status_filter'))
-        if(localStorage.getItem('status_filter') === ''){
+        if (localStorage.getItem('status_filter') === '') {
             setLength(reports.length)
-        }  
-        else{
+        }
+        else {
             setLength(filteredReport.length)
         }
         currentRP2 = filteredReport.slice((currentPage - 1) * rpPerPage, currentPage * rpPerPage);
-        setReport(currentRP2)   
+        setReport(currentRP2)
     };
 
     async function handleFormSubmit(ev: React.SyntheticEvent) {
@@ -136,6 +137,12 @@ export default function RP() {
     }
 
     const popupRef = useRef();
+
+    const [showLargeImage, setShowLargeImage] = useState(false);
+
+    const handleClick = () => {
+        setShowLargeImage(!showLargeImage);
+    };
 
     return (
         <>
@@ -183,7 +190,7 @@ export default function RP() {
                                 <p className="bg-zinc-300 text-black text-base font-bold leading-tight tracking-tight">Status</p>
                             </div>
                             <div className="h-[253px]">
-                                {((localStorage.getItem('status_filter') === 'Completed') || (localStorage.getItem('status_filter') === 'Uncompleted'))   ?
+                                {((localStorage.getItem('status_filter') === 'Completed') || (localStorage.getItem('status_filter') === 'Uncompleted')) ?
                                     currentRP3.map((rep, index) => (
                                         // ((checkStatus[index] == status || status == '') &&
                                         <div key={index} className="grid grid-cols-6 items-center text-center">
@@ -191,19 +198,20 @@ export default function RP() {
                                                 <div>{rep.userID}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <Tooltip 
-                                                disableFocusListener 
-                                                disableTouchListener 
-                                                title='Click to see full'>
+                                                <Tooltip
+                                                    disableFocusListener
+                                                    disableTouchListener
+                                                    title='Click to see full'>
                                                     <Grid item>
-                                                        <Popup 
-                                                            ref={popupRef} 
-                                                            trigger={<button className="hover:underline">{rep.title}</button>} 
+                                                        <Popup
+                                                            ref={popupRef}
+                                                            trigger={<button className="hover:underline">{rep.title}</button>}
                                                             position={"right bottom"}>
                                                             <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
                                                                 <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
                                                                     style={{ wordWrap: 'break-word' }}>
                                                                     {rep.content}
+                                                                    {((rep.file !== null) && (rep.file !== "")) ? <img src={rep.file} alt="Cannot load" /> : null}
                                                                 </div>
                                                                 <div className="flex items-center ml-4">
                                                                     {(localStorage.getItem('userType') === 'Admin') && (
@@ -216,7 +224,7 @@ export default function RP() {
                                                                                 localStorage.setItem('report_id', rep._id);
                                                                                 handleSwitchChange(rep.index);
                                                                                 handleFormSubmit(ev)
-                                                                                popupRef.current.close()                                                                            
+                                                                                popupRef.current.close()
                                                                             }} />)}
                                                                     {rep.isCompleted && <span>Completed</span>}
                                                                 </div>
@@ -252,6 +260,37 @@ export default function RP() {
                                                                 <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
                                                                     style={{ wordWrap: 'break-word' }}>
                                                                     {rep.content}
+                                                                    {((rep.file !== null) && (rep.file !== "")) ?
+                                                                        <div>
+                                                                            <img
+                                                                                src={rep.file}
+                                                                                alt="Cannot load"
+                                                                                onClick={handleClick}
+                                                                                style={{
+                                                                                    width: showLargeImage ? '50%' : 'auto',
+                                                                                    height: showLargeImage ? '50vh' : 'auto',
+                                                                                    position: showLargeImage ? 'fixed' : 'static',
+                                                                                    display: 'block',   
+                                                                                    margin: 'auto',
+                                                                                    zIndex: showLargeImage ? 2 : 'auto',
+                                                                                    transition: '0.5s',
+                                                                                }}
+                                                                            />
+                                                                            {showLargeImage && (
+                                                                                <div
+                                                                                    style={{
+                                                                                        position: 'fixed',
+                                                                                        top: 0,
+                                                                                        left: 0,
+                                                                                        width: '100%',
+                                                                                        height: '100%',
+                                                                                        background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                        zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                                    }}
+                                                                                />
+                                                                            )}
+                                                                        </div>
+                                                                        : null}
                                                                 </div>
                                                                 <div className="flex items-center ml-4">
                                                                     {(localStorage.getItem('userType') === 'Admin') && (
@@ -300,7 +339,7 @@ export default function RP() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
