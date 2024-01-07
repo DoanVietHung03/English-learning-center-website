@@ -16,6 +16,12 @@ import Tooltip from "@mui/material/Tooltip";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import IcircleXmark from "@/components/icons/icon_circle_xmark"
+import Fab from "@mui/material/Fab";
+import CheckIcon from "@mui/icons-material/Check";
+import { green } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Isend from "@/components/icons/icon_send"
 
 export default function Chat() {
     const [message, setMessage] = useState('')
@@ -148,6 +154,37 @@ export default function Chat() {
         whiteSpace: 'nowrap',
         width: 1,
     });
+
+    //Function for add
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const timer = React.useRef<number>();
+
+    const buttonSx = {
+        ...(success && {
+            bgcolor: green[500],
+            "&:hover": {
+                bgcolor: green[700],
+            },
+        }),
+    };
+
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonSend = (ev) => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 800);
+        }
+    };
 
     return (
         <>
@@ -444,11 +481,54 @@ export default function Chat() {
                                     </> : null}
 
                                 <div className="flex mt-8 mr-4 justify-end pb-8">
-                                    <button
-                                        onClick={handleFormSubmit}
-                                        className="text-center text-black text-base bg-lime-300 rounded-lg px-4 py-1 hover:bg-lime-400">
-                                        Send
-                                    </button>
+                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                        <Box sx={{ m: 1, position: "relative" }}>
+                                            <Fab
+                                                aria-label="save"
+                                                color="primary"
+                                                sx={buttonSx}
+                                                onClick={handleButtonSend}
+                                            >
+                                                {success ? <CheckIcon /> : <Isend />}
+                                            </Fab>
+                                            {loading && (
+                                                <CircularProgress
+                                                    size={68}
+                                                    sx={{
+                                                        color: green[500],
+                                                        position: "absolute",
+                                                        top: -6,
+                                                        left: -6,
+                                                        zIndex: 1,
+                                                    }}
+                                                />
+                                            )}
+                                        </Box>
+                                        <Box sx={{ m: 1, position: "relative" }}>
+                                            <Button
+                                                type="submit"
+                                                variant="contained"
+                                                sx={buttonSx}
+                                                disabled={loading}
+                                                onClick={(ev) => {handleButtonSend(ev); handleFormSubmit(ev)}}
+                                            >
+                                                Add
+                                            </Button>
+                                            {loading && (
+                                                <CircularProgress
+                                                    size={24}
+                                                    sx={{
+                                                        color: green[500],
+                                                        position: "absolute",
+                                                        top: "50%",
+                                                        left: "50%",
+                                                        marginTop: "-12px",
+                                                        marginLeft: "-12px",
+                                                    }}
+                                                />
+                                            )}
+                                        </Box>
+                                    </Box>
                                 </div>
                             </div>
                         </div>

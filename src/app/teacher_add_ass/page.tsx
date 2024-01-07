@@ -19,7 +19,6 @@ import { green } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
-import axios from 'axios';
 
 export default function Add_Ass() {
     const [skill, setSkill] = useState('')
@@ -29,36 +28,12 @@ export default function Add_Ass() {
     const [content, setContent] = useState('');
     const router = useRouter();
 
-
     const [file, setFile] = useState(null);
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0].name;
         setFile(selectedFile);
     };
-
-    const handleUpload = async () => {
-        if (file) {
-        const formData = new FormData();
-        formData.append('audio', file);
-
-        try {
-            const response = await axios.post('http://localhost:3000/api/mp3/upload', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-            });
-
-            console.log('Audio uploaded successfully:', response.data);
-        } catch (error) {
-            console.error('Error uploading audio:', error);
-        }
-        } else {
-        console.warn('No file selected');
-        }
-    };
-
-
 
     // function handleChangeImage(ev) {
     //     setFile(URL.createObjectURL(ev.target.files[0]));
@@ -168,9 +143,7 @@ export default function Add_Ass() {
                                                     {file && (
                                                         <p>Selected MP3: {file.name}</p>
                                                     )}
-                                                    <button onClick={handleUpload} className="bg-blue-500 text-white py-2 px-4 rounded">
-                                                        Upload MP3
-                                                    </button>
+                                                
                                                 </div>
                                                 // <div className="bg-white p-3 rounded-lg border-2">
                                                 //     <h2>Choose file Listening:</h2>
