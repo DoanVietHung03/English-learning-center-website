@@ -107,7 +107,8 @@ export default function Chat() {
         let fileSave = ''
         const data = new FormData()
         data.append("file", image)
-        data.append("folder", "chat")
+        data.append("folder", "audio")
+        data.append("resource_type", "auto")
         data.append("upload_preset", "introSE")
         data.append("cloud_name", "dzdmbflvk")
 
@@ -117,6 +118,7 @@ export default function Chat() {
         })
             .then((res) => res.json())
             .then((data) => {
+                console.log(data);
                 console.log(data);
                 fileSave = data.url
             }).catch((err) => {
@@ -128,7 +130,7 @@ export default function Chat() {
             body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file: fileSave, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        //window.location.reload(true);
+        // //window.location.reload(true);
     }
 
     const [contentChat, setContentChat] = useState<ReactElement | null>(null);
@@ -460,7 +462,7 @@ export default function Chat() {
 
                                         <Button onChange={handleChangeFile} component="label" startIcon={<Iimage />} >
                                             <div className="font-semibold text-xs text-black">Add Image</div>
-                                            <VisuallyHiddenInput type="file" />
+                                            <VisuallyHiddenInput type="file" accept="audio/*" />
                                         </Button>
                                     </div>
                                     <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none mt-2"
