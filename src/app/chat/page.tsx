@@ -15,6 +15,7 @@ import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import IcircleXmark from "@/components/icons/icon_circle_xmark"
 
 export default function Chat() {
     const [message, setMessage] = useState('')
@@ -34,6 +35,10 @@ export default function Chat() {
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
     };
+
+    const handleDeleteImage = () => {
+        setFile("")
+    }
 
     async function handleDelete(ev: SyntheticEvent) {
         ev.preventDefault()
@@ -177,8 +182,13 @@ export default function Chat() {
                                                     <div className="bg-zinc-300 rounded-lg mr-8 mt-3 grid grid-cols-2 pb-1">
                                                         <div>
                                                             <div className="flex items-center pl-7 pt-4">
-                                                                <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                                                <p className="text-black text-sm font-semibold font-['Poppins']">{mes_send.receiver_name}</p>
+                                                                {((mes_send.receiver_avatar === null) || (mes_send.receiver_avatar === undefined) || (mes_send.receiver_avatar === '')) ?
+                                                                    <Iuser className="w-10 fill-zinc-400 mr-2" /> :
+                                                                    <img
+                                                                        className="w-[3em] h-[3em] rounded-full border border-black"
+                                                                        src={mes_send.receiver_avatar}
+                                                                        alt="" />}
+                                                                <p className="text-black text-sm font-semibold font-['Poppins'] ml-4">{mes_send.receiver_name}</p>
                                                             </div>
 
                                                             <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
@@ -284,8 +294,13 @@ export default function Chat() {
                                                     <div className="bg-zinc-300 rounded-lg mr-8 mt-3 grid grid-cols-2 pb-1">
                                                         <div>
                                                             <div className="flex items-center pl-7 pt-4">
-                                                                <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                                                <p className="text-black text-sm font-semibold font-['Poppins']">{mes_receive.sender_name}</p>
+                                                                {((mes_receive.sender_avatar === null) || (mes_receive.sender_avatar === undefined) || (mes_receive.sender_avatar === '')) ?
+                                                                    <Iuser className="w-10 fill-zinc-400 mr-2" /> :
+                                                                    <img
+                                                                        className="w-[3em] h-[3em] rounded-full border border-black"
+                                                                        src={mes_receive.sender_avatar}
+                                                                        alt="" />}
+                                                                <p className="text-black text-sm font-semibold font-['Poppins'] ml-4">{mes_receive.sender_name}</p>
                                                             </div>
 
                                                             <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
@@ -414,14 +429,21 @@ export default function Chat() {
                                         placeholder="Type content..." onChange={ev => setContent(ev.target.value)}></textarea>
                                 </div>
                                 {(file !== '') ?
-                                    <div className="bg-white w-[380px] h-[200px] rounded-md border border-zinc-400 ml-7 mt-2 pl-2 py-1">
-                                        <Image
-                                            src={file}
-                                            width={380}
-                                            height={200} alt={""} />
-                                    </div> : null}
+                                    <>  
+                                        <div className="flex items-center justify-end mr-6">
+                                            <button onClick={handleDeleteImage}>
+                                                <IcircleXmark className="w-[1.5em]"/>
+                                            </button>
+                                        </div>
+                                        <div className="bg-white w-[380px] h-[200px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
+                                            <Image
+                                                src={file}
+                                                width={380}
+                                                height={200} alt={""} />
+                                        </div>
+                                    </> : null}
 
-                                <div className="flex mt-[86px] mr-4 justify-end pb-8">
+                                <div className="flex mt-8 mr-4 justify-end pb-8">
                                     <button
                                         onClick={handleFormSubmit}
                                         className="text-center text-black text-base bg-lime-300 rounded-lg px-4 py-1 hover:bg-lime-400">

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import Iuser from '../icons/icon_user'
@@ -31,7 +32,7 @@ export default function Header() {
             })
             .catch(error => console.error('Error:', error));
     }, []);
-    
+
 
     return (
         <header>
@@ -45,10 +46,22 @@ export default function Header() {
                     </div>
                 </Link>
                 <div className='mr-2'>
-                    <Popup trigger={<button><Iuser /></button>} position={"bottom right"}>
+                    <Popup trigger={<button>
+                        {((avatar === null) || (avatar === undefined) || (avatar === '')) ?
+                            <Iuser className='w-[4.5em] fill-[#717171]' /> :
+                            <img
+                                className="w-[4.5em] rounded-full border-2 border-black"
+                                src={avatar}
+                                alt="" />}
+                    </button>} position={"bottom right"}>
                         <div className='w-[18em] rounded-2xl border border-stone-400 bg-white pb-4'>
                             <div className='flex items-center justify-center mt-4'>
-                                <Iuser className='w-[4.5em] fill-[#717171]' />
+                                {((avatar === null) || (avatar === undefined) || (avatar === '')) ?
+                                    <Iuser className='w-[4.5em] fill-[#717171]' /> :
+                                    <img
+                                        className="w-[4.5em] rounded-full border-2 border-black"
+                                        src={avatar}
+                                        alt="" />}
                             </div>
                             <p className='relative text-center mt-2 text-black text-lg font-semibold'>{name}</p>
                             <p className='relative text-center mt-1 text-stone-400 text-base font-semibold'>({type})</p>
