@@ -198,40 +198,73 @@ export default function RP() {
                                                 <div>{rep.userID}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <Tooltip
-                                                    disableFocusListener
-                                                    disableTouchListener
-                                                    title='Click to see full'>
-                                                    <Grid item>
-                                                        <Popup
-                                                            ref={popupRef}
-                                                            trigger={<button className="hover:underline">{rep.title}</button>}
-                                                            position={"right bottom"}>
-                                                            <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
-                                                                <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
-                                                                    style={{ wordWrap: 'break-word' }}>
-                                                                    {rep.content}
-                                                                    {((rep.file !== null) && (rep.file !== "")) ? <img src={rep.file} alt="Cannot load" /> : null}
+                                                <Popup
+                                                    ref={popupRef}
+                                                    trigger={
+                                                        <Tooltip disableFocusListener disableTouchListener title='Click to see full'>
+                                                            <Grid item>
+                                                                <button className="hover:underline">{rep.title}</button>
+                                                            </Grid>
+                                                        </Tooltip>}
+                                                    position={"right bottom"}>
+                                                    <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
+                                                        <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
+                                                            style={{ wordWrap: 'break-word' }}>
+                                                            {rep.content}
+                                                            {((rep.file !== null) && (rep.file !== "")) ?
+                                                                <div className="mt-6">
+                                                                    <img
+                                                                        src={rep.file}
+                                                                        alt="Cannot load"
+                                                                        onClick={handleClick}
+                                                                        style={{
+                                                                            width: showLargeImage ? '70%' : 'auto',
+                                                                            height: showLargeImage ? '70vh' : 'auto',
+                                                                            objectFit: 'contain',
+                                                                            position: showLargeImage ? 'fixed' : 'static',
+                                                                            margin: 'auto',
+                                                                            display: 'flex',
+                                                                            left: '50%',
+                                                                            top: '50%',
+                                                                            transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                                            zIndex: showLargeImage ? 2 : 'auto',
+                                                                            transition: '0.5s',
+                                                                        }}
+                                                                    />
+                                                                    {showLargeImage && (
+                                                                        <div
+                                                                            style={{
+                                                                                position: 'fixed',
+                                                                                top: 0,
+                                                                                left: 0,
+                                                                                width: '100%',
+                                                                                height: '100%',
+                                                                                background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                            }}
+                                                                        />
+                                                                    )}
                                                                 </div>
-                                                                <div className="flex items-center ml-4">
-                                                                    {(localStorage.getItem('userType') === 'Admin') && (
-                                                                        <PinkSwitch
-                                                                            id={String(index)}
-                                                                            {...label}
-                                                                            defaultChecked={rep.isCompleted}
-                                                                            checked={rep.isCompleted}
-                                                                            onChange={(ev) => {
-                                                                                localStorage.setItem('report_id', rep._id);
-                                                                                handleSwitchChange(rep.index);
-                                                                                handleFormSubmit(ev)
-                                                                                popupRef.current.close()
-                                                                            }} />)}
-                                                                    {rep.isCompleted && <span>Completed</span>}
-                                                                </div>
-                                                            </div>
-                                                        </Popup>
-                                                    </Grid>
-                                                </Tooltip>
+                                                                : null}
+                                                        </div>
+                                                        <div className="flex items-center ml-4">
+                                                            {(localStorage.getItem('userType') === 'Admin') && (
+                                                                <PinkSwitch
+                                                                    id={String(index)}
+                                                                    {...label}
+                                                                    defaultChecked={rep.isCompleted}
+                                                                    checked={rep.isCompleted}
+                                                                    onChange={(ev) => {
+                                                                        localStorage.setItem('report_id', rep._id);
+                                                                        handleSwitchChange(rep.index);
+                                                                        handleFormSubmit(ev)
+                                                                        popupRef.current.close()
+                                                                    }} />)}
+                                                            {rep.isCompleted && <span>Completed</span>}
+                                                        </div>
+                                                    </div>
+                                                </Popup>
+
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
                                                 <div>{rep.type}</div>
@@ -253,63 +286,70 @@ export default function RP() {
                                                 <div>{rep.userID}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <Tooltip disableFocusListener disableTouchListener title='Click to see full'>
-                                                    <Grid item>
-                                                        <Popup trigger={<button className="hover:underline">{rep.title}</button>} position={"right bottom"}>
-                                                            <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
-                                                                <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
-                                                                    style={{ wordWrap: 'break-word' }}>
-                                                                    {rep.content}
-                                                                    {((rep.file !== null) && (rep.file !== "")) ?
-                                                                        <div>
-                                                                            <img
-                                                                                src={rep.file}
-                                                                                alt="Cannot load"
-                                                                                onClick={handleClick}
-                                                                                style={{
-                                                                                    width: showLargeImage ? '50%' : 'auto',
-                                                                                    height: showLargeImage ? '50vh' : 'auto',
-                                                                                    position: showLargeImage ? 'fixed' : 'static',
-                                                                                    display: 'block',   
-                                                                                    margin: 'auto',
-                                                                                    zIndex: showLargeImage ? 2 : 'auto',
-                                                                                    transition: '0.5s',
-                                                                                }}
-                                                                            />
-                                                                            {showLargeImage && (
-                                                                                <div
-                                                                                    style={{
-                                                                                        position: 'fixed',
-                                                                                        top: 0,
-                                                                                        left: 0,
-                                                                                        width: '100%',
-                                                                                        height: '100%',
-                                                                                        background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
-                                                                                        zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
-                                                                                    }}
-                                                                                />
-                                                                            )}
-                                                                        </div>
-                                                                        : null}
+                                                <Popup trigger={
+                                                    <Tooltip disableFocusListener disableTouchListener title='Click to see full'>
+                                                        <Grid item>
+                                                            <button className="hover:underline">{rep.title}</button>
+                                                        </Grid>
+                                                    </Tooltip>
+                                                } position={"right bottom"}>
+                                                    <div className="bg-white w-96 h-fit rounded-md border-2 border-zinc-300 p-2">
+                                                        <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
+                                                            style={{ wordWrap: 'break-word' }}>
+                                                            {rep.content}
+                                                            {((rep.file !== null) && (rep.file !== "")) ?
+                                                                <div className="mt-6">
+                                                                    <img
+                                                                        src={rep.file}
+                                                                        alt="Cannot load"
+                                                                        onClick={handleClick}
+                                                                        style={{
+                                                                            width: showLargeImage ? '70%' : 'auto',
+                                                                            height: showLargeImage ? '70vh' : 'auto',
+                                                                            objectFit: 'contain',
+                                                                            position: showLargeImage ? 'fixed' : 'static',
+                                                                            margin: 'auto',
+                                                                            display: 'flex',
+                                                                            left: '50%',
+                                                                            top: '50%',
+                                                                            transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                                            zIndex: showLargeImage ? 2 : 'auto',
+                                                                            transition: '0.5s',
+                                                                        }}
+                                                                    />
+                                                                    {showLargeImage && (
+                                                                        <div
+                                                                            style={{
+                                                                                position: 'fixed',
+                                                                                top: 0,
+                                                                                left: 0,
+                                                                                width: '100%',
+                                                                                height: '100%',
+                                                                                background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                            }}
+                                                                        />
+                                                                    )}
                                                                 </div>
-                                                                <div className="flex items-center ml-4">
-                                                                    {(localStorage.getItem('userType') === 'Admin') && (
-                                                                        <PinkSwitch
-                                                                            id={String(index)}
-                                                                            {...label}
-                                                                            defaultChecked={rep.isCompleted}
-                                                                            checked={rep.isCompleted}
-                                                                            onChange={(ev) => {
-                                                                                localStorage.setItem('report_id', rep._id);
-                                                                                handleSwitchChange(rep.index);
-                                                                                handleFormSubmit(ev)
-                                                                            }} />)}
-                                                                    {rep.isCompleted && <span>Completed</span>}
-                                                                </div>
-                                                            </div>
-                                                        </Popup>
-                                                    </Grid>
-                                                </Tooltip>
+                                                                : null}
+                                                        </div>
+                                                        <div className="flex justify-center items-center">
+                                                            {(localStorage.getItem('userType') === 'Admin') && (
+                                                                <PinkSwitch
+                                                                    id={String(index)}
+                                                                    {...label}
+                                                                    defaultChecked={rep.isCompleted}
+                                                                    checked={rep.isCompleted}
+                                                                    onChange={(ev) => {
+                                                                        localStorage.setItem('report_id', rep._id);
+                                                                        handleSwitchChange(rep.index);
+                                                                        handleFormSubmit(ev)
+                                                                    }} />)}
+                                                            {rep.isCompleted && <span>Completed</span>}
+                                                        </div>
+                                                    </div>
+                                                </Popup>
+
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
                                                 <div>{rep.type}</div>
