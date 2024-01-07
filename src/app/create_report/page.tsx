@@ -40,26 +40,27 @@ export default function Create_RP() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-
+        let fileSave = ''
         const data = new FormData()
         data.append("file", image)
         data.append("upload_preset", "introSE")
         data.append("cloud_name", "dzdmbflvk")
 
-        fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/image/upload", {
+        await fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/image/upload", {
             method:"post",
-            body:data
+            body: data
         })
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
+            fileSave = data.url
         }).catch((err) => {
             console.log(err);
         })
 
         await fetch('/api/report', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('userName'), title, type, content, date_created, date_completed, status, method: 'add' }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'), title, type, file: fileSave, content, date_created, date_completed, status, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         setTimeout(() => {
