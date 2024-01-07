@@ -22,6 +22,7 @@
     "@swc/core": "^1.3.100",
     "axios": "^1.6.5",
     "cloudinary": "^1.41.1",
+    "cloudinary-react": "^1.8.1",
     "clsx": "^2.0.0",
     "cookie": "^0.6.0",
     "cookies-next": "^4.1.0",
@@ -43,7 +44,8 @@
     "react-dom": "^18.2.0",
     "react-player": "^2.13.0",
     "react-select": "^5.8.0",
-    "reactjs-popup": "^2.0.6"
+    "reactjs-popup": "^2.0.6",
+    "swr": "^2.2.4"
   },
   "devDependencies": {
     "@types/node": "^20",

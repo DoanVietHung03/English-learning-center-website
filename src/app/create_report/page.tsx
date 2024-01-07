@@ -15,56 +15,51 @@ import { green } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
-import { Cloudinary } from 'cloudinary-core';
-
-const cloudinary = new Cloudinary({ cloud_name: 'dzdmbflvk', api_key: '255688826461671', api_secret: '_tIBX9mwSbKrEJK2qQRem8Fj-CE' });
 
 export default function Create_RP() {
     const [title, setTitle] = useState('')
     const [type, setType] = useState('')
     const [content, setContent] = useState('')
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState("");
     const [date_created, setDate_created] = useState(Date.now());
     const [date_completed, setDate_completed] = useState(null);
     const [status, setStatus] = useState('Uncompleted');
     const router = useRouter()
+
+    const [image, setImage] = useState("")
+
     const handleChangeType = (ev) => {
         setType(ev.value);
     };
 
     const handleChangeFile = (event) => {
         const selectedFile = event.target.files[0];
-        setFile(selectedFile);
-    };
-
-    const handleUpload = async () => {
-        if (file) {
-            try {
-                const formData = new FormData();
-                formData.append('file', file);
-
-                const response = await fetch(cloudinary.url('upload', { upload_preset: 'introSE' }), {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    console.log('Upload successful:', result);
-                } else {
-                    console.error('Upload failed');
-                }
-            } catch (error) {
-                console.error('Error during upload:', error);
-            }
-        }
+        setImage(selectedFile)
+        setFile(selectedFile)
     };
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+
+        const data = new FormData()
+        data.append("file", image)
+        data.append("upload_preset", "introSE")
+        data.append("cloud_name", "dzdmbflvk")
+
+        fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/image/upload", {
+            method:"post",
+            body:data
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+        }).catch((err) => {
+            console.log(err);
+        })
+
         await fetch('/api/report', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('userName'), title, type, content, file, date_created, date_completed, status, method: 'add' }),
+            body: JSON.stringify({ id: localStorage.getItem('userName'), title, type, content, date_created, date_completed, status, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         setTimeout(() => {
@@ -181,7 +176,7 @@ export default function Create_RP() {
                                         variant="contained"
                                         sx={buttonSx}
                                         disabled={loading}
-                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev); handleUpload }}
+                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                     >
                                         Create
                                     </Button>
