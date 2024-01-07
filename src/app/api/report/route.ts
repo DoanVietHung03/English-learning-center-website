@@ -5,7 +5,6 @@ export async function POST(req: { json: () => any }) {
     try{
         const body = await req.json()
         connectToDatabase();
-        console.log(body.file);
         if(body.method === 'add'){
             const createdReport = await Report.create({
                 userID: body.id,

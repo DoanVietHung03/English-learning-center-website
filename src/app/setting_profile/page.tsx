@@ -16,6 +16,15 @@ export default function Profile() {
     const [user, setUser] = useState({})
     const [password, setPassword] = useState('')
     const [errorPass, setErrorPass] = useState(false);
+    const [file, setFile] = useState("");
+    const [image, setImage] = useState("")
+
+    const handleChangeFile = (event) => {
+        const selectedFile = event.target.files[0];
+        setImage(selectedFile)
+        setFile(URL.createObjectURL(selectedFile))
+    };
+
     useEffect(() => {
         fetch('/api/user', {
             method: 'POST',
@@ -33,14 +42,36 @@ export default function Profile() {
     const router = useRouter();
     const [birth, setBirth] = React.useState<dayjs | null>(dayjs(user.birth))
     const [error, setError] = useState(false)
+
+
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         localStorage.setItem('userFname', user.name)
         if(errorPass === false){
             setError(false)
+
+
+            let fileSave = ''
+            const data = new FormData()
+            data.append("file", image)
+            data.append("folder", "chat")
+            data.append("upload_preset", "introSE")
+            data.append("cloud_name", "dzdmbflvk")
+
+            await fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/image/upload", {
+                method:"post",
+                body: data
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                fileSave = data.url
+            }).catch((err) => {
+                console.log(err);
+            })
+
             const response = await fetch('api/user', {
                 method: 'POST',
-                body: JSON.stringify({userID: user.phone, userBirth: birth, userName: user.name, userEmail: user.email, userAddress: user.address, userPassword: password, method: 'changeInfo' }),
+                body: JSON.stringify({userID: user.phone, userBirth: birth, userName: user.name, userEmail: user.email, userAddress: user.address, userAvatar: fileSave, userPassword: password, method: 'changeInfo' }),
                 headers: {'Content-Type': 'application/json'},
             })
             if (!response.ok)

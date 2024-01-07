@@ -25,6 +25,7 @@ export async function POST(req: { json: () => any }) {
                 email: null,
                 birth: null,
                 address: null,
+                avatar: null,
             })
             return Response.json(createdUser)
         }
@@ -67,7 +68,8 @@ export async function POST(req: { json: () => any }) {
                     email: body.userEmail,
                     birth: body.userBirth,
                     address: body.userAddress,
-                    password: body.userPassword
+                    password: body.userPassword,
+                    avatar: body.userAvatar
                 };
             }
             else{
@@ -75,7 +77,8 @@ export async function POST(req: { json: () => any }) {
                     name: body.userName,
                     email: body.userEmail,
                     birth: body.userBirth,
-                    address: body.userAddress
+                    address: body.userAddress,
+                    avatar: body.userAvatar
                 };
             }
             const submissionEdit = await User.updateOne({ phone: body.userID }, { $set: updatedInfo });

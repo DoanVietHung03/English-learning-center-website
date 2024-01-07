@@ -7,7 +7,8 @@ const userSchema = new Schema({
     type: { type: String, required: true },
     email: {type: String, required: false},
     birth: {type: Date, required: false},
-    address: {type: String, required: false}
+    address: {type: String, required: false},
+    avatar: {type: String, required: false}
 }, { timestamps: true });
 
 export const User = models?.User || model('User', userSchema)

@@ -24,6 +24,8 @@ export default function Chat() {
 
     const [message_sent, SetMessageSent] = useState([]);
     const [message_received, SetMessageReceived] = useState([]);
+    const [image, setImage] = useState("")
+
 
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
@@ -68,14 +70,35 @@ export default function Chat() {
 
 
     function handleChangeFile(ev) {
-        setFile(URL.createObjectURL(ev.target.files[0]));
+        const selectedFile = ev.target.files[0];
+        setImage(selectedFile)
+        setFile(selectedFile)
     }
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+
+        let fileSave = ''
+        const data = new FormData()
+        data.append("file", image)
+        data.append("folder", "chat")
+        data.append("upload_preset", "introSE")
+        data.append("cloud_name", "dzdmbflvk")
+
+        await fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/image/upload", {
+            method:"post",
+            body: data
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            fileSave = data.url
+        }).catch((err) => {
+            console.log(err);
+        })
+
         const response = await fetch('/api/message', {
             method: 'POST',
-            body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file, method: 'add' }),
+            body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file: fileSave, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         window.location.reload(true);
@@ -300,7 +323,7 @@ export default function Chat() {
                                     <input
                                         className="mb-3"
                                         type="file"
-                                        onChange={handleChangeFile} />
+                                        onChange={(ev) => handleChangeFile(ev)} />
                                     <Image
                                         src={file}
                                         width={200}

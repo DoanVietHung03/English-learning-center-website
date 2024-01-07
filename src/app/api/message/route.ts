@@ -14,7 +14,7 @@ export async function POST(req: { json: () => any }) {
                 receiver: body.receiver,
                 content: body.content,
                 sentDate: date,
-                attachedFile: body.attachedFile,
+                attachedFile: body.file,
             })
             return Response.json(createdMessage); 
         }

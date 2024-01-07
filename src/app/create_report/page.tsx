@@ -43,6 +43,8 @@ export default function Create_RP() {
         let fileSave = ''
         const data = new FormData()
         data.append("file", image)
+        data.append("folder", "report")
+
         data.append("upload_preset", "introSE")
         data.append("cloud_name", "dzdmbflvk")
 
