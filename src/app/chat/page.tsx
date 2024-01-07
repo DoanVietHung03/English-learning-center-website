@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
@@ -25,7 +26,6 @@ export default function Chat() {
     const [message_sent, SetMessageSent] = useState([]);
     const [message_received, SetMessageReceived] = useState([]);
     const [image, setImage] = useState("")
-
 
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
@@ -69,10 +69,10 @@ export default function Chat() {
     );
 
 
-    function handleChangeFile(ev) {
-        const selectedFile = ev.target.files[0];
+    const handleChangeFile = (event) => {
+        const selectedFile = event.target.files[0];
         setImage(selectedFile)
-        setFile(selectedFile)
+        setFile(URL.createObjectURL(selectedFile))
     }
 
     async function handleFormSubmit(ev: SyntheticEvent) {
@@ -86,15 +86,15 @@ export default function Chat() {
         data.append("cloud_name", "dzdmbflvk")
 
         await fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/image/upload", {
-            method:"post",
+            method: "post",
             body: data
         })
-        .then((res) => res.json())
-        .then((data) => {
-            fileSave = data.url
-        }).catch((err) => {
-            console.log(err);
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                fileSave = data.url
+            }).catch((err) => {
+                console.log(err);
+            })
 
         const response = await fetch('/api/message', {
             method: 'POST',
@@ -105,170 +105,16 @@ export default function Chat() {
     }
 
     const [contentChat, setContentChat] = useState<ReactElement | null>(null);
-    const [selectedButton, setSelectedButton] = useState<number | null>(null);
+    const [selectedButton, setSelectedButton] = useState<number | null>(1);
+    const [showLargeImage, setShowLargeImage] = useState(false);
+
+    const handleClick = () => {
+        setShowLargeImage(!showLargeImage);
+    };
 
     const popupRef = useRef();
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
-        if (buttonNumber === 1) {
-            setContentChat(
-                <>
-                    {message_received.map((mes_receive, i) => (
-                        <div key={i}>
-                            <div className="bg-zinc-300 rounded-lg mr-8 mt-3 grid grid-cols-2 pb-1">
-                                <div>
-                                    <div className="flex items-center pl-7 pt-4">
-                                        <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                        <p className="text-black text-sm font-semibold font-['Poppins']">{mes_receive.sender_name}</p>
-                                    </div>
-
-                                    <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
-                                        Send date: {moment.utc(mes_receive.sentDate).format('DD/MM/YYYY')}
-                                    </div>
-                                </div>
-                                <div>
-                                    <Popup
-                                        ref={popupRef}
-                                        trigger={<div className="mt-2 flex items-center justify-end w-full">
-                                            <button className="mr-4">
-                                                <Ixmark />
-                                            </button>
-                                        </div>}>
-
-                                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
-                                            <div className="mt-4">
-                                                <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
-                                                <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                    <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
-                                                        Yes
-                                                    </button>
-
-                                                    <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
-                                                        onClick={() => { popupRef.current.close() }}>
-                                                        No
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Popup>
-
-                                    <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-2 hover:underline cursor-pointer">
-                                        {(mes_receive.content.length <= 20 ?
-                                            <div>
-                                                <Grid item>
-                                                    <Tooltip disableFocusListener disableTouchListener title="Click to read full">
-                                                        <div>{mes_receive.content}</div>
-                                                    </Tooltip>
-                                                </Grid>
-
-                                            </div> :
-                                            <div>
-                                                <Grid item>
-                                                    <Tooltip disableFocusListener disableTouchListener title="Click to read full">
-                                                        <div>{mes_receive.content.substring(0, 20)}...</div>
-                                                    </Tooltip>
-                                                </Grid>
-                                            </div>)}
-                                    </div>}
-                                        position="right top"
-                                        contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
-                                        <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
-                                            <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
-                                                {mes_receive.content}
-                                            </div>
-                                        </div>
-                                    </Popup>
-                                </div>
-
-                                {/* <button className="flex items-center pl-7 mt-3 pb-6">
-                                    <Iimage className="w-6 mr-2 fill-zinc-500" />
-                                    <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
-                                </button> */}
-                            </div>
-                        </div>
-                    ))}
-                </>
-            )
-        } else if (buttonNumber === 2) {
-            setContentChat(
-                <>
-                    {message_sent.map((mes_send, i) => (
-                        <div key={i}>
-                            <div className="bg-zinc-300 rounded-lg mr-8 mt-3 grid grid-cols-2 pb-1">
-                                <div>
-                                    <div className="flex items-center pl-7 pt-4">
-                                        <Iuser className="w-10 fill-zinc-400 mr-4" />
-                                        <p className="text-black text-sm font-semibold font-['Poppins']">{mes_send.receiver_name}</p>
-                                    </div>
-
-                                    <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
-                                        Send date: {moment.utc(mes_send.sentDate).format('DD/MM/YYYY')}
-                                    </div>
-                                </div>
-                                <div>
-                                    <Popup
-                                        ref={popupRef}
-                                        trigger={<div className="mt-2 flex items-center justify-end w-full">
-                                            <button className="mr-4">
-                                                <Ixmark />
-                                            </button>
-                                        </div>}>
-
-                                        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
-                                            <div className="mt-4">
-                                                <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
-                                                <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                    <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
-                                                        Yes
-                                                    </button>
-
-                                                    <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
-                                                        onClick={() => { popupRef.current.close() }}>
-                                                        No
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Popup>
-
-                                    <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-2 hover:underline cursor-pointer">
-                                        {(mes_send.content.length <= 20 ?
-                                            <div>
-                                                <Grid item>
-                                                    <Tooltip disableFocusListener disableTouchListener title="Click to read full">
-                                                        <div>{mes_send.content}</div>
-                                                    </Tooltip>
-                                                </Grid>
-
-                                            </div> :
-                                            <div>
-                                                <Grid item>
-                                                    <Tooltip disableFocusListener disableTouchListener title="Click to read full">
-                                                        <div>{mes_send.content.substring(0, 20)}...</div>
-                                                    </Tooltip>
-                                                </Grid>
-                                            </div>)}
-                                    </div>}
-                                        position="right top"
-                                        contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
-                                        <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
-                                            <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto">
-                                                {mes_send.content}
-                                            </div>
-                                        </div>
-                                    </Popup>
-                                </div>
-
-                                {/* <button className="flex items-center pl-7 mt-3 pb-6">
-                                    <Iimage className="w-6 mr-2 fill-zinc-500" />
-                                    <p className="text-center text-zinc-400 text-base font-normal leading-tight tracking-tight hover:underline">Click to see image</p>
-                                </button> */}
-                            </div>
-                        </div>
-                    ))}
-                </>
-            )
-        }
     };
 
     return (
@@ -297,7 +143,222 @@ export default function Chat() {
                                 </button>
 
                                 <div className="mt-6 h-[450px] overflow-y-auto">
-                                    {contentChat}
+                                    {selectedButton === 2 ?
+                                        <>
+                                            {message_sent.map((mes_send, i) => (
+                                                <div key={i}>
+                                                    <div className="bg-zinc-300 rounded-lg mr-8 mt-3 grid grid-cols-2 pb-1">
+                                                        <div>
+                                                            <div className="flex items-center pl-7 pt-4">
+                                                                <Iuser className="w-10 fill-zinc-400 mr-4" />
+                                                                <p className="text-black text-sm font-semibold font-['Poppins']">{mes_send.receiver_name}</p>
+                                                            </div>
+
+                                                            <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
+                                                                Send date: {moment.utc(mes_send.sentDate).format('DD/MM/YYYY')}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <Popup
+                                                                ref={popupRef}
+                                                                trigger={<div className="mt-2 flex items-center justify-end w-full">
+                                                                    <button className="mr-4">
+                                                                        <Ixmark />
+                                                                    </button>
+                                                                </div>}>
+
+                                                                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
+                                                                    <div className="mt-4">
+                                                                        <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
+                                                                        <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
+                                                                                Yes
+                                                                            </button>
+
+                                                                            <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
+                                                                                onClick={() => { popupRef.current.close() }}>
+                                                                                No
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Popup>
+
+                                                            <Popup ref={popupRef} trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-2 hover:underline cursor-pointer">
+                                                                {(mes_send.content.length <= 20 ?
+                                                                    <div>
+                                                                        <Grid item>
+                                                                            <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                                                <div>{mes_send.content}</div>
+                                                                            </Tooltip>
+                                                                        </Grid>
+                                                                    </div> :
+                                                                    <div>
+                                                                        <Grid item>
+                                                                            <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                                                <div>{mes_send.content.substring(0, 20)}...</div>
+                                                                            </Tooltip>
+                                                                        </Grid>
+                                                                    </div>)}
+                                                            </div>}
+                                                                position="right top"
+                                                                contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
+                                                                <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
+                                                                    <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto"
+                                                                        style={{ wordWrap: 'break-word' }}>
+                                                                        {mes_send.content}
+                                                                        {((mes_send.attachedFile !== null) && (mes_send.attachedFile !== "")) ?
+                                                                            <div className="mt-6">
+                                                                                <img
+                                                                                    src={mes_send.attachedFile}
+                                                                                    alt="Cannot load"
+                                                                                    onClick={handleClick}
+                                                                                    style={{
+                                                                                        width: showLargeImage ? '70%' : 'auto',
+                                                                                        height: showLargeImage ? '70vh' : 'auto',
+                                                                                        objectFit: 'contain',
+                                                                                        position: showLargeImage ? 'fixed' : 'static',
+                                                                                        margin: 'auto',
+                                                                                        display: 'flex',
+                                                                                        left: '50%',
+                                                                                        top: '50%',
+                                                                                        transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                                                        zIndex: showLargeImage ? 2 : 'auto',
+                                                                                        transition: '0.5s',
+                                                                                    }}
+                                                                                />
+                                                                                {showLargeImage && (
+                                                                                    <div
+                                                                                        style={{
+                                                                                            position: 'fixed',
+                                                                                            top: 0,
+                                                                                            left: 0,
+                                                                                            width: '100%',
+                                                                                            height: '100%',
+                                                                                            background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                            zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                                        }}
+                                                                                    />
+                                                                                )}
+                                                                            </div>
+                                                                            : null}
+                                                                    </div>
+                                                                </div>
+                                                            </Popup>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </>
+                                        :
+                                        <>
+                                            {message_received.map((mes_receive, i) => (
+                                                <div key={i}>
+                                                    <div className="bg-zinc-300 rounded-lg mr-8 mt-3 grid grid-cols-2 pb-1">
+                                                        <div>
+                                                            <div className="flex items-center pl-7 pt-4">
+                                                                <Iuser className="w-10 fill-zinc-400 mr-4" />
+                                                                <p className="text-black text-sm font-semibold font-['Poppins']">{mes_receive.sender_name}</p>
+                                                            </div>
+
+                                                            <div className="ml-6 mt-2 font-semibold text-sm text-gray-400">
+                                                                Send date: {moment.utc(mes_receive.sentDate).format('DD/MM/YYYY')}
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <Popup
+                                                                ref={popupRef}
+                                                                trigger={<div className="mt-2 flex items-center justify-end w-full">
+                                                                    <button className="mr-4">
+                                                                        <Ixmark />
+                                                                    </button>
+                                                                </div>}>
+
+                                                                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
+                                                                    <div className="mt-4">
+                                                                        <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
+                                                                        <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
+                                                                                Yes
+                                                                            </button>
+
+                                                                            <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
+                                                                                onClick={() => { popupRef.current.close() }}>
+                                                                                No
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </Popup>
+
+                                                            <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-2 hover:underline cursor-pointer">
+                                                                {(mes_receive.content.length <= 20 ?
+                                                                    <div>
+                                                                        <Grid item>
+                                                                            <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                                                <div>{mes_receive.content}</div>
+                                                                            </Tooltip>
+                                                                        </Grid>
+
+                                                                    </div> :
+                                                                    <div>
+                                                                        <Grid item>
+                                                                            <Tooltip disableFocusListener disableTouchListener title="Click to read full">
+                                                                                <div>{mes_receive.content.substring(0, 20)}...</div>
+                                                                            </Tooltip>
+                                                                        </Grid>
+                                                                    </div>)}
+                                                            </div>}
+                                                                position="right top"
+                                                                contentStyle={{ right: '20px', margin: '0 0 0 10px' }}>
+                                                                <div className="bg-zinc-200 w-60 h-60 rounded-lg px-2 py-2">
+                                                                    <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto"
+                                                                        style={{ wordWrap: 'break-word' }}>
+                                                                        {mes_receive.content}
+                                                                        {((mes_receive.attachedFile !== null) && (mes_receive.attachedFile !== "")) ?
+                                                                            <div className="mt-6">
+                                                                                <img
+                                                                                    src={mes_receive.attachedFile}
+                                                                                    alt="Cannot load"
+                                                                                    onClick={handleClick}
+                                                                                    style={{
+                                                                                        width: showLargeImage ? '70%' : 'auto',
+                                                                                        height: showLargeImage ? '70vh' : 'auto',
+                                                                                        objectFit: 'contain',
+                                                                                        position: showLargeImage ? 'fixed' : 'static',
+                                                                                        margin: 'auto',
+                                                                                        display: 'flex',
+                                                                                        left: '50%',
+                                                                                        top: '50%',
+                                                                                        transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                                                        zIndex: showLargeImage ? 2 : 'auto',
+                                                                                        transition: '0.5s',
+                                                                                    }}
+                                                                                />
+                                                                                {showLargeImage && (
+                                                                                    <div
+                                                                                        style={{
+                                                                                            position: 'fixed',
+                                                                                            top: 0,
+                                                                                            left: 0,
+                                                                                            width: '100%',
+                                                                                            height: '100%',
+                                                                                            background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                            zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                                        }}
+                                                                                    />
+                                                                                )}
+                                                                            </div>
+                                                                            : null}
+                                                                    </div>
+                                                                </div>
+                                                            </Popup>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </>
+                                    }
                                 </div>
                             </div>
 
