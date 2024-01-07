@@ -21,7 +21,6 @@ export default function UserManagement() {
     }, []);
     const noStudent = students.length
     const noTeacher = teachers.length
-    console.log(teachers)
     return (
         <>
             <Header />

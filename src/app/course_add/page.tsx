@@ -5,7 +5,6 @@ import Header from "@/components/layout/header"
 import Select from "react-select";
 import Iplus from "@/components/icons/icon_plus";
 import Idelete from "@/components/icons/delete";
-import Link from "next/link"
 import { useState, useEffect, SyntheticEvent } from "react"
 import * as React from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -14,12 +13,18 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useRouter } from 'next/navigation'
 import dayjs, { Dayjs } from 'dayjs';
+import Fab from "@mui/material/Fab";
+import CheckIcon from "@mui/icons-material/Check";
+import { green } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+import CircularProgress from "@mui/material/CircularProgress";
+import Button from "@mui/material/Button";
 
 export default function Course_Add() {
     const [title, setTitle] = useState('')
     const [module, setModule] = useState('')
     const [teacher, setTeacher] = useState('')
-    const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
+    const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs(dayjs()));
     const [schedule, setSchedule] = useState('')
     const [room, setRoom] = useState('')
     const [student, setStudent] = useState()
@@ -27,10 +32,7 @@ export default function Course_Add() {
     var [student_added, setStudentAdded] = useState([])
     const router = useRouter();
     const handleDelete = (index) => {
-        // Tạo một bản sao mới của mảng và loại bỏ phần tử tại chỉ mục index
         const updatedArray = [...student_added.slice(0, index), ...student_added.slice(index + 1)];
-
-        // Cập nhật state với mảng mới
         setStudentAdded(updatedArray);
     };
     const handleChangeModule = (ev) => {
@@ -49,21 +51,22 @@ export default function Course_Add() {
         if (!student_added.includes(temp)) {
             student_added.push(temp)
         }
-        //  console.log(student_added)
     }
-    //console.log(student_added)
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+
         const response = await fetch('/api/course', {
             method: 'POST',
-            body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added }),
+            body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
+        console.log(response.ok)
         if (!response.ok)
             setError(true)
         else {
-
-            router.push('/courseList')
+            setTimeout(() => {
+                router.push('/courseList')
+            }, 2000);
         }
     }
     const [teachers, setTeachers] = useState([]);
@@ -76,6 +79,7 @@ export default function Course_Add() {
                 setStudents(data.students)
             })
     }, []);
+
     const optionTeachers = teachers.map(
         function (teacher) {
             return {
@@ -92,6 +96,38 @@ export default function Course_Add() {
             }
         }
     );
+
+    //Function for add
+    const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const timer = React.useRef<number>();
+
+    const buttonSx = {
+        ...(success && {
+            bgcolor: green[500],
+            "&:hover": {
+                bgcolor: green[700],
+            },
+        }),
+    };
+
+    React.useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleButtonClick = (ev) => {
+        if (!loading) {
+            setSuccess(false);
+            setLoading(true);
+            timer.current = window.setTimeout(() => {
+                setSuccess(true);
+                setLoading(false);
+            }, 800);
+        }
+    };
+
     return (
         <>
             <Header />
@@ -102,10 +138,56 @@ export default function Course_Add() {
                         <div>
                             Create Course
                         </div>
-                        <button className="gap-2 flex items-center justify-end bg-lime-300 rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight hover:bg-lime-400 px-4">
-                            <Iplus />
-                            <p className="flex items-center" onClick={handleFormSubmit}>Create course</p>
-                        </button>
+                        <div className="gap-2 flex items-center justify-end rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight px-4">
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <Box sx={{ m: 1, position: "relative" }}>
+                                    <Fab
+                                        aria-label="save"
+                                        color="primary"
+                                        sx={buttonSx}
+                                        onClick={handleButtonClick}
+                                    >
+                                        {success ? <CheckIcon /> : <Iplus />}
+                                    </Fab>
+                                    {loading && (
+                                        <CircularProgress
+                                            size={68}
+                                            sx={{
+                                                color: green[500],
+                                                position: "absolute",
+                                                top: -6,
+                                                left: -6,
+                                                zIndex: 1,
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+                                <Box sx={{ m: 1, position: "relative" }}>
+                                    <Button
+                                        type="submit"
+                                        variant="contained"
+                                        sx={buttonSx}
+                                        disabled={loading}
+                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
+                                    >
+                                        Create
+                                    </Button>
+                                    {loading && (
+                                        <CircularProgress
+                                            size={24}
+                                            sx={{
+                                                color: green[500],
+                                                position: "absolute",
+                                                top: "50%",
+                                                left: "50%",
+                                                marginTop: "-12px",
+                                                marginLeft: "-12px",
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+                            </Box>
+                        </div>
                     </div>
 
                     <div className="bg-white mt-2 rounded">

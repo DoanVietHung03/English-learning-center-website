@@ -1,14 +1,11 @@
 'use client';
-import Image from "next/image"
-import Link from "next/link"
+
 import Ilock from "@/components/icons/icon_lock"
 import Iman from "@/components/icons/icon_man"
-import { SyntheticEvent, useState, useEffect } from "react"
-import { signIn } from "next-auth/react"
+import { SyntheticEvent, useState } from "react"
 import { useRouter } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { getCookies, setCookie } from 'cookies-next'
-
+import Head from 'next/head';
+import RootLayout from "./layout";
 
 export default function Login() {
     const [phone, setPhone] = useState('')
@@ -16,9 +13,6 @@ export default function Login() {
     const [loginProgress, setloginProgress] = useState(true);
     const [error, setError] = useState(false);
     const [courses, setCourses] = useState([])
-    // const [checkUser, setCheck] = useState(Boolean)
-    // const [userType, setType] = useState('')
-
 
     const router = useRouter();
     async function handleFormSubmit(ev: SyntheticEvent) {
@@ -26,13 +20,12 @@ export default function Login() {
         var checkUser
         var userType
         var name
-        // try {
-        await fetch('/api/authentication', {
+        await fetch('/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ phone, password }), // Gửi dữ liệu
+            body: JSON.stringify({ phone, password, method : 'check' }), 
         })
             .then(response => response.json())
             .then(data => {
@@ -43,24 +36,20 @@ export default function Login() {
             .catch(error => {
                 console.error('Error fetching data:', error);
             })
-        console.log(userType)
 
         if (checkUser) {
             localStorage.setItem('userName', phone)
             localStorage.setItem("userType", userType)
             localStorage.setItem("userFname", name)
-            console.log(localStorage.getItem("userType"))
             router.push('/courseList')
-            console.log(courses)
         }
         else {
             setError(true);
         }
     }
 
-
     return (
-        <>
+        <RootLayout>
             <div className="mt-20 rounded-lg mx-auto my-auto w-2/3 h-[550px] bg-white border-gray-200 border-2">
                 <div className="flex h-full">
                     <div className="w-1/2">
@@ -116,6 +105,6 @@ export default function Login() {
                     </div>
                 </div>
             </div>
-        </>
+        </RootLayout>
     )
 }

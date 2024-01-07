@@ -19,23 +19,13 @@ const assignmentSchema = new Schema({
     },
     course_id: {
         type: String,
-        required: false
+        required: true
+    },
+    graded:{
+        type: Number,
+        required: true
     },
     attachedFile: String,
-    // submissions: [{
-    //     student_id:{
-    //         type: String,
-    //         required: false
-    //     },
-    //     answer: {
-    //         type: String,
-    //         required: false
-    //     },
-    //     grade:{
-    //         type: Number,
-    //         required: false
-    //     }
-    // }]
 }, { timestamps: true });
 
 export const Assignment = models?.Assignment || model('Assignment', assignmentSchema)

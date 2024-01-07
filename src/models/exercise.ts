@@ -25,16 +25,7 @@ const exerciseSchema = new Schema({
         type: String,
         required: false
     },
-    progress: [{
-        student_id: {
-            type: String,
-            required: false
-        },
-        answer: {
-            type: String,
-            required: false
-        },
-    }]
+
 
 }, { timestamps: true });
 

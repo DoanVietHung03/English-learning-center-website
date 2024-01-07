@@ -3,6 +3,8 @@ import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import { SyntheticEvent, useState, useEffect } from "react"
 import Select from "react-select";
+import { useRouter } from 'next/navigation'
+
 
 const options = [
     { value: "Student", label: "Student" },
@@ -17,6 +19,8 @@ export default function Register() {
     const [error, setError] = useState(false);
     const [regProgress, setRegProgress] = useState(false);
     const [countdown, setCountdown] = useState(4);
+    const router = useRouter();
+
     useEffect(() => {
         let countdownTimer;
 
@@ -30,21 +34,23 @@ export default function Register() {
             clearInterval(countdownTimer);
         };
     }, [regProgress]);
+    
     useEffect(() => {
         if (countdown === 0) {
             setRegProgress(false);
-            setCountdown(4); // Reset countdown for the next registration
+            setCountdown(4); 
         }
     }, [countdown]);
+
     const handleChange = (ev) => {
         setType(ev.value);
-        console.log(type);
     };
+
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         const response = await fetch('/api/user', {
             method: 'POST',
-            body: JSON.stringify({ phone, password, name, type }),
+            body: JSON.stringify({ phone, password, name, type, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         if (!response.ok) {
@@ -53,6 +59,8 @@ export default function Register() {
         else {
             setError(false)
             setRegProgress(true)
+            router.push('/user_management')
+
         }
     }
 
