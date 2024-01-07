@@ -7,6 +7,7 @@ import Iuser from "@/components/icons/icon_user";
 import * as React from 'react';
 import { useEffect, useState, ReactElement, SyntheticEvent } from "react";
 import { useRouter } from "next/navigation";
+import ReactAudioPlayer from "react-audio-player";
 
 export default function Ass_Grading() {
     const [submissions, setSubmissions] = useState([])
@@ -67,11 +68,23 @@ export default function Ass_Grading() {
                     <div className="mt-10 ml-[34px] text-black text-sm font-semibold font-poppins mb-2">
                         <p>{sub.student_Name}</p>
                     </div>
-                    <div className="mx-[34px] px-7 py-4 border-t border-b border-stone-300 overflow-y-auto h-80 h-fixed">
-                        <div className="text-black text-base font-normal font-poppins leading-tight tracking-tight"
+                    <div className="mx-[34px] px-7 py-4 border-t border-b border-stone-300 h-80 h-fixed">
+                        <div className="text-black text-base font-normal font-poppins leading-tight tracking-tight border-b border-zinc-300 h-3/5 overflow-y-auto"
                             style={{ wordWrap: 'break-word' }}>
                             {sub.answer}
                         </div>
+                        {((sub.attachedFile !== null) || (sub.attachedFile !== '') || (sub.attachedFile !== '')) &&
+                            (
+                                <div>
+                                    <p className="text-base font-semibold leading-tight tracking-tight mt-2">Submission file</p>
+                                    <ReactAudioPlayer
+                                    src={sub.attachedFile}
+                                    autoPlay
+                                    controls
+                                    className="w-full mt-6"
+                                />
+                                </div>
+                            )}
                     </div>
 
                 </div>
@@ -105,15 +118,15 @@ export default function Ass_Grading() {
                 sub.grade !== null ? (
                     setGrade(sub.grade),
                     <div key={i}>
-                        <textarea readOnly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        <input readOnly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
                             {sub.grade}
-                        </textarea>
+                        </input>
                     </div>
                 ) : (
                     //setGrade(null),
                     <div key={i}>
-                        <textarea onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
-                        </textarea>
+                        <input onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        </input>
                     </div>
                 )
             ) : null
@@ -162,8 +175,9 @@ export default function Ass_Grading() {
                                 </div>
                             </div>
 
-
-                            <div className="mt-4 ml-[62px]">
+                            {selectedButton !== null ? (
+                                <>
+                                <div className="mt-4 ml-[62px]">
                                 <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight">Type comment</p>
                             </div>
 
@@ -178,7 +192,8 @@ export default function Ass_Grading() {
                                 <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
                                     Grade
                                 </button>
-                            </div>
+                            </div> </>) : null}
+                            
                         </div>
                     </div>
                 </div>
