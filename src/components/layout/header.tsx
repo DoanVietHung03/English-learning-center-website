@@ -5,11 +5,32 @@ import Link from 'next/link'
 import React from 'react'
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
+import { SyntheticEvent, useState, useEffect } from "react"
+
 
 export default function Header() {
     const name = localStorage.getItem('userFname')
     const type = localStorage.getItem('userType')
-    
+    const [avatar, setAvatar] = useState('')
+
+
+    useEffect(() => {
+        localStorage.setItem('sidebar', 0)
+
+        fetch('/api/user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ phone: localStorage.getItem("userName"), method: 'getInfo' }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.avatar);
+                setAvatar(data.avatar)
+            })
+            .catch(error => console.error('Error:', error));
+    }, []);
     
 
     return (
