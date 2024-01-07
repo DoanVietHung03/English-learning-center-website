@@ -11,10 +11,11 @@ import { SyntheticEvent, useState } from "react"
 import { useRouter } from 'next/navigation'
 import Fab from "@mui/material/Fab";
 import CheckIcon from "@mui/icons-material/Check";
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import Ixmark from "@/components/icons/icon_xmark"
 
 export default function Create_RP() {
     const [title, setTitle] = useState('')
@@ -24,6 +25,7 @@ export default function Create_RP() {
     const [date_created, setDate_created] = useState(Date.now());
     const [date_completed, setDate_completed] = useState(null);
     const [status, setStatus] = useState('Uncompleted');
+    const [error, setError] = useState(false)
     const router = useRouter()
 
     const [image, setImage] = useState("")
@@ -60,13 +62,16 @@ export default function Create_RP() {
                 console.log(err);
             })
 
-        await fetch('/api/report', {
+            const response = await fetch('/api/report', {
             method: 'POST',
             body: JSON.stringify({ id: localStorage.getItem('userName'), title, type, file: fileSave, content, date_created, date_completed, status, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
+        if (!response.ok) {
+            setError(true)        
+        }
         setTimeout(() => {
-            router.push('/report_bug')
+            window.location.reload(true);
         }, 2000);
     }
 
@@ -76,15 +81,24 @@ export default function Create_RP() {
     const timer = React.useRef<number>();
 
     const buttonSx = {
-        ...(success && {
+        ...((success && !error) && {
             bgcolor: green[500],
             "&:hover": {
                 bgcolor: green[700],
             },
         }),
+        ...((success && error) && {
+            bgcolor: red[500],
+            "&:hover": {
+                bgcolor: red[700],
+            },
+        }),
+
     };
 
     React.useEffect(() => {
+        setError(false)
+        setSuccess(false)
         return () => {
             clearTimeout(timer.current);
         };
@@ -97,7 +111,7 @@ export default function Create_RP() {
             timer.current = window.setTimeout(() => {
                 setSuccess(true);
                 setLoading(false);
-            }, 800);
+            }, 1500);
         }
     };
 
@@ -156,9 +170,9 @@ export default function Create_RP() {
                                         aria-label="save"
                                         color="primary"
                                         sx={buttonSx}
-                                        onClick={handleButtonClick}
+                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                     >
-                                        {success ? <CheckIcon /> : <IfileExport />}
+                                        {success ? (!error ? <CheckIcon /> : <Ixmark /> )  : <IfileExport />}
                                     </Fab>
                                     {loading && (
                                         <CircularProgress
@@ -169,30 +183,6 @@ export default function Create_RP() {
                                                 top: -6,
                                                 left: -6,
                                                 zIndex: 1,
-                                            }}
-                                        />
-                                    )}
-                                </Box>
-                                <Box sx={{ m: 1, position: "relative" }}>
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        sx={buttonSx}
-                                        disabled={loading}
-                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
-                                    >
-                                        Create
-                                    </Button>
-                                    {loading && (
-                                        <CircularProgress
-                                            size={24}
-                                            sx={{
-                                                color: green[500],
-                                                position: "absolute",
-                                                top: "50%",
-                                                left: "50%",
-                                                marginTop: "-12px",
-                                                marginLeft: "-12px",
                                             }}
                                         />
                                     )}
