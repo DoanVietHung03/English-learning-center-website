@@ -117,6 +117,7 @@ export default function Chat() {
         })
             .then((res) => res.json())
             .then((data) => {
+                console.log(data);
                 fileSave = data.url
             }).catch((err) => {
                 console.log(err);
@@ -127,7 +128,7 @@ export default function Chat() {
             body: JSON.stringify({ sender: localStorage.getItem('userName'), receiver, content, file: fileSave, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        window.location.reload(true);
+        //window.location.reload(true);
     }
 
     const [contentChat, setContentChat] = useState<ReactElement | null>(null);
