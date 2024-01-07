@@ -9,6 +9,9 @@ import 'reactjs-popup/dist/index'
 export default function Header() {
     const name = localStorage.getItem('userFname')
     const type = localStorage.getItem('userType')
+    
+    
+
     return (
         <header>
             <div className='bg-white flex justify-between px-3 py-3 items-center'>

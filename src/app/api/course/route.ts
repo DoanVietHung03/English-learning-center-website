@@ -143,9 +143,8 @@ export async function POST(req: { json: () => any }) {
             }
             const deleteAssignment = await Assignment.deleteMany({course_id : body.course_id})
             const deleteSession = await Session.deleteMany({course_id : body.course_id})
-            const deleteAttendance = await Attendance.deleteMany({course_id : body.course_id})
             const deleteCourse = await Course.deleteOne({_id : body.course_id})
-            Response.json({deleteAssignment, deleteSession,deleteAttendance, deleteCourse })
+            Response.json({deleteAssignment, deleteSession, deleteCourse })
         }
     } catch (error) {
         return new Response(
