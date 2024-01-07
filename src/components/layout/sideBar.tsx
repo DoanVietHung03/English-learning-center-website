@@ -45,6 +45,7 @@ export default function SideBar() {
                         aoe
                     </h1>
                 </div>
+
                 <ul className="-pt-2">
                     {Menus.slice(0, 4).map((Menu, index) => (
                         <Link key={index} href={index < 3 ? paths[index] : (type === 'Admin' ? "/user_management" : "/chat")}>

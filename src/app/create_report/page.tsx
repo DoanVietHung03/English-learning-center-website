@@ -49,16 +49,16 @@ export default function Create_RP() {
         data.append("cloud_name", "dzdmbflvk")
 
         await fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/image/upload", {
-            method:"post",
+            method: "post",
             body: data
         })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            fileSave = data.url
-        }).catch((err) => {
-            console.log(err);
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                fileSave = data.url
+            }).catch((err) => {
+                console.log(err);
+            })
 
         await fetch('/api/report', {
             method: 'POST',
