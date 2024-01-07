@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-key */
 "use client"
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
 import Link from "next/link"
 import React from "react"
+import moment from "moment"
 import { SyntheticEvent, useEffect, useState } from "react"
 import ReactAudioPlayer from "react-audio-player"
 import { useRouter } from "next/navigation";
@@ -14,6 +16,8 @@ export default function Do_Assignment() {
     const [file, setFile] = useState('');
     const [submission, setSubmission] = useState([])
     const router = useRouter();
+
+    const currentDate = moment();
     const [audio, setAudio] = useState('');
 
     const handleFileChange = (event) => {
@@ -93,11 +97,12 @@ export default function Do_Assignment() {
                                 Title:{" " + assignment.title}
                             </div>
                             {(submission === null) ? <Link href={''}>
-                                <button onClick={handleFormSubmit}
-                                    className="flex items-center bg-lime-500 rounded-lg px-3 py-1 font-poppins text-sm
+                                {(currentDate.isAfter(moment.utc(assignment.deadline))) ? null
+                                    : <button onClick={handleFormSubmit}
+                                        className="flex items-center bg-lime-500 rounded-lg px-3 py-1 font-poppins text-sm
                                                             font-bold text-white hover:bg-lime-300 hover:text-gray-600 transition-colors">
-                                    Submit
-                                </button>
+                                        Submit
+                                    </button>}
                             </Link> : (submission.grade !== null) ?
                                 <div className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-medium
                                                         font-semibold">
@@ -110,14 +115,57 @@ export default function Do_Assignment() {
 
 
                         <div className="grid grid-cols-2 py-4 mx-4 gap-6">
-                            <div>
-                                <p className="text-base font-medium leading-tight tracking-tight">Content</p>
-                                <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 h-[371px] overflow-y-auto"
-                                    style={{ wordWrap: 'break-word' }}>
-                                    {assignment.content}
-                                </div>
-                            </div>
+                            {(currentDate.isAfter(moment.utc(assignment.deadline))) ?
+                                <>
+                                    <div>
+                                        <p className="text-base font-medium leading-tight tracking-tight">Content</p>
+                                        <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 h-[371px] overflow-y-auto"
+                                            style={{ wordWrap: 'break-word' }}>
+                                            {assignment.content}
+                                        </div>
+                                    </div>
+                                    <img
+                                        src="https://scontent.fsgn2-7.fna.fbcdn.net/v/t1.6435-9/165482761_510677450344194_7997565227561803700_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=7f8c78&_nc_eui2=AeHBHopgCKVUvKsb1vCaH8tn9SEzRUEmzPT1ITNFQSbM9JCBPunBQhcTtRiXi50UhdoPTmuSVQRNi-ApYHSk4Vou&_nc_ohc=n1X7i_ii7o0AX-ow7Lw&_nc_ht=scontent.fsgn2-7.fna&oh=00_AfAfyzYeuzWHS8gipcjzVo19xxZY4-hpKrRyLqd_XfcmSQ&oe=65C20433"
+                                        alt=""
+                                        className="w-[400px] h-[371px] mt-[18px] ml-5" />
+                                </>
+                                :
+                                <>
+                                    <div>
+                                        <p className="text-base font-medium leading-tight tracking-tight">Content</p>
+                                        <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 h-[371px] overflow-y-auto"
+                                            style={{ wordWrap: 'break-word' }}>
+                                            {assignment.content}
+                                        </div>
+                                    </div>
 
+                                    <div>
+                                        <p className="text-base font-medium leading-tight tracking-tight">Answer</p>
+                                        <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center pl-4 pt-4">
+                                            {(submission !== null) ?
+                                                <div className="h-[266px]" style={{ wordWrap: 'break-word' }}>{submission.answer}</div> :
+                                                <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full h-[348px] rounded-lg border border-zinc-400 p-3 focus:outline-none" id="myText" placeholder="Type..." ></textarea>}
+                                        </div>
+
+                                        <div>
+                                            {(submission !== null &&
+                                                <div className="flex items-center">
+                                                    <div className="w-full h-10">
+                                                        <p className="mt-3 text-base font-medium leading-tight tracking-tight">Comment</p>
+                                                        {submission.comment !== null ? <div className="rounded pl-2 py-1 border border-stone-300 w-full h-[55px] overflow-y-auto bg-lime-100">
+                                                            {submission.comment}
+                                                        </div> :
+                                                            <div className="rounded pl-2 py-1 border border-stone-300 w-full h-[55px] overflow-y-auto">
+                                                                No comment
+                                                            </div>}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                    </div>
+                                </>
+                            }
                             <div>
                                 <p className="text-base font-medium leading-tight tracking-tight">Answer</p>
                                 <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center pl-4 pt-4">
@@ -167,7 +215,7 @@ export default function Do_Assignment() {
                                     className="mb-4"
                                 />
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
             </div>

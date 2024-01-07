@@ -138,7 +138,7 @@ export default function Assigments() {
                                                         (assignment.status === 'Marked' ? <div className="font-poppins font-medium text-green-400">{assignment.status}</div> :
                                                             <div className="flex gap-2 items-center font-poppins font-medium text-yellow-500">
                                                                 {assignment.status}
-                                                                <CircularProgress size={'1em'} style={{ color: 'rgba(255, 215, 0, 1)' }}/>
+                                                                <CircularProgress size={'1em'} style={{ color: 'rgba(255, 215, 0, 1)' }} />
                                                             </div>))}
                                                 </div>
                                             </div>
@@ -149,7 +149,7 @@ export default function Assigments() {
                                 {currentAss.map(assignment => (type === "Teacher" && (
                                     <>
                                         <div className="flex w-full items-center mt-8">
-                                            <Link href={'/teacher_grading'} onClick={() => { localStorage.setItem('assignment_id', assignment._id) }}
+                                            <Link href={'/teacher_grading'} onClick={() => { localStorage.setItem('assignment_id', assignment._id), localStorage.setItem('assignment_skill', assignment.skill) }}
                                                 className="w-full flex items-center justify-between border border-black rounded-lg hover:bg-gray-300 transition-colors duration-300">
                                                 <div className=" p-2 flex items-center ">
                                                     <Ibook />
@@ -185,7 +185,7 @@ export default function Assigments() {
                                                                 Yes
                                                             </button>
                                                             <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
-                                                                onClick={() => {popupRef.current.close()}}>
+                                                                onClick={() => { popupRef.current.close() }}>
                                                                 No
                                                             </button>
                                                         </div>

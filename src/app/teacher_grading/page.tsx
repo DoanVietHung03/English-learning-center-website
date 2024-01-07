@@ -33,7 +33,7 @@ export default function Ass_Grading() {
         ev.preventDefault();
         await fetch('/api/submission', {
             method: 'POST',
-            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade, assignment_id: localStorage.getItem('assignment_id'), method: 'grading'}),
+            body: JSON.stringify({ id: localStorage.getItem('submission_id'), comment, grade, assignment_id: localStorage.getItem('assignment_id'), method: 'grading' }),
             headers: { 'Content-Type': 'application/json' },
         })
         window.location.reload(true);
@@ -73,11 +73,12 @@ export default function Ass_Grading() {
                             {sub.answer}
                         </div>
                     </div>
+
                 </div>
             ) : null
         ));
         setStudentContent(content);
-        
+
         const comments = submissions.map((sub, i) => (
             index === i ? (
                 sub.comment !== null ? (
@@ -91,7 +92,7 @@ export default function Ass_Grading() {
                     //setComment(null),
                     <div key={i}>
                         <textarea onChange={handleComment} className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
-        
+
                         </textarea>
                     </div>
                 )
@@ -104,7 +105,7 @@ export default function Ass_Grading() {
                 sub.grade !== null ? (
                     setGrade(sub.grade),
                     <div key={i}>
-                        <textarea  readOnly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        <textarea readOnly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
                             {sub.grade}
                         </textarea>
                     </div>
@@ -143,13 +144,13 @@ export default function Ass_Grading() {
                                     </div>
                                     {submissions.map((sub, index) => (
                                         <button
-                                            onClick={() => {handleButtonClick(index), localStorage.setItem('submission_id', sub._id)}}
+                                            onClick={() => { handleButtonClick(index), localStorage.setItem('submission_id', sub._id) }}
                                             key={index}
                                             className={`w-full flex items-center  overflow-y-auto border-b py-4 border-stone-300 hover:bg-zinc-100 ${selectedButton === index ? 'bg-zinc-100' : ''}`}>
                                             <Iuser className="w-[3em] fill-zinc-300" />
                                             <div>
                                                 <p className="text-black text-sm font-semibold font-poppins ml-4">{sub.student_Name} - {sub.student_id}</p>
-                                                {sub.grade !== null ? 
+                                                {sub.grade !== null ?
                                                     <p className="text-zinc-400 text-sm font-semibold font-poppins ml-4">Marked</p> : null}
                                             </div>
                                         </button>
@@ -161,12 +162,6 @@ export default function Ass_Grading() {
                                 </div>
                             </div>
 
-                            <div className="mt-8 ml-[62px]">
-                                <button className="flex items-center justify-center gap-2 bg-gray-200 rounded-2xl px-6 py-3 hover:bg-gray-300">
-                                    <Imicro />
-                                    <input type="file" onChange={handleChangeImage} />
-                                </button>
-                            </div>
 
                             <div className="mt-4 ml-[62px]">
                                 <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight">Type comment</p>
