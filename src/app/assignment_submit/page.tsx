@@ -14,10 +14,13 @@ export default function Do_Assignment() {
     const [file, setFile] = useState('');
     const [submission, setSubmission] = useState([])
     const router = useRouter();
+    const [audio, setAudio] = useState('');
 
-    function handleChangeFile(ev) {
-        setFile(URL.createObjectURL(ev.target.files[0]));
-    }
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0];
+        setAudio(selectedFile)
+        setFile(selectedFile);
+    };
 
 
     useEffect(() => {
@@ -45,9 +48,27 @@ export default function Do_Assignment() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+        ev.preventDefault()
+        let fileSave = ''
+        const data = new FormData()
+        data.append("file", audio);
+        data.append("folder", "submissions");
+        data.append("upload_preset", "introSE");
+        data.append("cloud_name", "dzdmbflvk");
+        await fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/raw/upload", {
+            method: "post",
+            body: data
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                fileSave = data.url
+            }).catch((err) => {
+                console.log(err);
+            })
         const response = await fetch('/api/submission', {
             method: 'POST',
-            body: JSON.stringify({ answer, id_student: localStorage.getItem("userName"), id_assignment: localStorage.getItem("assignment_id"), file, method: 'add' }),
+            body: JSON.stringify({ answer, id_student: localStorage.getItem("userName"), id_assignment: localStorage.getItem("assignment_id"), file: fileSave, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         router.push('/assignments')
@@ -104,36 +125,46 @@ export default function Do_Assignment() {
                                         <div className="h-[266px]" style={{ wordWrap: 'break-word' }}>{submission.answer}</div> :
                                         <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full h-[348px] rounded-lg border border-zinc-400 p-3 focus:outline-none" id="myText" placeholder="Type..." ></textarea>}
                                 </div>
-                                
+
                                 <div>
                                     {(submission !== null &&
                                         <div className="flex items-center">
                                             <div className="w-full h-10">
                                                 <p className="mt-3 text-base font-medium leading-tight tracking-tight">Comment</p>
                                                 {submission.comment !== null ? <div className="rounded pl-2 py-1 border border-stone-300 w-full h-[55px] overflow-y-auto bg-lime-100">
-                                                                                    {submission.comment}
-                                                                                </div> : 
-                                                                                <div className="rounded pl-2 py-1 border border-stone-300 w-full h-[55px] overflow-y-auto">
-                                                                                    No comment
-                                                                                </div>}
+                                                    {submission.comment}
+                                                </div> :
+                                                    <div className="rounded pl-2 py-1 border border-stone-300 w-full h-[55px] overflow-y-auto">
+                                                        No comment
+                                                    </div>}
                                             </div>
                                         </div>
                                     )}
                                 </div>
-                                
+
                             </div>
                         </div>
 
 
-                        {(assignment.skill === "Speaking" && submission === null &&
+                        {(assignment.skill === "Listening" && submission === null &&
                             <div className="bg-white p-3 rounded-lg border-2">
-                                <h2>Add your file:</h2>
-                                <input type="file" accept="audio" onChange={handleChangeFile} />
+                                <div>File listening</div>
                                 <ReactAudioPlayer
-                                    src={file}
+                                    src={assignment.attachedFile}
                                     autoPlay
                                     controls
-                                    className="w-full"
+                                    className="w-1/3"
+                                />
+                            </div>
+                        )}
+                        {(assignment.skill === "Speaking" && submission === null &&
+                            <div className="bg-white p-3 rounded-lg border-2">
+                                <div>Input file speaking</div>
+                                <input
+                                    type="file"
+                                    accept="audio"
+                                    onChange={handleFileChange}
+                                    className="mb-4"
                                 />
                             </div>
                         )}

@@ -27,11 +27,12 @@ export default function Add_Ass() {
     //const [file, setFile] = useState('');
     const [content, setContent] = useState('');
     const router = useRouter();
-
+    const [audio, setAudio] = useState('');
     const [file, setFile] = useState(null);
 
     const handleFileChange = (event) => {
-        const selectedFile = event.target.files[0].name;
+        const selectedFile = event.target.files[0];
+        setAudio(selectedFile)
         setFile(selectedFile);
     };
 
@@ -44,14 +45,31 @@ export default function Add_Ass() {
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
+        let fileSave = ''
+        const data = new FormData()
+        data.append("file", audio);
+        data.append("folder", "assignments");
+        data.append("upload_preset", "introSE");
+        data.append("cloud_name", "dzdmbflvk");
+        await fetch("https://api.cloudinary.com/v1_1/dzdmbflvk/raw/upload", {
+            method: "post",
+            body: data
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                fileSave = data.url
+            }).catch((err) => {
+                console.log(err);
+            })
         await fetch('/api/assignment', {
             method: 'POST',
-            body: JSON.stringify({ title, deadline, content, skill, file, id: localStorage.getItem('course_id'), method: 'add' }),
+            body: JSON.stringify({ title, deadline, content, skill, file: fileSave, id: localStorage.getItem('course_id'), method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         setTimeout(() => {
             router.push('/assignments')
-          }, 2000);
+        }, 2000);
     }
 
     //Function for add
@@ -127,23 +145,23 @@ export default function Add_Ass() {
                                                 <div className="container mx-auto mt-8">
                                                     <input
                                                         type="file"
-                                                        accept="audio/mpeg"
+                                                        accept="audio"
                                                         onChange={handleFileChange}
                                                         className="mb-4"
                                                     />
                                                     {file && (
                                                         <>
-                                                        <p>Selected MP3: {file.name}</p>
-                                                        <audio controls>
-                                                            <source src={URL.createObjectURL(file)} type="audio/mpeg" />
-                                                            Your browser does not support the audio tag.
-                                                        </audio>
+                                                            <p>Selected MP3: {file.name}</p>
+                                                            <audio controls>
+                                                                <source src={URL.createObjectURL(file)} type="audio" />
+                                                                Your browser does not support the audio tag.
+                                                            </audio>
                                                         </>
                                                     )}
                                                     {file && (
                                                         <p>Selected MP3: {file.name}</p>
                                                     )}
-                                                
+
                                                 </div>
                                                 // <div className="bg-white p-3 rounded-lg border-2">
                                                 //     <h2>Choose file Listening:</h2>
@@ -199,7 +217,7 @@ export default function Add_Ass() {
                                                 variant="contained"
                                                 sx={buttonSx}
                                                 disabled={loading}
-                                                onClick={(ev) => {handleButtonClick(ev); handleFormSubmit(ev)}}
+                                                onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                             >
                                                 Add
                                             </Button>
