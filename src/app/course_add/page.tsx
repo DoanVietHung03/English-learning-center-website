@@ -61,12 +61,16 @@ export default function Course_Add() {
             headers: { 'Content-Type': 'application/json' },
         })
         console.log(response.ok)
-        if (!response.ok)
+        if (!response.ok) {
             setError(true)
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 900);
+        }
         else {
             setTimeout(() => {
                 router.push('/courseList')
-            }, 2000);
+            }, 1000);
         }
     }
     const [teachers, setTeachers] = useState([]);
