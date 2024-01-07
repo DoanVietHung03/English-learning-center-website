@@ -15,10 +15,11 @@ import { useRouter } from 'next/navigation'
 import dayjs, { Dayjs } from 'dayjs';
 import Fab from "@mui/material/Fab";
 import CheckIcon from "@mui/icons-material/Check";
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import Ixmark from "@/components/icons/icon_xmark";
 
 export default function Course_Add() {
     const [title, setTitle] = useState('')
@@ -61,13 +62,19 @@ export default function Course_Add() {
             headers: { 'Content-Type': 'application/json' },
         })
         console.log(response.ok)
-        if (!response.ok)
+        if (!response.ok){
             setError(true)
-        else {
+            setTimeout(() => {
+                window.location.reload(true);           
+            }, 900);
+        }
+        else{
             setTimeout(() => {
                 router.push('/courseList')
-            }, 2000);
+            }, 1000);
         }
+        
+
     }
     const [teachers, setTeachers] = useState([]);
     const [students, setStudents] = useState([]);
@@ -103,15 +110,24 @@ export default function Course_Add() {
     const timer = React.useRef<number>();
 
     const buttonSx = {
-        ...(success && {
+        ...((success && !error) && {
             bgcolor: green[500],
             "&:hover": {
                 bgcolor: green[700],
             },
         }),
+        ...((success && error) && {
+            bgcolor: red[500],
+            "&:hover": {
+                bgcolor: red[700],
+            },
+        }),
     };
 
     React.useEffect(() => {
+        setSuccess(false)
+        setError(false)
+
         return () => {
             clearTimeout(timer.current);
         };
@@ -148,9 +164,10 @@ export default function Course_Add() {
                                         disabled={loading}
                                         onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                     >
-                                        {success ? <CheckIcon /> : <Iplus />}
+                                        {success ? (!error ? <CheckIcon /> : <Ixmark /> ) : <Iplus />}
                                     </Fab>
                                     {loading && (
+
                                         <CircularProgress
                                             size={68}
                                             sx={{
