@@ -6,12 +6,15 @@ import Iuser from "@/components/icons/icon_user"
 import React, { SyntheticEvent, useEffect, useState, ReactElement, useRef } from "react"
 import Image from "next/image"
 import Select from "react-select";
+import Iimage from "@/components/icons/icon_image"
 import Ixmark from "@/components/icons/icon_xmark"
 import moment from 'moment';
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
 export default function Chat() {
     const [message, setMessage] = useState('')
@@ -128,6 +131,18 @@ export default function Chat() {
     const handleButtonClick = (buttonNumber: number) => {
         setSelectedButton(buttonNumber);
     };
+
+    const VisuallyHiddenInput = styled('input')({
+        clip: 'rect(0 0 0 0)',
+        clipPath: 'inset(50%)',
+        height: 1,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        whiteSpace: 'nowrap',
+        width: 1,
+    });
 
     return (
         <>
@@ -290,7 +305,7 @@ export default function Chat() {
                                                                     <div className="mt-4">
                                                                         <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                                         <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_message = mes_receive._id, handleDelete(ev)}}>
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_message = mes_receive._id, handleDelete(ev) }}>
                                                                                 Yes
                                                                             </button>
 
@@ -387,21 +402,24 @@ export default function Chat() {
                                 </div>
 
                                 <div className="mt-12 ml-6 mr-4">
-                                    <p className="text-black text-base font-medium">Content</p>
+                                    <div className="flex items-center justify-between">
+                                        <p className="text-black text-base font-medium">Content</p>
+
+                                        <Button onChange={handleChangeFile} component="label" startIcon={<Iimage />} >
+                                            <div className="font-semibold text-xs text-black">Add Image</div>
+                                            <VisuallyHiddenInput type="file" />
+                                        </Button>
+                                    </div>
                                     <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none mt-2"
                                         placeholder="Type content..." onChange={ev => setContent(ev.target.value)}></textarea>
                                 </div>
-                                <div className="font-semibold mt-3 ml-7">Image</div>
-                                <div className="bg-white w-[380px] rounded-md border border-zinc-400 ml-7 mt-2 pl-2 py-1">
-                                    <input
-                                        className="mb-3"
-                                        type="file"
-                                        onChange={(ev) => handleChangeFile(ev)} />
-                                    <Image
-                                        src={file}
-                                        width={200}
-                                        height={150} alt={""} />
-                                </div>
+                                {(file !== '') ?
+                                    <div className="bg-white w-[380px] h-[200px] rounded-md border border-zinc-400 ml-7 mt-2 pl-2 py-1">
+                                        <Image
+                                            src={file}
+                                            width={380}
+                                            height={200} alt={""} />
+                                    </div> : null}
 
                                 <div className="flex mt-[86px] mr-4 justify-end pb-8">
                                     <button
