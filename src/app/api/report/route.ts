@@ -30,10 +30,14 @@ export async function POST(req: { json: () => any }) {
             .filter(report => report !== null);
             reports.reverse()
 
+            const complete = reports.filter(at => at.status === 'Completed')
+            const uncomplete = reports.filter(at => at.status === 'Uncompleted')
+            const reportList = [...uncomplete, ...complete]
+
 
             var isCompleted = []
-            for(var i = 0; i < reports.length; i++){
-                if(reports[i].status === 'Completed'){
+            for(var i = 0; i < reportList.length; i++){
+                if(reportList[i].status === 'Completed'){
                     isCompleted.push(true)
                 }
                 else{
@@ -41,7 +45,7 @@ export async function POST(req: { json: () => any }) {
                 }
             }
 
-            const combinesReports = reports.map((report,i) => {
+            const combinesReports = reportList.map((report,i) => {
                 return {
                     _id: report._id,
                     userID: report.userID,
@@ -61,7 +65,6 @@ export async function POST(req: { json: () => any }) {
         }
         else if (body.method === 'changeStatus'){
             var date
-            var isComplete
             if(body.status == 'Completed'){
                 date = new Date()
             }
