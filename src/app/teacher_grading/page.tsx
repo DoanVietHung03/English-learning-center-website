@@ -16,7 +16,8 @@ export default function Ass_Grading() {
     const [comment, setComment] = useState('')
     const [commentContent, setCommentContent] = useState<ReactElement | any | string>('')
     const [gradeContent, setGradeContent] = useState<ReactElement | any | string>('')
-    const [grade, setGrade] = useState('')
+    const [grade, setGrade] = useState<number|null>(null)
+    const [isGraded, setIsGraded] = useState(false)
     const [fileType, setFileType] = useState('');
 
     const handleGrading = (ev: SyntheticEvent) => {
@@ -147,7 +148,7 @@ export default function Ass_Grading() {
                         </textarea>
                     </div>
                 ) : (
-                    //setComment(null),
+                    setComment(''),
                     <div key={i}>
                         <textarea onChange={handleComment} className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
 
@@ -161,24 +162,20 @@ export default function Ass_Grading() {
         const grades = submissions.map((sub, i) => (
             index === i ? (
                 sub.grade !== null ? (
-                    setGrade(sub.grade),
+                    setIsGraded(true),
                     <div key={i}>
                         <textarea readOnly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
                             {sub.grade}
                         </textarea>
                     </div>
                 ) : (
-                    //setGrade(null),
-                    <>
+                    setIsGraded(false),
+                    setGrade(null),
                     <div key={i}>
                         <input onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
                         </input>
                     </div>
-                    <div className="flex items-center justify-end mr-6 mt-2">
-                    <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
-                        Grade
-                    </button>
-                </div></>
+
                 )
             ) : null
         ));
@@ -238,6 +235,12 @@ export default function Ass_Grading() {
 
                                     <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight mt-4 ml-[62px]">Score</p>
                                     <div>{gradeContent}</div>
+                                    {!isGraded &&(                                  
+                                    <div className="flex items-center justify-end mr-6 mt-2">
+                                        <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
+                                            Grade
+                                        </button>
+                                    </div>)}
                                     
                                 </>
                                 ) : null}

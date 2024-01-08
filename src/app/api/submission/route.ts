@@ -50,10 +50,15 @@ export async function POST(req: { json: () => any }) {
         }
         else if (body.method === 'grading'){
             var status
+            var newGraded
+            const gradedSubmission = await Assignment.findOne({_id: body.assignment_id}, {graded: 1, _id:0})
+
             if(body.grade !== null){
+                newGraded = gradedSubmission.graded + 1
                 status = "Marked"
             }
             else{
+                newGraded = gradedSubmission.graded
                 status = "Pending"
             }
             const updatedGrade = {
@@ -62,8 +67,6 @@ export async function POST(req: { json: () => any }) {
                 status: status
             };
             const submissionEdit = await Submission.updateOne({ _id: body.id }, { $set: updatedGrade });
-            const gradedSubmission = await Assignment.findOne({_id: body.assignment_id}, {graded: 1, _id:0})
-            var newGraded = gradedSubmission.graded + 1
             const updatedAssignment = {
                 graded: newGraded
             };
