@@ -22,6 +22,7 @@ import { green, red } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Isend from "@/components/icons/icon_send"
+import ReactAudioPlayer from "react-audio-player"
 
 export default function Chat() {
     const [message, setMessage] = useState('')
@@ -206,6 +207,9 @@ export default function Chat() {
             }, 1500);
         }
     };
+
+    const audioTail = ['mp3', 'wav']
+    const imgTail = ['jpg', 'png', 'jpeg']
 
     return (
         <>
@@ -480,7 +484,7 @@ export default function Chat() {
 
                                         <Button onChange={handleChangeFile} component="label" startIcon={<Iimage />} >
                                             <div className="font-semibold text-xs text-black">Add Image</div>
-                                            <VisuallyHiddenInput type="file" accept="audio/*" />
+                                            <VisuallyHiddenInput type="file" accept="auto" />
                                         </Button>
                                     </div>
                                     <textarea className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none mt-2"
@@ -493,12 +497,25 @@ export default function Chat() {
                                                 <IcircleXmark className="w-[1.5em]" />
                                             </button>
                                         </div>
-                                        <div className="bg-white w-[380px] h-[200px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
+                                        {imgTail.includes((assignment.attachedFile).substring((assignment.attachedFile).lastIndexOf('.') + 1)) ?
+                                            <div className="bg-white w-[380px] h-[200px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
                                             <Image
                                                 src={file}
                                                 width={380}
                                                 height={200} alt={""} />
-                                        </div>
+                                        </div> : ((audioTail.includes((assignment.attachedFile).substring((assignment.attachedFile).lastIndexOf('.') + 1))) ?
+                                            <div>
+                                            <div>File listening</div>
+                                            <ReactAudioPlayer
+                                                src={assignment.attachedFile}
+                                                controls
+                                                className="w-full"
+                                            />
+                                        </div> : 
+                                        <div className="border border-zinc-300 px-2 py-2">
+                                        <a style={{ wordWrap: 'break-word' }} href={assignment.attachedFile}>{assignment.attachedFile}</a>
+                                    </div>)}
+                                        
                                     </> : null}
 
                                 <div className="flex mt-8 mr-4 justify-end pb-8">
