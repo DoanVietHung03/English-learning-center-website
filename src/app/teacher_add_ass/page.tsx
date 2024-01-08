@@ -15,7 +15,8 @@ import { useRouter } from 'next/navigation'
 import Fab from "@mui/material/Fab";
 import CheckIcon from "@mui/icons-material/Check";
 import IfileAdd from "@/components/icons/icon_file_add";
-import { green } from "@mui/material/colors";
+import Ixmark from "@/components/icons/icon_xmark";
+import { green, red } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
@@ -29,6 +30,7 @@ export default function Add_Ass() {
     const router = useRouter();
     const [audio, setAudio] = useState('');
     const [file, setFile] = useState(null);
+    const [error, setError] = useState(false);
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
@@ -62,14 +64,22 @@ export default function Add_Ass() {
             }).catch((err) => {
                 console.log(err);
             })
-        await fetch('/api/assignment', {
+        const response = await fetch('/api/assignment', {
             method: 'POST',
             body: JSON.stringify({ title, deadline, content, skill, file: fileSave, id: localStorage.getItem('course_id'), method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        setTimeout(() => {
-            router.push('/assignments')
-        }, 2000);
+        if (!response.ok) {
+            setError(true)
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 900);
+        }
+        else {
+            setTimeout(() => {
+                router.push('/assignments')
+            }, 1000);
+        }
     }
 
     //Function for add
@@ -84,9 +94,17 @@ export default function Add_Ass() {
                 bgcolor: green[700],
             },
         }),
+        ...((success && error) && {
+            bgcolor: red[500],
+            "&:hover": {
+                bgcolor: red[700],
+            },
+        }),
     };
 
     React.useEffect(() => {
+        setSuccess(false);
+        setError(false)
         return () => {
             clearTimeout(timer.current);
         };
@@ -194,9 +212,9 @@ export default function Add_Ass() {
                                                 aria-label="save"
                                                 color="primary"
                                                 sx={buttonSx}
-                                                onClick={handleButtonClick}
+                                                onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                             >
-                                                {success ? <CheckIcon /> : <IfileAdd />}
+                                                  {success ? (!error ? <CheckIcon /> : <Ixmark /> ) : <IfileAdd />}
                                             </Fab>
                                             {loading && (
                                                 <CircularProgress
@@ -211,33 +229,15 @@ export default function Add_Ass() {
                                                 />
                                             )}
                                         </Box>
-                                        <Box sx={{ m: 1, position: "relative" }}>
-                                            <Button
-                                                type="submit"
-                                                variant="contained"
-                                                sx={buttonSx}
-                                                disabled={loading}
-                                                onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
-                                            >
-                                                Add
-                                            </Button>
-                                            {loading && (
-                                                <CircularProgress
-                                                    size={24}
-                                                    sx={{
-                                                        color: green[500],
-                                                        position: "absolute",
-                                                        top: "50%",
-                                                        left: "50%",
-                                                        marginTop: "-12px",
-                                                        marginLeft: "-12px",
-                                                    }}
-                                                />
-                                            )}
-                                        </Box>
                                     </Box>
                                 </div>
                             </form>
+                            {(error) &&
+                                <div className="mt-5 max-w-xs text-red-800 font-semibold 
+                                bg-red-300 rounded-lg p-3 mr-5">
+                                    Some information is missed.
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
