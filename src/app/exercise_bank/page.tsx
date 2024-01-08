@@ -287,7 +287,7 @@ export default function Exercise_bank() {
                             (selectedButton === 2 ?
                                 <div>
                                     {((localStorage.getItem('module_filter') === 'IELTS') || (localStorage.getItem('module_filter') === 'TOEFL') || (localStorage.getItem('module_filter') === 'TOEIC') || (localStorage.getItem('skill_filter') === 'Listening') || (localStorage.getItem('skill_filter') === 'Speaking') || (localStorage.getItem('skill_filter') === 'Writing') || (localStorage.getItem('skill_filter') === 'Reading')) ?
-                                        <div>
+                                        <div className="h-[460px]">
                                             <div className="grid grid-cols-3">
                                                 {currentExList3.map(exercise => (
                                                     <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
@@ -313,7 +313,7 @@ export default function Exercise_bank() {
                                                 ))}
                                             </div>
                                         </div> :
-                                        <div>
+                                        <div className="h-[460px]">
                                             <div className="grid grid-cols-3">
                                                 {currentExList.map(exercise => (
                                                     <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
@@ -351,7 +351,8 @@ export default function Exercise_bank() {
                                     </div>
                                 </div> :
                                 ((localStorage.getItem('module_filter') === 'IELTS') || (localStorage.getItem('module_filter') === 'TOEFL') || (localStorage.getItem('module_filter') === 'TOEIC') || (localStorage.getItem('skill_filter') === 'Listening') || (localStorage.getItem('skill_filter') === 'Speaking') || (localStorage.getItem('skill_filter') === 'Writing') || (localStorage.getItem('skill_filter') === 'Reading')) ?
-                                    <div>
+                                <>
+                                    <div className="h-[460px]">
                                         <div className="grid grid-cols-3">
                                             {currentEx3.map((exercise) => (
                                                 <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
@@ -422,18 +423,20 @@ export default function Exercise_bank() {
                                             )
                                             )}
                                         </div>
-                                        <div className="flex justify-center">
-                                            <Pagination
-                                                count={Math.ceil(length / exPerPage)}
-                                                shape="rounded"
-                                                page={currentPage}
-                                                onChange={(event, newPage) => handlePageChange(newPage)}
-                                                className=""
-                                                color="primary"
-                                            />
-                                        </div>
-                                    </div> :
-                                    <div>
+                                        
+                                    </div> 
+                                    <div className="flex justify-end">
+                                    <Pagination
+                                        count={Math.ceil(length / exPerPage)}
+                                        shape="rounded"
+                                        page={currentPage}
+                                        onChange={(event, newPage) => handlePageChange(newPage)}
+                                        className=""
+                                        color="primary"
+                                    />
+                                </div></>:
+                                    <>
+                                    <div className="h-[460px]">
                                         <div className="grid grid-cols-3">
                                             {currentEx.map((exercise) => (
                                                 <div className="inline-block bg-white mr-4 pl-10 pr-10 py-4 mb-4 rounded-xl">
@@ -504,17 +507,18 @@ export default function Exercise_bank() {
                                             )
                                             )}
                                         </div>
-                                        <div className="flex justify-end">
-                                            <Pagination
-                                                count={Math.ceil(exercises.length / exPerPage)}
-                                                shape="rounded"
-                                                page={currentPage}
-                                                onChange={(event, newPage) => setCurrentPage(newPage)}
-                                                className=""
-                                                color="primary"
-                                            />
-                                        </div>
-                                    </div>)
+                                        
+                                    </div>
+                                    <div className="flex justify-end">
+                                    <Pagination
+                                        count={Math.ceil(exercises.length / exPerPage)}
+                                        shape="rounded"
+                                        page={currentPage}
+                                        onChange={(event, newPage) => setCurrentPage(newPage)}
+                                        className=""
+                                        color="primary"
+                                    />
+                                </div></>)
                         }
                     </div>
                 </div>

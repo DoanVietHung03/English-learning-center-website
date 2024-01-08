@@ -34,7 +34,7 @@ export default function CourseList() {
         console.log(delete_course)
         const response = await fetch('/api/course', {
             method: 'POST',
-            body: JSON.stringify({ course_id: delete_course, method: 'delete' }),
+            body: JSON.stringify({ course_id: delete_course, method: 'Course' }),
             headers: { 'Content-Type': 'application/json' },
         })
         window.location.reload(true);
@@ -69,9 +69,17 @@ export default function CourseList() {
     const coursePerPage = 3; // Adjust as needed
     const currentCourse = courses.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
 
+    const [deleteCourse, setDeleteCourse] = useState(false)
+
     const actions = [
         { icon: <IfileAdd className="w-6" />, name: "Add Course", link: '/course_add' },
+        { icon: <IfileDelete className="w-6" />, name: "Delete Course" },
     ];
+
+    const handleShowBin = () => {
+        console.log('aaa');
+        setDeleteCourse(!deleteCourse)
+    }
 
     const popupRef = useRef();
 
@@ -98,7 +106,13 @@ export default function CourseList() {
                                             key={action.name}
                                             icon={action.icon}
                                             tooltipTitle={action.name}
-                                            onClick={() => handleActionClick(action.link)}
+                                            onClick={() => {
+                                                if (action.name == "Add Course") {
+                                                    handleActionClick(action.link)
+                                                } else {
+                                                    handleShowBin()
+                                                }
+                                                }}
                                             FabProps={{ size: "large" }}
                                         />
                                     ))}
@@ -142,7 +156,7 @@ export default function CourseList() {
                                                 </div>
                                             </div>
                                         </div>
-                                        {type === "Admin" ?
+                                        {((type === "Admin") && (deleteCourse === true)) ?
                                             <Popup
                                             ref={popupRef}
                                             trigger={<button className="flex justify-center items-center h-full w-1/6 bg-red-400 hover:bg-red-500 rounded-r-xl border-l border-stone-300">
@@ -150,7 +164,7 @@ export default function CourseList() {
                                             </button>}>
                                             <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
                                                 <div className="mt-4">
-                                                    <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
+                                                    <p className="text-center text-lg font-semibold">Do you want to Course permanentlCoursey ?</p>
                                                     <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
                                                         <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
                                                             Yes
