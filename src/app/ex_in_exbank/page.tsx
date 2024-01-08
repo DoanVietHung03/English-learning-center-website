@@ -5,6 +5,8 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { DateCalendar } from "@mui/x-date-pickers"
+import Assigments from "../assignments/page"
+import ReactAudioPlayer from "react-audio-player"
 
 export default function ExBank() {
     const [exercise, setExercise] = useState([])
@@ -18,7 +20,7 @@ export default function ExBank() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id: localStorage.getItem("exerciseID"), method: 'getInfo'}),
+            body: JSON.stringify({ id: localStorage.getItem("exerciseID"), method: 'getInfo' }),
         })
             .then(response => response.json())
             .then(data => {
@@ -48,7 +50,7 @@ export default function ExBank() {
             .catch(error => console.error('Error:', error));
 
     }, []);
-
+    console.log(exercise.solution)
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
         console.log(progress)
@@ -86,7 +88,7 @@ export default function ExBank() {
                             (<>
                                 <div className="flex items-center justify-end py-2 border-b border-stone-300 mx-4">
 
-                                    <button className="flex items-center bg-lime-300 rounded-lg px-3 py-1 font-poppins text-sm"
+                                    <button className="flex items-center bg-lime-500 font-semibold hover:bg-lime-400 duration-300 text-white rounded-lg px-3 py-2 font-poppins text-sm"
                                         onClick={handleFormSubmit}>
                                         Save your progress
                                     </button>
@@ -94,29 +96,38 @@ export default function ExBank() {
                                 </div>
                                 <div className="grid grid-cols-2 mt-4 py-4 mx-4 gap-6">
                                     <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 overflow-y-scroll h-[450px]">
-                                        <span className="text-black text-base font-normal">
+                                        <div className="text-black text-base font-normal break-words h-3/4">
                                             {exercise.content}
-                                        </span>
+                                        </div>
+                                        {exercise.attachedFile && (
+                                            <div className="rounded-xl py-3 mt-3">
+                                                <p className="font-semibold ml-3">File listening</p>
+                                                <ReactAudioPlayer
+                                                    src={exercise.attachedFile}
+                                                    controls
+                                                    className="w-full"
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                     {localStorage.getItem('saved') === 'already' ?
                                         ex_progress.map((exercise, index) => (
                                             <div key={index} className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
                                                 <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{exercise.progress}</textarea>
-                                                <div className="w-full flex items-center mr-12 mt-10 justify-end">
-                                                    <button
-                                                        className="rounded-md bg-lime-200 hover:bg-lime-300 px-3 py-1 font-medium leading-tight tracking-tight">
-                                                        View result
-                                                    </button>
-                                                </div>
+                                                {exercise.solution &&
+                                                    <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution}>
+                                                        View solution
+                                                    </a>
+                                                }
                                             </div>)) :
                                         <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
                                             <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
-                                            <div className="w-full flex items-center mr-12 mt-10 justify-end">
-                                                <button
-                                                    className="rounded-md bg-lime-200 hover:bg-lime-300 px-3 py-1 font-medium leading-tight tracking-tight">
-                                                    View result
-                                                </button>
-                                            </div>
+                                            {exercise.solution &&
+                                                <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution}>
+                                                    {/* View solution */}
+                                                    {exercise.solution}
+                                                </a>
+                                            }
                                         </div>}
                                 </div>
                             </>) :
@@ -124,10 +135,27 @@ export default function ExBank() {
                                 <div className="mt-4 pt-4 mx-4">
                                     <p className="ml-4 mb-2 text-base font-medium leading-tight tracking-tight">Content</p>
                                     <div className="rounded-lg border border-stone-300 pl-6 pt-8 overflow-y-auto h-[350px]">
-                                        <span className="text-black text-base font-normal"
+                                        <span className="text-black text-base font-normal h-3/4"
                                             style={{ wordWrap: 'break-word' }}>
                                             {exercise.content}
                                         </span>
+                                        {exercise.attachedFile && (
+                                            <div className="rounded-xl py-3 mt-3">
+                                                <p className="font-semibold ml-3">File listening</p>
+                                                <ReactAudioPlayer
+                                                    src={exercise.attachedFile}
+                                                    controls
+                                                    className="w-1/2"
+                                                />
+                                            </div>
+                                        )}
+                                        {exercise.solution &&
+                                            <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold"
+                                                href={exercise.solution}>
+                                                {/* View solution */}
+                                                {exercise.solution}
+                                            </a>
+                                        }
                                     </div>
                                 </div>
                             </>)}

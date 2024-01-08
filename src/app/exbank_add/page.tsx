@@ -98,7 +98,7 @@ export default function Exercise_Add() {
             })
         const response = await fetch('/api/exercise', {
             method: 'POST',
-            body: JSON.stringify({ title, filemp3: fileSave2, content, skill, file: fileSave, module, method: 'add' }),
+            body: JSON.stringify({ title, filemp3: fileSave, content, skill, file: fileSave2, module, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         if (!response.ok) {

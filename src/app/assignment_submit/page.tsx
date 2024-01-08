@@ -213,7 +213,7 @@ export default function Do_Assignment() {
                                                     <div className="h-[266px] overflow-y-auto" style={{ wordWrap: 'break-word' }}>
                                                         {submission.answer}
                                                     </div>
-                                                    {(skill == 'Speaking' &&
+                                                    {(assignment.skill == 'Speaking' &&
                                                         <>
                                                             <div className="">File speaking</div>
                                                             <ReactAudioPlayer
