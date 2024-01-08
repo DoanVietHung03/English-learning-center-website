@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import React, { useState, useEffect, ReactElement } from "react"
+import React, { useState } from "react"
 import IarrowLeft from "../icons/icon_arrow_left"
 import dynamic from "next/dynamic"
 import Grid from "@mui/material/Grid";

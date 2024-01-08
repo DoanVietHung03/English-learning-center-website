@@ -120,8 +120,8 @@ export default function ExBank() {
                                         ex_progress.map((exercise, index) => (
                                             <div key={index}>
                                                 <div className="text-base font-semibold leading-tight tracking-tight">Answer</div>
-                                                <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
-                                                    <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{exercise.progress}</textarea>
+                                                <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border p-4">
+                                                    <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96 mb-4" id="myText" placeholder="Type...">{exercise.progress}</textarea>
                                                     {exercise.solution &&
                                                         <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution}>
                                                             View solution
