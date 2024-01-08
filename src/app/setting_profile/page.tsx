@@ -31,7 +31,8 @@ const VisuallyHiddenInput = styled('input')({
 export default function Profile() {
     const [user, setUser] = useState({})
     const [password, setPassword] = useState('')
-    const [errorPass, setErrorPass] = useState(false);
+    var [errorPass, setErrorPass] = useState(false);
+    const [checkPass, setCheckPass] = useState('')
     const [file, setFile] = useState("");
     const [image, setImage] = useState("")
 
@@ -55,7 +56,7 @@ export default function Profile() {
             })
     }, []);
 
-    const router = useRouter();
+
     const [birth, setBirth] = React.useState<dayjs | null>(dayjs(user.birth))
     const [error, setError] = useState(false)
 
@@ -65,8 +66,6 @@ export default function Profile() {
         localStorage.setItem('userFname', user.name)
         if (errorPass === false) {
             setError(false)
-
-
             let fileSave = ''
             const data = new FormData()
             data.append("file", image)
@@ -98,6 +97,7 @@ export default function Profile() {
         }
         else {
             setError(true)
+            setErrorPass(true)
         }
     }
 
@@ -213,7 +213,14 @@ export default function Profile() {
                                 </div>
                                 <div className="flex items-center">
                                     <input
-                                        onChange={(ev) => { setPassword(ev.target.value) }}
+                                        onChange={(ev) => { setPassword(ev.target.value); 
+                                        if (ev.target.value === checkPass) {
+                                            setErrorPass(false);
+                                        }
+                                        else {
+                                            setErrorPass(true);
+                                        } 
+                                    }}
                                         className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none border-r-0"
                                         type={isPasswordVisible ? 'text' : 'password'}
                                         id="myNewPassword"
@@ -230,7 +237,7 @@ export default function Profile() {
                                 </div>
                                 <div className="flex items-center">
                                     <input onChange={(ev) => {
-                                        console.log(password)
+                                        setCheckPass(ev.target.value)
                                         if (ev.target.value === password) {
                                             setErrorPass(false);
                                         }
