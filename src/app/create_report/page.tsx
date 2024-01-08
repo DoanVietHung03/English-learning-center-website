@@ -68,11 +68,17 @@ export default function Create_RP() {
             headers: { 'Content-Type': 'application/json' },
         })
         if (!response.ok) {
-            setError(true)        
+            setError(true)  
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 2000);      
         }
-        setTimeout(() => {
-            window.location.reload(true);
-        }, 2000);
+        else{
+            setTimeout(() => {
+                router.push('/report_bug')
+            }, 2000);
+        }
+        
     }
 
     //Function for add
@@ -135,13 +141,13 @@ export default function Create_RP() {
                             </div>
 
                             <div className="w-1/3">
-                                <p className="text-black text-base font-medium leading-tight tracking-tight mb-3">Type of report</p>
+                                <p className="text-black text-base font-medium leading-tight tracking-tight mb-3">Type of report (*)</p>
                                 <Select options={optionType} onChange={handleChangeType} className="w-full" />
                             </div>
                         </div>
 
                         <div className="ml-14 h-96 items-center mt-12 mr-12 text-black text-base font-medium leading-tight tracking-tight">
-                            <p>Content of report</p>
+                            <p>Content of report (*)</p>
                             <textarea onChange={(ev) => { setContent(ev.target.value) }}
                                 className="w-full h-[340px] border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none"
                                 placeholder="Type content of the report"></textarea>
