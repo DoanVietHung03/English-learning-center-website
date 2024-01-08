@@ -17,6 +17,7 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import { useRouter } from "next/navigation";
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
+import Ixmark from "@/components/icons/icon_xmark"
 
 export default function Exercise_bank() {
     const [selectedButton, setSelectedButton] = useState<number | null>(1);
