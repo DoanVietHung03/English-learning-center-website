@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import SideBar from "@/components/layout/sideBar"
@@ -5,6 +6,7 @@ import Header from "@/components/layout/header"
 import { SyntheticEvent, useState } from "react"
 import Select from "react-select";
 import * as React from 'react';
+import Image from "next/image"
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -20,8 +22,10 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import { styled } from '@mui/material/styles';
-import Imp3 from "@/components/icons/icon_mp3";
 import ReactAudioPlayer from "react-audio-player"
+import IfileCirclePlus from "@/components/icons/icon_fileCirclePlus";
+import IcircleXmark from "@/components/icons/icon_circle_xmark";
+
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -41,16 +45,24 @@ export default function Add_Ass() {
     //const [file, setFile] = useState('');
     const [content, setContent] = useState();
     const router = useRouter();
-    const [audio, setAudio] = useState();
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState('');
     const [error, setError] = useState(false);
+    const [image, setImage] = useState("")
+    const [fileType, setFileType] = useState('');
 
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
-        setAudio(selectedFile)
-        setFile(selectedFile);
+        console.log(selectedFile)
+        setImage(selectedFile)
+        setFile(URL.createObjectURL(selectedFile))
+        setFileType(selectedFile.name)
     };
 
+    const handleDeleteImage = () => {
+        setFile("")
+        setFileType('')
+        setImage('')
+    }
 
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
@@ -93,6 +105,12 @@ export default function Add_Ass() {
         }
     }
 
+    const [showLargeImage, setShowLargeImage] = useState(false);
+
+    const handleClick = () => {
+        setShowLargeImage(!showLargeImage);
+    };
+
     //Function for add
     const [loading, setLoading] = React.useState(false);
     const [success, setSuccess] = React.useState(false);
@@ -133,6 +151,9 @@ export default function Add_Ass() {
             }, 1500);
         }
     };
+
+    const audioTail = ['mp3', 'wav']
+    const imgTail = ['jpg', 'png', 'jpeg']
 
     return (
         <>
@@ -179,7 +200,7 @@ export default function Add_Ass() {
                                                     <Button className="w-full justify-between items-center"
                                                         color="primary"
                                                         onChange={handleFileChange} component="label" variant="contained"
-                                                        startIcon={<Imp3 />}>
+                                                        startIcon={<IfileCirclePlus />}>
                                                         <div className="flex w-full justify-between items-center overflow-x-auto">
                                                             <div className="w-[100px]">
                                                                 Input file
@@ -189,22 +210,67 @@ export default function Add_Ass() {
                                                             {file && (
                                                                 <div className="overflow-x-visible">
                                                                     {file.name}
-                                                                    
+
                                                                 </div>
                                                             )}
                                                         </div>
                                                     </Button>
-                                                    {file && (
+                                                    {(file !== '') ?
                                                         <>
-                                                            <div className="border rounded-xl border-zinc-300 mt-5">
-                                                                <ReactAudioPlayer
-                                                                    src={URL.createObjectURL(file)}
-                                                                    controls
-                                                                    className="w-full"
-                                                                />
+                                                            <div className="flex items-center justify-end mr-6 mt-2">
+                                                                <button onClick={handleDeleteImage}>
+                                                                    <IcircleXmark className="w-[1.5em]" />
+                                                                </button>
                                                             </div>
-                                                        </>
-                                                    )}
+                                                            {imgTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1)) ?
+                                                                <div className="bg-white w-[120px] h-[80px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
+                                                                    <img
+                                                                        src={file}
+                                                                        width={120}
+                                                                        height={80} 
+                                                                        alt={"Cannot load"} 
+                                                                        onClick={handleClick} 
+                                                                        style={{
+                                                                            width: showLargeImage ? '70%' : 'auto',
+                                                                            height: showLargeImage ? '70vh' : 'auto',
+                                                                            objectFit: 'contain',
+                                                                            position: showLargeImage ? 'fixed' : 'static',
+                                                                            margin: 'auto',
+                                                                            display: 'flex',
+                                                                            left: '50%',
+                                                                            top: '50%',
+                                                                            transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                                            zIndex: showLargeImage ? 2 : 'auto',
+                                                                            transition: '0.5s',
+                                                                        }}/>
+                                                                        {showLargeImage && (
+                                                                                    <div
+                                                                                        style={{
+                                                                                            position: 'fixed',
+                                                                                            top: 0,
+                                                                                            left: 0,
+                                                                                            width: '100%',
+                                                                                            height: '100%',
+                                                                                            background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                            zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                                        }}
+                                                                                    />
+                                                                                )}
+                                                
+                                                                </div> : ((audioTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1))) ?
+                                                                    <div>
+                                                                        <div>File listening</div>
+                                                                        <ReactAudioPlayer
+                                                                            src={file}
+                                                                            controls
+                                                                            className="w-full"
+                                                                        />
+                                                                    </div> :
+                                                                    <div className="border border-zinc-300 px-2 py-2">
+                                                                        <a style={{ wordWrap: 'break-word' }} href={file}>{file}</a>
+                                                                    </div>)}
+
+                                                        </> : null}
 
 
                                                 </div>
@@ -231,7 +297,7 @@ export default function Add_Ass() {
                                                 sx={buttonSx}
                                                 onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                             >
-                                                {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileAdd className="w-[1.4em] fill-white"/>}
+                                                {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileAdd className="w-[1.4em] fill-white" />}
                                             </Fab>
                                             {loading && (
                                                 <CircularProgress
