@@ -143,11 +143,10 @@ export default function Do_Assignment() {
                                 <>
                                     <div>
                                         <p className="text-base font-medium leading-tight tracking-tight">Content</p>
-                                        <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 h-[378px]">
-                                            <div style={{ wordWrap: 'break-word' }}>
-                                                <div className="h-3/4 overflow-y-auto">
+                                        <div className="rounded-lg border border-stone-300 pl-6 py-4 pr-4 h-[378px]">
+                                            <div style={{ wordWrap: 'break-word'}} className="h-[355px] overflow-y-auto">
                                                     {assignment.content}
-                                                </div>
+                                             
                                                 <div className="mt-6">
                                                     {((assignment.attachedFile == null) || (assignment.attachedFile == '') || (assignment.attachedFile == undefined)) ?
                                                         null
