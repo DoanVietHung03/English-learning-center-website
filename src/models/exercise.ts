@@ -19,7 +19,7 @@ const exerciseSchema = new Schema({
     },
     solution: {
         type: String,
-        //  required: true
+        required: true
     },
     attachedFile: {
         type: String,
