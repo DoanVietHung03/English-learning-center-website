@@ -218,10 +218,10 @@ export default function Exercise_Add() {
                                     }
 
                                     <Button className="w-full justify-between items-center"
-                                        style={{ backgroundColor: "#33bbff", }}
+                                        style={{ backgroundColor: "primary", }}
                                         onChange={handleSolution} component="label" variant="contained"
                                         startIcon={<InsertDriveFileIcon />}>
-                                        <div className="py-2 flex w-full justify-between items-center overflow-x-auto">
+                                        <div className="py-1 flex w-full justify-between items-center overflow-x-auto">
                                             <div className="w-auto">
                                                 Input file solution (*)
                                             </div>

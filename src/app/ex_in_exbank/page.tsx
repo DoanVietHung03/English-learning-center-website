@@ -125,7 +125,7 @@ export default function ExBank() {
                                                 <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border p-4">
                                                     <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96 mb-4" id="myText" placeholder="Type...">{exercise.progress}</textarea>
                                                     {exercise.solution &&
-                                                        <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution}>
+                                                        <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution} >
                                                             View solution
                                                         </a>
                                                     }
@@ -136,7 +136,7 @@ export default function ExBank() {
                                             <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border p-4">
                                                 <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96 mb-4" id="myText" placeholder="Type..."></textarea>
                                                 {exercise.solution &&
-                                                    <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution}>
+                                                    <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution} >
                                                         View solution
                                                     </a>
                                                 }
@@ -147,26 +147,25 @@ export default function ExBank() {
                             (<>
                                 <div className="mt-4 pt-4 mx-4">
                                     <p className="ml-4 mb-2 text-base font-medium leading-tight tracking-tight">Content</p>
-                                    <div className="rounded-lg border border-stone-300 pl-6 pt-8 overflow-y-auto h-[350px]">
-                                        <span className="text-black text-base font-normal h-3/4"
+                                    <div className="rounded-lg border border-stone-300 pl-6 pt-8 h-[350px]">
+                                        <div className="text-black text-base font-normal overflow-y-auto w-full h-[250px]"
                                             style={{ wordWrap: 'break-word' }}>
                                             {exercise.content}
-                                        </span>
+                                        </div>
                                         {exercise.attachedFile && (
                                             <div className="rounded-xl py-3 mt-3">
                                                 <p className="font-semibold ml-3">File listening</p>
                                                 <ReactAudioPlayer
                                                     src={exercise.attachedFile}
                                                     controls
-                                                    className="w-1/2"
+                                                    className=""
                                                 />
                                             </div>
                                         )}
                                         {exercise.solution &&
-                                            <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold"
+                                            <a className="bg-lime-500 p-2 mt-10 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold"
                                                 href={exercise.solution}>
-                                                {/* View solution */}
-                                                {exercise.solution}
+                                                View solution                                            
                                             </a>
                                         }
                                     </div>
