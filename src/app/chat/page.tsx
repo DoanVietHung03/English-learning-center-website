@@ -32,6 +32,8 @@ export default function Chat() {
     const [students, setStudents] = useState([]);
     const [date, setDate] = useState(Date.now());
     const [file, setFile] = useState('');
+    const [fileType, setFileType] = useState('');
+
     const [receivers, setReceivers] = useState([])
 
     const [message_sent, SetMessageSent] = useState([]);
@@ -100,8 +102,10 @@ export default function Chat() {
 
     const handleChangeFile = (event) => {
         const selectedFile = event.target.files[0];
+        console.log(selectedFile)
         setImage(selectedFile)
         setFile(URL.createObjectURL(selectedFile))
+        setFileType(selectedFile.name)
     }
 
     async function handleFormSubmit(ev: SyntheticEvent) {
@@ -497,23 +501,23 @@ export default function Chat() {
                                                 <IcircleXmark className="w-[1.5em]" />
                                             </button>
                                         </div>
-                                        {imgTail.includes((assignment.attachedFile).substring((assignment.attachedFile).lastIndexOf('.') + 1)) ?
+                                        {imgTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1)) ?
                                             <div className="bg-white w-[380px] h-[200px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
                                             <Image
                                                 src={file}
                                                 width={380}
                                                 height={200} alt={""} />
-                                        </div> : ((audioTail.includes((assignment.attachedFile).substring((assignment.attachedFile).lastIndexOf('.') + 1))) ?
+                                        </div> : ((audioTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1))) ?
                                             <div>
                                             <div>File listening</div>
                                             <ReactAudioPlayer
-                                                src={assignment.attachedFile}
+                                                src={file}
                                                 controls
                                                 className="w-full"
                                             />
                                         </div> : 
                                         <div className="border border-zinc-300 px-2 py-2">
-                                        <a style={{ wordWrap: 'break-word' }} href={assignment.attachedFile}>{assignment.attachedFile}</a>
+                                        <a style={{ wordWrap: 'break-word' }} href={file}>{file}</a>
                                     </div>)}
                                         
                                     </> : null}
