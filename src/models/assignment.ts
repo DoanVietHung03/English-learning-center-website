@@ -7,7 +7,7 @@ const assignmentSchema = new Schema({
     },
     skill: {
         type: String,
-        Required: true
+        required: true
     },
     deadline: {
         type: Date,
@@ -15,7 +15,7 @@ const assignmentSchema = new Schema({
     },
     title: {
         type: String,
-        required: false
+        required: true
     },
     course_id: {
         type: String,
