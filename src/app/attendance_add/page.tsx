@@ -125,11 +125,11 @@ const [loading, setLoading] = React.useState(false);
                                 {listStudent.map((student, i) => (
                                     <div key={i} className="inline-block bg-gray-200 rounded-lg text-center items-center justify-center">
                                         {student &&
-                                            <div className="flex gap-6 items-center justify-start ml-3 w-3.5/4">
-                                                <div>
+                                            <div className="flex gap-6 items-center justify-center">
+                                                <div className="w-2/3">
                                                     {student.name} - {student.phone}
                                                 </div>
-                                                <div className= "ml-auto items-center justify-end">
+                                                <div className= "items-center justify-end">
                                                         <button>
                                                         <Checkbox checked={checked[i].check}
                                                             onChange={(ev) => {handleChange(ev, i)}}

@@ -25,7 +25,6 @@ export default function Assigments() {
     const router = useRouter();
 
     const currentDate = moment();
-    const CryptoJS = require('crypto-js');
 
     var delete_assignment: any
     const handleActionClick = (link) => {
@@ -35,42 +34,12 @@ export default function Assigments() {
     async function handleDelete(ev: SyntheticEvent) {
         ev.preventDefault()
 
-        const publicId = 'assignments/rc3wapxbkr1cbwhnu36o.wav';
-        const apiSecret = '_tIBX9mwSbKrEJK2qQRem8Fj-CE';
-        const apiKey = '255688826461671'
-
-        const timestamp = Math.floor(Date.now() / 1000);
-        const signaturePayload = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
-        const signature = CryptoJS.SHA1(signaturePayload).toString(CryptoJS.enc.Hex);
-        const deleteToken = `${apiKey}:${signature}:${timestamp}`;
-
-        await fetch(`https://api.cloudinary.com/v1_1/dzdmbflvk/delete_by_token`, {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            body: JSON.stringify({
-                public_id: publicId,
-                token: deleteToken,
-            }),
+        const response = await fetch('/api/assignment', {
+            method: 'POST',
+            body: JSON.stringify({ assignment_id: delete_assignment, method: 'delete' }),
+            headers: { 'Content-Type': 'application/json' },
         })
-            .then(response => {
-                console.log('Response Status:', response.status);
-                return response.json();
-            })
-            .then(data => {
-                console.log("File deleted successfully:", data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        // const response = await fetch('/api/assignment', {
-        //     method: 'POST',
-        //     body: JSON.stringify({ assignment_id: delete_assignment, method: 'delete' }),
-        //     headers: { 'Content-Type': 'application/json' },
-        // })
-        // window.location.reload(true);
+        window.location.reload(true);
     }
 
     useEffect(() => {

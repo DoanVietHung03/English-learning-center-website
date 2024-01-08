@@ -44,7 +44,7 @@ export default function ViewAttend() {
                             {localStorage.getItem('session_name')}
                         </div>
                         <div className="h-[331px] border border-zinc-200 mx-2 rounded-lg">
-                            <div className="grid grid-cols-3 overflow-y-auto items-center justify-center px-4 py-4 gap-2">
+                            <div className="grid grid-cols-2 overflow-y-auto items-center justify-center px-4 py-4 gap-2">
                                 {attends.map((student, i) => (
                                     <div key={i} className="inline-block rounded-lg text-center items-center justify-center">
                                         {(student.isAttended) ?
