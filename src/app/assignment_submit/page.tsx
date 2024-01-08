@@ -215,7 +215,7 @@ export default function Do_Assignment() {
                                                     </div>
                                                     {(assignment.skill == 'Speaking' &&
                                                         <>
-                                                            <div className="">File speaking</div>
+                                                            <div>File speaking</div>
                                                             <ReactAudioPlayer
                                                                 src={submission.attachedFile}
                                                                 controls

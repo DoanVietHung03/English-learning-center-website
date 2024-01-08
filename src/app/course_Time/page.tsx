@@ -117,7 +117,7 @@ export default function CourseTime() {
                                                 {(i % 3 == 1) &&
                                                     <div className="font-bold">Skill: Speaking</div>
                                                 }
-                                                {(type == 'Teacher') && (session.attendList.length === 0) &&
+                                                {(type == 'Teacher') && (session.attendList === null) &&
                                                     <Link onClick={() => {localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name)}} 
                                                     href='/attendance_add'
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
@@ -126,7 +126,7 @@ export default function CourseTime() {
                                                         Create Attendance List
                                                     </Link>
                                                 }
-                                                {(type == 'Teacher' || type == 'Admin') && (session.attendList.length !== 0) &&
+                                                {(type == 'Teacher' || type == 'Admin') && (session.attendList !== null) &&
                                                     <Link onClick={() => {localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name)}}
                                                      href='/attendance_view' 
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg

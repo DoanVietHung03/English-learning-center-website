@@ -66,7 +66,7 @@ export default function Course_Add() {
             setError(true)
             setTimeout(() => {
                 window.location.reload(true);           
-            }, 900);
+            }, 1000);
         }
         else{
             setTimeout(() => {
@@ -140,7 +140,7 @@ export default function Course_Add() {
             timer.current = window.setTimeout(() => {
                 setSuccess(true);
                 setLoading(false);
-            }, 800);
+            }, 900);
         }
     };
 

@@ -51,9 +51,7 @@ export default function Add_Ass() {
         setFile(selectedFile);
     };
 
-    // function handleChangeImage(ev) {
-    //     setFile(URL.createObjectURL(ev.target.files[0]));
-    // }
+
     const handleChangeSkill = (ev) => {
         setSkill(ev.value);
     };
