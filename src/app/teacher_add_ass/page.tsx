@@ -35,13 +35,13 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 export default function Add_Ass() {
-    const [skill, setSkill] = useState('')
+    const [skill, setSkill] = useState()
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs());
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState()
     //const [file, setFile] = useState('');
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState();
     const router = useRouter();
-    const [audio, setAudio] = useState('');
+    const [audio, setAudio] = useState();
     const [file, setFile] = useState(null);
     const [error, setError] = useState(false);
 
