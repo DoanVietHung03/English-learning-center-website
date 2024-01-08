@@ -184,10 +184,11 @@ export default function Add_Ass() {
                                                         <>
                                                             <div className="border border-zinc-300">
                                                                 <p className="mt-2">Selected file: {file.name}</p>
+                                                                {skill == 'Listening' && (
                                                                 <audio controls>
                                                                     <source src={URL.createObjectURL(file)} type="audio" />
                                                                     Your browser does not support the audio tag.
-                                                                </audio>
+                                                                </audio>)}
                                                             </div>
                                                         </>
                                                     )}
