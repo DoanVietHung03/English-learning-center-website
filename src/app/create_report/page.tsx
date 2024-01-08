@@ -180,7 +180,7 @@ export default function Create_RP() {
                                 placeholder="Type content of the report"></textarea>
                         </div>
                         <p className="text-black text-base font-medium leading-tight tracking-tight mb-3 ml-14 mt-3">Attach images</p>
-                        <div className="rounded-md border border-zinc-400 ml-14 mr-12 mt-2 pl-2 py-1">
+                        <div className="rounded-md border border-zinc-400 ml-14 mr-12 mt-2 px-2 py-1">
                             <Button className="w-full justify-between items-center"
                                 color="primary"
                                 onChange={handleChangeFile} component="label" variant="contained"
