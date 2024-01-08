@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import SideBar from "@/components/layout/sideBar"
@@ -16,11 +17,7 @@ export default function Ass_Grading() {
     const [commentContent, setCommentContent] = useState<ReactElement | any | string>('')
     const [gradeContent, setGradeContent] = useState<ReactElement | any | string>('')
     const [grade, setGrade] = useState('')
-
-
-    function handleChangeImage(ev) {
-        setFile(URL.createObjectURL(ev.target.files[0]));
-    }
+    const [fileType, setFileType] = useState('');
 
     const handleGrading = (ev: SyntheticEvent) => {
         setGrade(ev.target.value)
@@ -59,6 +56,15 @@ export default function Ass_Grading() {
     const [studentContent, setStudentContent] = useState<ReactElement | any | null>(null);
     const [selectedButton, setSelectedButton] = useState<number | any | null>(null);
 
+    const audioTail = ['mp3', 'wav']
+    const imgTail = ['jpg', 'png', 'jpeg']
+
+    const handleClick = () => {
+        setShowLargeImage(!showLargeImage);
+    };
+
+    const [showLargeImage, setShowLargeImage] = useState(false);
+
     const handleButtonClick = (index: number) => {
         setSelectedButton(index);
 
@@ -74,18 +80,56 @@ export default function Ass_Grading() {
                             style={{ wordWrap: 'break-word' }}>
                             {sub.answer}
                         </div>
-                        {((sub.attachedFile !== null) || (sub.attachedFile !== '') || (sub.attachedFile !== '')) &&
-                            (
-                                <div>
-                                    <p className="text-base font-semibold leading-tight tracking-tight mt-2">Submission file</p>
-                                    <ReactAudioPlayer
-                                    src={sub.attachedFile}
-                                    autoPlay
-                                    controls
-                                    className="w-full mt-6"
-                                />
-                                </div>
-                            )}
+                        {((sub.attachedFile == null) || (sub.attachedFile == undefined) || (sub.attachedFile == '')) ? null :
+                            <>
+                                {imgTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1)) ?
+                                    <div className="bg-white w-[120px] h-[80px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
+                                        <img
+                                            src={file}
+                                            width={120}
+                                            height={80}
+                                            alt={"Cannot load"}
+                                            onClick={handleClick}
+                                            style={{
+                                                width: showLargeImage ? '70%' : 'auto',
+                                                height: showLargeImage ? '70vh' : 'auto',
+                                                objectFit: 'contain',
+                                                position: showLargeImage ? 'fixed' : 'static',
+                                                margin: 'auto',
+                                                display: 'flex',
+                                                left: '50%',
+                                                top: '50%',
+                                                transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                zIndex: showLargeImage ? 2 : 'auto',
+                                                transition: '0.5s',
+                                            }} />
+                                        {showLargeImage && (
+                                            <div
+                                                style={{
+                                                    position: 'fixed',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                    zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                }}
+                                            />
+                                        )}
+
+                                    </div> : ((audioTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1))) ?
+                                        <div>
+                                            <div>File listening</div>
+                                            <ReactAudioPlayer
+                                                src={file}
+                                                controls
+                                                className="w-full"
+                                            />
+                                        </div> :
+                                        <div className="border border-zinc-300 px-2 py-2">
+                                            <a style={{ wordWrap: 'break-word' }} href={file}>{file}</a>
+                                        </div>)}
+                            </> }
                     </div>
 
                 </div>
@@ -119,16 +163,22 @@ export default function Ass_Grading() {
                 sub.grade !== null ? (
                     setGrade(sub.grade),
                     <div key={i}>
-                        <input readOnly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        <textarea readOnly className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
                             {sub.grade}
-                        </input>
+                        </textarea>
                     </div>
                 ) : (
                     //setGrade(null),
+                    <>
                     <div key={i}>
-                        <input onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
-                        </input>
+                        <textarea onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        </textarea>
                     </div>
+                    <div className="flex items-center justify-end mr-6 mt-2">
+                    <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
+                        Grade
+                    </button>
+                </div></>
                 )
             ) : null
         ));
@@ -178,23 +228,20 @@ export default function Ass_Grading() {
 
                             {selectedButton !== null ? (
                                 <>
-                                <div className="mt-4 ml-[62px]">
-                                <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight">Type comment</p>
-                            </div>
+                                    <div className="mt-4 ml-[62px]">
+                                        <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight">Type comment</p>
+                                    </div>
 
-                            <div className="mt-4 mx-[62px]">
-                                {commentContent}
-                            </div>
+                                    <div className="mt-4 mx-[62px]">
+                                        {commentContent}
+                                    </div>
 
-                            <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight mt-4 ml-[62px]">Score</p>
-                            <div>{gradeContent}</div>
+                                    <p className="text-black text-xl font-semibold font-poppins leading-tight tracking-tight mt-4 ml-[62px]">Score</p>
+                                    <div>{gradeContent}</div>
+                                    
+                                </>
+                                ) : null}
 
-                            <div className="flex items-center justify-end mr-6 mt-2">
-                                <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
-                                    Grade
-                                </button>
-                            </div> </>) : null}
-                            
                         </div>
                     </div>
                 </div>
