@@ -153,12 +153,7 @@ export default function Create_RP() {
                                 className="w-full h-[340px] border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none"
                                 placeholder="Type content of the report"></textarea>
                         </div>
-
-                        <div className="flex items-center ml-14 mt-2 gap-2 bg-gray-200 rounded-xl px-3 py-2 w-fit">
-                            <Iimage />
-                            <p className=" text-zinc-500 text-base leading-tight tracking-tight">Attached image</p>
-                        </div>
-
+                        <p className="text-black text-base font-medium leading-tight tracking-tight mb-3 ml-14 mt-3">Attach images</p>
                         <div className="rounded-md border border-zinc-400 ml-14 mr-12 mt-2 pl-2 py-1">
                             <input
                                 className="mb-3"
@@ -167,7 +162,7 @@ export default function Create_RP() {
                             <Image
                                 src={file}
                                 width={300}
-                                height={300} alt={""} />
+                                height={100} alt={""} />
                         </div>
 
                         <div className="flex items-center justify-end mr-12 mt-12">
