@@ -171,8 +171,8 @@ export default function Ass_Grading() {
                     //setGrade(null),
                     <>
                     <div key={i}>
-                        <textarea onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
-                        </textarea>
+                        <input onChange={handleGrading} className="mt-4 ml-[62px] px-[14] py-3 w-16 h-14 focus:outline-none rounded border border-zinc-300 text-center" type="text" id="myScore" placeholder="Type score">
+                        </input>
                     </div>
                     <div className="flex items-center justify-end mr-6 mt-2">
                     <button onClick={handleFormSubmit} className="bg-lime-300 rounded-lg text-center text-black text-base font-semibold font-poppins leading-3 tracking-tight px-5 py-2 hover:bg-lime-400">
