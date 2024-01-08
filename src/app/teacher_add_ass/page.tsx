@@ -71,7 +71,7 @@ export default function Add_Ass() {
         ev.preventDefault()
         let fileSave = ''
         const data = new FormData()
-        data.append("file", audio);
+        data.append("file", image);
         data.append("folder", "assignments");
         data.append("upload_preset", "introSE");
         data.append("cloud_name", "dzdmbflvk");
