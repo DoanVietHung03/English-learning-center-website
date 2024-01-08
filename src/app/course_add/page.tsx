@@ -187,24 +187,24 @@ export default function Course_Add() {
                     <div className="bg-white mt-2 rounded">
                         <div className="px-12 py-8">
                             <div className="items-center">
-                                <div className="text-base font-medium">Course Name</div>
+                                <div className="text-base font-medium">Course Name (*)</div>
                                 <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-full" type="text" id="myTitle" placeholder="Type name of the course"
                                     onChange={ev => setTitle(ev.target.value)} />
                             </div>
 
                             <div className="mt-8 grid grid-cols-2">
                                 <div>
-                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a schedule</p>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a schedule (*)</p>
                                     <Select options={optionSchedule} onChange={handleChangeSchedule}
                                         className="w-3/4 mt-2" placeholder="Select schedule" />
                                 </div>
                                 <div>
-                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a module</p>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a module (*)</p>
                                     <Select options={optionModule} onChange={handleChangeModule}
                                         className="w-3/4 mt-2" placeholder="Select module" />
                                 </div>
                                 <div>
-                                    <p className="text-black text-base font-medium leading-tight tracking-tight mt-4">Choose a teacher</p>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight mt-4">Choose a teacher (*)</p>
                                     <Select options={optionTeachers} onChange={handleChangeTeacher} className="w-3/4 mt-2" placeholder="Select teacher" />
                                 </div>
                                 <div className="items-center mt-3 w-3/4">
@@ -221,7 +221,7 @@ export default function Course_Add() {
                                         className="w-[333px] mt-2" placeholder="Telephone number of student" />
                                 </div>
                                 <div>
-                                    <div className="font-semibold">Start Date</div>
+                                    <div className="font-semibold">Start Date (*)</div>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DemoContainer components={['DatePicker']}>
                                             <DatePicker value={sDate} onChange={(newValue) => setSDate(newValue)}

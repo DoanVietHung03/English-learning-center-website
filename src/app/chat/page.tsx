@@ -468,7 +468,7 @@ export default function Chat() {
                                     <p className="mt-8 text-black text-2xl font-bold leading-tight tracking-tight">Send message</p>
                                 </div>
                                 <div className="mt-6 ml-7">
-                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose receiver</p>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose receiver (*)</p>
                                     {/* Dropdown list */}
                                     <Select options={optionReceivers} onChange={handleChangeReceiver}
                                         className="w-[380px] mt-2 mr-3" placeholder="Select receiver" />
@@ -476,7 +476,7 @@ export default function Chat() {
 
                                 <div className="mt-12 ml-6 mr-4">
                                     <div className="flex items-center justify-between">
-                                        <p className="text-black text-base font-medium">Content</p>
+                                        <p className="text-black text-base font-medium">Content (*)</p>
 
                                         <Button onChange={handleChangeFile} component="label" startIcon={<Iimage />} >
                                             <div className="font-semibold text-xs text-black">Add Image</div>

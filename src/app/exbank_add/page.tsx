@@ -168,17 +168,17 @@ export default function Exercise_Add() {
                             <div className="flex h-3/4">
                                 <div className="flex flex-col w-1/2 p-4 gap-5 pr-10">
                                     <div>
-                                        <div className="mb-2">Choose Module</div>
+                                        <div className="mb-2">Choose Module (*)</div>
                                         <Select options={optionModule} onChange={handelChangeModule} className="w-full" />
                                     </div>
 
                                     <div>
-                                        <div className="mb-2">Choose Skill</div>
+                                        <div className="mb-2">Choose Skill (*)</div>
                                         <Select options={optionSkill} onChange={handleChangeSkill} className="w-full" />
                                     </div>
 
                                     <div>
-                                        <div className="text-lg">Title</div>
+                                        <div className="text-lg">Title (*)</div>
                                         <input type="text" placeholder="Type title" onChange={ev => setTitle(ev.target.value)}
                                             className="py-2 px-2 w-full border-gray-300 border-2 rounded-md" />
                                     </div>
@@ -221,7 +221,7 @@ export default function Exercise_Add() {
                                         startIcon={<InsertDriveFileIcon />}>
                                         <div className="py-2 flex w-full justify-between items-center overflow-x-auto">
                                             <div className="w-auto">
-                                                Input file solution
+                                                Input file solution (*)
                                             </div>
                                             <VisuallyHiddenInput
                                                 type="file" accept="auto" />
@@ -237,7 +237,7 @@ export default function Exercise_Add() {
 
                                 <div className="flex flex-col w-1/2 mt-3 gap-3">
                                     <div className="h-96 items-center text-black text-base font-normal leading-tight tracking-tight">
-                                        <p>Content</p>
+                                        <p>Content (*)</p>
                                         <textarea onChange={ev => setContent(ev.target.value)}
                                             className="w-full h-[350px] border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none"
                                             id="myContent" placeholder="Type content of the assignment"></textarea>
