@@ -16,6 +16,11 @@ import Button from "@mui/material/Button";
 
 export default function CreateAttend() {
     const [listStudent, setListStudent] = useState([])
+const [loading, setLoading] = React.useState(false);
+    const [success, setSuccess] = React.useState(false);
+    const timer = React.useRef<number>();
+
+
     var [checked, setChecked] = useState([]);
 
     var check = []
@@ -56,13 +61,12 @@ export default function CreateAttend() {
             body: JSON.stringify({ course_id: localStorage.getItem('course_id'), id: localStorage.getItem('session_id'), studentList: listAttend, method: 'updateAttend' }),
             headers: { 'Content-Type': 'application/json' },
         })
+        
         router.push('/course_Time')
     }
 
     //Function for add
-    const [loading, setLoading] = React.useState(false);
-    const [success, setSuccess] = React.useState(false);
-    const timer = React.useRef<number>();
+    
 
     const buttonSx = {
         ...(success && {
@@ -116,19 +120,21 @@ export default function CreateAttend() {
                             {localStorage.getItem('session_name')}
                         </div>
                         <div className="h-[331px] border border-zinc-200 mx-2 rounded-lg">
-                            <div className="grid grid-cols-3 overflow-y-auto items-center justify-center px-4 py-4 gap-2">
+                            <div className="grid grid-cols-2 overflow-y-auto items-center justify-center px-4 py-4 gap-2">
                                 {listStudent.map((student, i) => (
                                     <div key={i} className="inline-block bg-gray-200 rounded-lg text-center items-center justify-center">
                                         {student &&
-                                            <div className="flex gap-6 items-center justify-center ml-4">
+                                            <div className="flex gap-6 items-center justify-start ml-3 w-3.5/4">
                                                 <div>
                                                     {student.name} - {student.phone}
                                                 </div>
-                                                <button>
-                                                    <Checkbox checked={checked[i].check}
-                                                        onChange={(ev) => {handleChange(ev, i)}}
-                                                        inputProps={{ 'aria-label': 'controlled' }} />
-                                                </button>
+                                                <div className= "ml-auto items-center justify-end">
+                                                        <button>
+                                                        <Checkbox checked={checked[i].check}
+                                                            onChange={(ev) => {handleChange(ev, i)}}
+                                                            inputProps={{ 'aria-label': 'controlled' }} />
+                                                        </button>
+                                                     </div>
                                             </div>}
                                     </div>
                                 ))}
@@ -141,7 +147,7 @@ export default function CreateAttend() {
                                         aria-label="save"
                                         color="primary"
                                         sx={buttonSx}
-                                        onClick={handleButtonClick}
+                                        onClick={(ev) => { handleButtonClick(ev); handleSubmit(ev) }}
                                     >
                                         {success ? <CheckIcon /> : <IuserPlus />}
                                     </Fab>
@@ -154,30 +160,6 @@ export default function CreateAttend() {
                                                 top: -6,
                                                 left: -6,
                                                 zIndex: 1,
-                                            }}
-                                        />
-                                    )}
-                                </Box>
-                                <Box sx={{ m: 1, position: "relative" }}>
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        sx={buttonSx}
-                                        disabled={loading}
-                                        onClick={(ev) => { handleButtonClick(ev); handleSubmit(ev) }}
-                                    >
-                                        Submit
-                                    </Button>
-                                    {loading && (
-                                        <CircularProgress
-                                            size={24}
-                                            sx={{
-                                                color: green[500],
-                                                position: "absolute",
-                                                top: "50%",
-                                                left: "50%",
-                                                marginTop: "-12px",
-                                                marginLeft: "-12px",
                                             }}
                                         />
                                     )}
