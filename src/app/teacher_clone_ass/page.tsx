@@ -122,6 +122,8 @@ export default function Clone_Assignment() {
     };
 
     React.useEffect(() => {
+        localStorage.setItem('sidebar', 0)
+
         setSuccess(false);
         setError(false)
         return () => {

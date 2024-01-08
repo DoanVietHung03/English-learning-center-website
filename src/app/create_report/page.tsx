@@ -103,6 +103,7 @@ export default function Create_RP() {
     };
 
     React.useEffect(() => {
+        localStorage.setItem('sidebar', 2)
         setError(false)
         setSuccess(false)
         return () => {

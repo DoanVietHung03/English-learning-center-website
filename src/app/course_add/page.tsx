@@ -125,6 +125,8 @@ export default function Course_Add() {
     };
 
     React.useEffect(() => {
+        localStorage.setItem('sidebar', 0)
+
         setSuccess(false)
         setError(false)
 

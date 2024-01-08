@@ -15,6 +15,8 @@ export default function ExBank() {
     const router = useRouter()
 
     useEffect(() => {
+        localStorage.setItem('sidebar', 1)
+
         fetch('/api/exercise', {
             method: 'POST',
             headers: {
