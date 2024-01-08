@@ -144,62 +144,65 @@ export default function Do_Assignment() {
                                     <div>
                                         <p className="text-base font-medium leading-tight tracking-tight">Content</p>
                                         <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 h-[378px]">
-                                            <div style={{ wordWrap: 'break-word' }} className="h-3/4 overflow-y-auto">
-                                                {assignment.content}
-                                            </div>
-                                            <div>
-                                                {((assignment.attachedFile == null) || (assignment.attachedFile == '') || (assignment.attachedFile == undefined)) ?
-                                                    null
-                                                    : <>
-                                                        {imgTail.includes((assignment.attachedFile).substring((assignment.attachedFile).lastIndexOf('.') + 1)) ?
-                                                            <>
-                                                                <img
-                                                                    src={assignment.attachedFile}
-                                                                    alt="Cannot load"
-                                                                    onClick={handleClick}
-                                                                    style={{
-                                                                        width: showLargeImage ? '70%' : 'auto',
-                                                                        height: showLargeImage ? '70vh' : 'auto',
-                                                                        objectFit: 'contain',
-                                                                        position: showLargeImage ? 'fixed' : 'static',
-                                                                        margin: 'auto',
-                                                                        display: 'flex',
-                                                                        left: '50%',
-                                                                        top: '50%',
-                                                                        transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
-                                                                        zIndex: showLargeImage ? 2 : 'auto',
-                                                                        transition: '0.5s',
-                                                                    }}
-                                                                />
-                                                                {showLargeImage && (
-                                                                    <div
+                                            <div style={{ wordWrap: 'break-word' }}>
+                                                <div className="h-3/4 overflow-y-auto">
+                                                    {assignment.content}
+                                                </div>
+                                                <div className="mt-6">
+                                                    {((assignment.attachedFile == null) || (assignment.attachedFile == '') || (assignment.attachedFile == undefined)) ?
+                                                        null
+                                                        : <>
+                                                            {imgTail.includes((assignment.attachedFile).substring((assignment.attachedFile).lastIndexOf('.') + 1)) ?
+                                                                <>
+                                                                    <img
+                                                                        src={assignment.attachedFile}
+                                                                        alt="Cannot load"
+                                                                        onClick={handleClick}
                                                                         style={{
-                                                                            position: 'fixed',
-                                                                            top: 0,
-                                                                            left: 0,
-                                                                            width: '100%',
-                                                                            height: '100%',
-                                                                            background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
-                                                                            zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                            width: showLargeImage ? '70%' : 'auto',
+                                                                            height: showLargeImage ? '70vh' : 'auto',
+                                                                            objectFit: 'contain',
+                                                                            position: showLargeImage ? 'fixed' : 'static',
+                                                                            margin: 'auto',
+                                                                            display: 'flex',
+                                                                            left: '50%',
+                                                                            top: '50%',
+                                                                            transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                                            zIndex: showLargeImage ? 2 : 'auto',
+                                                                            transition: '0.5s',
                                                                         }}
                                                                     />
-                                                                )} </> : (audioTail.includes((assignment.attachedFile).substring((assignment.attachedFile).lastIndexOf('.') + 1))) ?
-                                                                <div>
-                                                                    <div>File listening</div>
-                                                                    <ReactAudioPlayer
-                                                                        src={assignment.attachedFile}
-                                                                        controls
-                                                                        className="w-full"
-                                                                    />
-                                                                </div> :
-                                                                <div className="border border-zinc-300 px-2 py-2">
-                                                                    <a style={{ wordWrap: 'break-word' }} href={assignment.attachedFile}>{assignment.attachedFile}</a>
-                                                                </div>
-                                                        }
-                                                    </>}
+                                                                    {showLargeImage && (
+                                                                        <div
+                                                                            style={{
+                                                                                position: 'fixed',
+                                                                                top: 0,
+                                                                                left: 0,
+                                                                                width: '100%',
+                                                                                height: '100%',
+                                                                                background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                            }}
+                                                                        />
+                                                                    )} </> : (audioTail.includes((assignment.attachedFile).substring((assignment.attachedFile).lastIndexOf('.') + 1))) ?
+                                                                    <div>
+                                                                        <div>File listening</div>
+                                                                        <ReactAudioPlayer
+                                                                            src={assignment.attachedFile}
+                                                                            controls
+                                                                            className="w-full"
+                                                                        />
+                                                                    </div> :
+                                                                    <div className="border border-zinc-300 px-2 py-2">
+                                                                        <a style={{ wordWrap: 'break-word' }} href={assignment.attachedFile}>{assignment.attachedFile}</a>
+                                                                    </div>
+                                                            }
+                                                        </>}
 
 
+                                                </div>
                                             </div>
+
                                         </div>
 
                                     </div>
