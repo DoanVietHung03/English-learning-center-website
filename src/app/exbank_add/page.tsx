@@ -137,6 +137,7 @@ export default function Exercise_Add() {
 
     React.useEffect(() => {
         localStorage.setItem('sidebar', 1)
+
         setError(false)
         setSuccess(false)
         return () => {
