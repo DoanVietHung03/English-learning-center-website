@@ -201,7 +201,9 @@ export default function Create_RP() {
 }
 
 const optionType = [
-    { value: "Exercises_error", label: "Exercises error" },
+    { value: "Data_error", label: "Data error" },
     { value: "System_error", label: "System error" },
     { value: "Operation_error", label: "Operation error" },
+    { value: "Suggest new function", label: "Suggest new function" },
+    { value: "Other", label: "Other" }
 ];
