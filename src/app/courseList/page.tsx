@@ -162,10 +162,10 @@ export default function CourseList() {
                                             trigger={<button className="flex justify-center items-center h-full w-1/6 bg-red-400 hover:bg-red-500 rounded-r-xl border-l border-stone-300">
                                                 <IfileDelete className="w-8" />
                                             </button>}>
-                                            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
+                                            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-45 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
                                                 <div className="mt-4">
-                                                    <p className="text-center text-lg font-semibold">Do you want to Course permanentlCoursey ?</p>
-                                                    <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
+                                                    <p className="text-center text-lg font-semibold">Do you want to delete this course ( {course.name} ) permanently?</p>
+                                                    <div className="flex items-center justify-between mt-5 gap-2 text-lg font-medium">
                                                         <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_course = course.course_id, handleDelete(ev) }}>
                                                             Yes
                                                         </button>
