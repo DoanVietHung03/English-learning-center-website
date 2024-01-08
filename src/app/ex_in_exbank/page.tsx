@@ -95,39 +95,50 @@ export default function ExBank() {
 
                                 </div>
                                 <div className="grid grid-cols-2 mt-4 py-4 mx-4 gap-6">
-                                    <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 overflow-y-scroll h-[450px]">
-                                        <div className="text-black text-base font-normal break-words h-3/4">
-                                            {exercise.content}
+                                    <div>
+                                        <div className="text-base font-semibold leading-tight tracking-tight">
+                                            Content
                                         </div>
-                                        {exercise.attachedFile && (
-                                            <div className="rounded-xl py-3 mt-3">
-                                                <p className="font-semibold ml-3">File listening</p>
-                                                <ReactAudioPlayer
-                                                    src={exercise.attachedFile}
-                                                    controls
-                                                    className="w-full"
-                                                />
+                                        <div className="rounded-lg border border-stone-300 pl-6 py-8 pr-4 overflow-y-auto h-[450px]">
+                                            <div className="text-black text-base font-normal break-words h-3/4">
+                                                {exercise.content}
                                             </div>
-                                        )}
+                                            {exercise.attachedFile && (
+                                                <div className="rounded-xl py-3 mt-3">
+                                                    <p className="font-semibold ml-3">File listening</p>
+                                                    <ReactAudioPlayer
+                                                        src={exercise.attachedFile}
+                                                        controls
+                                                        className="w-full"
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
+
                                     {localStorage.getItem('saved') === 'already' ?
                                         ex_progress.map((exercise, index) => (
-                                            <div key={index} className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
-                                                <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{exercise.progress}</textarea>
+                                            <div key={index}>
+                                                <div className="text-base font-semibold leading-tight tracking-tight">Answer</div>
+                                                <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
+                                                    <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type...">{exercise.progress}</textarea>
+                                                    {exercise.solution &&
+                                                        <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution}>
+                                                            View solution
+                                                        </a>
+                                                    }
+                                                </div>
+                                            </div>)) :
+                                        <div>
+                                            <div className="text-base font-semibold leading-tight tracking-tight">Answer</div>
+                                            <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border p-4">
+                                                <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96 mb-4" id="myText" placeholder="Type..."></textarea>
                                                 {exercise.solution &&
                                                     <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution}>
                                                         View solution
                                                     </a>
                                                 }
-                                            </div>)) :
-                                        <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col items-center inline-flex p-4">
-                                            <textarea onChange={(ev) => { setProgress(ev.target.value) }} className="w-full rounded-lg border border-zinc-400 p-3 focus:outline-none h-96" id="myText" placeholder="Type..."></textarea>
-                                            {exercise.solution &&
-                                                <a className="bg-lime-500 p-2 mt-6 rounded-lg duration-300 hover:bg-lime-400 text-white font-semibold" href={exercise.solution}>
-                                                    {/* View solution */}
-                                                    {exercise.solution}
-                                                </a>
-                                            }
+                                            </div>
                                         </div>}
                                 </div>
                             </>) :
