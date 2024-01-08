@@ -83,10 +83,10 @@ export default function Ass_Grading() {
                         </div>
                         {((sub.attachedFile == null) || (sub.attachedFile == undefined) || (sub.attachedFile == '')) ? null :
                             <>
-                                {imgTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1)) ?
+                                {imgTail.includes(sub.attachedFile.substring(sub.attachedFile.lastIndexOf('.') + 1)) ?
                                     <div className="bg-white w-[120px] h-[80px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
                                         <img
-                                            src={file}
+                                            src={sub.attachedFile}
                                             width={120}
                                             height={80}
                                             alt={"Cannot load"}
@@ -118,11 +118,11 @@ export default function Ass_Grading() {
                                             />
                                         )}
 
-                                    </div> : ((audioTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1))) ?
+                                    </div> : ((audioTail.includes(sub.attachedFile.substring(sub.attachedFile.lastIndexOf('.') + 1))) ?
                                         <div>
                                             <div>File listening</div>
                                             <ReactAudioPlayer
-                                                src={file}
+                                                src={sub.attachedFile}
                                                 controls
                                                 className="w-full"
                                             />
