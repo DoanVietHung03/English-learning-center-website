@@ -15,7 +15,7 @@ const assignmentSchema = new Schema({
     },
     title: {
         type: String,
-        required: false
+        required: true
     },
     course_id: {
         type: String,
