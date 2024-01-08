@@ -20,11 +20,10 @@ import { green, red } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Ixmark from "@/components/icons/icon_xmark"
-import Button from "@mui/material/Button";
 
 export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
-    const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
+    const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs());
     const [assignments, setAssignments] = useState([])
     const [assignmentChoosed, setAssignmentChoosed] = useState(0)
     const [error, setError] = useState(false);

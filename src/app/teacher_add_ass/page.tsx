@@ -199,7 +199,7 @@ export default function Add_Ass() {
                                                     <Button className="w-full justify-between items-center"
                                                         color="primary"
                                                         onChange={handleFileChange} component="label" variant="contained"
-                                                        startIcon={<IfileCirclePlus />}>
+                                                        startIcon={<IfileCirclePlus className="w-[1em] fill-white"/>}>
                                                         <div className="flex w-full justify-between items-center overflow-x-auto">
                                                             <div className="w-[100px]">
                                                                 Input file
