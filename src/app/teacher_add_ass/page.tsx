@@ -177,7 +177,7 @@ export default function Add_Ass() {
                                                 <div className="container mx-auto mt-4">
 
                                                     <Button className="w-full justify-between items-center"
-                                                        style={{ backgroundColor: "#33bbff", }}
+                                                        color="primary"
                                                         onChange={handleFileChange} component="label" variant="contained"
                                                         startIcon={<Imp3 />}>
                                                         <div className="flex w-full justify-between items-center overflow-x-auto">
@@ -189,7 +189,7 @@ export default function Add_Ass() {
                                                             {file && (
                                                                 <div className="overflow-x-visible">
                                                                     {file.name}
-                                                                    {/* asdasdddddlwkejr;oawerj;awoejr;owekrja;woekrj;aowejrawer */}
+                                                                    
                                                                 </div>
                                                             )}
                                                         </div>
@@ -231,7 +231,7 @@ export default function Add_Ass() {
                                                 sx={buttonSx}
                                                 onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                             >
-                                                {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileAdd />}
+                                                {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileAdd className="w-[1.4em] fill-white"/>}
                                             </Fab>
                                             {loading && (
                                                 <CircularProgress
