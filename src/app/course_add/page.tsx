@@ -154,7 +154,7 @@ export default function Course_Add() {
                         <div>
                             Create Course
                         </div>
-                        <div className="gap-2 flex items-center justify-end rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight px-4">
+                    <div className="gap-2 flex items-center justify-end rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight px-4">
                             <Box sx={{ display: "flex", alignItems: "center" }}>
                                 <Box sx={{ m: 1, position: "relative" }}>
                                     <Fab

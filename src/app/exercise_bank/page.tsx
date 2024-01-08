@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
 import Ixmark from "@/components/icons/icon_xmark"
+import Iplus from "@/components/icons/icon_plus";
 
 export default function Exercise_bank() {
     const [selectedButton, setSelectedButton] = useState<number | null>(1);
@@ -36,7 +37,7 @@ export default function Exercise_bank() {
     const router = useRouter()
     const [currentPage, setCurrentPage] = useState(1);
 
-    const exPerPage = 3;
+    const exPerPage = 6;
     var currentEx: any[]
     currentEx = exercises.slice((currentPage - 1) * exPerPage, currentPage * exPerPage);
     var currentEx2: any[]
@@ -113,7 +114,6 @@ export default function Exercise_bank() {
         else {
             setLength(filteredEx.length)
         }
-
     }
 
     const handleModuleFilter = (ev) => {
@@ -233,22 +233,27 @@ export default function Exercise_bank() {
             <div className="flex">
                 <SideBar />
                 <div className="ml-14 w-2/3 pb-12">
-                    <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black">
-                        Exercises Bank
-                    </div>
+                <div className="mb-4 mt-4 font-poppins font-bold text-5xl border-b border-black flex items-center justify-between">
+                    <span>Exercises Bank</span>
+                        {localStorage.getItem('userType') !== 'Student' ?
+                            <Link href={'./exbank_add'}>
+                                <button className="bg-lime-300 hover:bg-lime-400 mb-3 px-4 py-2 text-black text-base font-medium rounded-lg leading-tight tracking-tight">
+                                Add exercise
+                                </button>
+                            </Link> : null}
+                </div>
                     <div className="bg-white rounded pb-3">
                         <div className="flex gap-32 justify-center px-11 py-7">
                             <Select key={`module-select-${resetKey}`}
                                 options={optionModule}
                                 onChange={handleModuleFilter}
                                 className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Module" />
+
                             <Select key={`skill-select-${resetKey}`}
                                 options={optionSkill}
                                 onChange={handleSkillFilter}
                                 className="w-1/4 text-center border-2 border-zinc-300 rounded-md" placeholder="Skill" />
-                        </div>
-
-                        <div className="mt-[52px] flex items-center ml-9 gap-2">
+                            
                             <button onClick={handleChangeRemoveF}
                                 className="text-red-700 rounded-lg text-base font-medium border-2 border-red-600 px-4 py-[2px]
                              hover:bg-red-200 transition-colors duration-300">
@@ -274,15 +279,10 @@ export default function Exercise_bank() {
                                     Your Exercises
                                 </button> : null}
                         </div>
-                        {localStorage.getItem('userType') !== 'Student' ?
-                            <Link href={'./exbank_add'}>
-                                <button className="bg-lime-300 hover:bg-lime-400 px-4 py-2 text-black text-base font-medium rounded-lg leading-tight tracking-tight mr-4">
-                                    Add Exercise
-                                </button>
-                            </Link> : null}
+                       
                     </div>
 
-                    <div className="mt-4 -mr-3">
+                    <div className="mt-1 -mr-3">
                         {
                             (selectedButton === 2 ?
                                 <div>
@@ -339,7 +339,7 @@ export default function Exercise_bank() {
                                                 ))}
                                             </div>
                                         </div>}
-                                    <div className="flex justify-center">
+                                    <div className="flex justify-end">
                                         <Pagination
                                             count={Math.ceil(length / exPerPage)}
                                             shape="rounded"
@@ -504,7 +504,7 @@ export default function Exercise_bank() {
                                             )
                                             )}
                                         </div>
-                                        <div className="flex justify-center">
+                                        <div className="flex justify-end">
                                             <Pagination
                                                 count={Math.ceil(exercises.length / exPerPage)}
                                                 shape="rounded"

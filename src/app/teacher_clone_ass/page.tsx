@@ -16,16 +16,18 @@ import Fab from "@mui/material/Fab";
 import Icheck from "@/components/icons/icon_check"
 import CheckIcon from "@mui/icons-material/Check";
 import IfileClone from "@/components/icons/icon_file_clone"
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
+import Ixmark from "@/components/icons/icon_xmark"
 import Button from "@mui/material/Button";
 
 export default function Clone_Assignment() {
     const [courses, setCourses] = useState([])
     const [deadline, setDeadline] = React.useState<Dayjs | null>(dayjs('2023-12-30'));
     const [assignments, setAssignments] = useState([])
-    const [assignmentChoosed, setAssignmentChoosed] = useState(Number)
+    const [assignmentChoosed, setAssignmentChoosed] = useState(0)
+    const [error, setError] = useState(false);
     const router = useRouter();
     useEffect(() => {
         fetch('/api/course', {
@@ -51,22 +53,38 @@ export default function Clone_Assignment() {
         })
 
     async function handleFormSubmit(ev: SyntheticEvent) {
-        const response = await fetch('/api/assignment', {
-            method: 'POST',
-            body: JSON.stringify({
-                title: assignments[assignmentChoosed].title,
-                content: assignments[assignmentChoosed].content,
-                skill: assignments[assignmentChoosed].skill,
-                deadline: deadline,
-                attachedFile: assignments[assignmentChoosed].attachedFile,
-                id: localStorage.getItem('course_id'),
-                method: 'add'
-            }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-        setTimeout(() => {
-            router.push('/assignments')
-        }, 2000);
+        if (assignments.length !== 0){
+            const response = await fetch('/api/assignment', {
+                method: 'POST',
+                body: JSON.stringify({
+                    title: assignments[assignmentChoosed].title,
+                    content: assignments[assignmentChoosed].content,
+                    skill: assignments[assignmentChoosed].skill,
+                    deadline: deadline,
+                    attachedFile: assignments[assignmentChoosed].attachedFile,
+                    id: localStorage.getItem('course_id'),
+                    method: 'add'
+                }),
+                headers: { 'Content-Type': 'application/json' },
+            })
+            if (!response.ok) {
+                setError(true)
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 2000);
+            }
+            else {
+                setTimeout(() => {
+                    router.push('/assignments')
+                }, 2000);
+            }
+        }
+        else{
+            setError(true)
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 2000);
+        }
     }
     const handleChangeCourse = (ev: SyntheticEvent) => {
         fetch('/api/assignment', {
@@ -89,15 +107,23 @@ export default function Clone_Assignment() {
     const timer = React.useRef<number>();
 
     const buttonSx = {
-        ...(success && {
+        ...((success && !error) && {
             bgcolor: green[500],
             "&:hover": {
                 bgcolor: green[700],
             },
         }),
+        ...((success && error) && {
+            bgcolor: red[500],
+            "&:hover": {
+                bgcolor: red[700],
+            },
+        }),
     };
 
     React.useEffect(() => {
+        setSuccess(false);
+        setError(false)
         return () => {
             clearTimeout(timer.current);
         };
@@ -110,7 +136,7 @@ export default function Clone_Assignment() {
             timer.current = window.setTimeout(() => {
                 setSuccess(true);
                 setLoading(false);
-            }, 800);
+            }, 1500);
         }
     };
 
@@ -136,9 +162,9 @@ export default function Clone_Assignment() {
                                             aria-label="save"
                                             color="primary"
                                             sx={buttonSx}
-                                            onClick={handleButtonClick}
+                                            onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                         >
-                                            {success ? <CheckIcon /> : <IfileClone />}
+                                            {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileClone />}
                                         </Fab>
                                         {loading && (
                                             <CircularProgress
@@ -149,30 +175,6 @@ export default function Clone_Assignment() {
                                                     top: -6,
                                                     left: -6,
                                                     zIndex: 1,
-                                                }}
-                                            />
-                                        )}
-                                    </Box>
-                                    <Box sx={{ m: 1, position: "relative" }}>
-                                        <Button
-                                            type="submit"
-                                            variant="contained"
-                                            sx={buttonSx}
-                                            disabled={loading}
-                                            onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
-                                        >
-                                            Clone
-                                        </Button>
-                                        {loading && (
-                                            <CircularProgress
-                                                size={24}
-                                                sx={{
-                                                    color: green[500],
-                                                    position: "absolute",
-                                                    top: "50%",
-                                                    left: "50%",
-                                                    marginTop: "-12px",
-                                                    marginLeft: "-12px",
                                                 }}
                                             />
                                         )}
