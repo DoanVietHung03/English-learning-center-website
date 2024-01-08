@@ -6,7 +6,6 @@ import Header from "@/components/layout/header"
 import { SyntheticEvent, useState } from "react"
 import Select from "react-select";
 import * as React from 'react';
-import Image from "next/image"
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';

@@ -1,11 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import SideBar from "@/components/layout/sideBar"
 import Header from "@/components/layout/header"
-import Iimage from "@/components/icons/icon_image"
 import IfileExport from "@/components/icons/file_export"
 import Select from "react-select";
-import Image from "next/image"
 import * as React from 'react';
 import { SyntheticEvent, useState } from "react"
 import { useRouter } from 'next/navigation'
@@ -16,6 +15,21 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import Ixmark from "@/components/icons/icon_xmark"
+import { styled } from '@mui/material/styles';
+import IfileCirclePlus from "@/components/icons/icon_fileCirclePlus";
+import IcircleXmark from "@/components/icons/icon_circle_xmark";
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 export default function Create_RP() {
     const [title, setTitle] = useState('')
@@ -27,8 +41,8 @@ export default function Create_RP() {
     const [status, setStatus] = useState('Uncompleted');
     const [error, setError] = useState(false)
     const router = useRouter()
-
     const [image, setImage] = useState("")
+    const [fileName, setFileName] = useState('')
 
     const handleChangeType = (ev) => {
         setType(ev.value);
@@ -38,7 +52,13 @@ export default function Create_RP() {
         const selectedFile = event.target.files[0];
         setImage(selectedFile)
         setFile(URL.createObjectURL(selectedFile))
+        setFileName(selectedFile)
     };
+
+    const handleDeleteImage = () => {
+        setFile("")
+        setImage('')
+    }
 
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
@@ -62,23 +82,23 @@ export default function Create_RP() {
                 console.log(err);
             })
 
-            const response = await fetch('/api/report', {
+        const response = await fetch('/api/report', {
             method: 'POST',
             body: JSON.stringify({ id: localStorage.getItem('userName'), title, type, file: fileSave, content, date_created, date_completed, status, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         if (!response.ok) {
-            setError(true)  
+            setError(true)
             setTimeout(() => {
                 window.location.reload(true);
-            }, 2000);      
+            }, 2000);
         }
-        else{
+        else {
             setTimeout(() => {
                 router.push('/report_bug')
             }, 2000);
         }
-        
+
     }
 
     //Function for add
@@ -122,6 +142,12 @@ export default function Create_RP() {
         }
     };
 
+    const [showLargeImage, setShowLargeImage] = useState(false);
+
+    const handleClick = () => {
+        setShowLargeImage(!showLargeImage);
+    }
+
     return (
         <>
             <Header />
@@ -155,14 +181,67 @@ export default function Create_RP() {
                         </div>
                         <p className="text-black text-base font-medium leading-tight tracking-tight mb-3 ml-14 mt-3">Attach images</p>
                         <div className="rounded-md border border-zinc-400 ml-14 mr-12 mt-2 pl-2 py-1">
-                            <input
-                                className="mb-3"
-                                type="file"
-                                onChange={handleChangeFile} />
-                            <Image
-                                src={file}
-                                width={300}
-                                height={100} alt={""} />
+                            <Button className="w-full justify-between items-center"
+                                color="primary"
+                                onChange={handleChangeFile} component="label" variant="contained"
+                                startIcon={<IfileCirclePlus />}>
+                                <div className="flex w-full justify-between items-center overflow-x-auto">
+                                    <div className="w-[100px]">
+                                        Input file
+                                    </div>
+                                    <VisuallyHiddenInput
+                                        type="file" accept="auto" />
+                                    {file && (
+                                        <div className="overflow-x-visible">
+                                            {fileName.name}
+                                        </div>
+                                    )}
+                                </div>
+                            </Button>
+                            {(file !== '') ?
+                                <>
+                                    <div className="flex items-center justify-end mr-6 mt-2">
+                                        <button onClick={handleDeleteImage}>
+                                            <IcircleXmark className="w-[1.5em]" />
+                                        </button>
+                                    </div>
+                                    <div className="bg-white w-[120px] h-[80px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
+                                        <img
+                                            src={file}
+                                            width={120}
+                                            height={80}
+                                            alt={"Cannot load"}
+                                            onClick={handleClick}
+                                            style={{
+                                                width: showLargeImage ? '70%' : 'auto',
+                                                height: showLargeImage ? '70vh' : 'auto',
+                                                objectFit: 'contain',
+                                                position: showLargeImage ? 'fixed' : 'static',
+                                                margin: 'auto',
+                                                display: 'flex',
+                                                left: '50%',
+                                                top: '50%',
+                                                transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                zIndex: showLargeImage ? 2 : 'auto',
+                                                transition: '0.5s',
+                                            }} />
+                                        {showLargeImage && (
+                                            <div
+                                                style={{
+                                                    position: 'fixed',
+                                                    top: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                    zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                }}
+                                            />
+                                        )}
+
+                                    </div>
+                                </> 
+                                : null}
                         </div>
 
                         <div className="flex items-center justify-end mr-12 mt-12">
@@ -174,7 +253,7 @@ export default function Create_RP() {
                                         sx={buttonSx}
                                         onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                     >
-                                        {success ? (!error ? <CheckIcon /> : <Ixmark /> )  : <IfileExport />}
+                                        {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileExport />}
                                     </Fab>
                                     {loading && (
                                         <CircularProgress
@@ -191,6 +270,7 @@ export default function Create_RP() {
                                 </Box>
                             </Box>
                         </div>
+                        
 
                     </div>
 
