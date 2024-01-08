@@ -120,7 +120,7 @@ export default function Profile() {
                     <div className="bg-white rounded pb-3">
                         <div className="flex items-center p-5">
 
-                            {(((user.avatar === null) || (user.avatar === undefined)) && (file === "")) ?
+                            {(((user.avatar === null) || (user.avatar === undefined) || (user.avatar === '')) && (file === "")) ?
                                 <ProfileUser /> :
                                 (file !== "") ?
                                 <img
