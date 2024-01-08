@@ -10,7 +10,6 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import ReactAudioPlayer from 'react-audio-player';
 import { useRouter } from 'next/navigation'
 import Fab from "@mui/material/Fab";
 import CheckIcon from "@mui/icons-material/Check";
@@ -20,6 +19,20 @@ import { green, red } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import { styled } from '@mui/material/styles';
+import Imp3 from "@/components/icons/icon_mp3";
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 export default function Add_Ass() {
     const [skill, setSkill] = useState('')
@@ -73,12 +86,12 @@ export default function Add_Ass() {
             setError(true)
             setTimeout(() => {
                 window.location.reload(true);
-            }, 900);
+            }, 1200);
         }
         else {
             setTimeout(() => {
                 router.push('/assignments')
-            }, 1000);
+            }, 2000);
         }
     }
 
@@ -88,7 +101,7 @@ export default function Add_Ass() {
     const timer = React.useRef<number>();
 
     const buttonSx = {
-        ...(success && {
+        ...((success && !error) && {
             bgcolor: green[500],
             "&:hover": {
                 bgcolor: green[700],
@@ -117,7 +130,7 @@ export default function Add_Ass() {
             timer.current = window.setTimeout(() => {
                 setSuccess(true);
                 setLoading(false);
-            }, 800);
+            }, 1500);
         }
     };
 
@@ -158,39 +171,29 @@ export default function Add_Ass() {
                                             <input type="text" placeholder="Type title" onChange={ev => setTitle(ev.target.value)}
                                                 className="py-2 px-2 w-full border-gray-300 border-2 rounded-md" />
                                         </div>
-                                        {(skill == "Listening") &&
+                                        
+                                        {(skill != "") &&
                                             (
-                                                <div className="container mx-auto mt-8">
-                                                    <input
-                                                        type="file"
-                                                        accept="audio"
-                                                        onChange={handleFileChange}
-                                                        className="mb-4"
-                                                    />
+                                                <div className="container mx-auto mt-4">
+
+                                                    <Button style={{ backgroundColor: "#33bbff" }} onChange={handleFileChange} component="label" variant="contained" startIcon={<Imp3 />}>
+                                                        Input file
+                                                        <VisuallyHiddenInput type="file" accept="auto" />
+                                                    </Button>
                                                     {file && (
                                                         <>
-                                                            <p>Selected MP3: {file.name}</p>
-                                                            <audio controls>
-                                                                <source src={URL.createObjectURL(file)} type="audio" />
-                                                                Your browser does not support the audio tag.
-                                                            </audio>
+                                                            <div className="border border-zinc-300">
+                                                                <p className="mt-2">Selected file: {file.name}</p>
+                                                                <audio controls>
+                                                                    <source src={URL.createObjectURL(file)} type="audio" />
+                                                                    Your browser does not support the audio tag.
+                                                                </audio>
+                                                            </div>
                                                         </>
                                                     )}
-                                                    {file && (
-                                                        <p>Selected MP3: {file.name}</p>
-                                                    )}
+
 
                                                 </div>
-                                                // <div className="bg-white p-3 rounded-lg border-2">
-                                                //     <h2>Choose file Listening:</h2>
-                                                //     <input type="file" accept="audio" onChange={handleChangeImage} />
-                                                //     <ReactAudioPlayer
-                                                //         src={file}
-                                                //         autoPlay
-                                                //         controls
-                                                //         className="w-full"
-                                                //     />
-                                                // </div>
                                             )
                                         }
                                     </div>
@@ -214,7 +217,7 @@ export default function Add_Ass() {
                                                 sx={buttonSx}
                                                 onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                             >
-                                                  {success ? (!error ? <CheckIcon /> : <Ixmark /> ) : <IfileAdd />}
+                                                {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileAdd />}
                                             </Fab>
                                             {loading && (
                                                 <CircularProgress
