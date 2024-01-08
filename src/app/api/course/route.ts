@@ -23,7 +23,8 @@ export async function POST(req: { json: () => any }) {
             for (var i = 0; i < 24; i++) {
                 await Session.create({
                     course_id: createdCourse._id,
-                    name: 'Session ' + String(i + 1)
+                    name: 'Session ' + String(i + 1),
+                    attendList : null
                 })
             }
             return Response.json(createdCourse);
@@ -100,29 +101,34 @@ export async function POST(req: { json: () => any }) {
             const studentListAttend = await Session.findOne({_id: body.id}, {attendList: 1, _id: 0})
             const studentList = await Course.findOne({_id: body.course_id}, {student_id: 1, _id: 0})
 
-            var student_name = []
-            var attend = []
-            var name
+            if(studentListAttend.attendList !== null){
+                var student_name = []
+                var attend = []
+                var name
 
-            for(var i = 0; i < studentList.student_id.length; i++){
-                if(studentListAttend.attendList.includes(studentList.student_id[i]) === true){
-                    attend.push(true)
+                for(var i = 0; i < studentList.student_id.length; i++){
+                    if(studentListAttend.attendList.includes(studentList.student_id[i]) === true){
+                        attend.push(true)
+                    }
+                    else{
+                        attend.push(false)
+                    }
+                    name = await User.findOne({phone: studentList.student_id[i]}, {name: 1, _id: 0})
+                    student_name.push(name.name)
                 }
-                else{
-                    attend.push(false)
-                }
-                name = await User.findOne({phone: studentList.student_id[i]}, {name: 1, _id: 0})
-                student_name.push(name.name)
+
+                const student_list = studentList.student_id.map((student, i) => {
+                    return {
+                        id: student,
+                        name: student_name[i], 
+                        isAttended: attend[i]
+                    };
+                })
+                return Response.json(student_list);
             }
-
-            const student_list = studentList.student_id.map((student, i) => {
-                return {
-                    id: student,
-                    name: student_name[i], 
-                    isAttended: attend[i]
-                };
-            })
-            return Response.json(student_list);
+            else{
+                return Response.json(null);
+            }
         }
         else if (body.method === 'updateAttend'){
             const updatedAttend = {
