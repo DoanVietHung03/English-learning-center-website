@@ -63,7 +63,7 @@ export default function Header() {
                                         src={avatar}
                                         alt="" />}
                             </div>
-                            <p className='relative text-center mt-2 text-black text-lg font-semibold'>{name}</p>
+                            <p className='relative text-center mt-2 text-black text-lg font-semibold break-words px-4'>{name}</p>
                             <p className='relative text-center mt-1 text-stone-400 text-base font-semibold'>({type})</p>
                             <Link href={"/setting_profile"}>
                                 <p className='text-center text-black text-lg font-semibold mt-6 pt-4 mb-4 border-t border-zinc-400 mx-8 hover:text-gray-400'>Setting</p>

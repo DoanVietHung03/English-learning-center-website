@@ -102,9 +102,14 @@ export default function Profile() {
     }
 
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isCheckPasswordVisible, setIsCheckPasswordVisible] = useState(false);
 
     const handleTogglePasswordVisibility = () => {
         setIsPasswordVisible((prev) => !prev);
+    };
+
+    const handleToggleCheckPasswordVisibility = () => {
+        setIsCheckPasswordVisible((prev) => !prev);
     };
 
     return (
@@ -236,16 +241,23 @@ export default function Profile() {
                                     Confirm new password
                                 </div>
                                 <div className="flex items-center">
-                                    <input onChange={(ev) => {
-                                        setCheckPass(ev.target.value)
+                                    <input 
+                                        onChange={(ev) => {setCheckPass(ev.target.value)
                                         if (ev.target.value === password) {
                                             setErrorPass(false);
                                         }
                                         else {
                                             setErrorPass(true);
                                         }
-                                    }} className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" type="password" id="myConfirmPassword" placeholder="Confirm password" />
-                                    <button className="transition transform hover:scale-110 active:scale-100">
+                                    }} 
+                                        className="w-4/5 bg-zinc-100 rounded border border-neutral-200 p-1 mt-2 -ml-2 focus:outline-none" 
+                                        type={isCheckPasswordVisible ? 'text' : 'password'} 
+                                        id="myConfirmPassword" 
+                                        placeholder="Confirm password" 
+                                        value={checkPass} />
+                                    <button
+                                        onClick={handleToggleCheckPasswordVisibility} 
+                                        className="transition transform hover:scale-110 active:scale-100">
                                         <Ieye className="w-4 items-center mt-2 ml-2" />
                                     </button>
                                 </div>

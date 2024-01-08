@@ -155,36 +155,7 @@ export default function Clone_Assignment() {
                         <div className="p-2 ml-2 font-poppins text-xs">{localStorage.getItem('course_name')}</div>
                     </div>
 
-                    <div className="bg-white mt-2 pb-8 rounded px-7">
-                        <div className="mx-6 border-b border-stone-300 pb-2">
-                            <div className="flex items-center justify-end pt-4">
-                                <Box sx={{ display: "flex", alignItems: "center" }}>
-                                    <Box sx={{ m: 1, position: "relative" }}>
-                                        <Fab
-                                            aria-label="save"
-                                            color="primary"
-                                            sx={buttonSx}
-                                            onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
-                                        >
-                                            {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileClone />}
-                                        </Fab>
-                                        {loading && (
-                                            <CircularProgress
-                                                size={68}
-                                                sx={{
-                                                    color: green[500],
-                                                    position: "absolute",
-                                                    top: -6,
-                                                    left: -6,
-                                                    zIndex: 1,
-                                                }}
-                                            />
-                                        )}
-                                    </Box>
-                                </Box>
-                            </div>
-                        </div>
-
+                    <div className="bg-white mt-2 py-6 rounded px-7">
                         <div className="bg-zinc-100 rounded-lg border border-neutral-400 pb-6 mt-4">
                             <div className="ml-14 pt-4">
                                 <div className="flex flex-col justify-center items-center">
@@ -230,6 +201,34 @@ export default function Clone_Assignment() {
                                         </div>
                                     ))
                                 }
+                            </div>
+                        </div>
+                        <div className="mx-6 pb-2">
+                            <div className="flex items-center justify-end pt-4">
+                                <Box sx={{ display: "flex", alignItems: "center" }}>
+                                    <Box sx={{ m: 1, position: "relative" }}>
+                                        <Fab
+                                            aria-label="save"
+                                            color="primary"
+                                            sx={buttonSx}
+                                            onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
+                                        >
+                                            {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileClone className="w-[1.4em] fill-white"/>}
+                                        </Fab>
+                                        {loading && (
+                                            <CircularProgress
+                                                size={68}
+                                                sx={{
+                                                    color: green[500],
+                                                    position: "absolute",
+                                                    top: -6,
+                                                    left: -6,
+                                                    zIndex: 1,
+                                                }}
+                                            />
+                                        )}
+                                    </Box>
+                                </Box>
                             </div>
                         </div>
 

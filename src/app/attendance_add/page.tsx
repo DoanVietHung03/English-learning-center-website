@@ -12,7 +12,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import { green } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
 
 export default function CreateAttend() {
     const [listStudent, setListStudent] = useState([])
@@ -61,8 +60,10 @@ const [loading, setLoading] = React.useState(false);
             body: JSON.stringify({ course_id: localStorage.getItem('course_id'), id: localStorage.getItem('session_id'), studentList: listAttend, method: 'updateAttend' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        
-        router.push('/course_Time')
+        setTimeout(() => {
+            router.push('/course_Time')
+        }, 1000);
+
     }
 
     //Function for add
@@ -124,11 +125,11 @@ const [loading, setLoading] = React.useState(false);
                                 {listStudent.map((student, i) => (
                                     <div key={i} className="inline-block bg-gray-200 rounded-lg text-center items-center justify-center">
                                         {student &&
-                                            <div className="flex gap-6 items-center justify-start ml-3 w-3.5/4">
-                                                <div>
+                                            <div className="flex gap-6 items-center justify-center">
+                                                <div className="w-2/3">
                                                     {student.name} - {student.phone}
                                                 </div>
-                                                <div className= "ml-auto items-center justify-end">
+                                                <div className= "items-center justify-end">
                                                         <button>
                                                         <Checkbox checked={checked[i].check}
                                                             onChange={(ev) => {handleChange(ev, i)}}

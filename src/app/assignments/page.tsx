@@ -33,6 +33,7 @@ export default function Assigments() {
 
     async function handleDelete(ev: SyntheticEvent) {
         ev.preventDefault()
+
         const response = await fetch('/api/assignment', {
             method: 'POST',
             body: JSON.stringify({ assignment_id: delete_assignment, method: 'delete' }),
