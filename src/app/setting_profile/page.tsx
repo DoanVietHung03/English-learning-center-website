@@ -190,7 +190,7 @@ export default function Profile() {
                                 <div>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DemoContainer components={['DatePicker']}>
-                                            <DatePicker value={birth} onChange={(ev) => setBirth(ev.target.value)}
+                                            <DatePicker value={dayjs(user.birth)} onChange={(ev) => setBirth(ev ? ev.toISOString() : null)}
                                                 className="w-3/4"
                                             />
                                         </DemoContainer>

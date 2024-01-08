@@ -7,6 +7,7 @@ import Ibook from "@/components/icons/icon_book"
 import { useEffect, useState } from "react"
 import Iteacher from "@/components/icons/icon_teacher"
 import Istudent from "@/components/icons/icon_student"
+import Image from "next/image"
 export default function UserManagement() {
     const [teachers, setTeachers] = useState([]);
     const [students, setStudents] = useState([]);
@@ -21,6 +22,7 @@ export default function UserManagement() {
     }, []);
     const noStudent = students.length
     const noTeacher = teachers.length
+    console.log(students)
     return (
         <>
             <Header />
@@ -43,7 +45,12 @@ export default function UserManagement() {
                                 teachers.map(teacher => (
                                     // eslint-disable-next-line react/jsx-key
                                     <div className="flex gap-3 p-3 items-center bg-gray-300 ml-5 rounded-xl mt-2">
-                                        <Iteacher className="flex w-8 fill-gray-500" />
+                                        {teacher.avatar ?
+                                            (
+                                                <img className="w-10 rounded-full border border-black" src={teacher.avatar} alt="" />
+                                            ) :
+                                            (<Iteacher className="flex w-8 fill-gray-500" />)
+                                        }
                                         <div className="flex gap-4">
                                             <div className="text-gray-500">{teacher.phone}</div>
                                             <div className="text-gray-500"> {teacher.name}</div>
@@ -58,7 +65,13 @@ export default function UserManagement() {
                                 students.map(student => (
                                     // eslint-disable-next-line react/jsx-key
                                     <div className="flex gap-3 p-3 items-center bg-gray-300 ml-5 rounded-xl mt-2">
-                                        <Istudent className="flex w-[28.5px] fill-gray-500" />
+                                        {student.avatar ?
+                                            (
+                                                <img className="w-10 rounded-full border border-black" src={student.avatar} alt="" />
+                                            ) :
+                                            (<Istudent className="flex w-[28.5px] fill-gray-500" />)
+                                        }
+
                                         <div className="flex gap-4">
                                             <div className="text-gray-500">{student.phone}</div>
                                             <div className="text-gray-500"> {student.name}</div>
