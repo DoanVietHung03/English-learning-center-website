@@ -21,7 +21,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import { styled } from '@mui/material/styles';
 import Imp3 from "@/components/icons/icon_mp3";
-
+import ReactAudioPlayer from "react-audio-player"
 const VisuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
@@ -171,24 +171,37 @@ export default function Add_Ass() {
                                             <input type="text" placeholder="Type title" onChange={ev => setTitle(ev.target.value)}
                                                 className="py-2 px-2 w-full border-gray-300 border-2 rounded-md" />
                                         </div>
-                                        
+
                                         {(skill != "") &&
                                             (
                                                 <div className="container mx-auto mt-4">
 
-                                                    <Button style={{ backgroundColor: "#33bbff" }} onChange={handleFileChange} component="label" variant="contained" startIcon={<Imp3 />}>
-                                                        Input file
-                                                        <VisuallyHiddenInput type="file" accept="auto" />
+                                                    <Button className="w-full justify-between items-center"
+                                                        style={{ backgroundColor: "#33bbff", }}
+                                                        onChange={handleFileChange} component="label" variant="contained"
+                                                        startIcon={<Imp3 />}>
+                                                        <div className="flex w-full justify-between items-center overflow-x-auto">
+                                                            <div className="w-[100px]">
+                                                                Input file
+                                                            </div>
+                                                            <VisuallyHiddenInput
+                                                                type="file" accept="auto" />
+                                                            {file && (
+                                                                <div className="overflow-x-visible">
+                                                                    {file.name}
+                                                                    {/* asdasdddddlwkejr;oawerj;awoejr;owekrja;woekrj;aowejrawer */}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     </Button>
                                                     {file && (
                                                         <>
-                                                            <div className="border border-zinc-300">
-                                                                <p className="mt-2">Selected file: {file.name}</p>
-                                                                {skill == 'Listening' && (
-                                                                <audio controls>
-                                                                    <source src={URL.createObjectURL(file)} type="audio" />
-                                                                    Your browser does not support the audio tag.
-                                                                </audio>)}
+                                                            <div className="border rounded-xl border-zinc-300 mt-5">
+                                                                <ReactAudioPlayer
+                                                                    src={URL.createObjectURL(file)}
+                                                                    controls
+                                                                    className="w-full"
+                                                                />
                                                             </div>
                                                         </>
                                                     )}
@@ -244,8 +257,8 @@ export default function Add_Ass() {
                             }
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     )
 }
