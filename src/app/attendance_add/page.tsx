@@ -12,7 +12,6 @@ import CheckIcon from "@mui/icons-material/Check";
 import { green } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
 
 export default function CreateAttend() {
     const [listStudent, setListStudent] = useState([])
@@ -61,8 +60,10 @@ const [loading, setLoading] = React.useState(false);
             body: JSON.stringify({ course_id: localStorage.getItem('course_id'), id: localStorage.getItem('session_id'), studentList: listAttend, method: 'updateAttend' }),
             headers: { 'Content-Type': 'application/json' },
         })
-        
-        router.push('/course_Time')
+        setTimeout(() => {
+            router.push('/course_Time')
+        }, 1000);
+
     }
 
     //Function for add
