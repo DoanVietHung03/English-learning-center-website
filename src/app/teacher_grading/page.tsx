@@ -41,6 +41,7 @@ export default function Ass_Grading() {
     }
 
     useEffect(() => {
+        localStorage.setItem('sidebar', 0)
         fetch('/api/submission', {
             method: 'POST',
             body: JSON.stringify({ id: localStorage.getItem('assignment_id'), method: 'getList' }),

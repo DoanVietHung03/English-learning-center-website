@@ -114,6 +114,8 @@ export default function Add_Ass() {
     };
 
     React.useEffect(() => {
+        localStorage.setItem('sidebar', 0)
+
         setSuccess(false);
         setError(false)
         return () => {
