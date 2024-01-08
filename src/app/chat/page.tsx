@@ -6,7 +6,6 @@ import Iuser from "@/components/icons/icon_user"
 import React, { SyntheticEvent, useEffect, useState, ReactElement, useRef } from "react"
 import Image from "next/image"
 import Select from "react-select";
-import Iimage from "@/components/icons/icon_image"
 import Ixmark from "@/components/icons/icon_xmark"
 import moment from 'moment';
 import Popup from 'reactjs-popup'
@@ -23,6 +22,7 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Isend from "@/components/icons/icon_send"
 import ReactAudioPlayer from "react-audio-player"
+import IfileCirclePlus from "@/components/icons/icon_fileCirclePlus"
 
 export default function Chat() {
     const [message, setMessage] = useState('')
@@ -310,7 +310,7 @@ export default function Chat() {
                                                                     <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto"
                                                                         style={{ wordWrap: 'break-word' }}>
                                                                         {mes_send.content}
-                                                                        {((mes_send.attachedFile !== null) && (mes_send.attachedFile !== "")) ?
+                                                                        {((mes_send.attachedFile === null) || (mes_send.attachedFile === "") || (mes_send.attachedFile === undefined)) ? null :
                                                                             <div className="mt-6">
                                                                                 <img
                                                                                     src={mes_send.attachedFile}
@@ -344,7 +344,7 @@ export default function Chat() {
                                                                                     />
                                                                                 )}
                                                                             </div>
-                                                                            : null}
+                                                                            }
                                                                     </div>
                                                                 </div>
                                                             </Popup>
@@ -486,8 +486,8 @@ export default function Chat() {
                                     <div className="flex items-center justify-between">
                                         <p className="text-black text-base font-medium">Content (*)</p>
 
-                                        <Button onChange={handleChangeFile} component="label" startIcon={<Iimage />} >
-                                            <div className="font-semibold text-xs text-black">Add Image</div>
+                                        <Button onChange={handleChangeFile} component="label" startIcon={<IfileCirclePlus className="w-[1em] fill-black"/>} >
+                                            <div className="font-semibold text-xs text-black">Add File</div>
                                             <VisuallyHiddenInput type="file" accept="auto" />
                                         </Button>
                                     </div>
