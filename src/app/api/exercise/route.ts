@@ -15,8 +15,8 @@ export async function POST(req: { json: () => any }) {
                 title: body.title,
                 content: body.content,
                 skill: body.skill,
-                solution: body.file,
-                attachedFile: body.filemp3,
+                solution: body.solution,
+                attachedFile: body.attachedFile,
                 module: body.module
             })
             return Response.json(createdExercise)

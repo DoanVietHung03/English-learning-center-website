@@ -47,6 +47,11 @@ export default function Exercise_Add() {
     const [image, setImage] = useState("")
     const [fileType, setFileType] = useState('');
 
+    const [file2, setFile2] = useState('');
+    const [fileType2, setFileType2] = useState('');
+
+
+
     const handleFileChange = (event) => {
         const selectedFile = event.target.files[0];
         console.log(selectedFile)
@@ -55,10 +60,24 @@ export default function Exercise_Add() {
         setFileType(selectedFile.name)
     };
 
+    const handleFileChange2 = (event) => {
+        const selectedFile = event.target.files[0];
+        console.log(selectedFile)
+        setSolution(selectedFile)
+        setFile2(URL.createObjectURL(selectedFile))
+        setFileType2(selectedFile.name)
+    };
+
     const handleDeleteImage = () => {
         setFile("")
         setFileType('')
         setImage('')
+    }
+
+    const handleDeleteImage2 = () => {
+        setFile2("")
+        setFileType2('')
+        setSolution('')
     }
 
     const handleChangeSkill = (ev) => {
@@ -107,14 +126,14 @@ export default function Exercise_Add() {
             })
         const response = await fetch('/api/exercise', {
             method: 'POST',
-            body: JSON.stringify({ title, filemp3: fileSave, content, skill, file: fileSave2, module, method: 'add' }),
+            body: JSON.stringify({ title, attachedFile: fileSave, content, skill, solution: fileSave2, module, method: 'add' }),
             headers: { 'Content-Type': 'application/json' },
         })
         if (!response.ok) {
             setError(true)
-            // setTimeout(() => {
-            //     window.location.reload(true);
-            // }, 2000);
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 2000);
         }
         else {
             setTimeout(() => {
@@ -205,6 +224,7 @@ export default function Exercise_Add() {
                                     </div>
                                     {(skill != "") &&
                                         (
+                                            <> 
                                             <div className="container mx-auto mt-4">
 
                                                 <Button className="w-full justify-between items-center"
@@ -281,9 +301,86 @@ export default function Exercise_Add() {
                                                                 </div>)}
 
                                                     </> : null}
-
-
                                             </div>
+                                            <div className="container mx-auto mt-4">
+
+                                            <Button className="w-full justify-between items-center"
+                                                color="primary"
+                                                onChange={handleFileChange2} component="label" variant="contained"
+                                                startIcon={<IfileCirclePlus className="w-[1em] fill-white" />}>
+                                                <div className="flex w-full justify-between items-center overflow-x-auto">
+                                                    <div className="w-[100px]">
+                                                        Input solution
+                                                    </div>
+                                                    <VisuallyHiddenInput
+                                                        type="file" accept="auto" />
+                                                    {file2 && (
+                                                        <div className="overflow-x-visible">
+                                                            {file2.name}
+
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </Button>
+                                            {(file2 !== '') ?
+                                                <>
+                                                    <div className="flex items-center justify-end mr-6 mt-2">
+                                                        <button onClick={handleDeleteImage2}>
+                                                            <IcircleXmark className="w-[1.5em]" />
+                                                        </button>
+                                                    </div>
+                                                    {imgTail.includes(fileType2.substring(fileType2.lastIndexOf('.') + 1)) ?
+                                                        <div className="bg-white w-[120px] h-[80px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
+                                                            <img
+                                                                src={file2}
+                                                                width={120}
+                                                                height={80}
+                                                                alt={"Cannot load"}
+                                                                onClick={handleClick}
+                                                                style={{
+                                                                    width: showLargeImage ? '70%' : 'auto',
+                                                                    height: showLargeImage ? '70vh' : 'auto',
+                                                                    objectFit: 'contain',
+                                                                    position: showLargeImage ? 'fixed' : 'static',
+                                                                    margin: 'auto',
+                                                                    display: 'flex',
+                                                                    left: '50%',
+                                                                    top: '50%',
+                                                                    transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                                    zIndex: showLargeImage ? 2 : 'auto',
+                                                                    transition: '0.5s',
+                                                                }} />
+                                                            {showLargeImage && (
+                                                                <div
+                                                                    style={{
+                                                                        position: 'fixed',
+                                                                        top: 0,
+                                                                        left: 0,
+                                                                        width: '100%',
+                                                                        height: '100%',
+                                                                        background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                        zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                    }}
+                                                                />
+                                                            )}
+
+                                                        </div> : ((audioTail.includes(fileType2.substring(fileType2.lastIndexOf('.') + 1))) ?
+                                                            <div>
+                                                                <div>Solution</div>
+                                                                <ReactAudioPlayer
+                                                                    src={file2}
+                                                                    controls
+                                                                    className="w-full"
+                                                                />
+                                                            </div> :
+                                                            <div className="border border-zinc-300 px-2 py-2">
+                                                                <a style={{ wordWrap: 'break-word' }} href={file2}>{file2}</a>
+                                                            </div>)}
+
+                                                </> : null}
+
+
+                                        </div></>
                                         )
                                     }
 
