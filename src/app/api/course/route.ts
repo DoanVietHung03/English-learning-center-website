@@ -17,6 +17,7 @@ export async function POST(req: { json: () => any }) {
                 room: body.room,
                 startDate: body.sDate,
                 module: body.module,
+                time: body.time,
                 teacher_id: body.teacher,
                 student_id: body.student_added
             });
@@ -39,6 +40,7 @@ export async function POST(req: { json: () => any }) {
                 startDate: course.startDate,
                 module: course.module,
                 room: course.room,
+                time: course.time,
                 schedule: course.schedule,
                 teacher_id: course.teacher_id,
                 student_id: course.student_id,
@@ -75,6 +77,7 @@ export async function POST(req: { json: () => any }) {
                 startDate: course.startDate,
                 module: course.module,
                 room: course.room,
+                time: course.time,
                 schedule: course.schedule,
                 teacher_id: course.teacher_id,
                 student_id: course.student_id,
