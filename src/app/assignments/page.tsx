@@ -164,10 +164,14 @@ export default function Assigments() {
                                                         :
                                                         <p className="text-green-400 leading-tight tracking-tight font-medium text-base mr-2">Submitted: {assignment.numSub}/{localStorage.getItem('course_student')}</p>
                                                     }
-                                                    {((assignment.graded === assignment.numSub) && (assignment.numSub !== 0)) ?
+                                                    {((assignment.graded === assignment.numSub) && (assignment.numSub !== 0)) ? 
+                                                        ((assignment.numSub == localStorage.getItem('course_student')) ? 
+                                                            <div className="flex items-center mr-4">
+                                                                <p className="text-green-400 leading-tight tracking-tight font-medium text-base">Fully marked</p>
+                                                            </div> :
                                                         <div className="flex items-center mr-4">
-                                                            <p className="text-green-400 leading-tight tracking-tight font-medium text-base">Fully marked</p>
-                                                        </div> :
+                                                            <p className="text-green-400 leading-tight tracking-tight font-medium text-base">Marked: {assignment.graded}/{assignment.numSub}</p>
+                                                        </div>) :
                                                         <div className="flex items-center mr-5">
                                                             <p className="text-red-400 leading-tight tracking-tight font-medium text-base">Marked: {assignment.graded}/{assignment.numSub}</p>
                                                         </div>}

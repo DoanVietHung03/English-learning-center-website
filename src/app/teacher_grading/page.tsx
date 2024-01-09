@@ -13,7 +13,7 @@ import ReactAudioPlayer from "react-audio-player";
 export default function Ass_Grading() {
     const [submissions, setSubmissions] = useState([])
     const [file, setFile] = useState('');
-    const [comment, setComment] = useState('')
+    const [comment, setComment] = useState(null)
     const [commentContent, setCommentContent] = useState<ReactElement | any | string>('')
     const [gradeContent, setGradeContent] = useState<ReactElement | any | string>('')
     const [grade, setGrade] = useState<number|null>(null)
@@ -76,8 +76,8 @@ export default function Ass_Grading() {
                     <div className="mt-10 ml-[34px] text-black text-sm font-semibold font-poppins mb-2">
                         <p>{sub.student_Name}</p>
                     </div>
-                    <div className="mx-[34px] px-7 py-4 border-t border-b border-stone-300 h-80 h-fixed">
-                        <div className="text-black text-base font-normal font-poppins leading-tight tracking-tight border-b border-zinc-300 h-3/5 overflow-y-auto"
+                    <div className="mx-[34px] px-7 py-4 border-t border-b border-stone-300 h-[359px] h-fixed">
+                        <div className="text-black text-base font-normal font-poppins leading-tight tracking-tight border-b border-zinc-300 h-4/5 overflow-y-auto"
                             style={{ wordWrap: 'break-word' }}>
                             {sub.answer}
                         </div>
@@ -119,7 +119,7 @@ export default function Ass_Grading() {
                                         )}
 
                                     </div> : ((audioTail.includes(sub.attachedFile.substring(sub.attachedFile.lastIndexOf('.') + 1))) ?
-                                        <div>
+                                        <div className="">
                                             <div>File listening</div>
                                             <ReactAudioPlayer
                                                 src={sub.attachedFile}
@@ -148,7 +148,7 @@ export default function Ass_Grading() {
                         </textarea>
                     </div>
                 ) : (
-                    setComment(''),
+                    setComment(null),
                     <div key={i}>
                         <textarea onChange={handleComment} className="w-full h-56 border border-zinc-300 pt-3 pl-4 focus:outline-none" id="myComment" placeholder="Type comment...">
 
@@ -203,19 +203,22 @@ export default function Ass_Grading() {
                                     <div className="mb-8">
                                         <p className="text-2xl font-bold">List of submissions</p>
                                     </div>
-                                    {submissions.map((sub, index) => (
-                                        <button
-                                            onClick={() => { handleButtonClick(index), localStorage.setItem('submission_id', sub._id) }}
-                                            key={index}
-                                            className={`w-full flex items-center  overflow-y-auto border-b py-4 border-stone-300 hover:bg-zinc-100 ${selectedButton === index ? 'bg-zinc-100' : ''}`}>
-                                            <Iuser className="w-[3em] fill-zinc-300" />
-                                            <div>
-                                                <p className="text-black text-sm font-semibold font-poppins ml-4">{sub.student_Name} - {sub.student_id}</p>
-                                                {sub.grade !== null ?
-                                                    <p className="text-zinc-400 text-sm font-semibold font-poppins ml-4">Marked</p> : null}
-                                            </div>
-                                        </button>
-                                    ))}
+                                    <div className="h-80 overflow-y-auto">
+                                        {submissions.map((sub, index) => (
+                                            <button
+                                                onClick={() => { handleButtonClick(index), localStorage.setItem('submission_id', sub._id) }}
+                                                key={index}
+                                                className={`w-full flex items-center border-b py-4 border-stone-300 hover:bg-zinc-100 ${selectedButton === index ? 'bg-zinc-100' : ''}`}>
+                                                <Iuser className="w-[3em] fill-zinc-300" />
+                                                <div>
+                                                    <p className="text-black text-sm font-semibold font-poppins ml-3">{sub.student_Name} - {sub.student_id}</p>
+                                                    {sub.grade !== null ?
+                                                        <p className="text-zinc-400 text-sm font-semibold font-poppins ml-4">Marked</p> : null}
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                    
                                 </div>
 
                                 <div className="w-2/3">
