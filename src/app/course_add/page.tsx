@@ -63,7 +63,7 @@ export default function Course_Add() {
         if (student_added.length !== 0) {
             const response = await fetch('/api/course', {
                 method: 'POST',
-                body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added, method: 'add' }),
+                body: JSON.stringify({ title, schedule, room, module, time, teacher, sDate, student_added, method: 'add' }),
                 headers: { 'Content-Type': 'application/json' },
             })
             if (!response.ok) {

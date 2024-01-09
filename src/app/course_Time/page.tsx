@@ -105,13 +105,13 @@ export default function CourseTime() {
                                                 <div className="font-bold text-blue-400 mb-3">
                                                     OFFLINE
                                                 </div>
-                                                <div className="flex gap-10 items-center mb-3">
+                                                <div className="flex gap-10 items-center mb-3 justify-between mr-4">
                                                     <div className="font-semibold font-poppins">
                                                         {session.name}
                                                     </div>
 
                                                     <div className="font-bold font-poppins text-sm">
-                                                        23:00 - 2:00
+                                                        {course.time}
                                                     </div>
                                                 </div>
                                                 {(i % 3 == 0) &&
