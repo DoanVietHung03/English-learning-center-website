@@ -67,10 +67,6 @@ export async function POST(req: { json: () => any }) {
             combinedReceivedMessages.reverse()
             return Response.json({combinedSentMessages, combinedReceivedMessages});  
         }
-        else{
-            const deleteMess = await Message.deleteOne({_id : body.id})
-            Response.json(deleteMess)
-        }
     } catch (error) {
         return new Response(
             JSON.stringify(

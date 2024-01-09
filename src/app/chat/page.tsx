@@ -34,14 +34,11 @@ export default function Chat() {
     const [file, setFile] = useState('');
     const [fileType, setFileType] = useState('');
 
-    const [receivers, setReceivers] = useState([])
-
     const [message_sent, SetMessageSent] = useState([]);
     const [message_received, SetMessageReceived] = useState([]);
     const [image, setImage] = useState("")
     const [error, setError] = useState(false)
 
-    var delete_message = ''
 
     const handleChangeReceiver = (ev) => {
         setReceiver(ev.value);
@@ -49,17 +46,6 @@ export default function Chat() {
 
     const handleDeleteImage = () => {
         setFile("")
-    }
-
-    async function handleDelete(ev: SyntheticEvent) {
-        ev.preventDefault()
-        console.log(delete_message)
-        const response = await fetch('/api/message', {
-            method: 'POST',
-            body: JSON.stringify({ id: delete_message, method: 'delete' }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-        window.location.reload(true);
     }
 
     useEffect(() => {
@@ -261,33 +247,8 @@ export default function Chat() {
                                                                 Send date: {moment.utc(mes_send.sentDate).format('DD/MM/YYYY')}
                                                             </div>
                                                         </div>
-                                                        <div>
-                                                            <Popup
-                                                                ref={popupRef}
-                                                                trigger={<div className="mt-2 flex items-center justify-end w-full">
-                                                                    <button className="mr-4">
-                                                                        <Ixmark />
-                                                                    </button>
-                                                                </div>}>
-
-                                                                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
-                                                                    <div className="mt-4">
-                                                                        <p className="text-center text-lg font-semibold">Do you want to delete permanently?</p>
-                                                                        <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_message = mes_send._id, handleDelete(ev) }}>
-                                                                                Yes
-                                                                            </button>
-
-                                                                            <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
-                                                                                onClick={() => { popupRef.current.close() }}>
-                                                                                No
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </Popup>
-
-                                                            <Popup ref={popupRef} trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-2 hover:underline cursor-pointer">
+                                                        
+                                                            <Popup ref={popupRef} trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-10 hover:underline cursor-pointer">
                                                                 {(mes_send.content.length <= 20 ?
                                                                     <div>
                                                                         <Grid item>
@@ -348,7 +309,7 @@ export default function Chat() {
                                                                     </div>
                                                                 </div>
                                                             </Popup>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             ))}
@@ -373,33 +334,9 @@ export default function Chat() {
                                                                 Send date: {moment.utc(mes_receive.sentDate).format('DD/MM/YYYY')}
                                                             </div>
                                                         </div>
-                                                        <div>
-                                                            <Popup
-                                                                ref={popupRef}
-                                                                trigger={<div className="mt-2 flex items-center justify-end w-full">
-                                                                    <button className="mr-4">
-                                                                        <Ixmark />
-                                                                    </button>
-                                                                </div>}>
+                                                        
 
-                                                                <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-44 bg-gray-200 p-4 border-2 border-gray-500 rounded-lg">
-                                                                    <div className="mt-4">
-                                                                        <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
-                                                                        <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_message = mes_receive._id, handleDelete(ev) }}>
-                                                                                Yes
-                                                                            </button>
-
-                                                                            <button className="w-1/2 border-2 border-black bg-red-400 hover:bg-red-500 rounded-md py-2"
-                                                                                onClick={() => { popupRef.current.close() }}>
-                                                                                No
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </Popup>
-
-                                                            <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-2 hover:underline cursor-pointer">
+                                                            <Popup trigger={<div className="text-zinc-500 w-fit h-fit text-sm font-semibold pl-7 mt-10 hover:underline cursor-pointer">
                                                                 {(mes_receive.content.length <= 20 ?
                                                                     <div>
                                                                         <Grid item>
@@ -461,7 +398,7 @@ export default function Chat() {
                                                                     </div>
                                                                 </div>
                                                             </Popup>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                             ))}
