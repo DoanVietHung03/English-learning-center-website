@@ -46,6 +46,7 @@ export default function Chat() {
 
     const handleDeleteImage = () => {
         setFile("")
+        setImage('')
     }
 
     useEffect(() => {
@@ -360,7 +361,7 @@ export default function Chat() {
                                                                     <div className="bg-white rounded-lg pl-2 py-2 h-full overflow-y-auto"
                                                                         style={{ wordWrap: 'break-word' }}>
                                                                         {mes_receive.content}
-                                                                        {((mes_receive.attachedFile !== null) && (mes_receive.attachedFile !== "")) ?
+                                                                        {((mes_receive.attachedFile !== null) && (mes_receive.attachedFile !== "") && (mes_receive.attachedFile !== undefined)) ?
                                                                             <div className="mt-6">
                                                                                 <img
                                                                                     src={mes_receive.attachedFile}
