@@ -201,15 +201,15 @@ export default function Add_Ass() {
                                                         onChange={handleFileChange} component="label" variant="contained"
                                                         startIcon={<IfileCirclePlus className="w-[1em] fill-white" />}>
                                                         <div className="flex w-full justify-between items-center overflow-x-auto">
-                                                            <div className="w-[100px]">
+                                                            <div className="w-1/3">
                                                                 Input file
                                                             </div>
                                                             <VisuallyHiddenInput
                                                                 type="file" accept="auto" />
                                                             {file && (
                                                                 <div className="w-full ml-4">
-                                                                    {(file.name).length > 21 ?
-                                                                        ((file.name).substring(0, 21) + '... ' + (file.name).substring((file.name).lastIndexOf('.') + 1)) : file.name}
+                                                                    {(image.name).length > 17 ?
+                                                                        ((image.name).substring(0, 17) + '... ' + (image.name).substring((image.name).lastIndexOf('.') + 1)) : image.name}
                                                                 </div>
                                                             )}
                                                         </div>
@@ -222,7 +222,7 @@ export default function Add_Ass() {
                                                                 </button>
                                                             </div>
                                                             {imgTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1)) ?
-                                                                <div className="bg-white w-[120px] h-[80px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
+                                                                <div className="bg-white w-[120px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
                                                                     <img
                                                                         src={file}
                                                                         width={120}
