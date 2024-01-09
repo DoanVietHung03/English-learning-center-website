@@ -204,7 +204,7 @@ export default function Exercise_Add() {
                     </div>
 
                     <div className="bg-white mt-2 pb-8 rounded px-7 py-8">
-                        <form className="h-[530px] p-4 bg-zinc-100 rounded-lg border border-neutral-400">
+                        <form className="h-[550px] p-4 bg-zinc-100 rounded-lg border border-neutral-400">
                             <div className="flex h-3/4">
                                 <div className="flex flex-col w-1/2 p-4 gap-5 pr-10">
                                     <div>
@@ -224,100 +224,112 @@ export default function Exercise_Add() {
                                     </div>
                                     {(skill != "") &&
                                         (
-                                            <> 
-                                            <div className="container mx-auto mt-4">
+                                            <>
+                                                <div className="container mx-auto mt-4">
 
-                                                <Button className="w-full justify-between items-center"
-                                                    color="primary"
-                                                    onChange={handleFileChange} component="label" variant="contained"
-                                                    startIcon={<IfileCirclePlus className="w-[1em] fill-white" />}>
-                                                    <div className="flex w-full justify-between items-center overflow-x-auto">
-                                                        <div className="w-[100px]">
-                                                            Input file
-                                                        </div>
-                                                        <VisuallyHiddenInput
-                                                            type="file" accept="auto" />
-                                                        {file && (
-                                                            <div className="overflow-x-visible">
-                                                                {file.name}
-
+                                                    <Button className="w-full justify-between items-center"
+                                                        color="primary"
+                                                        onChange={handleFileChange} component="label" variant="contained"
+                                                        startIcon={<IfileCirclePlus className="w-[1em] fill-white" />}>
+                                                        <div className="flex w-full justify-between items-center">
+                                                            <div>
+                                                                file
                                                             </div>
-                                                        )}
-                                                    </div>
-                                                </Button>
-                                                {(file !== '') ?
-                                                    <>
-                                                        <div className="flex items-center justify-end mr-6 mt-2">
-                                                            <button onClick={handleDeleteImage}>
-                                                                <IcircleXmark className="w-[1.5em]" />
-                                                            </button>
+                                                            <VisuallyHiddenInput
+                                                                type="file" accept="auto" />
+                                                            {file && (
+                                                                <div className="w-full ml-4">
+                                                                    {(image.name).length > 21 ?
+                                                                        ((image.name).substring(0, 21) + '... ' + (image.name).substring(fileType.lastIndexOf('.') + 1)) : image.name}
+                                                                </div>
+                                                            )}
                                                         </div>
-                                                        {imgTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1)) ?
-                                                            <div className="bg-white w-[120px] h-[80px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
-                                                                <img
-                                                                    src={file}
-                                                                    width={120}
-                                                                    height={80}
-                                                                    alt={"Cannot load"}
-                                                                    onClick={handleClick}
-                                                                    style={{
-                                                                        width: showLargeImage ? '70%' : 'auto',
-                                                                        height: showLargeImage ? '70vh' : 'auto',
-                                                                        objectFit: 'contain',
-                                                                        position: showLargeImage ? 'fixed' : 'static',
-                                                                        margin: 'auto',
-                                                                        display: 'flex',
-                                                                        left: '50%',
-                                                                        top: '50%',
-                                                                        transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
-                                                                        zIndex: showLargeImage ? 2 : 'auto',
-                                                                        transition: '0.5s',
-                                                                    }} />
-                                                                {showLargeImage && (
-                                                                    <div
-                                                                        style={{
-                                                                            position: 'fixed',
-                                                                            top: 0,
-                                                                            left: 0,
-                                                                            width: '100%',
-                                                                            height: '100%',
-                                                                            background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
-                                                                            zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
-                                                                        }}
-                                                                    />
-                                                                )}
-
-                                                            </div> : ((audioTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1))) ?
-                                                                <div>
-                                                                    <div>File listening</div>
-                                                                    <ReactAudioPlayer
+                                                    </Button>
+                                                    {(file !== '') ?
+                                                        <>
+                                                            <div className="flex items-center justify-end mr-6 mt-2">
+                                                                <button onClick={handleDeleteImage2}>
+                                                                    <IcircleXmark className="w-[1.5em]" />
+                                                                </button>
+                                                            </div>
+                                                            {imgTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1)) ?
+                                                                <div className="bg-white w-[120px] h-[80px] rounded-md border border-zinc-400 ml-7 pl-2 py-1 overflow-y-auto">
+                                                                    <img
                                                                         src={file}
-                                                                        controls
-                                                                        className="w-full"
-                                                                    />
-                                                                </div> :
-                                                                <div className="border border-zinc-300 px-2 py-2">
-                                                                    <a style={{ wordWrap: 'break-word' }} href={file}>{file}</a>
-                                                                </div>)}
+                                                                        width={120}
+                                                                        height={80}
+                                                                        alt={"Cannot load"}
+                                                                        onClick={handleClick}
+                                                                        style={{
+                                                                            width: showLargeImage ? '70%' : 'auto',
+                                                                            height: showLargeImage ? '70vh' : 'auto',
+                                                                            objectFit: 'contain',
+                                                                            position: showLargeImage ? 'fixed' : 'static',
+                                                                            margin: 'auto',
+                                                                            display: 'flex',
+                                                                            left: '50%',
+                                                                            top: '50%',
+                                                                            transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
+                                                                            zIndex: showLargeImage ? 2 : 'auto',
+                                                                            transition: '0.5s',
+                                                                        }} />
+                                                                    {showLargeImage && (
+                                                                        <div
+                                                                            style={{
+                                                                                position: 'fixed',
+                                                                                top: 0,
+                                                                                left: 0,
+                                                                                width: '100%',
+                                                                                height: '100%',
+                                                                                background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                            }}
+                                                                        />
+                                                                    )}
 
-                                                    </> : null}
-                                            </div>
-                                            <div className="container mx-auto mt-4">
+                                                                </div> : ((audioTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1))) ?
+                                                                    <div>
+                                                                        <ReactAudioPlayer
+                                                                            src={file}
+                                                                            controls
+                                                                            className="w-full"
+                                                                        />
+                                                                    </div> :
+                                                                    <div className="border border-zinc-300 px-2 py-2 mt-2">
+                                                                        <a style={{ wordWrap: 'break-word' }} href={file}>{file}</a>
+                                                                    </div>)}
 
+                                                        </> : null}
+                                                </div>
+                                            </>
+                                        )
+                                    }
+                                </div>
+
+                                <div className="flex flex-col w-1/2 p-4 pr-6 gap-1">
+                                    <p className="text-black text-base font-normal leading-tight tracking-tight mb-2">Content (*)</p>
+                                    <div className="mb-[27px]">
+                                        <textarea onChange={ev => setContent(ev.target.value)}
+                                            className="w-full h-[218px] border-2 rounded-md pt-2 pl-2 focus:outline-none"
+                                            id="myContent" placeholder="Type content of the assignment"></textarea>
+                                    </div>
+
+                                    {(skill != "") && (
+                                        <div className="container mx-auto">
                                             <Button className="w-full justify-between items-center"
                                                 color="primary"
                                                 onChange={handleFileChange2} component="label" variant="contained"
                                                 startIcon={<IfileCirclePlus className="w-[1em] fill-white" />}>
-                                                <div className="flex w-full justify-between items-center overflow-x-auto">
-                                                    <div className="w-[100px]">
-                                                        Input solution
+                                                <div className="flex w-full justify-between items-center">
+                                                    <div>
+                                                        solution
                                                     </div>
                                                     <VisuallyHiddenInput
                                                         type="file" accept="auto" />
                                                     {file2 && (
-                                                        <div className="overflow-x-visible">
-                                                            {file2.name}
-
+                                                        <div className="w-full ml-4">
+                                                            {(solution.name).length > 21 ?
+                                                                ((solution.name).substring(0, 21) + '... ' + (solution.name).substring((solution.name).lastIndexOf('.') + 1)) : solution.name}
                                                         </div>
                                                     )}
                                                 </div>
@@ -373,31 +385,15 @@ export default function Exercise_Add() {
                                                                     className="w-full"
                                                                 />
                                                             </div> :
-                                                            <div className="border border-zinc-300 px-2 py-2">
+                                                            <div className="border border-zinc-300 px-2 py-2 mt-2">
                                                                 <a style={{ wordWrap: 'break-word' }} href={file2}>{file2}</a>
                                                             </div>)}
-
                                                 </> : null}
-
-
-                                        </div></>
-                                        )
-                                    }
-
-                
+                                        </div>
+                                    )}
                                 </div>
-
-                                <div className="flex flex-col w-1/2 mt-3 gap-3">
-                                    <div className="h-96 items-center text-black text-base font-normal leading-tight tracking-tight">
-                                        <p>Content (*)</p>
-                                        <textarea onChange={ev => setContent(ev.target.value)}
-                                            className="w-full h-[350px] border-2 rounded-md mt-4 pt-2 pl-2 focus:outline-none"
-                                            id="myContent" placeholder="Type content of the assignment"></textarea>
-                                    </div>
-                                </div>
-
                             </div>
-                            <div className="flex items-center justify-end mt-16 mr-4">
+                            <div className="flex items-center justify-end mt-[77px] mr-4">
                                 <Grid item>
                                     <Tooltip disableFocusListener disableTouchListener title="Click to add">
                                         <Box sx={{ display: "flex", alignItems: "center" }}>
