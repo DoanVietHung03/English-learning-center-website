@@ -23,7 +23,6 @@ import 'reactjs-popup/dist/index'
 export default function CourseList() {
     const [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
-    const [name, setName] = useState('')
     const type = localStorage.getItem('userType')
     const router = useRouter();
 

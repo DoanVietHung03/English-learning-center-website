@@ -27,6 +27,7 @@ export default function Course_Add() {
     const [teacher, setTeacher] = useState('')
     const [sDate, setSDate] = React.useState<Dayjs | null>(dayjs(dayjs()));
     const [schedule, setSchedule] = useState('')
+    const [time, setTime] = useState('')
     const [room, setRoom] = useState('')
     const [student, setStudent] = useState()
     const [error, setError] = useState(false)
@@ -46,6 +47,10 @@ export default function Course_Add() {
     const handleChangeSchedule = (ev) => {
         setSchedule(ev.value);
     };
+
+    const handleChangeTime = (ev) => {
+        setTime(ev.value);
+    };
     const handleChangeStudentID = (ev) => {
         setStudent(ev.value)
         var temp = ev.value
@@ -55,31 +60,31 @@ export default function Course_Add() {
     }
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-        if(student_added.length !== 0){
+        if (student_added.length !== 0) {
             const response = await fetch('/api/course', {
                 method: 'POST',
                 body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added, method: 'add' }),
                 headers: { 'Content-Type': 'application/json' },
             })
-            if (!response.ok){
+            if (!response.ok) {
                 setError(true)
                 setTimeout(() => {
-                    window.location.reload(true);           
+                    window.location.reload(true);
                 }, 1000);
             }
-            else{
+            else {
                 setTimeout(() => {
                     router.push('/courseList')
                 }, 1000);
             }
         }
-        else{
+        else {
             setError(true)
-                setTimeout(() => {
-                    window.location.reload(true);           
-                }, 1000);
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 1000);
         }
-        
+
 
     }
     const [teachers, setTeachers] = useState([]);
@@ -162,7 +167,7 @@ export default function Course_Add() {
                         <div>
                             Create Course
                         </div>
-                    <div className="gap-2 flex items-center justify-end rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight px-4">
+                        <div className="gap-2 flex items-center justify-end rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight px-4">
                             <Box sx={{ display: "flex", alignItems: "center" }}>
                                 <Box sx={{ m: 1, position: "relative" }}>
                                     <Fab
@@ -172,7 +177,7 @@ export default function Course_Add() {
                                         disabled={loading}
                                         onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                     >
-                                        {success ? (!error ? <CheckIcon /> : <Ixmark /> ) : <Iplus />}
+                                        {success ? (!error ? <CheckIcon /> : <Ixmark />) : <Iplus className="w-[1.4em] fill-white" />}
                                     </Fab>
                                     {loading && (
 
@@ -192,22 +197,21 @@ export default function Course_Add() {
                         </div>
                     </div>
 
-                    <div className="bg-white mt-2 rounded">
-                        <div className="px-12 py-8">
-                            <div className="items-center">
-                                <div className="text-base font-medium">Course Name (*)</div>
-                                <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-full" type="text" id="myTitle" placeholder="Type name of the course"
-                                    onChange={ev => setTitle(ev.target.value)} />
-                            </div>
-
-                            <div className="mt-8 grid grid-cols-2">
+                    <div className="bg-white mt-2 rounded pb-8 px-4">
+                        <div className="px-12 py-8 grid grid-cols-2">
+                            <div className="mt-8">
+                                <div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Course Name (*)</p>
+                                    <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-3/4 mb-4" type="text" id="myTitle" placeholder="Type name of the course"
+                                        onChange={ev => setTitle(ev.target.value)} />
+                                </div>
                                 <div>
                                     <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a schedule (*)</p>
                                     <Select options={optionSchedule} onChange={handleChangeSchedule}
                                         className="w-3/4 mt-2" placeholder="Select schedule" />
                                 </div>
                                 <div>
-                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose a module (*)</p>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight mt-4">Choose a module (*)</p>
                                     <Select options={optionModule} onChange={handleChangeModule}
                                         className="w-3/4 mt-2" placeholder="Select module" />
                                 </div>
@@ -215,21 +219,26 @@ export default function Course_Add() {
                                     <p className="text-black text-base font-medium leading-tight tracking-tight mt-4">Choose a teacher (*)</p>
                                     <Select options={optionTeachers} onChange={handleChangeTeacher} className="w-3/4 mt-2" placeholder="Select teacher" />
                                 </div>
-                                <div className="items-center mt-3 w-3/4">
-                                    <div className="text-base font-medium">Room</div>
-                                    <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-full" type="text" id="myTitle" placeholder="Type name of the course"
+                            </div>
+
+                            <div className="mt-8">
+                                <div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Room</p>
+                                    <input className="px-2 py-2 rounded-md border border-zinc-300 focus:outline-none mt-2 w-3/4 mb-4" type="text" id="myTitle" placeholder="Type name of the course"
                                         onChange={ev => setRoom(ev.target.value)} />
                                 </div>
-                            </div>
-                            <div></div>
-                            <div className="mt-7 grid grid-cols-2">
-                                <div className="">
-                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Student</p>
-                                    <Select options={optionStudents} onChange={handleChangeStudentID}
-                                        className="w-[333px] mt-2" placeholder="Telephone number of student" />
+                                <div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight">Choose Time Period (*)</p>
+                                    <Select options={optionTime} onChange={handleChangeTime}
+                                        className="w-3/4 mt-2" placeholder="Select schedule" />
                                 </div>
                                 <div>
-                                    <div className="font-semibold">Start Date (*)</div>
+                                    <p className="text-black text-base font-medium leading-tight tracking-tight mt-4">Student</p>
+                                    <Select options={optionStudents} onChange={handleChangeStudentID}
+                                        className="w-3/4 mt-2" placeholder="Telephone number of student" />
+                                </div>
+                                <div>
+                                    <div className="font-semibold mt-2">Start Date (*)</div>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DemoContainer components={['DatePicker']}>
                                             <DatePicker value={sDate} onChange={(newValue) => setSDate(newValue)}
@@ -240,30 +249,27 @@ export default function Course_Add() {
                                 </div>
 
                             </div>
-
-
-
-                            <div className="inline-block px-4 mt-8 rounded-lg border border-stone-300 h-40 w-full gap-3">
-                                {
-                                    student_added.map((c: string, i) => (
-                                        <>
-                                            <div className="inline-block items-center gap-2 mt-3 ml-3 p-3 bg-gray-300 font-semibold py-2">
-                                                {i + 1}: {c}
-                                                <button className="ml-2" onClick={() => handleDelete(i)}>
-                                                    < Idelete />
-                                                </button>
-                                            </div>
-                                        </>
-                                    )
-                                    )}
-                            </div>
-                            {(error) &&
-                                <div className="mt-5 max-w-xs text-red-800 font-semibold 
-                                bg-red-300 rounded-lg p-3 mr-5">
-                                    Some information is missed or wrong
-                                </div>
-                            }
                         </div>
+                        <div className="inline-block px-4 mt-4 rounded-lg border border-stone-300 h-40 w-full gap-3">
+                            {
+                                student_added.map((c: string, i) => (
+                                    <>
+                                        <div className="inline-block items-center gap-2 mt-3 ml-3 p-3 bg-gray-300 font-semibold py-2">
+                                            {i + 1}: {c}
+                                            <button className="ml-2" onClick={() => handleDelete(i)}>
+                                                < Idelete />
+                                            </button>
+                                        </div>
+                                    </>
+                                )
+                                )}
+                        </div>
+                        {(error) &&
+                            <div className="mt-5 max-w-xs text-red-800 font-semibold 
+                                bg-red-300 rounded-lg p-3 mr-5">
+                                Some information is missed or wrong
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
@@ -280,4 +286,14 @@ const optionModule = [
 const optionSchedule = [
     { value: "Mon-Wed-Fri", label: "Mon-Wed-Fri" },
     { value: "Tue-Thu-Sat", label: "Tue-Thu-Sat" },
+];
+
+const optionTime = [
+    { value: "7:30 -> 9:30", label: "7:30 -> 9:30" },
+    { value: "8:00 -> 10:00", label: "8:00 -> 10:00" },
+    { value: "10:00 -> 12:00", label: "10:00 -> 12:00" },
+    { value: "13:30 -> 15:30", label: "13:30 -> 15:30" },
+    { value: "17:30 -> 19:30", label: "17:30 -> 19:30" },
+    { value: "18:00 -> 20:00", label: "18:00 -> 20:00" },
+    { value: "20:00 -> 22:00", label: "20:00 -> 22:00" },
 ];

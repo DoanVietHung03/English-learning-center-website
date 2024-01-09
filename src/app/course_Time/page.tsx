@@ -8,6 +8,8 @@ import { useState, useEffect } from "react"
 import moment from "moment"
 import IcirclePlus from "@/components/icons/circlePlus"
 import Ieye from "@/components/icons/eye"
+import Pagination from '@mui/material/Pagination';
+
 export default function CourseTime() {
     const [course, setCourse] = useState('')
     const [sessions, setSessions] = useState([])
@@ -26,7 +28,7 @@ export default function CourseTime() {
                 setSessions(data)
             })
             .catch(error => console.error('Error:', error));
-        
+
         fetch('/api/course', {
             method: 'POST',
             headers: {
@@ -41,6 +43,10 @@ export default function CourseTime() {
             .catch(error => console.error('Error:', error));
 
     }, []);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const sessionPerPage = 6; // Adjust as needed
+    const currentSeesion = sessions.slice((currentPage - 1) * sessionPerPage, currentPage * sessionPerPage);
 
     return (
         <>
@@ -91,19 +97,19 @@ export default function CourseTime() {
                                     {course.schedule}
                                 </div>
                             </div>
-                            <div className="ml-4 h-96 overflow-y-auto grid grid-cols-3">
+                            <div className="ml-4 h-96 grid grid-cols-3">
                                 {
-                                    sessions.map((session, i) => (
+                                    currentSeesion.map((session, i) => (
                                         <>
                                             <div className="inline-block bg-white mb-4 mr-8 rounded-lg py-3 pl-4 pr-2">
                                                 <div className="font-bold text-blue-400 mb-3">
                                                     OFFLINE
                                                 </div>
                                                 <div className="flex gap-10 items-center mb-3">
-                                                        <div className="font-semibold font-poppins">
-                                                            {session.name}
-                                                        </div>
-                                                    
+                                                    <div className="font-semibold font-poppins">
+                                                        {session.name}
+                                                    </div>
+
                                                     <div className="font-bold font-poppins text-sm">
                                                         23:00 - 2:00
                                                     </div>
@@ -118,8 +124,8 @@ export default function CourseTime() {
                                                     <div className="font-bold">Skill: Speaking</div>
                                                 }
                                                 {(type == 'Teacher') && (session.attendList === null) &&
-                                                    <Link onClick={() => {localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name)}} 
-                                                    href='/attendance_add'
+                                                    <Link onClick={() => { localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name) }}
+                                                        href='/attendance_add'
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
                                                          hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <IcirclePlus className="w-5 fill-blue-400" />
@@ -127,8 +133,8 @@ export default function CourseTime() {
                                                     </Link>
                                                 }
                                                 {(type == 'Teacher' || type == 'Admin') && (session.attendList !== null) &&
-                                                    <Link onClick={() => {localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name)}}
-                                                     href='/attendance_view' 
+                                                    <Link onClick={() => { localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name) }}
+                                                        href='/attendance_view'
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg
                                                         hover:bg-gray-100 hover:border-2 hover:border-gray-300 transition-colors duration-300">
                                                         <Ieye className="w-5 fill-blue-400" />
@@ -139,6 +145,15 @@ export default function CourseTime() {
                                         </>
                                     ))
                                 }
+                            </div>
+                            <div className="flex justify-center mt-4">
+                                <Pagination
+                                    count={Math.ceil(sessions.length / sessionPerPage)}
+                                    shape="rounded"
+                                    onChange={(event, newPage) => setCurrentPage(newPage)}
+                                    className=""
+                                    color="primary"
+                                />
                             </div>
                         </div>
                     </div>
