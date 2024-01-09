@@ -406,7 +406,7 @@ export default function Exercise_bank() {
                                                                     <div className="mt-4">
                                                                         <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                                         <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { delete_ex = exercise._id, handleDelete(ev) }}>
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { localStorage.setItem('exerciseID', exercise._id), handleDelete(ev) }}>
                                                                                 Yes
                                                                             </button>
 
@@ -490,7 +490,7 @@ export default function Exercise_bank() {
                                                                     <div className="mt-4">
                                                                         <p className="text-center text-lg font-semibold">Do you want to delete permanently ?</p>
                                                                         <div className="flex items-center justify-between mt-10 gap-2 text-lg font-medium">
-                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { handleDelete(ev) }}>
+                                                                            <button className="w-1/2 border-2 border-black bg-lime-400 hover:bg-lime-500 rounded-md py-2" onClick={ev => { localStorage.setItem('exerciseID', exercise._id), handleDelete(ev) }}>
                                                                                 Yes
                                                                             </button>
 
