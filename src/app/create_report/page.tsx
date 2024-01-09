@@ -91,12 +91,12 @@ export default function Create_RP() {
             setError(true)
             setTimeout(() => {
                 window.location.reload(true);
-            }, 2000);
+            }, 1500);
         }
         else {
             setTimeout(() => {
                 router.push('/report_bug')
-            }, 2000);
+            }, 1500);
         }
 
     }
@@ -138,7 +138,7 @@ export default function Create_RP() {
             timer.current = window.setTimeout(() => {
                 setSuccess(true);
                 setLoading(false);
-            }, 1500);
+            }, 1400);
         }
     };
 

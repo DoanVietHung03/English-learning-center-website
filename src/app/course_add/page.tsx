@@ -55,23 +55,29 @@ export default function Course_Add() {
     }
     async function handleFormSubmit(ev: SyntheticEvent) {
         ev.preventDefault()
-
-        const response = await fetch('/api/course', {
-            method: 'POST',
-            body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added, method: 'add' }),
-            headers: { 'Content-Type': 'application/json' },
-        })
-        console.log(response.ok)
-        if (!response.ok){
-            setError(true)
-            setTimeout(() => {
-                window.location.reload(true);           
-            }, 1000);
+        if(student_added.length !== 0){
+            const response = await fetch('/api/course', {
+                method: 'POST',
+                body: JSON.stringify({ title, schedule, room, module, teacher, sDate, student_added, method: 'add' }),
+                headers: { 'Content-Type': 'application/json' },
+            })
+            if (!response.ok){
+                setError(true)
+                setTimeout(() => {
+                    window.location.reload(true);           
+                }, 1000);
+            }
+            else{
+                setTimeout(() => {
+                    router.push('/courseList')
+                }, 1000);
+            }
         }
         else{
-            setTimeout(() => {
-                router.push('/courseList')
-            }, 1000);
+            setError(true)
+                setTimeout(() => {
+                    window.location.reload(true);           
+                }, 1000);
         }
         
 
