@@ -167,34 +167,6 @@ export default function Course_Add() {
                         <div>
                             Create Course
                         </div>
-                        <div className="gap-2 flex items-center justify-end rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight px-4">
-                            <Box sx={{ display: "flex", alignItems: "center" }}>
-                                <Box sx={{ m: 1, position: "relative" }}>
-                                    <Fab
-                                        aria-label="save"
-                                        color="primary"
-                                        sx={buttonSx}
-                                        disabled={loading}
-                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
-                                    >
-                                        {success ? (!error ? <CheckIcon /> : <Ixmark />) : <Iplus className="w-[1.4em] fill-white" />}
-                                    </Fab>
-                                    {loading && (
-
-                                        <CircularProgress
-                                            size={68}
-                                            sx={{
-                                                color: green[500],
-                                                position: "absolute",
-                                                top: -6,
-                                                left: -6,
-                                                zIndex: 1,
-                                            }}
-                                        />
-                                    )}
-                                </Box>
-                            </Box>
-                        </div>
                     </div>
 
                     <div className="bg-white mt-2 rounded pb-8 px-4">
@@ -270,6 +242,34 @@ export default function Course_Add() {
                                 Some information is missed or wrong
                             </div>
                         }
+                        <div className="gap-2 flex items-center justify-end rounded-lg text-center text-black text-base font-poppins leading-tight tracking-tight px-4">
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
+                                <Box sx={{ m: 1, position: "relative" }}>
+                                    <Fab
+                                        aria-label="save"
+                                        color="primary"
+                                        sx={buttonSx}
+                                        disabled={loading}
+                                        onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
+                                    >
+                                        {success ? (!error ? <CheckIcon /> : <Ixmark />) : <Iplus className="w-[1.4em] fill-white" />}
+                                    </Fab>
+                                    {loading && (
+
+                                        <CircularProgress
+                                            size={68}
+                                            sx={{
+                                                color: green[500],
+                                                position: "absolute",
+                                                top: -6,
+                                                left: -6,
+                                                zIndex: 1,
+                                            }}
+                                        />
+                                    )}
+                                </Box>
+                            </Box>
+                        </div>
                     </div>
                 </div>
             </div>

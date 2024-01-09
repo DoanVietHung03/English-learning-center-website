@@ -184,7 +184,7 @@ export default function Create_RP() {
                             <Button className="w-full justify-between items-center"
                                 color="primary"
                                 onChange={handleChangeFile} component="label" variant="contained"
-                                startIcon={<IfileCirclePlus />}>
+                                startIcon={<IfileCirclePlus className="w-[1em] fill-white"/>}>
                                 <div className="flex w-full justify-between items-center overflow-x-auto">
                                     <div className="w-[100px]">
                                         Input file
@@ -253,7 +253,7 @@ export default function Create_RP() {
                                         sx={buttonSx}
                                         onClick={(ev) => { handleButtonClick(ev); handleFormSubmit(ev) }}
                                     >
-                                        {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileExport />}
+                                        {success ? (!error ? <CheckIcon /> : <Ixmark />) : <IfileExport className="w-[1em] fill-white"/>}
                                     </Fab>
                                     {loading && (
                                         <CircularProgress
