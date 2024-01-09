@@ -21,7 +21,7 @@ import Popup from 'reactjs-popup'
 import 'reactjs-popup/dist/index'
 
 export default function CourseList() {
-    const [courses, setCourses] = useState([])
+    var [courses, setCourses] = useState([])
     const [emptyCourse, setEmptyCourse] = useState(true)
     const type = localStorage.getItem('userType')
     const router = useRouter();
@@ -46,7 +46,7 @@ export default function CourseList() {
     useEffect(() => {
         localStorage.setItem('sidebar', 0)
 
-        fetch('/api/course', {
+        const response = fetch('/api/course', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +56,8 @@ export default function CourseList() {
             .then(response => response.json())
             .then(data => {
                 setCourses(data)
-                if (courses == null)
+                console.log(data);
+                if (courses == null || courses.length === 0)
                     setEmptyCourse(true)
                 else
                     setEmptyCourse(false)
@@ -66,7 +67,10 @@ export default function CourseList() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const coursePerPage = 3; // Adjust as needed
-    const currentCourse = courses.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
+    var currentCourse = []
+    if(!emptyCourse){
+        currentCourse = courses.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
+    }
 
     const [deleteCourse, setDeleteCourse] = useState(false)
 
