@@ -133,12 +133,12 @@ export default function Exercise_Add() {
             setError(true)
             setTimeout(() => {
                 window.location.reload(true);
-            }, 2000);
+            }, 1500);
         }
         else {
             setTimeout(() => {
                 router.push('/exercise_bank')
-            }, 2000)
+            }, 1500)
         }
     }
 
@@ -180,7 +180,7 @@ export default function Exercise_Add() {
             timer.current = window.setTimeout(() => {
                 setSuccess(true);
                 setLoading(false);
-            }, 1500);
+            }, 1400);
         }
     };
 

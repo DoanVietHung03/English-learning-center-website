@@ -41,6 +41,7 @@ export default function Login() {
             localStorage.setItem('userName', phone)
             localStorage.setItem("userType", userType)
             localStorage.setItem("userFname", name)
+            setError(false);
             router.push('/courseList')
         }
         else {
