@@ -61,10 +61,10 @@ export async function POST(req: { json: () => any }) {
                 courses = await Course.find()
                 courses = courses
                 .filter(course => course.student_id.includes(body.id))
-                .filter(course => course !== null);
             }
+            
             var data = []
-            var teacherName
+            var teacherName = []
             for (var i = 0; i < courses.length; i++) {
                 teacherName = await User.findOne({phone: courses[i].teacher_id}, {name: 1, _id: 0})
                 data.push(teacherName.name)
@@ -84,9 +84,10 @@ export async function POST(req: { json: () => any }) {
                 teacher_name: data[i], 
             };
             });
+
             combinedCourses.reverse()
             return Response.json(combinedCourses);
-        }
+            }
         else if (body.method === 'getStudentList'){
             var course;
             course = await Course.findOne({ _id: body.id })

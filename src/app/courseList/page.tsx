@@ -45,7 +45,6 @@ export default function CourseList() {
 
     useEffect(() => {
         localStorage.setItem('sidebar', 0)
-
         const response = fetch('/api/course', {
             method: 'POST',
             headers: {
@@ -57,7 +56,7 @@ export default function CourseList() {
             .then(data => {
                 setCourses(data)
                 console.log(data);
-                if (courses == null || courses.length === 0)
+                if (courses == null)
                     setEmptyCourse(true)
                 else
                     setEmptyCourse(false)
@@ -68,9 +67,7 @@ export default function CourseList() {
     const [currentPage, setCurrentPage] = useState(1);
     const coursePerPage = 3; // Adjust as needed
     var currentCourse = []
-    if(!emptyCourse){
-        currentCourse = courses.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
-    }
+    currentCourse = courses.slice((currentPage - 1) * coursePerPage, currentPage * coursePerPage);
 
     const [deleteCourse, setDeleteCourse] = useState(false)
 
