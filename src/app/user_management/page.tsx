@@ -33,7 +33,7 @@ export default function UserManagement() {
                         <div className="font-poppins font-bold text-5xl ">
                             User Manangement
                         </div>
-                        <Link href='/register' className="bg-lime-400 flex gap-3 rounded-xl items-center justify-center py-3 px-3">
+                        <Link href='/register' className="bg-lime-400 hover:bg-lime-500 flex gap-3 rounded-xl items-center justify-center py-3 px-3">
                             <div className="text-2xl font-bold">+</div>
                             <div className="font-bold flex items-center">Add User</div>
                         </Link>

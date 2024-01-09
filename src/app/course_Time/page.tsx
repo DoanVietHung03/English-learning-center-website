@@ -39,6 +39,7 @@ export default function CourseTime() {
             .then(response => response.json())
             .then(data => {
                 setCourse(data)
+                console.log(data);
             })
             .catch(error => console.error('Error:', error));
 

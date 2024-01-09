@@ -94,6 +94,7 @@ export default function RP() {
             .then(data => {
                 setReports(data)
                 setLength(data.length)
+                console.log(data)
             })
             .catch(error => console.error('Error:', error));
 
@@ -207,11 +208,12 @@ export default function RP() {
                                                             </Grid>
                                                         </Tooltip>}
                                                     position={"right bottom"}>
-                                                    <div className="bg-white w-52 h-fit rounded-md border-2 border-zinc-300 p-2">
+                                                    <div className="bg-white w-96 h-fit rounded-md border-2 border-zinc-300 p-2">
                                                         <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
                                                             style={{ wordWrap: 'break-word' }}>
                                                             {rep.content}
-                                                            {((rep.file !== null) && (rep.file !== "")) ?
+                                                            
+                                                            {((rep.file === null) || (rep.file === "") || (rep.file === undefined)) ? null :
                                                                 <div className="mt-6">
                                                                     <img
                                                                         src={rep.file}
@@ -245,7 +247,7 @@ export default function RP() {
                                                                         />
                                                                     )}
                                                                 </div>
-                                                                : null}
+                                                               }
                                                         </div>
                                                         <div className="flex items-center ml-4">
                                                             {(localStorage.getItem('userType') === 'Admin') && (
@@ -286,7 +288,7 @@ export default function RP() {
                                                 <div>{rep.userID}</div>
                                             </div>
                                             <div className="items-center text-center text-black text-xs leading-tight tracking-tight px-1 py-1 mt-1 border-b border-stone-300 pb-3">
-                                                <Popup trigger={
+                                                <Popup ref={popupRef} trigger={
                                                     <Tooltip disableFocusListener disableTouchListener title='Click to see full'>
                                                         <Grid item>
                                                             <button className="hover:underline">{rep.title}</button>
@@ -297,7 +299,7 @@ export default function RP() {
                                                         <div className="overflow-y-auto h-44 border border-zinc-200 px-1"
                                                             style={{ wordWrap: 'break-word' }}>
                                                             {rep.content}
-                                                            {((rep.file !== null) && (rep.file !== "")) ?
+                                                            {((rep.file === null) || (rep.file === "") || (rep.file === undefined)) ? null :
                                                                 <div className="mt-6">
                                                                     <img
                                                                         src={rep.file}
@@ -331,7 +333,7 @@ export default function RP() {
                                                                         />
                                                                     )}
                                                                 </div>
-                                                                : null}
+                                                            }
                                                         </div>
                                                         <div className="flex justify-center items-center">
                                                             {(localStorage.getItem('userType') === 'Admin') && (

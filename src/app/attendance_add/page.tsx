@@ -62,7 +62,7 @@ const [loading, setLoading] = React.useState(false);
         })
         setTimeout(() => {
             router.push('/course_Time')
-        }, 1000);
+        }, 1200);
 
     }
 
