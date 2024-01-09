@@ -248,7 +248,7 @@ export default function Exercise_Add() {
                                                     {(file !== '') ?
                                                         <>
                                                             <div className="flex items-center justify-end mr-6 mt-2">
-                                                                <button onClick={handleDeleteImage2}>
+                                                                <button onClick={handleDeleteImage}>
                                                                     <IcircleXmark className="w-[1.5em]" />
                                                                 </button>
                                                             </div>
