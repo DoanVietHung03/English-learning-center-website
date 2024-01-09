@@ -132,7 +132,7 @@ export default function CourseTime() {
                                                         Create Attendance List
                                                     </Link>
                                                 }
-                                                {(type == 'Teacher' || type == 'Admin') && (session.attendList !== null) &&
+                                                {(type == 'Teacher') && (session.attendList !== null) &&
                                                     <Link onClick={() => { localStorage.setItem("session_id", session._id), localStorage.setItem("session_name", session.name) }}
                                                         href='/attendance_view'
                                                         className="bg-gray-300 border-2 border-gray-300 font-bold p-2 mt-3 flex gap-3 text-blue-400 rounded-lg

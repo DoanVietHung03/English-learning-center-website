@@ -71,8 +71,8 @@ export default function CourseList() {
     const [deleteCourse, setDeleteCourse] = useState(false)
 
     const actions = [
-        { icon: <IfileAdd className="w-6" />, name: "Add Course", link: '/course_add' },
-        { icon: <IfileDelete className="w-6" />, name: "Delete Course" },
+        { icon: <IfileAdd className="w-4" />, name: "Add Course", link: '/course_add' },
+        { icon: <IfileDelete className="w-4" />, name: "Delete Course" },
     ];
 
     const handleShowBin = () => {
@@ -112,7 +112,7 @@ export default function CourseList() {
                                                     handleShowBin()
                                                 }
                                                 }}
-                                            FabProps={{ size: "large" }}
+                                            FabProps={{ size: "medium" }}
                                         />
                                     ))}
                                 </SpeedDial>
@@ -122,7 +122,6 @@ export default function CourseList() {
                     <div className="flex flex-col gap-4 h-[480px]">
                         {!emptyCourse && (
                             currentCourse.map(course => (
-                                // eslint-disable-next-line react/jsx-key
                                 <>
                                     <div className="w-full h-36 rounded-xl bg-white flex mt-2">
                                         <div className="w-5/6 p-8">
