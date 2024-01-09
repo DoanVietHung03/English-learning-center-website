@@ -9,6 +9,21 @@ import moment from "moment"
 import { SyntheticEvent, useEffect, useState } from "react"
 import ReactAudioPlayer from "react-audio-player"
 import { useRouter } from "next/navigation";
+import Button from "@mui/material/Button";
+import { styled } from '@mui/material/styles';
+import IfileCirclePlus from "@/components/icons/icon_fileCirclePlus"
+
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
 export default function Do_Assignment() {
     const [assignment, SetAssignment] = useState([])
@@ -144,9 +159,9 @@ export default function Do_Assignment() {
                                     <div>
                                         <p className="text-base font-medium leading-tight tracking-tight">Content</p>
                                         <div className="rounded-lg border border-stone-300 pl-6 py-4 pr-4 h-[378px]">
-                                            <div style={{ wordWrap: 'break-word'}} className="h-[355px] overflow-y-auto">
-                                                    {assignment.content}
-                                             
+                                            <div style={{ wordWrap: 'break-word' }} className="h-[355px] overflow-y-auto">
+                                                {assignment.content}
+
                                                 <div className="mt-6">
                                                     {((assignment.attachedFile == null) || (assignment.attachedFile == '') || (assignment.attachedFile == undefined)) ?
                                                         null
@@ -208,7 +223,7 @@ export default function Do_Assignment() {
 
                                     <div>
                                         <p className="text-base font-medium leading-tight tracking-tight">Answer</p>
-                                        <div className="bg-orange-100 bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center pl-4 pt-4 pb-2">
+                                        <div className="bg-orange-100 h-[378px] bg-opacity-40 rounded-lg shadow-lg border flex-col justify-start items-center px-4 pt-4 pb-2">
                                             {(submission !== null) ?
                                                 <>
                                                     <div className="h-[266px] overflow-y-auto" style={{ wordWrap: 'break-word' }}>
@@ -225,7 +240,40 @@ export default function Do_Assignment() {
                                                         </>)}
 
                                                 </> :
-                                                <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full h-[348px] rounded-lg border border-zinc-400 p-3 focus:outline-none" id="myText" placeholder="Type..." ></textarea>}
+                                                <div>
+                                                    <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full h-[200px] rounded-lg border border-zinc-400 p-3 focus:outline-none mb-4" id="myText" placeholder="Type..." ></textarea>
+                                                    {(assignment.skill == 'Speaking' &&
+                                                        <>
+                                                            <Button className="w-full justify-between items-center mt-4"
+                                                                color="primary"
+                                                                onChange={handleFileChange} component="label" variant="contained"
+                                                                startIcon={<IfileCirclePlus className="w-[1em] fill-white" />}>
+                                                                <div className="flex w-full justify-between items-center overflow-x-auto">
+                                                                    <div className="w-1/3">
+                                                                        Input file 
+                                                                    </div>
+                                                                    <VisuallyHiddenInput
+                                                                        type="file" accept="auto" />
+                                                                    {file && (
+                                                                        <div className="w-full ml-4">
+                                                                            {(file.name).length > 21 ?
+                                                                                ((file.name).substring(0, 21) + '... ' + (file.name).substring((file.name).lastIndexOf('.') + 1)) : file.name}
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                            </Button>
+                                                            {((file === '') || (file === null) || (file === undefined)) ? null :
+                                                                <>
+                                                                    <ReactAudioPlayer
+                                                                        src={file}
+                                                                        controls
+                                                                        className="w-full mt-8"
+                                                                    />
+                                                                </>}
+
+                                                        </>)}
+                                                </div>
+                                            }
                                         </div>
 
                                         <div>
@@ -249,18 +297,6 @@ export default function Do_Assignment() {
                             }
 
                         </div>
-
-                        {(assignment.skill === "Speaking" && submission === null &&
-                            <div className="bg-white p-3 rounded-lg border-2">
-                                <div>Input file speaking</div>
-                                <input
-                                    type="file"
-                                    accept="audio"
-                                    onChange={handleFileChange}
-                                    className="mb-4"
-                                />
-                            </div>
-                        )}
                     </div>
                 </div>
             </div>
