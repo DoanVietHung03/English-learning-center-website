@@ -241,16 +241,19 @@ export default function Do_Assignment() {
 
                                                 </> :
                                                 <div>
-                                                    <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full h-[200px] rounded-lg border border-zinc-400 p-3 focus:outline-none mb-4" id="myText" placeholder="Type..." ></textarea>
+                                                    {(assignment.skill != 'Speaking' && 
+                                                        <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full h-[345px] rounded-lg border border-zinc-400 p-3 focus:outline-none mb-4" id="myText" placeholder="Type..." ></textarea>
+                                                    )}                                                 
                                                     {(assignment.skill == 'Speaking' &&
                                                         <>
+                                                            <textarea onChange={(ev) => { SetAnswer(ev.target.value) }} className="w-full h-[200px] rounded-lg border border-zinc-400 p-3 focus:outline-none mb-4" id="myText" placeholder="Type..." ></textarea>
                                                             <Button className="w-full justify-between items-center mt-4"
                                                                 color="primary"
                                                                 onChange={handleFileChange} component="label" variant="contained"
                                                                 startIcon={<IfileCirclePlus className="w-[1em] fill-white" />}>
                                                                 <div className="flex w-full justify-between items-center overflow-x-auto">
                                                                     <div className="w-1/3">
-                                                                        Input file 
+                                                                        Input file
                                                                     </div>
                                                                     <VisuallyHiddenInput
                                                                         type="file" accept="auto" />

@@ -199,7 +199,7 @@ export default function Add_Ass() {
                                                     <Button className="w-full justify-between items-center"
                                                         color="primary"
                                                         onChange={handleFileChange} component="label" variant="contained"
-                                                        startIcon={<IfileCirclePlus className="w-[1em] fill-white"/>}>
+                                                        startIcon={<IfileCirclePlus className="w-[1em] fill-white" />}>
                                                         <div className="flex w-full justify-between items-center overflow-x-auto">
                                                             <div className="w-[100px]">
                                                                 Input file
@@ -207,9 +207,9 @@ export default function Add_Ass() {
                                                             <VisuallyHiddenInput
                                                                 type="file" accept="auto" />
                                                             {file && (
-                                                                <div className="overflow-x-visible">
-                                                                    {file.name}
-
+                                                                <div className="w-full ml-4">
+                                                                    {(file.name).length > 21 ?
+                                                                        ((file.name).substring(0, 21) + '... ' + (file.name).substring((file.name).lastIndexOf('.') + 1)) : file.name}
                                                                 </div>
                                                             )}
                                                         </div>
@@ -226,9 +226,9 @@ export default function Add_Ass() {
                                                                     <img
                                                                         src={file}
                                                                         width={120}
-                                                                        height={80} 
-                                                                        alt={"Cannot load"} 
-                                                                        onClick={handleClick} 
+                                                                        height={80}
+                                                                        alt={"Cannot load"}
+                                                                        onClick={handleClick}
                                                                         style={{
                                                                             width: showLargeImage ? '70%' : 'auto',
                                                                             height: showLargeImage ? '70vh' : 'auto',
@@ -241,21 +241,21 @@ export default function Add_Ass() {
                                                                             transform: showLargeImage ? 'translate(-50%, -50%)' : 'none',
                                                                             zIndex: showLargeImage ? 2 : 'auto',
                                                                             transition: '0.5s',
-                                                                        }}/>
-                                                                        {showLargeImage && (
-                                                                                    <div
-                                                                                        style={{
-                                                                                            position: 'fixed',
-                                                                                            top: 0,
-                                                                                            left: 0,
-                                                                                            width: '100%',
-                                                                                            height: '100%',
-                                                                                            background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
-                                                                                            zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
-                                                                                        }}
-                                                                                    />
-                                                                                )}
-                                                
+                                                                        }} />
+                                                                    {showLargeImage && (
+                                                                        <div
+                                                                            style={{
+                                                                                position: 'fixed',
+                                                                                top: 0,
+                                                                                left: 0,
+                                                                                width: '100%',
+                                                                                height: '100%',
+                                                                                background: 'rgba(0, 0, 0, 0.7)', // Điều này tạo ra một lớp đen với độ mờ là 0.7
+                                                                                zIndex: 1, // Đặt z-index để nó hiển thị phía trên ảnh, nhưng đằng sau nó
+                                                                            }}
+                                                                        />
+                                                                    )}
+
                                                                 </div> : ((audioTail.includes(fileType.substring(fileType.lastIndexOf('.') + 1))) ?
                                                                     <div>
                                                                         <div>File listening</div>
